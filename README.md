@@ -22,7 +22,9 @@ The initial concrete renderer candidate is **Godot 4.7 / native Vulkan**, proven
 | [FOUND prototype record](docs/07_FOUND_PROTOTYPES.md) | FOUND-001 delivered/Windows seen, known parser issue, FOUND-002A/B/C |
 | [Interaction design](docs/08_INTERACTION_AND_AUTHORING.md) | Free flight, gesture modulation, selection, drill-down and edit boundaries |
 | [Roadmap](docs/09_ROADMAP.md) | Work packages, acceptance, conservative CI and non-goals |
-| [Sources and reuse](docs/10_SOURCES_AND_REUSE.md) | Repositories, technical references and limitations |
+| [Sources and reuse](docs/10_SOURCES_AND_REUSE.md) | Repositories, licensing, technical references and limitations |
+| [Architecture decisions](docs/11_ARCHITECTURE_DECISIONS.md) | Accepted boundaries and unresolved design choices |
+| [Implementation brief](docs/12_IMPLEMENTATION_BRIEF.md) | Source-exact engineering handoff and acceptance requirements |
 
 ## Explicit separation
 
@@ -34,3 +36,12 @@ The initial concrete renderer candidate is **Godot 4.7 / native Vulkan**, proven
 ## State as of 23 November 2026
 
 Founding research and design documentation. FOUND-001 exists as an earlier standalone Godot 4.7 ZIP, and the owner provided running Windows screenshots. The repo initially contained no code. This documentation records desired features and implementation experiments, **not claims that the future renderer, streaming protocol, surgery adapter, GPU benchmarks or FOUND-002 exist**. No CI workflows, model downloads or cross-repo changes are required for this specification.
+
+## Tracking
+
+- [Draft/HOLD founding PR #1](https://github.com/techrote/Xenovection/pull/1) — this specification; review before merging.
+- [Programme / custody #2](https://github.com/techrote/Xenovection/issues/2) and [original Godot source recovery #3](https://github.com/techrote/Xenovection/issues/3).
+- [FOUND-002A kinetic filaments #4](https://github.com/techrote/Xenovection/issues/4), [FOUND-002B reflective/weather lab #5](https://github.com/techrote/Xenovection/issues/5), [FOUND-002C hybrid composition #6](https://github.com/techrote/Xenovection/issues/6).
+- [Modulation bus #7](https://github.com/techrote/Xenovection/issues/7) and [optional data taps #8](https://github.com/techrote/Xenovection/issues/8).
+
+**Custody note:** The historical fixed Godot 4.7 FOUND-001 ZIP and the user's screenshot originals were available in the founding conversation but are not yet committed as binaries here. Detailed identifying hashes and image names appear in the FOUND record and evidence ledger. This repository's founding PR is intentionally **documentation-only**; do not conflate the code artifact with completed in-repo implementation.
