@@ -1,0 +1,12 @@
+# Godot regenerates import metadata with LF on every platform. Keep the Windows
+# checkout byte-stable so import cannot create an autocrlf-only dirty tree.
+* text=auto eol=lf
+
+# Custody and numerical provenance are byte-exact; never normalize these files.
+experiments/found-001/** -text
+app/data/*.json -text
+
+*.zip -text
+*.png -text
+*.jpg -text
+*.gif -text

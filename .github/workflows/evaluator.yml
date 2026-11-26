@@ -3,7 +3,7 @@ name: Windows evaluator
 on:
   push:
     branches: [docs/xenovection-founding-charter]
-    paths: [app/**, tests/**, tools/**, packaging/**, .github/workflows/evaluator.yml]
+    paths: [app/**, tests/**, tools/**, packaging/**, .gitattributes, .github/workflows/evaluator.yml]
   workflow_dispatch:
 
 permissions:
