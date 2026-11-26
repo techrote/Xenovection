@@ -6,9 +6,52 @@ Xenovection is an **independent visual instrument and experimental art engine**,
 
 **Primary design stance:** keep the extremely thin line-and-filigree representation intact. Add rich surfaces, materials and volumes as separate opt-in layers; do not substitute shiny opaque shapes for the successful fine-line experiment. Make the whole environment directly manipulable. Modulation is a first-class compositional instrument, not an afterthought.
 
-The initial concrete renderer candidate is **Godot 4.7 / native Vulkan**, proven to launch on the owner's Windows machine for the synthetic FOUND-001 field study (screenshots supplied 23 November 2026). Investigate selective techniques from [XenoField](https://github.com/techrote/XenoField) (native WebGPU) and [PlasmaTerm](https://github.com/techrote/PlasmaTerm) (including its [web edition](https://techrote.github.io/plasmaterm/web/)); do not assume these codebases share a renderer. Browser/portable rendering is a possible parallel target, not a mandate to use Three.js.
+The implementation uses **Godot 4.7.2 / native Vulkan Forward+**. The founding architecture remains below; the integrated application is in [`app/`](app/). XenoField and PlasmaTerm informed the visual direction, while the current shaders and runtime are independent implementations.
 
-## Start here
+## Run FOUND-002
+
+The Windows evaluator is built by [Windows evaluator CI](https://github.com/techrote/Xenovection/actions/workflows/evaluator.yml). Download the artifact for the source revision you want, extract its inner `Xenovection-FOUND-002-Windows-<revision>.zip`, then run **Launch-Xenovection.cmd**. The engine and local content are included. Each package carries `BUILD.json`, payload hashes and a 600-frame owner profiling launcher. See [`START-HERE.txt`](packaging/START-HERE.txt) for the short tour and controls.
+
+To run from source with Godot **4.7.2**:
+
+```sh
+godot --path app --editor --import
+godot --path app --rendering-method forward_plus --rendering-driver vulkan
+```
+
+**Draft/HOLD.** Hosted software Vulkan qualification and the owner's TITAN RTX qualification are separate. A headless test does not establish visual correctness or physical-GPU performance.
+
+| Preset | What to explore |
+| --- | --- |
+| 1 · Convergence | Exact fine connections surrounding a materialised source region |
+| 2 · Counterflow loom | Reversible luminous phase, pinned waves, torsion and opposing secondary fibres |
+| 3 · Spectral knot | Moving analytical environment reflected by a selected optical proxy |
+| 4 · Weather membrane | Independent normal, reflection-domain and geometric deformation; optional translucency |
+| 5 · Scientific / no FX | Straight primary connections, exact IDs and coefficients, decorative passes disabled |
+| 6 · Dense interference | 46,080 source edges; the Source tab also offers an 81,920-edge stress specimen |
+
+Orbit with **MMB**, pan with **Shift+MMB**, zoom with the wheel, or hold **RMB** to fly with **WASD/QE**. Click a source item or drag a through-depth region, then choose **Knot / Ribbon / Membrane / Filaments**. **F** focuses selection, **I** isolates, **G** toggles scientific mode, **Space** pauses, **V** reverses, **R** resets. **F5/F6** save/recall a source-bound scene; **F10** writes measured frame statistics. The Clocks tab separates filament, sky, normal, displacement and palette time.
+
+### Runtime boundaries
+
+Persistent MultiMesh buffers hold exact primary edges separately from decorative fibres. Shader animation does not rebuild strands on the CPU each frame. Analytical optical illumination avoids per-frame cubemap rebuilds. Optical meshes rebuild only when their composition changes. Bounded source snapshots, selection history, replay and performance buffers keep transient visual state separate from immutable source values.
+
+The recovered synthetic specimen has **288 nodes, 11,520 coefficients and 48 inputs**. All 11,568 stored numeric values are checked bit-for-bit against the original JSON. A proxy keeps its complete exact source membership, even when its visible ribbon sample is bounded. The inspector and exports distinguish source values, derived quantities and artistic effects. No model loading, weight surgery or undocumented external transport is implemented.
+
+The optical material uses an analytical reflected-direction field and a roughness approximation. Translucency uses alpha blending. Refraction, ray tracing and volumes remain future experiments; the founding vision below is broader than this first implementation.
+
+### Compact qualification
+
+```sh
+python experiments/found-001/source/tests/verify_specimen.py
+godot --headless --path app --script ../tests/test_core.gd
+godot --headless --path app --script ../tests/test_integration.gd
+python tests/verify_source_exact.py --godot godot
+```
+
+The historical numerical verifier requires NumPy. The renderer folders contain focused invariant checks; `tests/gui_input_probe.gd` exercises real graphical input. `tools/package_evaluator.py` exports an exact clean source revision using matching official Windows templates. `tools/windows_evaluator.ps1` verifies the archive and runs the extracted Windows executable under explicitly identified software Vulkan; test graphics libraries stay outside the owner package.
+
+## Founding architecture
 
 | Record | Contents |
 | --- | --- |
@@ -33,15 +76,15 @@ The initial concrete renderer candidate is **Godot 4.7 / native Vulkan**, proven
 - **[CyberSand](https://github.com/techrote/cybersand)** may optionally reuse independent filaments, atmospheric backgrounds or overlays; no code is to be inserted into CyberSand as a side effect of this programme.
 - **XenoField and PlasmaTerm** are references/donors, not dependencies to vendor wholesale without interface and licence review.
 
-## State as of 23 November 2026
+## Founding state, 23 November 2026
 
-Founding research and design documentation. FOUND-001 exists as an earlier standalone Godot 4.7 ZIP, and the owner provided running Windows screenshots. The repo initially contained no code. This documentation records desired features and implementation experiments, **not claims that the future renderer, streaming protocol, surgery adapter, GPU benchmarks or FOUND-002 exist**. No CI workflows, model downloads or cross-repo changes are required for this specification.
+The repository began with research and design documentation. FOUND-001 was a standalone Godot ZIP with owner-provided Windows screenshots. Those documents preserve the founding intent; current implementation and qualification are identified separately above.
 
 ## Tracking
 
-- [Draft/HOLD founding PR #1](https://github.com/techrote/Xenovection/pull/1) — this specification; review before merging.
+- [Draft/HOLD PR #1](https://github.com/techrote/Xenovection/pull/1) — founding architecture and the coherent FOUND-002 implementation lineage; owner acceptance precedes merge.
 - [Programme / custody #2](https://github.com/techrote/Xenovection/issues/2) and [original Godot source recovery #3](https://github.com/techrote/Xenovection/issues/3).
 - [FOUND-002A kinetic filaments #4](https://github.com/techrote/Xenovection/issues/4), [FOUND-002B reflective/weather lab #5](https://github.com/techrote/Xenovection/issues/5), [FOUND-002C hybrid composition #6](https://github.com/techrote/Xenovection/issues/6).
 - [Modulation bus #7](https://github.com/techrote/Xenovection/issues/7) and [optional data taps #8](https://github.com/techrote/Xenovection/issues/8).
 
-**Custody note:** The historical fixed Godot 4.7 FOUND-001 ZIP and the user's screenshot originals were available in the founding conversation but are not yet committed as binaries here. Detailed identifying hashes and image names appear in the FOUND record and evidence ledger. This repository's founding PR is intentionally **documentation-only**; do not conflate the code artifact with completed in-repo implementation.
+**Custody:** the exact historical fixed ZIP has been recovered and preserved unmodified under [`experiments/found-001/`](experiments/found-001/). Its archive and specimen hashes match issue #3. The [custody receipt](experiments/found-001/CUSTODY.md) distinguishes this baseline from the successor implementation.

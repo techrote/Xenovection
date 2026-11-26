@@ -1,0 +1,9 @@
+**/.godot/
+**/*.tmp
+**/__pycache__/
+build/
+evidence/local/
+app/build_info.json
+experiments/found-001/source/**/*.uid
+.runtime/
+.DS_Store
