@@ -401,7 +401,13 @@ func _input(event: InputEvent) -> void:
 				ui.show_message(str(picked.warning), 7)
 			if picked.kind == "node": selection.select_node(picked.id, true, _drag_additive)
 			elif picked.kind == "edge": selection.select_edge(picked.id, _drag_additive)
-			elif not _drag_additive: selection.clear()
+			elif not _drag_additive:
+				var proxy_hit: Dictionary = optical.ray_pick_proxy(camera.project_ray_origin(event.position), camera.project_ray_normal(event.position), camera.far)
+				if proxy_hit.is_empty():
+					selection.clear()
+				else:
+					# A proxy identifies its existing exact group, never a fabricated item.
+					ui.show_message("Optical group · %d source nodes / %d source edges retained" % [proxy_hit.source_membership.node_ids.size(), proxy_hit.source_membership.edge_ids.size()])
 		get_viewport().set_input_as_handled()
 
 func handle_action(action: String) -> void:
@@ -433,7 +439,11 @@ func handle_action(action: String) -> void:
 			selection.set_materialisation(action)
 			scientific = false
 			optical_flags.enabled = true
-		"unmaterialise": selection.set_materialisation("none")
+			ui.set_tab(1)
+		"unmaterialise":
+			selection.set_materialisation("none")
+			filament_flags.enabled = true
+			ui.set_tab(0)
 		"undo": selection.undo()
 		"redo": selection.redo()
 		"density24", "density48", "density96", "density128":

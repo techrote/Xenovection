@@ -161,8 +161,11 @@ func _run() -> void:
 	var file := FileAccess.open(tiny_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"schema": "xenovection.source.v1", "manifest": {"source_id": "empty-integration"}, "nodes": [], "edges": []}))
 	file.close()
+	application.set_parameter("replay.enabled", true)
+	application.bus.register_source("sample", {"type": "manual", "value": 0.6})
 	application._import_source(tiny_path)
 	application._process(0.016)
+	check(application.bus.sources.sample.value == 0.0, "Empty-source import clears the previous source replay sample")
 	application.handle_action("knot")
 	check(application.dataset.nodes.is_empty() and not application.optical.get_metrics().optical_visible, "Empty source remains usable without phantom material geometry")
 	check(not application.load_scene(save_path), "Saved scene cannot cross into a different source revision")
@@ -171,6 +174,15 @@ func _run() -> void:
 		application.apply_preset(index)
 		application._process(0.016)
 		check(application.dataset.manifest.revision == original_revision, "Principal preset %d retains the archived source" % index)
+	application.apply_preset(2)
+	application._process(0.016)
+	var optical_selection: Dictionary = application.selection.get_reference()
+	application.handle_action("unmaterialise")
+	application._process(0.016)
+	check(application.filaments.get_metrics().primary_edges > 0
+		and not application.optical.get_metrics().optical_visible
+		and application.selection.get_reference() == optical_selection,
+		"Optical preset returns to visible fine filaments without losing its exact source selection")
 	file = FileAccess.open(tiny_path, FileAccess.WRITE)
 	file.store_string(JSON.stringify({"schema": "xenovection.source.v1", "manifest": {"source_id": "near-plane-crossing"},
 		"nodes": [{"id": "behind", "position": [-0.5, 0, 1], "layer": 8}, {"id": "front", "position": [0.5, 0, -2], "layer": 9}],

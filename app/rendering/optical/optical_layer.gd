@@ -87,6 +87,13 @@ var _represented_ribbons := 0
 var _clock_updates := 0
 var _surface_scale := 1.0
 var _surface_mode := 0
+var _pick_positions := PackedVector3Array()
+var _pick_normals := PackedVector3Array()
+var _pick_uvs := PackedVector2Array()
+var _pick_indices := PackedInt32Array()
+var _pick_count := 0
+var _last_pick_usec := 0
+var _last_pick_triangle_tests := 0
 
 func _ready() -> void:
 	_ensure_nodes()
@@ -200,6 +207,9 @@ func get_metrics() -> Dictionary:
 		"proxy_visible_source_nodes": _represented_node_ids.size(), "proxy_visible_source_edges": _represented_edge_ids.size(),
 		"proxy_ribbons_drawn": _represented_ribbons, "proxy_ribbon_budget": MAX_RIBBONS,
 		"surface_translucent": float(_parameters.surface_opacity) < 0.999,
+		"proxy_pick_cpu_bytes_estimate": _mesh_bytes,
+		"proxy_pick_count": _pick_count, "proxy_last_pick_usec": _last_pick_usec,
+		"proxy_last_pick_triangle_tests": _last_pick_triangle_tests,
 		"environment_method": "analytical reflected direction; no dynamic cubemap",
 		"topology_modified": false,
 	}
@@ -209,6 +219,72 @@ func get_source_membership() -> Dictionary:
 
 func get_represented_membership() -> Dictionary:
 	return {"node_ids": _represented_node_ids.duplicate(), "edge_ids": _represented_edge_ids.duplicate(), "representation": "visible subset of artistic proxy; source selection unchanged"}
+
+func ray_pick_proxy(ray_origin: Vector3, ray_direction: Vector3, max_distance: float = 1000.0) -> Dictionary:
+	## A hit addresses this artistic aggregate, never an invented individual source.
+	## Evaluate static mesh + current bounded shader displacement only on a click.
+	## CPU/GPU floating-point differences make deformed-surface picking approximate.
+	if not is_instance_valid(_surface) or not _surface.is_visible_in_tree() or _surface.mesh == null:
+		return {}
+	if not ray_origin.is_finite() or not ray_direction.is_finite() or not is_finite(max_distance) or max_distance <= 0.0:
+		return {}
+	if ray_direction.length_squared() < 0.000000000001 or _pick_indices.is_empty():
+		return {}
+	var transform := _surface.global_transform
+	if absf(transform.basis.determinant()) < 0.000000000001:
+		return {}
+	var started := Time.get_ticks_usec()
+	_pick_count += 1
+	_last_pick_triangle_tests = 0
+	var inverse := transform.affine_inverse()
+	var local_origin := inverse * ray_origin
+	var local_direction := (inverse.basis * ray_direction.normalized()).normalized()
+	var amplitude := float(_parameters.displacement) * _surface_scale * 0.34
+	var bounds := _surface.mesh.get_aabb().grow(amplitude + 0.0001)
+	if bounds.intersects_ray(local_origin, local_direction) == null:
+		_last_pick_usec = Time.get_ticks_usec() - started
+		return {}
+	var positions := _pick_positions
+	var deformed := float(_parameters.displacement) > 0.0001
+	if deformed:
+		positions = _pick_positions.duplicate()
+		var scale_value := maxf(_surface_scale, 0.05)
+		var k0 := Vector3(1.7, 2.3, 0.9) / scale_value
+		var k1 := Vector3(-2.9, 1.4, 2.1) / scale_value
+		var clock := float(_clocks.displacement)
+		for i in range(positions.size()):
+			var p := _pick_positions[i]
+			var envelope := 1.0
+			if _surface_mode == 1:
+				var pin := sin(_pick_uvs[i].x * PI)
+				envelope = pin * pin
+			elif _surface_mode == 2:
+				var pin := sin(_pick_uvs[i].x * PI) * sin(_pick_uvs[i].y * PI)
+				envelope = pin * pin
+			var height := 0.62 * sin(p.dot(k0) + clock * 0.81) + 0.38 * sin(p.dot(k1) - clock * 0.53)
+			positions[i] = p + _pick_normals[i] * amplitude * envelope * height
+	var closest := max_distance
+	var world_hit := Vector3.ZERO
+	var found := false
+	for i in range(0, _pick_indices.size(), 3):
+		_last_pick_triangle_tests += 1
+		var intersection: Variant = Geometry3D.ray_intersects_triangle(local_origin, local_direction,
+			positions[_pick_indices[i]], positions[_pick_indices[i + 1]], positions[_pick_indices[i + 2]])
+		if intersection == null:
+			continue
+		var point: Vector3 = transform * Vector3(intersection)
+		var distance := ray_origin.distance_to(point)
+		if distance <= closest:
+			closest = distance
+			world_hit = point
+			found = true
+	_last_pick_usec = Time.get_ticks_usec() - started
+	if not found:
+		return {}
+	return {"hit_semantics": "artistic-proxy-mesh", "selection_semantics": "retain-existing-exact-group",
+		"proxy_kind": str(_visual.get("materialisation", "none")), "source_membership": get_source_membership(),
+		"represented_membership": get_represented_membership(), "world_position": world_hit, "distance": closest,
+		"deformation_approximate": deformed, "individual_source_item": false}
 
 func get_parameter_schema() -> Dictionary:
 	return {"defaults": DEFAULTS.duplicate(true), "limits": LIMITS.duplicate(true), "palettes": ["glacier", "ember", "pearl"]}
@@ -302,6 +378,10 @@ func _refresh_proxy() -> void:
 		if source_layer not in hidden and target_layer not in hidden:
 			_represented_edge_ids.append(id)
 	_surface.mesh = null
+	_pick_positions = PackedVector3Array()
+	_pick_normals = PackedVector3Array()
+	_pick_uvs = PackedVector2Array()
+	_pick_indices = PackedInt32Array()
 	_mesh_vertices = 0
 	_mesh_triangles = 0
 	_mesh_bytes = 0
@@ -334,6 +414,12 @@ func _refresh_proxy() -> void:
 			_surface_mode = 2
 	_surface_material.set_shader_parameter("surface_mode", _surface_mode)
 	_surface.mesh = builder.finish()
+	# Retained bounded CPU geometry supports accurate holes/shape hit-testing on
+	# demand. There is no per-frame picking mesh or deformation update.
+	_pick_positions = builder.positions
+	_pick_normals = builder.normals
+	_pick_uvs = builder.uvs
+	_pick_indices = builder.indices
 	_surface.extra_cull_margin = _surface_scale
 	_surface_material.set_shader_parameter("displacement_scale", _surface_scale)
 	_surface.set_meta("source_membership", get_source_membership())

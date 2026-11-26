@@ -38,6 +38,39 @@ func _run() -> void:
 			for p in vertices:
 				finite = finite and p.is_finite()
 			_check(finite, "finite vertices for " + kind)
+	# Picking addresses the visible artistic group, including true membrane holes.
+	layer.set_parameters({"displacement": 0.0})
+	var pick_surface: MeshInstance3D = layer.get_node("SelectedArtisticProxy")
+	var pick_arrays: Array = pick_surface.mesh.surface_get_arrays(0)
+	var pick_vertices: PackedVector3Array = pick_arrays[Mesh.ARRAY_VERTEX]
+	var pick_indices: PackedInt32Array = pick_arrays[Mesh.ARRAY_INDEX]
+	var ta := pick_vertices[pick_indices[0]]
+	var tb := pick_vertices[pick_indices[1]]
+	var tc := pick_vertices[pick_indices[2]]
+	var triangle_center := (ta + tb + tc) / 3.0
+	var triangle_normal := (tb - ta).cross(tc - ta).normalized()
+	var pick_builds := int(layer.get_metrics().proxy_geometry_builds)
+	var picked := layer.ray_pick_proxy(triangle_center + triangle_normal * 4.0, -triangle_normal)
+	_check(not picked.is_empty(), "ray hits actual knot triangle")
+	if not picked.is_empty():
+		_check(picked.source_membership == expected and not bool(picked.individual_source_item), "proxy hit retains group identity without inventing a source item")
+		_check(picked.world_position.is_finite() and is_finite(float(picked.distance)), "proxy hit reports finite position and distance")
+	_check(int(layer.get_metrics().proxy_geometry_builds) == pick_builds, "ray picking does not rebuild geometry")
+	_check(layer.ray_pick_proxy(Vector3(500.0, 500.0, 500.0), Vector3.RIGHT).is_empty(), "off-proxy ray misses")
+	_check(layer.ray_pick_proxy(Vector3.ZERO, Vector3.ZERO).is_empty(), "zero-length ray is rejected")
+	layer.set_parameters({"scientific": true})
+	_check(layer.ray_pick_proxy(triangle_center + triangle_normal * 4.0, -triangle_normal).is_empty(), "scientific mode has no proxy hit")
+	layer.set_parameters({"scientific": false})
+	layer.set_visual_state({"materialisation": "membrane"})
+	_check(layer.ray_pick_proxy(Vector3(-3.045, -0.9166667, 5.0), Vector3.FORWARD).is_empty(), "ray through membrane aperture does not hit proxy bounds")
+	_check(not layer.ray_pick_proxy(Vector3(-2.784, -0.836, 5.0), Vector3.FORWARD).is_empty(), "ray hits membrane material between apertures")
+	layer.set_visual_state({"materialisation": "knot"})
+	layer.set_parameters({"displacement": 0.12})
+	layer.update_clocks({"displacement": 1.25})
+	var deformed_pick := layer.ray_pick_proxy(triangle_center + triangle_normal * 4.0, -triangle_normal)
+	_check(not deformed_pick.is_empty(), "ray query evaluates current displaced geometry")
+	if not deformed_pick.is_empty():
+		_check(bool(deformed_pick.deformation_approximate) and deformed_pick.source_membership == expected, "deformed picking reports approximation and preserves group")
 	var builds := int(layer.get_metrics().proxy_geometry_builds)
 	for i in range(120):
 		layer.set_visual_state({"node_ids": ["n:b", "n:a"], "edge_ids": ["e:ab"], "materialisation": "knot"})

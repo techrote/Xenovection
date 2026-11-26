@@ -20,9 +20,11 @@ void vertex() {
 	if (displacement > 0.0001) {
 		float envelope = 1.0;
 		if (surface_mode == 1) {
-			envelope = pow(sin(UV.x * 3.14159265359), 2.0);
+			float pin = sin(UV.x * 3.14159265359);
+			envelope = pin * pin;
 		} else if (surface_mode == 2) {
-			envelope = pow(sin(UV.x * 3.14159265359) * sin(UV.y * 3.14159265359), 2.0);
+			float pin = sin(UV.x * 3.14159265359) * sin(UV.y * 3.14159265359);
+			envelope = pin * pin;
 		}
 		vec3 k0 = vec3(1.7, 2.3, 0.9) / max(displacement_scale, 0.05);
 		vec3 k1 = vec3(-2.9, 1.4, 2.1) / max(displacement_scale, 0.05);
@@ -56,10 +58,16 @@ void fragment() {
 	if (domain_warp > 0.0001) {
 		vec3 p = local_position / max(displacement_scale, 0.05);
 		// Warp only the reflected sampling domain: no vertex or topology changes.
-		reflection = normalize(reflection + domain_warp * 0.23 * vec3(
+		vec3 warped = reflection + domain_warp * 0.23 * vec3(
 			sin(p.y * 3.1 + sky_clock * 0.17),
 			cos(p.z * 2.7 - sky_clock * 0.19),
-			sin(p.x * 2.3 + sky_clock * 0.13)));
+			sin(p.x * 2.3 + sky_clock * 0.13));
+		// At extreme allowed warp, the offset can cancel the unit reflection.
+		// Preserve the unwarped direction instead of normalizing a zero vector.
+		float warped_length_squared = dot(warped, warped);
+		if (warped_length_squared > 0.00000001) {
+			reflection = warped * inversesqrt(warped_length_squared);
+		}
 	}
 	vec3 reflected = spectral_environment(reflection);
 	if (roughness > 0.08) {

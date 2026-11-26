@@ -88,11 +88,27 @@ function Read-PngDimensions {
     return @($Width, $Height)
 }
 
+function Write-TreeEvidence {
+    param([string]$Stage)
+    $StatusText = (& git -C $RepoRoot status --porcelain --untracked-files=no | Out-String)
+    if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect source working tree' }
+    $DiffText = (& git -C $RepoRoot diff --no-ext-diff --binary | Out-String)
+    if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect source diff' }
+    $StatusText | Set-Content -Encoding utf8 (Join-Path $Evidence ($Stage + '-git-status.log'))
+    $DiffText | Set-Content -Encoding utf8 (Join-Path $Evidence ($Stage + '-git-diff.log'))
+    if ($StatusText.Trim()) {
+        Write-Host "Tracked source changes at ${Stage}:"
+        Write-Host $StatusText
+        Write-Host $DiffText.Substring(0, [Math]::Min(6000, $DiffText.Length))
+    }
+}
+
 try {
     if (-not $IsWindows) { throw 'This harness must run on native Windows.' }
     $SourceSha = (& git -C $RepoRoot rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0 -or $SourceSha -notmatch '^[0-9a-f]{40}$') { throw 'Cannot identify source revision' }
     $Qualification.source_sha = $SourceSha
+    Write-TreeEvidence -Stage 'initial'
     Invoke-Checked -Name 'prepare-runtime' -Executable 'python' -Arguments @(
         (Join-Path $RepoRoot 'tools/prepare_runtime.py'), '--runtime', $Runtime, '--evidence', $Evidence
     ) -TimeoutSeconds 1200
@@ -107,10 +123,20 @@ try {
     Invoke-Checked -Name 'historical-numerical' -Executable 'python' -Arguments @(
         (Join-Path $RepoRoot 'experiments/found-001/source/tests/verify_specimen.py')
     )
-    $HistoricalProject = Join-Path $RepoRoot 'experiments/found-001/source'
+    # Godot import is allowed to generate metadata only in a disposable extraction.
+    # The recovered archive and preserved source tree remain untouched.
+    $HistoricalArchive = Join-Path $RepoRoot 'experiments/found-001/FRANKENFIELD-FOUND-001-Godot47-FIXED.zip'
+    Assert-FileHash -Path $HistoricalArchive -Expected 'ebb3df3a271cdd2e3294d812392e4e5d03d666761d1f5ee8d5b5c90f3954d362'
+    $HistoricalCopy = Join-Path $RepoRoot 'build/historical-startup'
+    if (Test-Path $HistoricalCopy) { Remove-Item -Recurse -Force $HistoricalCopy }
+    Expand-Archive -LiteralPath $HistoricalArchive -DestinationPath $HistoricalCopy
+    $HistoricalProject = Join-Path $HistoricalCopy 'frankenfield_fieldstudy_001'
+    Assert-FileHash -Path (Join-Path $HistoricalProject 'data/synthetic_foundry.json') -Expected '745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c'
     Invoke-Checked -Name 'historical-godot-import' -Executable $Editor -Arguments @('--headless', '--path', $HistoricalProject, '--editor', '--import')
     Invoke-Checked -Name 'historical-godot-startup' -Executable $Editor -Arguments @('--headless', '--path', $HistoricalProject, '--quit-after', '10')
+    Write-TreeEvidence -Stage 'after-historical-import'
     Invoke-Checked -Name 'editor-import' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--editor', '--import')
+    Write-TreeEvidence -Stage 'after-app-import'
     $Tests = [ordered]@{
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
@@ -124,6 +150,7 @@ try {
         (Join-Path $RepoRoot 'tests/verify_source_exact.py'), '--godot', $Editor,
         '--receipt', (Join-Path $Evidence 'source-binary64-exactness.json')
     )
+    Write-TreeEvidence -Stage 'after-tests'
     Invoke-Checked -Name 'package' -Executable 'python' -Arguments @(
         (Join-Path $RepoRoot 'tools/package_evaluator.py'), '--godot', $Editor,
         '--templates', [string]$Tools.paths.templates, '--source-sha', $SourceSha,
