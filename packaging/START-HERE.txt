@@ -13,7 +13,7 @@ TRY THIS FIRST
 3. Drag a box through source nodes. Click Knot, Ribbon or Membrane.
 4. Open Optics and vary the environment, normal detail or geometric displacement.
 5. Press G to inspect exact source topology without decorative effects.
-6. Press U to return the same selected source region to hairlines.
+6. Press G again, then U, to return that selected region to moving hairlines.
 
 CONTROLS
 MMB: orbit. Shift+MMB: pan. Hold RMB: capture pointer and fly with WASD/QE.
@@ -41,7 +41,8 @@ source membership remains in its selection receipt.
 PERFORMANCE
 The footer reports wall-frame percentiles, render CPU/GPU timing where supported,
 draw calls and strands. F10 saves a fuller receipt. Profile-This-PC.cmd collects
-a reproducible 600-frame Convergence profile after warm-up with VSync disabled.
+a reproducible 600-frame Convergence profile after warm-up, requesting VSync off.
+The engine log records any driver fallback to a synchronised presentation mode.
 GPU timing on a software renderer measures that software device, not a TITAN RTX.
 The build manifest identifies the precise source revision. Owner hardware and
 subjective motion/visual acceptance remain separate from hosted qualification.

@@ -62,8 +62,41 @@ func _run() -> void:
 	_check(layer.ray_pick_proxy(triangle_center + triangle_normal * 4.0, -triangle_normal).is_empty(), "scientific mode has no proxy hit")
 	layer.set_parameters({"scientific": false})
 	layer.set_visual_state({"materialisation": "membrane"})
-	_check(layer.ray_pick_proxy(Vector3(-3.045, -0.9166667, 5.0), Vector3.FORWARD).is_empty(), "ray through membrane aperture does not hit proxy bounds")
-	_check(not layer.ray_pick_proxy(Vector3(-2.784, -0.836, 5.0), Vector3.FORWARD).is_empty(), "ray hits membrane material between apertures")
+	var lace_arrays: Array = pick_surface.mesh.surface_get_arrays(0)
+	var lace_vertices: PackedVector3Array = lace_arrays[Mesh.ARRAY_VERTEX]
+	var lace_normals: PackedVector3Array = lace_arrays[Mesh.ARRAY_NORMAL]
+	var aperture_center := Vector3.ZERO
+	var aperture_normal := Vector3.ZERO
+	for i in range(32):
+		aperture_center += lace_vertices[i] / 32.0
+		aperture_normal += lace_normals[i]
+	aperture_normal = aperture_normal.normalized()
+	_check(layer.ray_pick_proxy(aperture_center + aperture_normal * 4.0, -aperture_normal).is_empty(), "ray through membrane aperture does not hit proxy bounds")
+	var lace_indices: PackedInt32Array = lace_arrays[Mesh.ARRAY_INDEX]
+	var lace_uvs: PackedVector2Array = lace_arrays[Mesh.ARRAY_TEX_UV]
+	var material_fraction := 0.0
+	for i in range(0, lace_indices.size(), 3):
+		var ua := lace_uvs[lace_indices[i]]
+		var ub := lace_uvs[lace_indices[i + 1]]
+		var uc := lace_uvs[lace_indices[i + 2]]
+		material_fraction += absf((ub - ua).cross(uc - ua)) * 0.5
+	_check(material_fraction > 0.15 and material_fraction < 0.35, "membrane remains open lace rather than a solid plate")
+	var shared_uvs := {}
+	var maximum_seam := 0.0
+	for i in range(lace_uvs.size()):
+		var key := Vector2i(roundi(lace_uvs[i].x * 1000000.0), roundi(lace_uvs[i].y * 1000000.0))
+		if shared_uvs.has(key):
+			maximum_seam = maxf(maximum_seam, lace_vertices[i].distance_to(shared_uvs[key]))
+		else:
+			shared_uvs[key] = lace_vertices[i]
+	_check(maximum_seam < 0.0001, "shared membrane cell boundaries remain continuous")
+	print("OPTICAL_LACE ", JSON.stringify({"apertures": 216, "material_uv_fraction": material_fraction, "maximum_shared_boundary_error": maximum_seam}))
+	var la := lace_vertices[lace_indices[0]]
+	var lb := lace_vertices[lace_indices[1]]
+	var lc := lace_vertices[lace_indices[2]]
+	var lace_center := (la + lb + lc) / 3.0
+	var lace_normal := (lb - la).cross(lc - la).normalized()
+	_check(not layer.ray_pick_proxy(lace_center + lace_normal * 0.25, -lace_normal).is_empty(), "ray hits delicate membrane ligament")
 	layer.set_visual_state({"materialisation": "knot"})
 	layer.set_parameters({"displacement": 0.12})
 	layer.update_clocks({"displacement": 1.25})

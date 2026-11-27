@@ -20,6 +20,8 @@ $Qualification = [ordered]@{
     platform = [System.Runtime.InteropServices.RuntimeInformation]::OSDescription
     physical_gpu_qualified = $false
     scope = 'Native Windows executable, Vulkan Forward+ with pinned Mesa software rendering'
+    vsync_requested = 'Disabled; any driver fallback is recorded per scene from the engine log'
+    profile_scope = 'Short software Windows qualification: 60 measured frames after 60 warm-up frames; screenshot readback precedes measurement'
     owner_titan_rtx_qualification = 'Pending owner hardware execution and visual acceptance'
     steps = $Steps
     scenes = @()
@@ -219,11 +221,12 @@ try {
         $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
         Invoke-Checked -Name ($Preset + '-playable-vulkan') -Executable $Application -Arguments (
             $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel',
-                '--warmup=15', '--profile-frames=60', "--profile=$ProfilePath",
+                '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath",
                 '--capture-frame=45', "--capture=$CapturePath")
         ) -TimeoutSeconds 240 -EngineLog $EngineLog
         $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
         $Dimensions = Read-PngDimensions -Path $CapturePath
+        $VSyncFallback = (Get-Content -Raw -LiteralPath $EngineLog) -match 'Falling back to V-Sync mode Enabled'
         if ($Profile.render_target_pixels[0] -ne $Dimensions[0] -or $Profile.render_target_pixels[1] -ne $Dimensions[1]) {
             throw "Rendered pixel dimensions disagree with the profile: $Preset"
         }
@@ -231,17 +234,38 @@ try {
             $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
             -not $Profile.platform.software_device) { throw "Unexpected graphics platform in $Preset" }
         if ($Profile.samples -lt 60 -or $Profile.draw_calls_3d -lt 1 -or $Profile.wall_frame.p50_ms -le 0 -or
-            -not $Profile.source_unchanged -or $Profile.build.source_sha -ne $SourceSha) {
+            -not $Profile.source_unchanged -or $Profile.build.source_sha -ne $SourceSha -or $Profile.preset -ne $Preset) {
             throw "Incomplete or inconsistent packaged execution: $Preset"
         }
-        if ($Preset -eq 'scientific' -and (-not $Profile.scientific -or $Profile.filaments.secondary_fibres -ne 0)) {
-            throw 'Scientific profile retained decorative fibres'
+        if ($Preset -eq 'flow') {
+            if ($Profile.source.source_id -ne 'xenovection-spatial-flow-v1' -or $Profile.source.node_count -ne 4608 -or $Profile.source.edge_count -ne 6144) {
+                throw 'Packaged spatial-flow source identity or topology is incorrect'
+            }
+        } elseif ($Profile.source.revision -ne ('sha256:' + $PackageReceipt.build.specimen_sha256) -or
+            -not $Profile.source.historical_custody_verified -or $Profile.source.node_count -ne 288 -or $Profile.source.edge_count -ne 11520) {
+            throw "Packaged historical source identity or topology is incorrect: $Preset"
+        }
+        if ($Preset -eq 'scientific' -and (-not $Profile.scientific -or $Profile.filaments.secondary_fibres -ne 0 -or
+            $Profile.filaments.primary_edges -ne 11520 -or $Profile.filaments.segments_per_strand -ne 1 -or
+            $Profile.optical.optical_visible -or $Profile.optical.sky_visible)) {
+            throw 'Scientific profile did not expose exact primary topology with decorative passes disabled'
+        }
+        if ((@('filaments', 'flow') -contains $Preset) -and $Profile.filaments.secondary_fibres -lt 1) {
+            throw "Kinetic preset has no decorative fibre pass: $Preset"
+        }
+        if ((@('optical', 'hybrid', 'membrane') -contains $Preset) -and (-not $Profile.optical.optical_visible -or
+            $Profile.optical.proxy_source_edges -ne $Profile.selection.edge_ids.Count)) {
+            throw "Materialised proxy lost selected source membership: $Preset"
+        }
+        if ($Preset -eq 'membrane' -and -not $Profile.optical.surface_translucent) {
+            throw 'Membrane qualification did not exercise the alpha material variant'
         }
         $Qualification.scenes += [ordered]@{
             preset = $Preset; status = 'EXECUTED'; capture = (Split-Path -Leaf $CapturePath)
             capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
             capture_dimensions = $Dimensions; profile = (Split-Path -Leaf $ProfilePath)
             samples = $Profile.samples; device = $Profile.platform.device
+            presentation = $(if ($VSyncFallback) { 'VSync Enabled: driver fallback despite Disabled request' } else { 'Disabled requested; no driver fallback reported' })
             wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
             draw_calls_3d = $Profile.draw_calls_3d; visible_strands = $Profile.filaments.visible_strands
             source_unchanged = $Profile.source_unchanged

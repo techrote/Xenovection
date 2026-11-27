@@ -343,10 +343,17 @@ func _process(delta: float) -> void:
 		get_tree().quit(0)
 
 func evidence_context() -> Dictionary:
+	# Canvas stretching can make both visible_rect and ViewportTexture.size logical.
+	# Read actual pixels only when emitting a receipt, after the sampled frames.
+	var rendered_pixels: Array = [0, 0]
+	if DisplayServer.get_name() != "headless":
+		var rendered_image: Image = get_viewport().get_texture().get_image()
+		if rendered_image != null and not rendered_image.is_empty():
+			rendered_pixels = [rendered_image.get_width(), rendered_image.get_height()]
 	return {"build": _build, "preset": presets[preset_index].id, "scientific": scientific,
 		"viewport": [get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y],
-		"viewport_scope": "Logical canvas coordinates; render_target_pixels is the actual texture size",
-		"render_target_pixels": [get_viewport().get_texture().get_width(), get_viewport().get_texture().get_height()],
+		"viewport_scope": "Logical canvas coordinates; render_target_pixels is an actual image readback outside the frame samples",
+		"render_target_pixels": rendered_pixels,
 		"hud_visible": not ui.clean_view, "control_panel_visible": ui.rail.visible and not ui.clean_view,
 		"source": dataset.manifest, "selection": selection.get_reference(),
 		"filaments": filaments.get_metrics(), "optical": optical.get_metrics(),
@@ -360,7 +367,8 @@ func _update_performance() -> void:
 	var gpu_text: String = "n/a"
 	if metric.gpu_timing_available:
 		gpu_text = "%.2f ms" % metric.render_gpu.p50_ms
-	ui.performance_label.text = "%.1f FPS   ·   frame p50 / p95  %.1f / %.1f ms   ·   CPU render  %.2f ms   ·   GPU  %s   ·   %d draws   ·   %s strands" % [metric.fps_from_mean_frame, metric.wall_frame.p50_ms, metric.wall_frame.p95_ms, metric.render_cpu.p50_ms, gpu_text, metric.draw_calls_3d, str(int(fm.get("visible_strands", 0)))]
+	var device_label: String = "Software device" if metric.platform.software_device else "GPU"
+	ui.performance_label.text = "%.1f FPS   ·   frame p50 / p95  %.1f / %.1f ms   ·   CPU render  %.2f ms   ·   %s  %s   ·   %d draws   ·   %s strands" % [metric.fps_from_mean_frame, metric.wall_frame.p50_ms, metric.wall_frame.p95_ms, metric.render_cpu.p50_ms, device_label, gpu_text, metric.draw_calls_3d, str(int(fm.get("visible_strands", 0)))]
 
 func _selection_changed() -> void:
 	if dataset.is_empty():
@@ -371,7 +379,7 @@ func _selection_changed() -> void:
 	if not is_instance_valid(ui.selection_label):
 		return
 	var kind: String = " · %s proxy (artistic)" % state.materialisation if state.materialisation != "none" else ""
-	ui.selection_label.text = "%d exact nodes · %d exact edges%s" % [state.node_ids.size(), state.edge_ids.size(), kind]
+	ui.selection_label.text = "Selected: %d exact nodes · %d exact edges%s" % [state.node_ids.size(), state.edge_ids.size(), kind]
 	ui.measurement_label.text = "Source IDs are unchanged by phase, fibres, materials and displacement."
 	if state.node_ids.size() == 1:
 		var node: Dictionary = source.get_node(state.node_ids[0])

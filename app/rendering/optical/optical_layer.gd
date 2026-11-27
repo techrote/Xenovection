@@ -510,38 +510,50 @@ func _build_ribbons(builder: SurfaceBuilder, edges: Array[String], anchors: Pack
 		_represented_ribbons += 1
 
 func _build_membrane(builder: SurfaceBuilder, center: Vector3, extent: Vector3) -> void:
-	const COLUMNS := 8
-	const ROWS := 6
+	const COLUMNS := 18
+	const ROWS := 12
 	const ARC_STEPS := 32
-	const RADIAL_STEPS := 4
+	const RADIAL_STEPS := 2
 	var width := clampf(maxf(extent.x, extent.z) * 0.58, 1.5, 7.0)
 	var height := clampf(extent.y * 0.55, 1.1, 5.0)
-	# Each cell joins a smooth aperture to its square outer boundary. Neighbouring
-	# cells meet exactly, avoiding coarse discarded-quad/staircase hole edges.
+	# A delicate continuous lace: large rounded apertures leave narrow ligaments.
+	# Only each inner rim varies; outer cell boundaries use one shared UV map.
+	# Domain bending is smooth and static, so animation preserves connectivity.
 	for column in range(COLUMNS):
 		for row in range(ROWS):
 			var base := builder.positions.size()
-			var aperture := 0.27 + 0.035 * sin(float(column * 7 + row * 11))
+			var seed := float(column * 7 + row * 11)
+			var aperture := 0.905 + 0.015 * sin(seed)
 			for radial in range(RADIAL_STEPS + 1):
 				var blend := float(radial) / RADIAL_STEPS
 				for arc in range(ARC_STEPS + 1):
 					var angle := TAU * float(arc) / ARC_STEPS
 					var direction := Vector2(cos(angle), sin(angle))
 					var outer := 0.5 / maxf(absf(direction.x), absf(direction.y))
-					var inner := aperture * (1.0 + 0.07 * sin(angle * 3.0 + float(column + row)))
+					var rounded := 0.5 / pow(pow(absf(direction.x), 3.2) + pow(absf(direction.y), 3.2), 1.0 / 3.2)
+					var asymmetry := 1.0 + 0.045 * sin(angle * 3.0 + seed) + 0.03 * cos(angle * 5.0 - seed * 0.71)
+					var inner := minf(rounded * aperture * asymmetry, outer * 0.96)
 					var local := direction * lerpf(inner, outer, blend) + Vector2(0.5, 0.5)
-					var u := (float(column) + local.x) / COLUMNS
-					var v := (float(row) + local.y) / ROWS
-					var x := (u * 2.0 - 1.0) * width
-					var y := (v * 2.0 - 1.0) * height
-					var z := _surface_scale * (0.16 * sin(u * TAU * 1.5) * sin(v * PI) + 0.09 * cos(v * TAU * 2.0))
-					var dzdx := _surface_scale * 0.16 * TAU * 1.5 * cos(u * TAU * 1.5) * sin(v * PI) / (2.0 * width)
-					var dzdy := _surface_scale * (0.16 * PI * sin(u * TAU * 1.5) * cos(v * PI) - 0.09 * TAU * 2.0 * sin(v * TAU * 2.0)) / (2.0 * height)
-					builder.vertex(center + Vector3(x, y, z), Vector3(-dzdx, -dzdy, 1.0).normalized(), Vector2(u, v))
+					var uv := Vector2((float(column) + local.x) / COLUMNS, (float(row) + local.y) / ROWS)
+					var p := _membrane_domain(uv, width, height)
+					var du := _membrane_domain(uv + Vector2(0.0001, 0.0), width, height) - _membrane_domain(uv - Vector2(0.0001, 0.0), width, height)
+					var dv := _membrane_domain(uv + Vector2(0.0, 0.0001), width, height) - _membrane_domain(uv - Vector2(0.0, 0.0001), width, height)
+					builder.vertex(center + p, du.cross(dv).normalized(), uv)
 			for radial in range(RADIAL_STEPS):
 				for arc in range(ARC_STEPS):
 					var a := base + radial * (ARC_STEPS + 1) + arc
 					builder.quad(a, a + 1, a + ARC_STEPS + 1, a + ARC_STEPS + 2)
+
+func _membrane_domain(uv: Vector2, width: float, height: float) -> Vector3:
+	var u := uv.x
+	var v := uv.y
+	var sx := u * 2.0 - 1.0
+	var sy := v * 2.0 - 1.0
+	# Curved outline and smooth uneven cell spacing remove the manufactured grid.
+	var x := width * (sx * (1.0 - 0.20 * sy * sy) + 0.055 * sin(v * TAU) + 0.018 * sin(u * TAU * 2.0 + v * 3.1) + 0.012 * sin(v * TAU * 6.0 + u * 2.1))
+	var y := height * (sy * (0.94 + 0.06 * cos(u * TAU)) + 0.10 * sin(u * TAU + 0.4) + 0.018 * sin(v * TAU * 2.0 - u * 2.7) + 0.012 * sin(u * TAU * 9.0 + v * 2.3))
+	var z := _surface_scale * (0.27 * sin(u * TAU * 1.25) * sin(v * PI) + 0.12 * cos(v * TAU * 1.5) + 0.16 * sx * sy)
+	return Vector3(x, y, z)
 
 func _rebuild_palette() -> void:
 	var stops: Array[Color]

@@ -52,6 +52,8 @@ python tests/verify_source_exact.py --godot godot
 
 The historical numerical verifier requires NumPy. The renderer folders contain focused invariant checks; `tests/gui_input_probe.gd` exercises real graphical input. `tools/package_evaluator.py` exports an exact clean source revision using matching official Windows templates. `tools/windows_evaluator.ps1` verifies the archive and runs the extracted Windows executable under explicitly identified software Vulkan; test graphics libraries stay outside the owner package.
 
+[Development measurements and receipts](evidence/found-002/README.md) identify the tested revisions, density sweep, disabled-pass costs, exact numerical comparison and adversarial interaction checks. The final Actions artifact separately records the packaged Windows source SHA, native graphical captures and software-renderer qualification.
+
 ## Founding architecture
 
 | Record | Contents |

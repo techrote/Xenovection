@@ -1,5 +1,5 @@
 extends RefCounted
-## Complete deterministic starting points, sharing one source and one renderer.
+## Deterministic starting points sharing one source contract and rendering system.
 
 static func all() -> Array:
 	return [
@@ -16,7 +16,7 @@ static func all() -> Array:
 			"materialisation": "knot", "band": [2, 8, 12], "focus": true, "distance": 5.0, "yaw": 0.34, "pitch": 0.24, "density": 48, "modulation": true},
 		{"id": "membrane", "title": "04  Weather membrane", "description": "Normal, domain and geometric weather are independent",
 			"filament": {"opacity": 0.12, "line_width_px": 0.42, "fibres": 0, "selection_fade": 0.22},
-			"optical": {"palette": "ember", "sky_intensity": 2.3, "sky_frequency": Vector2(0.52, 0.26), "sky_radius": 0.2, "sky_diagonal": 0.48, "sky_warp": 0.4, "sky_contrast": 2.65, "normal_strength": 0.34, "displacement": 0.32, "domain_warp": 0.15, "background_strength": 0.006, "surface_opacity": 0.72},
+			"optical": {"palette": "pearl", "sky_intensity": 1.4, "sky_frequency": Vector2(1.35, 0.7), "sky_radius": 0.55, "sky_diagonal": 0.7, "sky_warp": 0.2, "sky_contrast": 1.5, "roughness": 0.23, "metallic": 0.9, "normal_strength": 0.18, "displacement": 0.15, "domain_warp": 0.10, "background_strength": 0.004, "surface_opacity": 0.62},
 			"materialisation": "membrane", "band": [2, 8, 14], "focus": true, "distance": 7.5, "yaw": 0.30, "pitch": 0.20, "density": 48, "modulation": true},
 		{"id": "scientific", "title": "05  Scientific / no FX", "description": "Exact coefficients and IDs · all decoration disabled",
 			"filament": {"opacity": 0.24, "line_width_px": 0.55, "fibres": 0},

@@ -1,0 +1,546 @@
+{
+	"application_update": {
+		"max_ms": 2.166,
+		"mean_ms": 0.545346666666666,
+		"p50_ms": 0.441,
+		"p95_ms": 1.434
+	},
+	"build": {
+		"godot": "4.7.2.stable.official.ed1daf0bf",
+		"primary_renderer": "Vulkan Forward+",
+		"repository": "https://github.com/techrote/Xenovection",
+		"schema": "xenovection.build.v1",
+		"source_sha": "ce694fce2d98530e09a069007d81d34c80f950a1",
+		"specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c",
+		"status": "Draft/HOLD",
+		"tree_sha": "a380dfd6c96a2ac50f2a2ff8059b629a72b485a9"
+	},
+	"camera": {
+		"distance": 15.0,
+		"fov": 48.0,
+		"pitch": 0.2,
+		"pivot": {
+			"_type": "v3",
+			"value": [
+				0.0,
+				0.0,
+				0.0
+			]
+		},
+		"position": {
+			"_type": "v3",
+			"value": [
+				6.39442777633667,
+				2.9800398349762,
+				13.2374715805054
+			]
+		},
+		"yaw": 0.45
+	},
+	"clocks": {
+		"displacement": 26.0,
+		"filament": 26.0,
+		"normal": 26.0,
+		"palette": 26.0,
+		"sky": 26.0
+	},
+	"draw_calls_3d": 2,
+	"draw_calls_total": 2,
+	"duration_seconds": 203.134714,
+	"engine_static_bytes": 358222438,
+	"engine_video_bytes": 70229152,
+	"filaments": {
+		"active_segments": 1966080,
+		"active_triangles": 3932160,
+		"geometry_bytes_estimate": 5294360,
+		"instance_buffer_bytes_estimate": 5292032,
+		"instance_rebuild_count": 3,
+		"instance_upload_count": 9,
+		"invalid_or_degenerate_edges": 0,
+		"last_instance_rebuild_ms": 358.014,
+		"memory_kind": "estimate: instance buffers + shared ribbon; excludes engine, textures and driver",
+		"mesh_build_count": 2,
+		"primary_edges": 81920,
+		"scientific": false,
+		"secondary_fibres": 0,
+		"segments_per_strand": 24,
+		"source_edges": 81920,
+		"source_nodes": 768,
+		"source_revision": "sha256:23e729c78066c7fde22f5c47b9d344c0dba042f96c417f6685477a1fe17b4105",
+		"submitted_passes": 2,
+		"uniform_update_count": 390,
+		"visible_nodes": 768,
+		"visible_strands": 81920
+	},
+	"fps_from_mean_frame": 0.738429402013963,
+	"gpu_timing_available": true,
+	"memory_scope": "Engine allocations/proxies, not process RSS or total driver VRAM",
+	"modulation": {
+		"clocks": {
+			"displacement": {
+				"paused": false,
+				"rate": 1.0,
+				"time": 26.0
+			},
+			"filament": {
+				"paused": false,
+				"rate": 1.0,
+				"time": 26.0
+			},
+			"normal": {
+				"paused": false,
+				"rate": 1.0,
+				"time": 26.0
+			},
+			"palette": {
+				"paused": false,
+				"rate": 1.0,
+				"time": 26.0
+			},
+			"sky": {
+				"paused": false,
+				"rate": 1.0,
+				"time": 26.0
+			}
+		},
+		"enabled": true,
+		"paused": false,
+		"routes": [
+			{
+				"amplitude": 0.023,
+				"enabled": true,
+				"id": "breath-braid",
+				"mask": 1.0,
+				"operation": "add",
+				"smoothing": 0.18,
+				"source": "breath",
+				"target": "filament.braid_radius"
+			},
+			{
+				"amplitude": 0.15,
+				"enabled": true,
+				"id": "breath-field",
+				"mask": 1.0,
+				"operation": "add",
+				"smoothing": 0.18,
+				"source": "breath",
+				"target": "optical.sky_warp"
+			},
+			{
+				"amplitude": 0.28,
+				"enabled": true,
+				"id": "counter-resonance",
+				"mask": 1.0,
+				"operation": "multiply",
+				"smoothing": 0.0,
+				"source": "counterphase",
+				"target": "filament.resonance"
+			},
+			{
+				"amplitude": {
+					"_type": "v2",
+					"value": [
+						0.140000000596046,
+						-0.100000001490116
+					]
+				},
+				"enabled": true,
+				"id": "spectral-drift",
+				"mask": 1.0,
+				"operation": "add",
+				"smoothing": 0.0,
+				"source": "breath",
+				"target": "optical.sky_frequency"
+			},
+			{
+				"amplitude": {
+					"_type": "color",
+					"value": [
+						0.0350000001490116,
+						0.0179999992251396,
+						-0.0149999996647239,
+						0.0
+					]
+				},
+				"enabled": true,
+				"id": "material-breath",
+				"mask": 1.0,
+				"operation": "add",
+				"smoothing": 0.0,
+				"source": "breath",
+				"target": "optical.material_tint"
+			},
+			{
+				"amplitude": 0.55,
+				"enabled": true,
+				"id": "sample-phase",
+				"mask": 0.0,
+				"operation": "add",
+				"smoothing": 0.0,
+				"source": "sample",
+				"target": "filament.phase_speed"
+			},
+			{
+				"amplitude": 0.2,
+				"enabled": true,
+				"id": "sample-field",
+				"mask": 0.0,
+				"operation": "add",
+				"smoothing": 0.0,
+				"source": "sample",
+				"target": "optical.sky_warp"
+			}
+		],
+		"schema": "xenovection.modulation.v1",
+		"sources": {
+			"breath": {
+				"clock": "sky",
+				"frequency": 0.08,
+				"phase": 0.0,
+				"type": "lfo",
+				"waveform": "sine"
+			},
+			"counterphase": {
+				"clock": "filament",
+				"frequency": 0.1096,
+				"phase": 0.25,
+				"type": "lfo",
+				"waveform": "sine"
+			},
+			"sample": {
+				"type": "manual",
+				"value": 0.0
+			}
+		},
+		"targets": {
+			"filament.adaptive_coverage": {
+				"base": 1.0,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.braid_radius": {
+				"base": 0.07,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.braid_turns": {
+				"base": 2.0,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": 0.0
+			},
+			"filament.coverage": {
+				"base": 1.0,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.intensity": {
+				"base": 0.9,
+				"kind": "scalar",
+				"maximum": 4.0,
+				"minimum": 0.0
+			},
+			"filament.line_width_px": {
+				"base": 0.5,
+				"kind": "scalar",
+				"maximum": 6.0,
+				"minimum": 0.0500000007450581
+			},
+			"filament.node_radius": {
+				"base": 0.012,
+				"kind": "scalar",
+				"maximum": 0.100000001490116,
+				"minimum": 0.0020000000949949
+			},
+			"filament.opacity": {
+				"base": 0.19,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.palette_amount": {
+				"base": 0.1,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.palette_phase": {
+				"base": 0.0,
+				"kind": "scalar",
+				"maximum": 10000.0,
+				"minimum": -10000.0
+			},
+			"filament.phase_frequency": {
+				"base": 2.4,
+				"kind": "scalar",
+				"maximum": 16.0,
+				"minimum": 0.0
+			},
+			"filament.phase_speed": {
+				"base": 1.1,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": -8.0
+			},
+			"filament.resonance": {
+				"base": 0.04,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.selection_fade": {
+				"base": 0.28,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.turbulence": {
+				"base": 0.025,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"filament.wave_amplitude": {
+				"base": 0.15,
+				"kind": "scalar",
+				"maximum": 2.0,
+				"minimum": 0.0
+			},
+			"filament.wave_frequency": {
+				"base": 1.5,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": 0.0
+			},
+			"optical.background_strength": {
+				"base": 0.006,
+				"kind": "scalar",
+				"maximum": 0.300000011920929,
+				"minimum": 0.0
+			},
+			"optical.displacement": {
+				"base": 0.12,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"optical.domain_warp": {
+				"base": 0.12,
+				"kind": "scalar",
+				"maximum": 3.0,
+				"minimum": 0.0
+			},
+			"optical.material_tint": {
+				"base": {
+					"_type": "color",
+					"value": [
+						0.319999992847443,
+						0.589999973773956,
+						0.639999985694885,
+						1.0
+					]
+				},
+				"kind": "colour",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"optical.metallic": {
+				"base": 0.92,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0
+			},
+			"optical.normal_strength": {
+				"base": 0.24,
+				"kind": "scalar",
+				"maximum": 2.0,
+				"minimum": 0.0
+			},
+			"optical.palette_phase": {
+				"base": 0.0,
+				"kind": "scalar",
+				"maximum": 1000.0,
+				"minimum": -1000.0
+			},
+			"optical.roughness": {
+				"base": 0.19,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.0199999995529652
+			},
+			"optical.sky_contrast": {
+				"base": 1.7,
+				"kind": "scalar",
+				"maximum": 5.0,
+				"minimum": 0.100000001490116
+			},
+			"optical.sky_diagonal": {
+				"base": 0.65,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": -8.0
+			},
+			"optical.sky_frequency": {
+				"base": {
+					"_type": "v2",
+					"value": [
+						1.60000002384186,
+						2.09999990463257
+					]
+				},
+				"kind": "vector2",
+				"maximum": 16.0,
+				"minimum": -16.0
+			},
+			"optical.sky_intensity": {
+				"base": 2.3,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": 0.0
+			},
+			"optical.sky_pan": {
+				"base": {
+					"_type": "v2",
+					"value": [
+						0.0,
+						0.0
+					]
+				},
+				"kind": "vector2",
+				"maximum": 100.0,
+				"minimum": -100.0
+			},
+			"optical.sky_radius": {
+				"base": 1.7,
+				"kind": "scalar",
+				"maximum": 12.0,
+				"minimum": 0.0
+			},
+			"optical.sky_rotation": {
+				"base": 0.0,
+				"kind": "scalar",
+				"maximum": 1000.0,
+				"minimum": -1000.0
+			},
+			"optical.sky_speed": {
+				"base": 0.55,
+				"kind": "scalar",
+				"maximum": 8.0,
+				"minimum": -8.0
+			},
+			"optical.sky_warp": {
+				"base": 0.38,
+				"kind": "scalar",
+				"maximum": 3.0,
+				"minimum": 0.0
+			},
+			"optical.surface_opacity": {
+				"base": 1.0,
+				"kind": "scalar",
+				"maximum": 1.0,
+				"minimum": 0.100000001490116
+			}
+		}
+	},
+	"optical": {
+		"environment_method": "analytical reflected direction; no dynamic cubemap",
+		"optical_visible": false,
+		"proxy_clock_updates": 0,
+		"proxy_geometry_builds": 0,
+		"proxy_kind": "none",
+		"proxy_mesh_bytes_estimate": 0,
+		"proxy_ribbon_budget": 96,
+		"proxy_ribbons_drawn": 0,
+		"proxy_source_edges": 0,
+		"proxy_source_nodes": 0,
+		"proxy_triangles": 0,
+		"proxy_vertices": 0,
+		"proxy_visible_source_edges": 0,
+		"proxy_visible_source_nodes": 0,
+		"sky_visible": false,
+		"surface_translucent": false,
+		"topology_modified": false
+	},
+	"platform": {
+		"api": "1.4.305",
+		"device": "llvmpipe (LLVM 19.1.7, 256 bits)",
+		"display": "X11",
+		"driver": "vulkan",
+		"godot": "4.7.2-stable (official)",
+		"headless": false,
+		"os": "Linux",
+		"rendering_method": "forward_plus",
+		"software_device": true
+	},
+	"preset": "filaments",
+	"primitive_count_scope": "Visible 3D viewport; UI canvas excluded",
+	"render_cpu": {
+		"max_ms": 0.749000017166138,
+		"mean_ms": 0.240246665859222,
+		"p50_ms": 0.201999994397163,
+		"p95_ms": 0.512999999165535
+	},
+	"render_gpu": {
+		"max_ms": 1517.03894042969,
+		"mean_ms": 1343.46459391276,
+		"p50_ms": 1338.74499511719,
+		"p95_ms": 1426.56396484375
+	},
+	"rendered_primitives": 3993600,
+	"sample_replay": {
+		"coalesced_samples": 0,
+		"cursor": 0,
+		"duration_seconds": 12.0,
+		"enabled": true,
+		"maximum_samples_per_frame": 256,
+		"samples": 1444,
+		"streams": 4
+	},
+	"samples": 150,
+	"schema": "xenovection.performance.v1",
+	"scientific": false,
+	"selection": {
+		"coordinate_mapping": "layered-orbits-v1",
+		"edge_ids": [],
+		"node_ids": [],
+		"projection_revision": "sha256:bda772b2bb2699fab9f2e71a7510e83115f8f298f29dfd6f04245ba19cf91b40",
+		"schema": "xenovection.selection.v1",
+		"selection_origin": "exact-listed-elements",
+		"selection_semantics": "exact-listed-elements",
+		"source_id": "found-002-synthetic-128",
+		"source_revision": "sha256:23e729c78066c7fde22f5c47b9d344c0dba042f96c417f6685477a1fe17b4105",
+		"upstream_revision": ""
+	},
+	"source": {
+		"content_sha256": "bda772b2bb2699fab9f2e71a7510e83115f8f298f29dfd6f04245ba19cf91b40",
+		"coordinate_mapping": "layered-orbits-v1",
+		"description": "Deterministic six-layer tanh specimen; new FOUND-002 synthesis, not the historical archive",
+		"edge_count": 81920,
+		"node_count": 768,
+		"positions": "derived visual projection; not measured physical positions",
+		"projection_revision": "sha256:bda772b2bb2699fab9f2e71a7510e83115f8f298f29dfd6f04245ba19cf91b40",
+		"read_only": true,
+		"revision": "sha256:23e729c78066c7fde22f5c47b9d344c0dba042f96c417f6685477a1fe17b4105",
+		"revision_basis": "Scientific source values and topology; projection is separately hashed",
+		"schema": "xenovection.source.v1",
+		"source_id": "found-002-synthetic-128",
+		"source_kind": "synthetic",
+		"upstream_revision": ""
+	},
+	"source_unchanged": true,
+	"timestamp": "2026-11-26T23:52:55",
+	"total_frames": 150,
+	"viewport": [
+		1440.0,
+		900.0
+	],
+	"wall_frame": {
+		"max_ms": 1527.18,
+		"mean_ms": 1354.2256,
+		"p50_ms": 1349.647,
+		"p95_ms": 1434.523
+	}
+}
