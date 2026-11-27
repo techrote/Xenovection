@@ -76,7 +76,7 @@ func snapshot(extra: Dictionary = {}) -> Dictionary:
 		"schema": "xenovection.performance.v1", "platform": _metadata,
 		"samples": _count, "total_frames": _total_frames,
 		"duration_seconds": float(Time.get_ticks_usec() - _first_usec) / 1000000.0,
-		"fps_from_mean_frame": 1000.0 / maxf(wall.mean_ms, 0.0001),
+		"fps_from_mean_frame": 1000.0 / wall.mean_ms if _count > 0 and wall.mean_ms > 0.0 else 0.0,
 		"wall_frame": wall, "render_cpu": cpu,
 		"gpu_timing_available": gpu.mean_ms > 0.0 and not _metadata.headless,
 		"render_gpu": gpu if gpu.mean_ms > 0.0 and not _metadata.headless else null,

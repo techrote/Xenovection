@@ -363,6 +363,9 @@ func evidence_context() -> Dictionary:
 
 func _update_performance() -> void:
 	var metric: Dictionary = recorder.snapshot()
+	if int(metric.samples) == 0:
+		ui.performance_label.text = "Measuring frame times…"
+		return
 	var fm: Dictionary = filaments.get_metrics()
 	var gpu_text: String = "n/a"
 	if metric.gpu_timing_available:
