@@ -386,6 +386,10 @@ func _refresh_proxy() -> void:
 	_mesh_triangles = 0
 	_mesh_bytes = 0
 	_represented_ribbons = 0
+	# Metadata follows the new exact membership even when no mesh will be built.
+	_surface.set_meta("source_membership", get_source_membership())
+	_surface.set_meta("represented_membership", get_represented_membership())
+	_surface.set_meta("scientific_geometry", false)
 	if kind == "none" or (_represented_node_ids.is_empty() and _represented_edge_ids.is_empty()):
 		_apply_visibility()
 		return
@@ -422,9 +426,6 @@ func _refresh_proxy() -> void:
 	_pick_indices = builder.indices
 	_surface.extra_cull_margin = _surface_scale
 	_surface_material.set_shader_parameter("displacement_scale", _surface_scale)
-	_surface.set_meta("source_membership", get_source_membership())
-	_surface.set_meta("represented_membership", get_represented_membership())
-	_surface.set_meta("scientific_geometry", false)
 	_mesh_vertices = builder.positions.size()
 	_mesh_triangles = builder.indices.size() / 3
 	_mesh_bytes = builder.positions.size() * 32 + builder.indices.size() * 4

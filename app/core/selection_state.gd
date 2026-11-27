@@ -36,6 +36,24 @@ func bind_dataset(dataset: Dictionary) -> void:
 		_state = _empty_state()
 		_undo.clear()
 		_redo.clear()
+	# An ordinary adapter may legitimately repeat a declared upstream revision.
+	# Validate membership against every new snapshot instead of trusting that label.
+	var retained_nodes: Array = []
+	var retained_edges: Array = []
+	for id in _state.node_ids:
+		if _nodes.has(id):
+			retained_nodes.append(id)
+	for id in _state.edge_ids:
+		if _edges.has(id):
+			retained_edges.append(id)
+	_state.node_ids = retained_nodes
+	_state.edge_ids = retained_edges
+	if retained_nodes.is_empty() and retained_edges.is_empty():
+		_state.materialisation = "none"
+	# Drop operations that refer to removed elements; coordinate-only remaps keep
+	# all valid membership and history. Undo must never resurrect stale source IDs.
+	_undo = _undo.filter(_state_ids_exist)
+	_redo = _redo.filter(_state_ids_exist)
 	changed.emit()
 
 
@@ -201,10 +219,12 @@ func get_reference() -> Dictionary:
 func get_selected_points() -> PackedVector3Array:
 	var indices: Dictionary = {}
 	for id in _state.node_ids:
-		indices[_nodes[id].index] = true
+		if _nodes.has(id):
+			indices[_nodes[id].index] = true
 	for id in _state.edge_ids:
-		indices[_edges[id].from_index] = true
-		indices[_edges[id].to_index] = true
+		if _edges.has(id):
+			indices[_edges[id].from_index] = true
+			indices[_edges[id].to_index] = true
 	var points := PackedVector3Array()
 	for index in indices:
 		points.append(_dataset.nodes[index].position)
@@ -231,6 +251,16 @@ func redo() -> bool:
 
 func get_history_counts() -> Vector2i:
 	return Vector2i(_undo.size(), _redo.size())
+
+
+func _state_ids_exist(state: Dictionary) -> bool:
+	for id in state.node_ids:
+		if not _nodes.has(id):
+			return false
+	for id in state.edge_ids:
+		if not _edges.has(id):
+			return false
+	return true
 
 
 func _commit(next: Dictionary) -> void:

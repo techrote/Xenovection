@@ -6,6 +6,7 @@ const Modulation = preload("res://core/modulation_bus.gd")
 const Camera = preload("res://interaction/exploration_camera.gd")
 const Picker = preload("res://interaction/spatial_selection.gd")
 const Replay = preload("res://core/sample_replay.gd")
+const SceneValidation = preload("res://core/scene_validation.gd")
 
 var failures: Array = []
 var checks := 0
@@ -152,6 +153,7 @@ func _run() -> void:
 	check(selection.get_reference().edge_ids == ["e:2:17:9"] and selection.get_reference().node_ids.is_empty(), "Exact edge selection does not silently expand to adjacency")
 	selection.bind_dataset(first.get_dataset())
 	check(selection.get_reference().node_ids.is_empty() and selection.get_reference().edge_ids.is_empty(), "New source revision clears stale selections")
+	_check_reused_upstream_revision()
 	var bus := Modulation.new()
 	check(bus.register_target("gain", 2.0, 0.0, 10.0), "Scalar modulation target registers")
 	check(bus.register_target("vector", Vector3.ONE, -3.0, 3.0), "Vector modulation target registers")
@@ -224,6 +226,83 @@ func _run() -> void:
 		"source_revision": original_revision, "samples": [{"time": 0, "value": 1, "id": "absent", "kind": "node", "value_kind": "derived"}]}, dataset), "Replay rejects stale source item IDs")
 	DirAccess.remove_absolute(ProjectSettings.globalize_path(exported))
 	finish()
+
+
+func _check_reused_upstream_revision() -> void:
+	var source := Source.new()
+	var replacement := Source.new()
+	source.set_validated({"schema": Source.SCHEMA, "manifest": {"source_id": "declared-upstream-rebind"},
+		"nodes": [{"id": "old", "position": [-1, 0, 0]}, {"id": "keep-a", "position": [0, 0, 0]},
+			{"id": "keep-b", "position": [1, 0, 0]}],
+		"edges": [{"id": "deleted-edge", "from_index": 0, "to_index": 1},
+			{"id": "stable-edge", "from_index": 1, "to_index": 2}]})
+	var original: Dictionary = source.get_dataset()
+	var selection := Selection.new()
+	selection.bind_dataset(original)
+	selection.select(["keep-a"], ["stable-edge"])
+	selection.select(["old", "keep-a"], ["deleted-edge", "stable-edge"])
+	selection.set_materialisation("knot")
+	selection.set_materialisation("ribbon")
+	selection.undo() # Stale IDs now occur in current state and both history stacks.
+	replacement.set_validated({"schema": Source.SCHEMA, "manifest": {"source_id": "declared-upstream-rebind"},
+		"nodes": [{"id": "keep-b", "position": [2, 0, 0]}, {"id": "keep-a", "position": [0, 1, 0]},
+			{"id": "replacement", "position": [0, 0, 2]}],
+		"edges": [{"id": "stable-edge", "from_index": 1, "to_index": 0},
+			{"id": "new-edge", "from_index": 2, "to_index": 0}]})
+	var input: Dictionary = replacement.get_dataset().duplicate(true)
+	input.manifest.revision = original.manifest.revision
+	check(source.set_validated(input).ok and source.get_dataset().manifest.revision == original.manifest.revision,
+		"A valid ordinary snapshot may retain its declared upstream revision after changed content")
+	selection.bind_dataset(source.get_dataset())
+	var retained: Dictionary = selection.get_reference()
+	var points: PackedVector3Array = selection.get_selected_points()
+	check(retained.node_ids == ["keep-a"] and retained.edge_ids == ["stable-edge"]
+		and points.size() == 2 and Vector3(2, 0, 0) in points and Vector3(0, 1, 0) in points,
+		"Same-revision rebind prunes removed node/edge IDs and resolves retained IDs through reordered indices")
+	var history_valid := true
+	for action in ["undo", "redo"]:
+		while selection.call(action):
+			var reference: Dictionary = selection.get_reference()
+			for id in reference.node_ids:
+				history_valid = history_valid and not source.get_node(id).is_empty()
+			for id in reference.edge_ids:
+				history_valid = history_valid and not source.get_edge(id).is_empty()
+			for point in selection.get_selected_points():
+				history_valid = history_valid and point.is_finite()
+	check(history_valid and selection.get_reference().node_ids == retained.node_ids
+		and selection.get_reference().edge_ids == retained.edge_ids,
+		"Undo/redo after reused-revision rebind cannot revive deleted source membership")
+	var saved := {"schema": SceneValidation.SCHEMA, "source_id": original.manifest.source_id,
+		"source_revision": original.manifest.revision, "source_projection_revision": original.manifest.projection_revision}
+	var refused: Dictionary = SceneValidation.validate(saved, source.get_dataset(), {}, {}, {})
+	check(not refused.ok and str(refused.error).contains("projection"),
+		"Scene recall rejects the changed snapshot before stale IDs can be restored despite a reused upstream revision")
+	var old_projection: String = source.get_dataset().manifest.projection_revision
+	var history_before: Vector2i = selection.get_history_counts()
+	input = source.get_dataset().duplicate(true)
+	input.nodes[1].position = Vector3(4, 1, 0)
+	input.manifest.content_sha256 = Source._canonical(input.manifest.source_id,
+		input.manifest.coordinate_mapping, input.nodes, input.edges).sha256_text()
+	source.set_validated(input)
+	selection.bind_dataset(source.get_dataset())
+	check(selection.get_reference().node_ids == retained.node_ids and selection.get_reference().edge_ids == retained.edge_ids
+		and selection.get_history_counts() == history_before and Vector3(4, 1, 0) in selection.get_selected_points()
+		and source.get_dataset().manifest.projection_revision != old_projection,
+		"Coordinate-only remaps preserve valid exact membership/history while selected points follow the new mapping")
+	selection.select_node("replacement")
+	selection.set_materialisation("knot")
+	selection.set_isolated(true)
+	input = source.get_dataset().duplicate(true)
+	input.nodes.pop_back()
+	input.edges = [input.edges[0]]
+	input.manifest.content_sha256 = Source._canonical(input.manifest.source_id,
+		input.manifest.coordinate_mapping, input.nodes, input.edges).sha256_text()
+	source.set_validated(input)
+	selection.bind_dataset(source.get_dataset())
+	var empty_state: Dictionary = selection.get_visual_state()
+	check(empty_state.node_ids.is_empty() and empty_state.edge_ids.is_empty()
+		and empty_state.materialisation == "none" and empty_state.isolate and selection.get_selected_points().is_empty(),
+		"Deleting the entire selected region removes its proxy and keeps intentional empty isolation without invalid point access")
 
 
 func check(condition: bool, label: String) -> void:
