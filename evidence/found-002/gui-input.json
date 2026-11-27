@@ -1,0 +1,17 @@
+{
+	"capture_result": 0,
+	"checks": 28,
+	"device": "llvmpipe (LLVM 19.1.7, 256 bits)",
+	"display": "X11",
+	"evidence_kind": "Real graphical event routing on software Vulkan; not owner TITAN RTX performance",
+	"failures": [],
+	"passed": 28,
+	"renderer": "forward_plus",
+	"source_revision": "sha256:b2a0d580c78dd403ec37adcdb720d4dbce4fb2ef6f4b8e15ec907e7fffee318e",
+	"status": "PASS",
+	"suite": "graphical-input-routing",
+	"viewport": [
+		1440.0,
+		900.0
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"changed_pixels": 45680,
+	"check": "background_preserves_source_hairlines",
+	"minimum_changed_pixels": 50,
+	"nodes_visible": false,
+	"optical_proxy_visible": false,
+	"passed": true,
+	"source_edges": 144
+}

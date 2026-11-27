@@ -1,0 +1,124 @@
+{
+  "source_sha": "ce694fce2d98530e09a069007d81d34c80f950a1",
+  "warmup_frames": 45,
+  "samples": 150,
+  "ui": "clean view, no HUD",
+  "renderer": "Linux Mesa llvmpipe Vulkan Forward+, four software threads",
+  "run_order": [
+    {
+      "name": "primary-24",
+      "arguments": [
+        "--preset=filaments",
+        "--density=24",
+        "--no-fibres",
+        "--no-optical"
+      ],
+      "duration_wall_seconds": 17.778680074000476,
+      "profile": "primary-24.json"
+    },
+    {
+      "name": "primary-48",
+      "arguments": [
+        "--preset=filaments",
+        "--density=48",
+        "--no-fibres",
+        "--no-optical"
+      ],
+      "duration_wall_seconds": 44.27700068099966,
+      "profile": "primary-48.json"
+    },
+    {
+      "name": "primary-96",
+      "arguments": [
+        "--preset=filaments",
+        "--density=96",
+        "--no-fibres",
+        "--no-optical"
+      ],
+      "duration_wall_seconds": 156.24679831499998,
+      "profile": "primary-96.json"
+    },
+    {
+      "name": "primary-128",
+      "arguments": [
+        "--preset=filaments",
+        "--density=128",
+        "--no-fibres",
+        "--no-optical"
+      ],
+      "duration_wall_seconds": 270.315690595,
+      "profile": "primary-128.json"
+    },
+    {
+      "name": "scientific",
+      "arguments": [
+        "--preset=scientific"
+      ],
+      "duration_wall_seconds": 22.470217107999815,
+      "profile": "scientific.json"
+    },
+    {
+      "name": "hybrid",
+      "arguments": [
+        "--preset=hybrid"
+      ],
+      "duration_wall_seconds": 76.36992825200014,
+      "profile": "hybrid.json"
+    },
+    {
+      "name": "hybrid-no-optical",
+      "arguments": [
+        "--preset=hybrid",
+        "--no-optical"
+      ],
+      "duration_wall_seconds": 73.0361102249999,
+      "profile": "hybrid-no-optical.json"
+    },
+    {
+      "name": "hybrid-no-fibres",
+      "arguments": [
+        "--preset=hybrid",
+        "--no-fibres"
+      ],
+      "duration_wall_seconds": 44.43991601500056,
+      "profile": "hybrid-no-fibres.json"
+    },
+    {
+      "name": "hybrid-no-wave",
+      "arguments": [
+        "--preset=hybrid",
+        "--no-wave"
+      ],
+      "duration_wall_seconds": 74.51080208599979,
+      "profile": "hybrid-no-wave.json"
+    },
+    {
+      "name": "all-layers-off",
+      "arguments": [
+        "--preset=hybrid",
+        "--no-optical",
+        "--no-filaments"
+      ],
+      "duration_wall_seconds": 5.900468644000284,
+      "profile": "all-layers-off.json"
+    }
+  ],
+  "conditions": "Serial independent app launches, VSync disabled; actual animated frame time, no fixed-fps, no physical GPU claim",
+  "requested_window_pixels": [
+    1280,
+    800
+  ],
+  "logical_canvas_coordinates": [
+    1440,
+    900
+  ],
+  "resolution_note": "A separate actual viewport capture from the same exact source/runtime and --resolution1280x800 confirms physical1280x800 pixels; receipt viewport1440x900 is logical canvas coordinates.",
+  "render_target_pixels_verified": [
+    1280,
+    800
+  ],
+  "pixel_verification_capture": {
+    "file": "verify-pixels.png",
+    "sha256": "e9515fbb740e8589aa4f436bab114d6f89245ea9994bb0e6422aeea002b7f20e"
+  }
+}
