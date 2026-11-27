@@ -25,6 +25,8 @@ func setup(viewport: Viewport) -> void:
 		RenderingServer.viewport_set_measure_render_time(_viewport, true)
 	var device: String = RenderingServer.get_video_adapter_name()
 	_metadata = {"godot": Engine.get_version_info().string, "os": OS.get_name(),
+		"cpu": OS.get_processor_name(), "logical_processors": OS.get_processor_count(),
+		"software_threads_environment": OS.get_environment("LP_NUM_THREADS"),
 		"device": device, "driver": RenderingServer.get_current_rendering_driver_name(),
 		"rendering_method": RenderingServer.get_current_rendering_method(),
 		"api": RenderingServer.get_video_adapter_api_version(),

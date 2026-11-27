@@ -128,6 +128,7 @@ func _frame_canvas() -> void:
 	# Reserve the control rail's screen space without changing source coordinates.
 	var height: float = maxf(get_viewport().get_visible_rect().size.y, 1.0)
 	camera.h_offset = camera.orbit_distance * tan(deg_to_rad(camera.fov * 0.5)) * 326.0 / height if ui.rail.visible and not ui.clean_view else 0.0
+	camera.v_offset = -camera.orbit_distance * tan(deg_to_rad(camera.fov * 0.5)) * 76.0 / height if not ui.clean_view else 0.0
 
 func _notification(what: int) -> void:
 	if not _ready_done:
@@ -176,6 +177,36 @@ func load_density(channels: int) -> void:
 		return
 	_bind_source()
 
+func load_spatial_flow() -> void:
+	var result: Dictionary = source.generate_spatial_flow()
+	if not result.ok:
+		ui.show_message("Spatial source refused: " + str(result.error), 8)
+		return
+	density = 0
+	_bind_source()
+
+func _select_example_region() -> void:
+	if density > 0:
+		selection.select_band(2, mini(8, density / 2), mini(12, density))
+		return
+	# A generic spatial source need not have the founding layer/channel layout.
+	var candidates: Array = dataset.nodes.duplicate()
+	var centre: Vector3 = camera.pivot
+	candidates.sort_custom(func(a: Dictionary, b: Dictionary):
+		var da: float = a.position.distance_squared_to(centre)
+		var db: float = b.position.distance_squared_to(centre)
+		return da < db if da != db else a.id < b.id)
+	var ids: Array = []
+	var membership: Dictionary = {}
+	for index in range(mini(96, candidates.size())):
+		ids.append(candidates[index].id)
+		membership[candidates[index].index] = true
+	var edges: Array = []
+	for edge: Dictionary in dataset.edges:
+		if membership.has(edge.from_index) and membership.has(edge.to_index):
+			edges.append(edge.id)
+	selection.select(ids, edges, false, "nearest-spatial-region-induced-edges")
+
 func _bind_source() -> void:
 	dataset = source.get_dataset()
 	_source_sha = dataset.manifest.revision
@@ -192,6 +223,7 @@ func _bind_source() -> void:
 	ui.set_source_layers(layers)
 	if is_instance_valid(ui.source_label):
 		ui.source_label.text = "%s\n\n%d nodes · %d exact edges\n\nSource revision\n%s\n\nCoordinates: %s\n\n%s\n\nSource values are read-only. The inspector distinguishes source values, derived quantities and artistic appearance." % [dataset.manifest.source_id, dataset.nodes.size(), dataset.edges.size(), str(dataset.manifest.revision).substr(0, 32) + "…", dataset.manifest.coordinate_mapping, dataset.manifest.description]
+		ui.source_label.tooltip_text = JSON.stringify(dataset.manifest, "\t")
 	_selection_changed()
 
 func apply_preset(index: int) -> void:
@@ -204,7 +236,10 @@ func apply_preset(index: int) -> void:
 		set_parameter("optical." + name, preset.optical[name])
 	bus.enabled = preset.get("modulation", true)
 	scientific = preset.get("scientific", false)
-	load_density(int(preset.density))
+	if preset.get("source", "foundry") == "spatial_flow":
+		load_spatial_flow()
+	else:
+		load_density(int(preset.density))
 	selection.clear()
 	selection.reveal()
 	if preset.has("band"):
@@ -310,6 +345,9 @@ func _process(delta: float) -> void:
 func evidence_context() -> Dictionary:
 	return {"build": _build, "preset": presets[preset_index].id, "scientific": scientific,
 		"viewport": [get_viewport().get_visible_rect().size.x, get_viewport().get_visible_rect().size.y],
+		"viewport_scope": "Logical canvas coordinates; render_target_pixels is the actual texture size",
+		"render_target_pixels": [get_viewport().get_texture().get_width(), get_viewport().get_texture().get_height()],
+		"hud_visible": not ui.clean_view, "control_panel_visible": ui.rail.visible and not ui.clean_view,
 		"source": dataset.manifest, "selection": selection.get_reference(),
 		"filaments": filaments.get_metrics(), "optical": optical.get_metrics(),
 		"clocks": bus.get_clocks(), "camera": _encode(camera.get_pose()),
@@ -337,19 +375,23 @@ func _selection_changed() -> void:
 	ui.measurement_label.text = "Source IDs are unchanged by phase, fibres, materials and displacement."
 	if state.node_ids.size() == 1:
 		var node: Dictionary = source.get_node(state.node_ids[0])
-		if _source_sha == "sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c" and int(node.layer) == 0:
+		if _is_recovered_source() and int(node.layer) == 0:
 			probe.probe(node.channel)
-		var measure: Dictionary = probe.node_measurement(node.layer, node.channel) if _source_sha == "sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c" else {}
-		ui.measurement_label.text = "%s · value %.7f (%s)" % [node.id, node.value, node.value_kind]
+		var measure: Dictionary = probe.node_measurement(node.layer, node.channel) if _is_recovered_source() else {}
+		ui.measurement_label.text = "%s · value %s (%s)" % [node.id, JSON.stringify(node.value, "", true, true), node.value_kind]
 		if not measure.is_empty():
 			ui.measurement_label.text += "\nΔh %.7f · derived forward response to input %d + %.3f" % [measure.delta, probe.selected_input, probe.epsilon]
 	elif state.edge_ids.size() == 1:
 		var edge: Dictionary = source.get_edge(state.edge_ids[0])
-		ui.measurement_label.text = "%s → %s  ·  %s\nStored W = %.9f · source coefficient" % [edge.source, edge.target, edge.id, edge.weight]
-		if _source_sha == "sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c":
+		ui.measurement_label.text = "%s → %s  ·  %s\nValue = %s (%s)" % [edge.source, edge.target, edge.id, JSON.stringify(edge.weight, "", true, true), edge.value_kind]
+		if _is_recovered_source():
+			ui.measurement_label.text = "%s → %s  ·  %s\nStored W = %s · synthetic source coefficient" % [edge.source, edge.target, edge.id, JSON.stringify(edge.weight, "", true, true)]
 			var ids: PackedStringArray = str(edge.id).split(":")
 			var measure: Dictionary = probe.edge_measurement(int(ids[1]), int(ids[2]), int(ids[3]))
 			ui.measurement_label.text += " · W × Δh = %.7f (derived)" % float(measure.get("signed_flow", 0.0))
+
+func _is_recovered_source() -> bool:
+	return bool(dataset.get("manifest", {}).get("historical_custody_verified", false)) and _source_sha == "sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -372,7 +414,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F12: handle_action("screenshot")
 			KEY_Z:
 				if event.ctrl_pressed: handle_action("redo" if event.shift_pressed else "undo")
-			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6:
+			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7:
 				apply_preset(event.keycode - KEY_1)
 			_:
 				return
@@ -433,9 +475,9 @@ func handle_action(action: String) -> void:
 			camera.release_pointer()
 			_dragging = false
 			ui.show_selection_box(Rect2(), false)
-		"select_region": selection.select_band(2, mini(8, density / 2), mini(12, density))
+		"select_region": _select_example_region()
 		"knot", "ribbon", "membrane":
-			if selection.get_selected_points().is_empty(): selection.select_band(2, mini(8, density / 2), mini(12, density))
+			if selection.get_selected_points().is_empty(): _select_example_region()
 			selection.set_materialisation(action)
 			scientific = false
 			optical_flags.enabled = true
@@ -506,7 +548,7 @@ func _import_source(path: String) -> void:
 	if result.ok:
 		density = 0
 		_bind_source()
-		ui.show_message("Imported exact source: " + str(dataset.manifest.source_id))
+		ui.show_message("Imported source snapshot: " + str(dataset.manifest.source_id))
 	else:
 		ui.show_message("Source refused: " + str(result.get("error", "Invalid source")), 10)
 
@@ -515,6 +557,7 @@ func save_scene(path: String) -> void:
 	for key: String in bus.targets:
 		bases[key] = bus.get_base(key)
 	_save_json(path, {"schema": "xenovection.scene.v1", "source_revision": _source_sha,
+		"source_projection_revision": dataset.manifest.projection_revision,
 		"source_id": dataset.manifest.source_id, "density": density, "preset_index": preset_index,
 		"base_parameters": _encode(bases), "filament_flags": _encode(filament_flags),
 		"optical_flags": _encode(optical_flags), "selection": selection.get_visual_state(),
@@ -564,6 +607,9 @@ func load_scene(path: String) -> bool:
 	mod_frequency = clampf(float(data.get("mod_frequency", 0.08)), 0, 2)
 	mod_waveform = str(data.get("mod_waveform", "sine"))
 	replay_enabled = bool(data.get("replay_enabled", false))
+	preset_index = clampi(int(data.get("preset_index", preset_index)), 0, presets.size() - 1)
+	ui.preset_picker.select(preset_index)
+	ui.subtitle_label.text = str(presets[preset_index].description).to_upper()
 	_rebuild_modulation()
 	_sync_ui()
 	ui.show_message("Scene restored · source IDs preserved")

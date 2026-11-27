@@ -19,7 +19,7 @@ GODOT_VERSION = "4.7.2.stable"
 
 
 def run(command: list[str], *, cwd: Path) -> None:
-    result = subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    result = subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     print(result.stdout, end="")
     if result.returncode or any(token in result.stdout for token in ("SCRIPT ERROR:", "Parse Error:", "Shader compilation failed", "ERROR: Cannot export")):
         raise RuntimeError(f"Command failed: {command[0]} (exit {result.returncode})")
@@ -58,7 +58,7 @@ def main() -> int:
              "repository": "https://github.com/techrote/Xenovection", "godot": actual_engine,
              "status": "Draft/HOLD", "primary_renderer": "Vulkan Forward+",
              "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
-    (app / "build_info.json").write_text(json.dumps(build, indent=2) + "\n")
+    (app / "build_info.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
     # Custom templates keep the package reproducible without a machine-wide install.
     export_file = app / "export_presets.cfg"
     original = export_file.read_bytes()
@@ -69,7 +69,7 @@ def main() -> int:
         if not template.is_file():
             raise FileNotFoundError(template)
         configuration = configuration.replace(f'custom_template/{kind}=""', f'custom_template/{kind}="{template.as_posix()}"')
-    export_file.write_text(configuration)
+    export_file.write_text(configuration, encoding="utf-8", newline="\n")
     try:
         run([options.godot, "--headless", "--path", str(app), "--editor", "--import"], cwd=root)
         if not options.skip_tests:
@@ -83,7 +83,7 @@ def main() -> int:
     for filename in ("Xenovection.exe", "Xenovection.console.exe", "Xenovection.pck"):
         if not (package / filename).is_file():
             raise RuntimeError("Missing required evaluator file: " + filename)
-    (package / "BUILD.json").write_text(json.dumps(build, indent=2) + "\n")
+    (package / "BUILD.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
     shutil.copy2(root / "packaging" / "START-HERE.txt", package / "START-HERE.txt")
     shutil.copytree(root / "packaging" / "licenses", package / "licenses", dirs_exist_ok=True)
     launchers = {
@@ -97,7 +97,7 @@ def main() -> int:
     for path in sorted(package.rglob("*")):
         if path.is_file() and path.name != "SHA256SUMS.json":
             hashes[path.relative_to(package).as_posix()] = hashlib.file_digest(path.open("rb"), "sha256").hexdigest()
-    (package / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2) + "\n")
+    (package / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
     archive = output / f"Xenovection-FOUND-002-Windows-{sha[:12]}.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as target:
         for path in sorted(package.rglob("*")):
@@ -106,7 +106,7 @@ def main() -> int:
     receipt = {"archive": archive.name, "bytes": archive.stat().st_size,
                "sha256": hashlib.file_digest(archive.open("rb"), "sha256").hexdigest(), "build": build,
                "payload_files": len(hashes)}
-    (output / "package-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    (output / "package-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(receipt, indent=2))
     return 0
 

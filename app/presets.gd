@@ -24,4 +24,8 @@ static func all() -> Array:
 		{"id": "stress", "title": "06  Dense interference", "description": "46,080 primary edges · explicit density stress specimen",
 			"filament": {"opacity": 0.08, "line_width_px": 0.35, "fibres": 1, "segments": 16, "wave_amplitude": 0.09, "braid_radius": 0.04, "phase_speed": 0.9, "node_radius": 0.012},
 			"optical": {"sky_visible": false}, "materialisation": "none", "distance": 19.0, "yaw": 0.52, "pitch": 0.28, "density": 96, "modulation": false},
+		{"id": "flow", "title": "07  Vortex atlas", "description": "Synthetic spatial flow · exact stream and coupling identities",
+			"source": "spatial_flow", "density": 0,
+			"filament": {"opacity": 0.30, "line_width_px": 0.55, "fibres": 1, "segments": 8, "nodes_visible": false, "wave_amplitude": 0.025, "braid_radius": 0.012, "resonance": 0.006, "turbulence": 0.004, "phase_speed": 1.0, "phase_frequency": 1.2, "adaptive_coverage": 0.3, "palette_amount": 0.06},
+			"optical": {"sky_visible": false}, "materialisation": "none", "distance": 19.0, "yaw": 0.50, "pitch": 0.28, "modulation": false},
 	]

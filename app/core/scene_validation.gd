@@ -13,6 +13,8 @@ static func validate(input, dataset: Dictionary, targets: Dictionary, filament_d
 	var manifest: Dictionary = dataset.get("manifest", {})
 	if input.get("source_id", "") != manifest.get("source_id", "") or input.get("source_revision", "") != manifest.get("revision", ""):
 		return _fail("Scene belongs to a different source identity/revision; load its exact source first")
+	if input.has("source_projection_revision") and input.source_projection_revision != manifest.get("projection_revision", ""):
+		return _fail("Scene belongs to a different spatial projection; restore its exact source snapshot first")
 	for field in ["base_parameters", "filament_flags", "optical_flags", "selection", "camera", "clocks"]:
 		if not input.get(field, null) is Dictionary:
 			return _fail("Scene %s must be an object" % field)
@@ -20,6 +22,8 @@ static func validate(input, dataset: Dictionary, targets: Dictionary, filament_d
 	if input.has("replay_enabled") and not input.replay_enabled is bool:
 		return _fail("Replay enable flag must be boolean")
 	result.replay_enabled = input.get("replay_enabled", false)
+	if input.has("preset_index") and (not _number(input.preset_index) or float(input.preset_index) != floor(float(input.preset_index)) or float(input.preset_index) < 0 or float(input.preset_index) > 63):
+		return _fail("Invalid scene preset identity")
 	if input.base_parameters.size() > 256:
 		return _fail("Too many scene parameters")
 	for name in input.base_parameters:

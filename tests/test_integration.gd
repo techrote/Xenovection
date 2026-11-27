@@ -117,6 +117,12 @@ func _run() -> void:
 	malformed.source_id = "different-source"
 	check(not validate_scene(malformed).ok, "Source ID is checked independently of revision")
 	malformed = saved.duplicate(true)
+	malformed.source_projection_revision = "sha256:wrong-projection"
+	check(not validate_scene(malformed).ok, "Saved scenes bind the exact artistic projection separately from source identity")
+	malformed = saved.duplicate(true)
+	malformed.preset_index = "flow"
+	check(not validate_scene(malformed).ok, "Saved preset identity cannot contain a malformed string index")
+	malformed = saved.duplicate(true)
 	malformed.filament_flags.enabled = "false"
 	check(not validate_scene(malformed).ok, "String booleans cannot silently enable renderer passes")
 	malformed = saved.duplicate(true)
@@ -175,8 +181,35 @@ func _run() -> void:
 		application._process(0.016)
 		check(application.dataset.manifest.revision == original_revision, "Principal preset %d retains the archived source" % index)
 	application.apply_preset(2)
+	application.set_parameter("optical.displacement", 0.0)
 	application._process(0.016)
 	var optical_selection: Dictionary = application.selection.get_reference()
+	var proxy_surface: MeshInstance3D = application.optical.get_node("SelectedArtisticProxy")
+	var proxy_arrays: Array = proxy_surface.mesh.surface_get_arrays(0)
+	var proxy_vertices: PackedVector3Array = proxy_arrays[Mesh.ARRAY_VERTEX]
+	var proxy_indices: PackedInt32Array = proxy_arrays[Mesh.ARRAY_INDEX]
+	var proxy_point: Vector3 = proxy_surface.global_transform * ((proxy_vertices[proxy_indices[0]]
+		+ proxy_vertices[proxy_indices[1]] + proxy_vertices[proxy_indices[2]]) / 3.0)
+	var proxy_screen: Vector2 = application.camera.unproject_position(proxy_point)
+	var proxy_hit: Dictionary = application.optical.ray_pick_proxy(application.camera.project_ray_origin(proxy_screen),
+		application.camera.project_ray_normal(proxy_screen), application.camera.far)
+	check(not proxy_hit.is_empty() and not proxy_hit.individual_source_item
+		and proxy_hit.source_membership.node_ids == optical_selection.node_ids
+		and proxy_hit.source_membership.edge_ids == optical_selection.edge_ids,
+		"Optical-only click addresses its full exact group without inventing an individual source item")
+	var proxy_state: Dictionary = application.selection.get_visual_state()
+	var proxy_history: Vector2i = application.selection.get_history_counts()
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.position = proxy_screen
+	click.pressed = true
+	application._unhandled_input(click)
+	click.pressed = false
+	application._input(click)
+	check(application.selection.get_reference() == optical_selection
+		and application.selection.get_visual_state() == proxy_state
+		and application.selection.get_history_counts() == proxy_history,
+		"Application proxy click retains exact group, selection origin, materialisation and graphics history")
 	application.handle_action("unmaterialise")
 	application._process(0.016)
 	check(application.filaments.get_metrics().primary_edges > 0

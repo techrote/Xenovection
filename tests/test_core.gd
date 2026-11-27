@@ -51,8 +51,26 @@ func _run() -> void:
 	var exported := "user://core-test-source.json"
 	check(source.export_json(exported) == OK, "Snapshot exports")
 	var imported := Source.new()
+	Source._historical_reference = {} # Exercise normalized import before any cached custody reference.
 	check(imported.load_json(exported).ok, "Exported snapshot reimports with verified content hash")
 	check(imported.get_dataset().manifest.revision == original_revision, "Source identity survives serialization round-trip")
+	check(imported.get_dataset().manifest.historical_custody_verified,
+		"Baseline snapshot custody is independently checked against the recovered specimen")
+	var forged: Dictionary = dataset.duplicate(true)
+	forged.edges[0].weight += 0.01
+	forged.manifest.content_sha256 = Source._canonical(forged.manifest.source_id,
+		forged.manifest.coordinate_mapping, forged.nodes, forged.edges).sha256_text()
+	check(not source.set_validated(forged).ok and source.get_dataset().manifest.revision == original_revision,
+		"A self-consistent modified snapshot cannot forge the reserved baseline revision")
+	check(not imported.import_historical(modified, Source.HISTORICAL_SPECIMEN_SHA256).ok,
+		"Caller-supplied raw hashes cannot confer recovered custody on modified source values")
+	var reprojected: Dictionary = dataset.duplicate(true)
+	reprojected.manifest.erase("content_sha256")
+	reprojected.nodes[0].position += Vector3.ONE
+	check(imported.set_validated(reprojected).ok and imported.get_dataset().manifest.revision == original_revision
+		and imported.get_dataset().manifest.historical_custody_verified
+		and imported.get_dataset().manifest.projection_revision != dataset.manifest.projection_revision,
+		"Verified historical science retains custody across explicitly separate artistic projections")
 	var malformed := {"schema": "xenovection.source.v1", "manifest": {"source_id": "bad"},
 		"nodes": [{"id": "a", "position": [0, 0, 0]}],
 		"edges": [{"id": "broken", "from_index": 0, "to_index": 9, "weight": 1.0}]}
@@ -79,6 +97,42 @@ func _run() -> void:
 	second.set_validated(projected)
 	check(first.get_dataset().manifest.revision == second.get_dataset().manifest.revision, "Artistic positions do not mutate scientific source identity")
 	check(first.get_dataset().manifest.projection_revision != second.get_dataset().manifest.projection_revision, "Projection changes have their own revision")
+	var flow := Source.new()
+	var flow_repeat := Source.new()
+	check(flow.generate_spatial_flow().ok and flow_repeat.generate_spatial_flow().ok,
+		"General spatial-flow adapter generates through the same versioned source contract")
+	var flow_data: Dictionary = flow.get_dataset()
+	check(flow_data.nodes.size() == 4608 and flow_data.edges.size() == 6144
+		and flow_data.manifest.revision == flow_repeat.get_dataset().manifest.revision
+		and flow_data.manifest.projection_revision == flow_repeat.get_dataset().manifest.projection_revision,
+		"Spatial flow has deterministic stable IDs, 4608 source nodes and 6144 exact edges")
+	var flow_valid: bool = flow_data.manifest.source_kind == "synthetic-spatial" and not flow_data.manifest.historical_custody_verified
+	var along_count := 0
+	var coupling_count := 0
+	var layers: Dictionary = {}
+	for node in flow_data.nodes:
+		flow_valid = flow_valid and node.position.is_finite() and node.position.length() < 7.0 \
+			and absf(node.value) <= 0.85 and node.value_kind == "derived" and node.units == "synthetic_field"
+		layers[node.layer] = true
+	for edge in flow_data.edges:
+		flow_valid = flow_valid and is_finite(edge.weight) and absf(edge.weight) <= 0.7 and edge.value_kind == "derived"
+		along_count += 1 if edge.relation == "streamline_step" else 0
+		coupling_count += 1 if edge.relation == "neighbour_coupling" else 0
+	check(flow_valid and layers.size() == 8 and along_count == 4608 and coupling_count == 1536,
+		"Spatial source coordinates and values are finite/bounded with explicit synthetic relations and eight layers")
+	var flow_path := "user://core-spatial-flow.json"
+	check(flow.export_json(flow_path) == OK and flow_repeat.load_json(flow_path).ok
+		and flow_repeat.get_dataset().manifest.revision == flow_data.manifest.revision
+		and flow_repeat.get_dataset().edges[0].relation == "streamline_step",
+		"Spatial source export preserves exact identity and typed connection semantics")
+	forged = flow_data.duplicate(true)
+	forged.manifest.source_id = Source.HISTORICAL_SOURCE_ID
+	forged.manifest.revision = original_revision
+	forged.manifest.content_sha256 = Source._canonical(forged.manifest.source_id,
+		forged.manifest.coordinate_mapping, forged.nodes, forged.edges).sha256_text()
+	check(not source.set_validated(forged).ok,
+		"A general source cannot self-claim recovered ID and revision even with its own valid content hash")
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(flow_path))
 	var selection := Selection.new()
 	selection.bind_dataset(dataset)
 	selection.select_band(2, 0, 8)

@@ -2,7 +2,7 @@
 
 **A native-GPU playground for procedural visual synthesis, dense spatial information and direct, game-like interaction.**
 
-Xenovection is an **independent visual instrument and experimental art engine**, not an LLM model editor and not an ANN-specific visualiser. It must be impressive and useful with synthetic, recorded or arbitrary live data, or with no data connected. Its defining materials are ultra-fine filaments, oscillating fields, animated environment illumination, continuous colour LUTs, reflectance/refraction, mesh displacement, translucent membranes and volumetric phenomena.
+Xenovection is an **independent visual instrument and experimental art engine**, not an LLM model editor and not an ANN-specific visualiser. It must be impressive and useful with synthetic, recorded or arbitrary live data, or with no data connected. Its founding visual vocabulary includes ultra-fine filaments, oscillating fields, animated environment illumination, continuous colour LUTs, reflectance/refraction, mesh displacement, translucent membranes and volumetric phenomena. The implemented subset is identified below.
 
 **Primary design stance:** keep the extremely thin line-and-filigree representation intact. Add rich surfaces, materials and volumes as separate opt-in layers; do not substitute shiny opaque shapes for the successful fine-line experiment. Make the whole environment directly manipulable. Modulation is a first-class compositional instrument, not an afterthought.
 
@@ -29,6 +29,7 @@ godot --path app --rendering-method forward_plus --rendering-driver vulkan
 | 4 · Weather membrane | Independent normal, reflection-domain and geometric deformation; optional translucency |
 | 5 · Scientific / no FX | Straight primary connections, exact IDs and coefficients, decorative passes disabled |
 | 6 · Dense interference | 46,080 source edges; the Source tab also offers an 81,920-edge stress specimen |
+| 7 · Vortex atlas | 4,608 spatial samples and 6,144 exact streamline/coupling edges from an analytical synthetic field |
 
 Orbit with **MMB**, pan with **Shift+MMB**, zoom with the wheel, or hold **RMB** to fly with **WASD/QE**. Click a source item or drag a through-depth region, then choose **Knot / Ribbon / Membrane / Filaments**. **F** focuses selection, **I** isolates, **G** toggles scientific mode, **Space** pauses, **V** reverses, **R** resets. **F5/F6** save/recall a source-bound scene; **F10** writes measured frame statistics. The Clocks tab separates filament, sky, normal, displacement and palette time.
 

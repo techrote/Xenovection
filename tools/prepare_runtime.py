@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+import ctypes
 import hashlib
 import json
 import os
@@ -164,15 +165,60 @@ def build_loader(runtime: Path, logs: Path) -> tuple[Path, dict]:
     return library, receipt
 
 
+def probe_vulkan(runtime: Path, evidence: Path) -> int:
+    """Inspect the actual loader's Win32 presentation extensions before Godot."""
+    receipt = json.loads((runtime / "runtime.json").read_text(encoding="utf-8"))
+    paths = receipt["paths"]
+
+    class ExtensionProperties(ctypes.Structure):
+        _fields_ = [("extensionName", ctypes.c_char * 256), ("specVersion", ctypes.c_uint32)]
+
+    result = {"schema": "xenovection.windows-vulkan-preflight.v1",
+              "loader": paths["loader"], "icd": paths["icd"],
+              "required_extensions": ["VK_KHR_surface", "VK_KHR_win32_surface"]}
+    try:
+        with os.add_dll_directory(paths["mesa"]):
+            # Distinguish missing transitive DLL dependencies from discovery errors.
+            driver = ctypes.WinDLL(str(Path(paths["mesa"]) / "vulkan_lvp.dll"))
+            result["driver_dll_loaded"] = bool(driver._handle)
+            loader = ctypes.WinDLL(paths["loader"])
+            enumerate_extensions = loader.vkEnumerateInstanceExtensionProperties
+            enumerate_extensions.argtypes = [ctypes.c_char_p, ctypes.POINTER(ctypes.c_uint32),
+                                            ctypes.POINTER(ExtensionProperties)]
+            enumerate_extensions.restype = ctypes.c_int32
+            count = ctypes.c_uint32()
+            code = enumerate_extensions(None, ctypes.byref(count), None)
+            if code != 0:
+                raise RuntimeError(f"vkEnumerateInstanceExtensionProperties returned {code}")
+            extensions = (ExtensionProperties * count.value)()
+            code = enumerate_extensions(None, ctypes.byref(count), extensions)
+            if code != 0:
+                raise RuntimeError(f"Vulkan extension enumeration returned {code}")
+            names = sorted(item.extensionName.decode("ascii") for item in extensions)
+            result["extensions"] = names
+            result["missing_extensions"] = sorted(set(result["required_extensions"]) - set(names))
+            result["status"] = "PASS" if not result["missing_extensions"] else "FAIL"
+    except Exception as error:
+        result["status"] = "FAIL"
+        result["error"] = str(error)
+    evidence.mkdir(parents=True, exist_ok=True)
+    (evidence / "vulkan-preflight.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(result, indent=2), flush=True)
+    return 0 if result["status"] == "PASS" else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--runtime", type=Path, default=Path(".runtime"))
     parser.add_argument("--evidence", type=Path, default=Path("build/windows-evidence"))
+    parser.add_argument("--probe-vulkan", action="store_true")
     options = parser.parse_args()
     if os.name != "nt":
         raise RuntimeError("This preparation command requires native Windows with CMake/MSVC/7-Zip")
     runtime = options.runtime.resolve()
     evidence = options.evidence.resolve()
+    if options.probe_vulkan:
+        return probe_vulkan(runtime, evidence)
     runtime.mkdir(parents=True, exist_ok=True)
     logs = evidence / "runtime"
     logs.mkdir(parents=True, exist_ok=True)

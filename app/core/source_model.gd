@@ -7,6 +7,9 @@ const MAX_EDGES := 262144
 const MAX_FILE_BYTES := 32 * 1024 * 1024
 const VALUE_KINDS := ["measured", "derived", "artistic"]
 const HISTORICAL_SPECIMEN_SHA256 := "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+const HISTORICAL_SOURCE_ID := "found-001-synthetic-foundry"
+
+static var _historical_reference: Dictionary = {}
 
 var _dataset: Dictionary = {"manifest": {}, "nodes": [], "edges": []}
 var _node_lookup: Dictionary = {}
@@ -39,16 +42,22 @@ func load_json(path: String) -> Dictionary:
 	if file.get_length() > MAX_FILE_BYTES:
 		return _failure("Source file exceeds the 32 MiB input limit")
 	var parser := JSON.new()
-	var json_text := file.get_as_text()
+	var json_bytes := file.get_buffer(file.get_length())
+	var json_text := json_bytes.get_string_from_utf8()
 	var code := parser.parse(json_text)
 	if code != OK or not parser.data is Dictionary:
 		return _failure("Invalid source JSON: %s" % parser.get_error_message())
 	if parser.data.get("schema", "") == "frankenfield.synthetic-dense-tanh.v1":
-		return import_historical(parser.data, json_text.sha256_text())
+		return _import_historical(parser.data, _hash_bytes(json_bytes), true)
 	return set_validated(parser.data)
 
 
 func import_historical(input: Dictionary, specimen_sha256: String) -> Dictionary:
+	# The public adapter cannot confer custody merely from a caller-supplied hash.
+	return _import_historical(input, specimen_sha256, false)
+
+
+func _import_historical(input: Dictionary, specimen_sha256: String, verified_bytes: bool) -> Dictionary:
 	# Exact archived coefficients, in original [layer][output][input] order.
 	var recovered_baseline := specimen_sha256 == HISTORICAL_SPECIMEN_SHA256
 	if input.get("layers", 0) != 6 or input.get("channels", 0) != 48:
@@ -91,18 +100,18 @@ func import_historical(input: Dictionary, specimen_sha256: String) -> Dictionary
 				"channel": channel, "position": project_node(layer, channel, 48),
 				"value": activations[channel], "value_kind": "derived"})
 	return _validate_and_set({"schema": SCHEMA, "manifest": {
-		"source_id": "found-001-synthetic-foundry" if recovered_baseline else "frankenfield-import-" + specimen_sha256.substr(0, 12),
+		"source_id": HISTORICAL_SOURCE_ID if recovered_baseline else "frankenfield-import-" + specimen_sha256.substr(0, 12),
 		"source_kind": "synthetic-historical" if recovered_baseline else "synthetic-imported",
 		"coordinate_mapping": "layered-orbits-v1", "upstream_revision": "sha256:" + specimen_sha256,
 		"description": "Exact recovered FOUND-001 coefficients; analytical tanh values; new artistic coordinate projection" if recovered_baseline else "Imported FRANKENFIELD-format synthetic specimen; distinct from the recovered historical baseline"},
-		"nodes": nodes, "edges": edges}, "sha256:" + specimen_sha256)
+		"nodes": nodes, "edges": edges}, "sha256:" + specimen_sha256, verified_bytes and recovered_baseline)
 
 
 func set_validated(input: Dictionary) -> Dictionary:
 	return _validate_and_set(input)
 
 
-func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dictionary:
+func _validate_and_set(input: Dictionary, verified_revision: String = "", historical_bytes_verified: bool = false) -> Dictionary:
 	# Validate completely before replacing the current snapshot.
 	if input.get("schema", "") != SCHEMA:
 		return _failure("Unsupported source schema")
@@ -169,6 +178,10 @@ func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dic
 		var value_kind := str(raw.get("value_kind", "derived"))
 		if not value_kind in VALUE_KINDS:
 			return _failure("Unknown edge value classification")
+		var relation := str(raw.get("relation", "connection"))
+		var units := str(raw.get("units", "unitless"))
+		if relation.length() > 128 or units.length() > 128:
+			return _failure("Edge relation or units exceed the bounded metadata length")
 		var a: Dictionary = nodes[int(from_index)]
 		var b: Dictionary = nodes[int(to_index)]
 		var edge := {
@@ -176,6 +189,7 @@ func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dic
 			"from_index": int(from_index), "to_index": int(to_index),
 			"source": a.id, "target": b.id, "a": a.position, "b": b.position,
 			"weight": float(weight), "value": float(weight), "value_kind": value_kind,
+			"relation": relation, "units": units,
 			"layer": a.layer, "contribution": float(weight) * float(a.value)
 		}
 		edges.append(edge)
@@ -190,13 +204,29 @@ func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dic
 		return _failure("Content hash does not match the declared source snapshot")
 	var scientific_digest := _canonical(source_id, "", nodes, edges, false).sha256_text()
 	var revision := "sha256:" + scientific_digest
-	# An exported snapshot carries its verified content hash plus original source revision.
+	# A self-hash proves internal consistency, not custody of the recovered specimen.
+	var historical_revision := "sha256:" + HISTORICAL_SPECIMEN_SHA256
+	var reserved_claim := source_id == HISTORICAL_SOURCE_ID \
+		or str(manifest_in.get("revision", "")) == historical_revision \
+		or str(manifest_in.get("source_kind", "")) == "synthetic-historical" \
+		or verified_revision == historical_revision
+	var historical_custody_verified := historical_bytes_verified and verified_revision == historical_revision
+	if reserved_claim and not historical_custody_verified:
+		var reference := _get_verified_historical_reference()
+		if reference.is_empty() or not _matches_historical_source(source_id, nodes, edges, reference):
+			return _failure("Reserved FOUND-001 identity does not match the locally verified recovered scientific source")
+		historical_custody_verified = true
+	var revision_basis := "Scientific source values and topology; projection is separately hashed"
+	# Ordinary upstream revisions are declared provenance. The content hash does not
+	# authenticate their origin; only the reserved historical identity is verified.
 	if manifest_in.has("content_sha256") and str(manifest_in.get("revision", "")).begins_with("sha256:"):
 		revision = str(manifest_in.revision)
+		revision_basis = "Declared upstream revision; snapshot content verified separately; historical custody unverified"
 	var manifest := {
 		"schema": SCHEMA, "source_id": source_id, "revision": revision,
 		"projection_revision": "sha256:" + digest,
-		"revision_basis": "Scientific source values and topology; projection is separately hashed",
+		"revision_basis": revision_basis,
+		"historical_custody_verified": historical_custody_verified,
 		"content_sha256": digest, "coordinate_mapping": mapping,
 		"upstream_revision": str(manifest_in.get("upstream_revision", manifest_in.get("revision", ""))),
 		"description": str(manifest_in.get("description", "Imported read-only source")),
@@ -207,6 +237,10 @@ func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dic
 	if not verified_revision.is_empty():
 		manifest.revision = verified_revision
 		manifest.revision_basis = "SHA-256 of the exact imported specimen bytes"
+	if historical_custody_verified:
+		manifest.revision = historical_revision
+		manifest.source_kind = "synthetic-historical"
+		manifest.revision_basis = "Recovered raw specimen SHA-256; scientific values and topology verified against local custody reference"
 	# Freeze every nested mutable container once, at the source boundary. Renderers
 	# share the snapshot without per-frame copies and cannot accidentally edit it.
 	for node in nodes:
@@ -218,11 +252,59 @@ func _validate_and_set(input: Dictionary, verified_revision: String = "") -> Dic
 	manifest.make_read_only()
 	_dataset = {"schema": SCHEMA, "manifest": manifest, "nodes": nodes, "edges": edges}
 	_dataset.make_read_only()
+	if historical_bytes_verified and historical_custody_verified:
+		_historical_reference = _dataset
 	_node_lookup = node_lookup
 	_edge_lookup = edge_lookup
 	_incident = incident
 	last_error = ""
 	return {"ok": true, "revision": manifest.revision, "nodes": nodes.size(), "edges": edges.size()}
+
+
+func _get_verified_historical_reference() -> Dictionary:
+	if not _historical_reference.is_empty():
+		return _historical_reference
+	var raw_bytes := FileAccess.get_file_as_bytes("res://data/synthetic_foundry.json")
+	if _hash_bytes(raw_bytes) != HISTORICAL_SPECIMEN_SHA256:
+		return {}
+	var raw = JSON.parse_string(raw_bytes.get_string_from_utf8())
+	if not raw is Dictionary:
+		return {}
+	var reference_source = get_script().new()
+	var result: Dictionary = reference_source._import_historical(raw, HISTORICAL_SPECIMEN_SHA256, true)
+	return reference_source.get_dataset() if result.get("ok", false) else {}
+
+
+static func _matches_historical_source(source_id: String, nodes: Array, edges: Array, reference: Dictionary) -> bool:
+	if source_id != HISTORICAL_SOURCE_ID or nodes.size() != reference.nodes.size() or edges.size() != reference.edges.size():
+		return false
+	var expected_nodes: Dictionary = {}
+	var expected_edges: Dictionary = {}
+	for node in reference.nodes:
+		expected_nodes[node.id] = node
+	for edge in reference.edges:
+		expected_edges[edge.id] = edge
+	for node in nodes:
+		if not expected_nodes.has(node.id):
+			return false
+		var expected: Dictionary = expected_nodes[node.id]
+		if node.layer != expected.layer or node.channel != expected.channel \
+			or node.value_kind != expected.value_kind or node.units != expected.units:
+			return false
+		# Inputs are exact source bytes; later activations are derived tanh values.
+		# Permit only tiny libm differences across operating systems for the latter.
+		if (node.layer == 0 and _encode_exact(node.value) != _encode_exact(expected.value)) \
+			or (node.layer > 0 and absf(node.value - expected.value) > 1.0e-13):
+			return false
+	for edge in edges:
+		if not expected_edges.has(edge.id):
+			return false
+		var expected: Dictionary = expected_edges[edge.id]
+		if edge.source != expected.source or edge.target != expected.target \
+			or edge.value_kind != expected.value_kind or edge.units != expected.units \
+			or edge.relation != expected.relation or _encode_exact(edge.weight) != _encode_exact(expected.weight):
+			return false
+	return true
 
 
 func generate_synthetic(density: int = 48) -> Dictionary:
@@ -257,6 +339,56 @@ func generate_synthetic(density: int = 48) -> Dictionary:
 		"manifest": {"source_id": "found-002-synthetic-%d" % channels,
 			"source_kind": "synthetic", "coordinate_mapping": "layered-orbits-v1",
 			"description": "Deterministic six-layer tanh specimen; new FOUND-002 synthesis, not the historical archive"},
+		"nodes": nodes, "edges": edges})
+
+
+func generate_spatial_flow() -> Dictionary:
+	# A static analytical specimen, not a fluid simulation or measured velocity.
+	# Each ring is an independently addressed neighbouring streamline. Sparse
+	# cross-couplings make its source topology more than disconnected decoration.
+	const STREAMS := 64
+	const SAMPLES := 72
+	var nodes: Array = []
+	var edges: Array = []
+	for stream in range(STREAMS):
+		var alpha := TAU * float(stream) / float(STREAMS)
+		var radius := 0.58 + 0.24 * sin(5.0 * alpha + 0.3)
+		for sample_index in range(SAMPLES):
+			var t := TAU * float(sample_index) / float(SAMPLES)
+			var radial := Vector3(cos(2.0 * t), 0.0, sin(2.0 * t))
+			var ring_radius := 4.2 + 1.3 * cos(3.0 * t)
+			var center := radial * ring_radius + Vector3.UP * (1.3 * sin(3.0 * t))
+			var radial_derivative := Vector3(-2.0 * sin(2.0 * t), 0.0, 2.0 * cos(2.0 * t))
+			var tangent := (radial_derivative * ring_radius - radial * (3.9 * sin(3.0 * t))
+				+ Vector3.UP * (3.9 * cos(3.0 * t))).normalized()
+			var normal := (radial - tangent * radial.dot(tangent)).normalized()
+			var binormal := tangent.cross(normal).normalized()
+			var twist := alpha + 2.0 * t + 0.28 * sin(3.0 * t + alpha)
+			var position := center + radius * (normal * cos(twist) + binormal * (0.78 * sin(twist)))
+			var field := 0.6 * sin(3.0 * t + alpha) + 0.25 * cos(2.0 * t - alpha)
+			nodes.append({"id": "flow:n:%02d:%02d" % [stream, sample_index],
+				"layer": stream / 8, "channel": sample_index, "position": position,
+				"value": field, "value_kind": "derived", "units": "synthetic_field"})
+	for stream in range(STREAMS):
+		var alpha := TAU * float(stream) / float(STREAMS)
+		var polarity := 1.0 if stream % 2 == 0 else -1.0
+		for sample_index in range(SAMPLES):
+			var t := TAU * float(sample_index) / float(SAMPLES)
+			var here := stream * SAMPLES + sample_index
+			var next := stream * SAMPLES + (sample_index + 1) % SAMPLES
+			edges.append({"id": "flow:e:%02d:%02d" % [stream, sample_index],
+				"from_index": here, "to_index": next,
+				"weight": polarity * (0.5 + 0.2 * sin(4.0 * t + alpha)),
+				"value_kind": "derived", "units": "synthetic_transport", "relation": "streamline_step"})
+			if (sample_index + stream) % 3 == 0:
+				edges.append({"id": "flow:c:%02d:%02d" % [stream, sample_index],
+					"from_index": here, "to_index": ((stream + 1) % STREAMS) * SAMPLES + sample_index,
+					"weight": 0.08 * cos(alpha + 2.0 * t), "value_kind": "derived",
+					"units": "synthetic_coupling", "relation": "neighbour_coupling"})
+	return set_validated({"schema": SCHEMA,
+		"manifest": {"source_id": "xenovection-spatial-flow-v1", "source_kind": "synthetic-spatial",
+			"coordinate_mapping": "toroidal-neighbour-streamlines-v1",
+			"description": "Analytical synthetic torus-knot field: 64 closed neighbouring streamlines, signed transport and sparse cross-couplings; not measured fluid data"},
 		"nodes": nodes, "edges": edges})
 
 
@@ -318,6 +450,13 @@ static func _finite_number(value) -> bool:
 	return (value is float or value is int) and is_finite(float(value))
 
 
+static func _hash_bytes(value: PackedByteArray) -> String:
+	var hash_context := HashingContext.new()
+	hash_context.start(HashingContext.HASH_SHA256)
+	hash_context.update(value)
+	return hash_context.finish().hex_encode()
+
+
 static func _encode_exact(value: float) -> String:
 	var bytes := PackedByteArray()
 	bytes.resize(8)
@@ -362,5 +501,9 @@ static func _canonical(source_id: String, mapping: String, nodes: Array, edges: 
 			values.append_array([p.x, p.y, p.z])
 		rows.append(JSON.stringify(values, "", true, true))
 	for edge in edges:
-		rows.append(JSON.stringify([edge.id, edge.from_index, edge.to_index, edge.weight, edge.value_kind], "", true, true))
+		var values: Array = [edge.id, edge.from_index, edge.to_index, edge.weight, edge.value_kind]
+		# Preserve hashes of existing v1 snapshots using the implicit defaults.
+		if edge.get("relation", "connection") != "connection" or edge.get("units", "unitless") != "unitless":
+			values.append_array([edge.get("relation", "connection"), edge.get("units", "unitless")])
+		rows.append(JSON.stringify(values, "", true, true))
 	return "\n".join(rows)

@@ -9,6 +9,11 @@ $Evidence = Join-Path $RepoRoot 'build/windows-evidence'
 $Runtime = Join-Path $RepoRoot '.runtime'
 New-Item -ItemType Directory -Force -Path $Evidence | Out-Null
 $Steps = [System.Collections.Generic.List[object]]::new()
+$DriverRegistryKey = $null
+$DriverRegistryName = ''
+$DriverRegistryHadValue = $false
+$DriverRegistryPriorValue = $null
+$DriverRegistryPriorKind = $null
 $Qualification = [ordered]@{
     schema = 'xenovection.windows-qualification.v1'
     status = 'RUNNING'
@@ -177,13 +182,38 @@ try {
     $Qualification.verified_payload_files = $PayloadHashes.Count
     # Only the disposable extracted test copy receives the CI software loader.
     Copy-Item -LiteralPath ([string]$Tools.paths.loader) -Destination (Join-Path $Payload 'vulkan-1.dll')
+    # The Khronos loader intentionally ignores ICD environment overrides at high
+    # Windows integrity. Hosted runneradmin uses that token. Use documented
+    # software-driver discovery instead, restoring only our own registry value.
+    # This is restricted to the disposable hosted CI machine, never owner setup.
+    $Principal = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
+    $Elevated = $Principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    $Qualification.runner_elevated = $Elevated
+    $Qualification.icd_discovery = 'Explicit process environment'
+    if ($Elevated) {
+        if ($env:GITHUB_ACTIONS -ne 'true') { throw 'Elevated local execution is unsupported; run this harness without elevation.' }
+        $DriverRegistryKey = [Microsoft.Win32.Registry]::LocalMachine.CreateSubKey('SOFTWARE\Khronos\Vulkan\Drivers', $true)
+        $DriverRegistryName = [string]$Tools.paths.icd
+        $DriverRegistryHadValue = $DriverRegistryKey.GetValueNames() -contains $DriverRegistryName
+        if ($DriverRegistryHadValue) {
+            $DriverRegistryPriorValue = $DriverRegistryKey.GetValue($DriverRegistryName)
+            $DriverRegistryPriorKind = $DriverRegistryKey.GetValueKind($DriverRegistryName)
+        }
+        $DriverRegistryKey.SetValue($DriverRegistryName, 0, [Microsoft.Win32.RegistryValueKind]::DWord)
+        $Qualification.icd_discovery = 'Temporary hosted-CI HKLM software-driver registration; restored in finally'
+    }
+    $env:VK_LOADER_DEBUG = 'error,warn,driver'
+    Invoke-Checked -Name 'vulkan-preflight' -Executable 'python' -Arguments @(
+        (Join-Path $RepoRoot 'tools/prepare_runtime.py'), '--runtime', $Runtime,
+        '--evidence', $Evidence, '--probe-vulkan'
+    )
     $Application = Join-Path $Payload 'Xenovection.exe'
     $Graphics = @('--rendering-method', 'forward_plus', '--rendering-driver', 'vulkan', '--audio-driver', 'Dummy', '--disable-vsync', '--windowed', '--resolution', '1000x650')
     Invoke-Checked -Name 'filament-vulkan-buffer-roundtrip' -Executable ([string]$Tools.paths.godot) -Arguments (
         $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', 'res://rendering/filaments/verify_filaments.gd', '--log-file', (Join-Path $Evidence 'filament-vulkan-engine.log'))
     ) -EngineLog (Join-Path $Evidence 'filament-vulkan-engine.log')
 
-    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid')) {
+    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
         $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
@@ -194,6 +224,9 @@ try {
         ) -TimeoutSeconds 240 -EngineLog $EngineLog
         $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
         $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.render_target_pixels[0] -ne $Dimensions[0] -or $Profile.render_target_pixels[1] -ne $Dimensions[1]) {
+            throw "Rendered pixel dimensions disagree with the profile: $Preset"
+        }
         if ($Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
             $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
             -not $Profile.platform.software_device) { throw "Unexpected graphics platform in $Preset" }
@@ -217,7 +250,7 @@ try {
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Four rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'
@@ -225,5 +258,23 @@ catch {
     throw
 }
 finally {
+    $CleanupFailure = $null
+    if ($null -ne $DriverRegistryKey) {
+        try {
+            if ($DriverRegistryHadValue) {
+                $DriverRegistryKey.SetValue($DriverRegistryName, $DriverRegistryPriorValue, $DriverRegistryPriorKind)
+            } else {
+                $DriverRegistryKey.DeleteValue($DriverRegistryName, $false)
+            }
+            $Qualification.icd_registration_restored = $true
+        } catch {
+            $Qualification.icd_registration_restored = $false
+            $Qualification.status = 'FAIL'
+            $CleanupFailure = $_
+        } finally {
+            $DriverRegistryKey.Dispose()
+        }
+    }
     $Qualification | ConvertTo-Json -Depth 20 | Set-Content -Encoding utf8 (Join-Path $Evidence 'qualification.json')
+    if ($null -ne $CleanupFailure) { throw $CleanupFailure }
 }
