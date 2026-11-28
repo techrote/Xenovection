@@ -54,6 +54,9 @@ func reset(candidate: Dictionary) -> bool:
 	if not validate(candidate):
 		return false
 	config = candidate.duplicate(true)
+	# Vector2 stores bounds at engine real_t precision. Canonicalize accepted values.
+	for key in BOUNDS:
+		config.params[key] = clampf(float(config.params[key]), BOUNDS[key].x, BOUNDS[key].y)
 	effective = config.params.duplicate()
 	rng.seed = int(config.seed)
 	organisms.clear()
@@ -99,7 +102,7 @@ func validate(c: Dictionary) -> bool:
 		return false
 	for key in BOUNDS:
 		var value = c.params.get(key)
-		if not numeric(value) or float(value) < BOUNDS[key].x or float(value) > BOUNDS[key].y:
+		if not numeric(value) or float(value) < float(BOUNDS[key].x) - 1e-7 or float(value) > float(BOUNDS[key].y) + 1e-7:
 			return false
 	for name in ["plants", "sources"]:
 		var entries = c.get(name)

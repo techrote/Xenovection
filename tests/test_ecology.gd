@@ -17,7 +17,7 @@ func run_steps(w, count: int) -> void:
 		w.step()
 
 func finite_and_bounded(w) -> bool:
-	if w.organisms.size() > World.MAX_POP or w.history.size() > 240:
+	if w.organisms.size() > World.MAX_POP or w.history.size() > 240 or w.resource.size() != World.N * World.N or w.signal_field.size() != World.N * World.N:
 		return false
 	var seen = {}
 	for o in w.organisms:
@@ -67,9 +67,13 @@ func _initialize() -> void:
 	var strong = World.new()
 	var excitable = World.initial_config(4, 142)
 	excitable.params.excitation = 0.15
-	weak.reset(excitable)
+	var weak_ok = weak.reset(excitable)
 	excitable.params.excitation = 1.55
-	strong.reset(excitable)
+	var strong_ok = strong.reset(excitable)
+	check(weak_ok and strong_ok, "excitation configurations reset")
+	if not weak_ok or not strong_ok:
+		quit(1)
+		return
 	var weak_peak: int = 0
 	var strong_peak: int = 0
 	for i in range(90):
@@ -84,9 +88,13 @@ func _initialize() -> void:
 	var diffusion_config = World.initial_config(4, 125)
 	diffusion_config.interactions = false
 	diffusion_config.params.diffusion = 0.0
-	low.reset(diffusion_config)
+	var low_ok = low.reset(diffusion_config)
 	diffusion_config.params.diffusion = 0.24
-	high.reset(diffusion_config)
+	var high_ok = high.reset(diffusion_config)
+	check(low_ok and high_ok, "exact authored diffusion endpoints accepted")
+	if not low_ok or not high_ok:
+		quit(1)
+		return
 	low.perturb(Vector2(0.5, 0.5), 1.0)
 	high.perturb(Vector2(0.5, 0.5), 1.0)
 	run_steps(low, 30)
@@ -100,6 +108,9 @@ func _initialize() -> void:
 	var bad = initial.duplicate(true)
 	bad.params.growth = "bad"
 	check(not w.reset(bad) and w.digest() == before, "malformed config transactional")
+	bad = initial.duplicate(true)
+	bad.params.diffusion = 0.241
+	check(not w.reset(bad) and w.digest() == before, "unsafe diffusion rejected")
 	bad = initial.duplicate(true)
 	bad.sources = [[0.0, 0.0, 1e99]]
 	check(not w.reset(bad), "invalid sources")
