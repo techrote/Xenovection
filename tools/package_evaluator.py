@@ -56,7 +56,7 @@ def main() -> int:
     package.mkdir(parents=True, exist_ok=True)
     build = {"schema": "xenovection.build.v1", "source_sha": sha, "tree_sha": tree,
              "repository": "https://github.com/techrote/Xenovection", "godot": actual_engine,
-             "status": "Draft/HOLD", "primary_renderer": "Vulkan Forward+",
+             "status": "Draft/HOLD", "mission": "SYNTH-002", "primary_renderer": "Vulkan Forward+",
              "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
     (app / "build_info.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
     # Custom templates keep the package reproducible without a machine-wide install.
@@ -73,7 +73,7 @@ def main() -> int:
     try:
         run([options.godot, "--headless", "--path", str(app), "--editor", "--import"], cwd=root)
         if not options.skip_tests:
-            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
+            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "../tests/test_synth.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
                 run([options.godot, "--headless", "--path", str(app), "--script", test], cwd=root)
             import sys
             run([sys.executable, str(root / "tests" / "verify_source_exact.py"), "--godot", options.godot], cwd=root)
@@ -98,7 +98,7 @@ def main() -> int:
         if path.is_file() and path.name != "SHA256SUMS.json":
             hashes[path.relative_to(package).as_posix()] = hashlib.file_digest(path.open("rb"), "sha256").hexdigest()
     (package / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
-    archive = output / f"Xenovection-FOUND-002-Windows-{sha[:12]}.zip"
+    archive = output / f"Xenovection-SYNTH-002-Windows-{sha[:12]}.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as target:
         for path in sorted(package.rglob("*")):
             if path.is_file():

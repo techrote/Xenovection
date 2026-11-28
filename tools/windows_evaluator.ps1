@@ -147,6 +147,7 @@ try {
     $Tests = [ordered]@{
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
+        'synth-contracts' = (Join-Path $RepoRoot 'tests/test_synth.gd')
         'filament-contracts' = 'res://rendering/filaments/verify_filaments.gd'
         'optical-contracts' = 'res://rendering/optical/verify_optical.gd'
     }
@@ -271,10 +272,48 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    # SYNTH-002 source GUI input probe and exact extracted-package patch profiles.
+    $GuiPrefix = Join-Path $Evidence 'synth-gui'
+    Invoke-Checked -Name 'synth-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_synth_probe.gd'),
+            '--log-file', (Join-Path $Evidence 'synth-gui-engine.log'), '--', "--output-prefix=$GuiPrefix")
+    ) -TimeoutSeconds 300 -EngineLog (Join-Path $Evidence 'synth-gui-engine.log')
+    $null = Read-PngDimensions -Path ($GuiPrefix + '.png')
+    $Qualification.synth_patches = @()
+    $PatchNames = @('Vortex Conductor', 'Weather Instrument', 'Filament Sequencer', 'Spectral Layers', 'Autonomous Organism', 'XY Morphosis')
+    $PatchPresets = @('flow', 'membrane', 'filaments', 'optical', 'hybrid', 'membrane')
+    for ($Index = 1; $Index -le 6; $Index++) {
+        $ProfilePath = Join-Path $Evidence ("synth-$Index.json")
+        $CapturePath = Join-Path $Evidence ("synth-$Index.png")
+        $EngineLog = Join-Path $Evidence ("synth-$Index-engine.log")
+        $Frames = $(if ($Index -eq 6) { 600 } else { 90 })
+        $Clock = [System.Diagnostics.Stopwatch]::StartNew()
+        Invoke-Checked -Name ("synth-$Index-packaged") -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--patch-example=$Index", '--hide-panel',
+                '--warmup=60', "--profile-frames=$Frames", "--profile=$ProfilePath", '--capture-frame=45', "--capture=$CapturePath")
+        ) -TimeoutSeconds 480 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.build.source_sha -ne $SourceSha -or $Profile.preset -ne $PatchPresets[$Index - 1] -or
+            -not $Profile.source_unchanged -or -not $Profile.synthesis.active -or $Profile.synthesis.fixed_ticks -lt 1 -or
+            $Profile.synthesis.route_count -lt 1 -or $Profile.synthesis.samples -lt 1 -or $Profile.samples -lt $Frames -or
+            $Profile.platform.headless -or $Profile.platform.driver -ne 'vulkan' -or -not $Profile.platform.software_device) {
+            throw "Incomplete packaged synthesis profile: $Index"
+        }
+        $Qualification.synth_patches += [ordered]@{
+            name = $PatchNames[$Index - 1]; preset = $Profile.preset; source_sha = $Profile.build.source_sha
+            capture = (Split-Path -Leaf $CapturePath); capture_dimensions = $Dimensions
+            capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            profile = (Split-Path -Leaf $ProfilePath); samples = $Profile.samples
+            execution_wall_seconds = [Math]::Round($Clock.Elapsed.TotalSeconds, 3)
+            wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
+            graph = $Profile.synthesis; device = $Profile.platform.device
+        }
+    }
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Baseline and synth patch PNGs plus actual graphical input capture; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'

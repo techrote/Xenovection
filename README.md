@@ -1,5 +1,9 @@
 # Xenovection
 
+## SYNTH-002 — modular visual instrument (Draft/HOLD)
+
+Press **F7** to open the Synth rail. Recall an example, choose **Perform** for XY and macros or **Patch** to wire sources and destinations. The seven original presets remain available. See [SYNTH-002 controls and contract](docs/13_SYNTH_002_INSTRUMENT.md). The branch evaluator archive is named `Xenovection-SYNTH-002-Windows-<revision>.zip`; extract the complete folder and run `Launch-Xenovection.cmd`. Qualification and physical TITAN RTX acceptance are separate.
+
 **A native-GPU playground for procedural visual synthesis, dense spatial information and direct, game-like interaction.**
 
 Xenovection is an **independent visual instrument and experimental art engine**, not an LLM model editor and not an ANN-specific visualiser. It must be impressive and useful with synthetic, recorded or arbitrary live data, or with no data connected. Its founding visual vocabulary includes ultra-fine filaments, oscillating fields, animated environment illumination, continuous colour LUTs, reflectance/refraction, mesh displacement, translucent membranes and volumetric phenomena. The implemented subset is identified below.

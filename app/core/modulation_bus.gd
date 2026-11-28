@@ -23,7 +23,7 @@ func _init() -> void:
 		clocks[name] = {"time": 0.0, "rate": 1.0, "paused": false}
 
 
-func register_target(name: String, base, minimum = -1000.0, maximum = 1000.0) -> bool:
+func register_target(name: String, base, minimum = -1000.0, maximum = 1000.0, metadata: Dictionary = {}) -> bool:
 	if name.is_empty() or (targets.size() >= MAX_TARGETS and not targets.has(name)):
 		return _error("Target limit exceeded or empty target name")
 	var kind := _kind(base)
@@ -33,7 +33,14 @@ func register_target(name: String, base, minimum = -1000.0, maximum = 1000.0) ->
 		return _error("Target bounds have an incompatible type")
 	if not _valid_bounds(minimum, maximum):
 		return _error("Target minimum exceeds maximum")
+	var policy = metadata.get("policy", "continuous")
+	if not policy in ["continuous", "base_only", "discrete"]:
+		return _error("Unknown target update policy")
 	targets[name] = {"base": _bounded(base, minimum, maximum), "minimum": minimum, "maximum": maximum, "kind": kind}
+	if metadata.has("policy"):
+		targets[name]["policy"] = policy
+	if metadata.get("field_descriptor") is Dictionary:
+		targets[name]["field_descriptor"] = metadata.field_descriptor.duplicate(true)
 	_effective[name] = targets[name].base
 	return true
 
@@ -65,6 +72,8 @@ func add_route(config: Dictionary) -> bool:
 	var target := str(config.get("target", ""))
 	if not targets.has(target):
 		return _error("Modulation route references an unknown target")
+	if targets[target].get("policy", "continuous") != "continuous":
+		return _error("Destination is not a continuously modulated target")
 	var operation := str(config.get("operation", "add"))
 	if not operation in ["add", "multiply"]:
 		return _error("Modulation operation must be add or multiply")
@@ -154,7 +163,7 @@ func evaluate(delta: float = 0.0) -> Dictionary:
 		sampled[name] = _source_value(sources[name])
 	# Insertion order is the declared, serialized route order.
 	for route in routes:
-		if not route.enabled or route.mask <= 0.0:
+		if not route.enabled or route.mask <= 0.0 or not targets.has(route.target) or targets[route.target].get("policy", "continuous") != "continuous":
 			continue
 		var raw = sampled.get(route.source, null)
 		if raw == null:

@@ -2,7 +2,7 @@ name: Windows evaluator
 
 on:
   push:
-    branches: [docs/xenovection-founding-charter]
+    branches: [docs/xenovection-founding-charter, feature/synth-002-visual-instrument]
     paths: [app/**, tests/**, tools/**, packaging/**, .gitattributes, .github/workflows/evaluator.yml]
   workflow_dispatch:
 
@@ -12,7 +12,7 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,7 +31,7 @@ jobs:
         with:
           name: Xenovection-Windows-${{ github.sha }}
           path: |
-            build/Xenovection-FOUND-002-Windows-*.zip
+            build/Xenovection-SYNTH-002-Windows-*.zip
             build/package-receipt.json
             build/windows-evidence/**
           if-no-files-found: error
