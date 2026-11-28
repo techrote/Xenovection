@@ -63,6 +63,22 @@ func _initialize() -> void:
 			check(a.organisms[0].trail.size() > 1, "vortex trail persistence")
 		if preset == 2:
 			check(a.organisms[0].radius != 0.008, "membrane growth")
+	var weak = World.new()
+	var strong = World.new()
+	var excitable = World.initial_config(4, 142)
+	excitable.params.excitation = 0.15
+	weak.reset(excitable)
+	excitable.params.excitation = 1.55
+	strong.reset(excitable)
+	var weak_peak: int = 0
+	var strong_peak: int = 0
+	for i in range(90):
+		weak.step()
+		strong.step()
+		weak_peak = maxi(weak_peak, int(weak.metrics().excited_count))
+		strong_peak = maxi(strong_peak, int(strong.metrics().excited_count))
+	check(strong_peak > weak_peak, "excitation strength changes collective propagation")
+	experiments.append({"experiment": "excitation-strength", "weak_peak": weak_peak, "strong_peak": strong_peak})
 	var low = World.new()
 	var high = World.new()
 	var diffusion_config = World.initial_config(4, 125)

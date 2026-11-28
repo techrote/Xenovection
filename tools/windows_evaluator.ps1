@@ -272,6 +272,13 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    Invoke-Checked -Name 'ecology-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_ecology_probe.gd'),
+            '--log-file', (Join-Path $Evidence 'ecology-gui-engine.log'), '--', "--output-prefix=$(Join-Path $Evidence 'ecology-gui')")
+    ) -EngineLog (Join-Path $Evidence 'ecology-gui-engine.log') -TimeoutSeconds 240
+    $GuiReceipt = Get-Content -Raw (Join-Path $Evidence 'ecology-gui.json') | ConvertFrom-Json
+    if ($GuiReceipt.status -ne 'PASS' -or $GuiReceipt.checks -lt 12) { throw 'Ecology graphical input receipt incomplete' }
+    $Qualification.ecology_gui = $GuiReceipt
     $Qualification.ecology = @()
     for ($PresetIndex = 0; $PresetIndex -lt 6; $PresetIndex++) {
         $Name = "ecosystem-$PresetIndex"
@@ -289,38 +296,7 @@ try {
             $Profile.simulation.population -gt 192 -or $Profile.samples -lt 59 -or $Profile.wall_frame.p50_ms -le 0 -or
             $Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
             $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
-            -not $Profile.platform.software_device -or $Profile.digest -notmatch '^[0-9a-f]{64}
-    Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
-    $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six baseline and six ecology native Windows PNGs; retain for human visual review'
-}
-catch {
-    $Qualification.status = 'FAIL'
-    $Qualification.failure = $_.ToString()
-    throw
-}
-finally {
-    $CleanupFailure = $null
-    if ($null -ne $DriverRegistryKey) {
-        try {
-            if ($DriverRegistryHadValue) {
-                $DriverRegistryKey.SetValue($DriverRegistryName, $DriverRegistryPriorValue, $DriverRegistryPriorKind)
-            } else {
-                $DriverRegistryKey.DeleteValue($DriverRegistryName, $false)
-            }
-            $Qualification.icd_registration_restored = $true
-        } catch {
-            $Qualification.icd_registration_restored = $false
-            $Qualification.status = 'FAIL'
-            $CleanupFailure = $_
-        } finally {
-            $DriverRegistryKey.Dispose()
-        }
-    }
-    $Qualification | ConvertTo-Json -Depth 20 | Set-Content -Encoding utf8 (Join-Path $Evidence 'qualification.json')
-    if ($null -ne $CleanupFailure) { throw $CleanupFailure }
-}
-) {
+            -not $Profile.platform.software_device -or $Profile.digest -notmatch '^[0-9a-f]{64}$') {
             throw "Invalid extracted ecology profile: $Name"
         }
         if ($PresetIndex -eq 0 -and $Profile.simulation.segments -lt 1) { throw 'Mycelial topology missing' }
@@ -349,7 +325,7 @@ finally {
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Six baseline and six ecology native Windows PNGs; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'

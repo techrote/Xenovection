@@ -425,7 +425,10 @@ func _draw() -> void:
 	for o in world.organisms:
 		if isolated >= 0 and o.kind != isolated:
 			continue
-		var p = _screen(o.p, area)
+		var position: Vector2 = o.p
+		if not automated and not paused and (o.kind == 1 or o.kind == 2):
+			position = o.prev_p.lerp(o.p, clampf(accum / World.DT, 0.0, 1.0))
+		var p = _screen(position, area)
 		var col: Color = COLOURS[o.kind].lerp(Color(0.95, 0.99, 1.0), clampf(float(o.trait) - 0.5, 0.0, 1.0) * 0.3)
 		var brightness = clampf(0.28 + float(o.energy) * 0.68, 0.2, 0.96)
 		brightness *= clampf(float(world.effective.material), 0.15, 1.4)

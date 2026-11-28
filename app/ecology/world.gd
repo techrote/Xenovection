@@ -143,9 +143,9 @@ func _spawn(family: int, p: Vector2, parent: Dictionary = {}) -> bool:
 	var trait: float = rng.randf_range(0.65, 1.35) if parent.is_empty() else clampf(float(parent.trait) + rng.randf_range(-1.0, 1.0) * float(effective.mutation), 0.35, 1.65)
 	var phase: float = rng.randf_range(0.0, TAU)
 	if family == 3:
-		phase = 0.0
+		phase = rng.randf_range(0.0, 0.35) + p.x * 0.4
 	p = p.clamp(Vector2.ONE * 0.02, Vector2.ONE * 0.98)
-	organisms.append({"id": id, "parent": int(parent.get("id", 0)), "lineage": int(parent.get("lineage", id)), "generation": int(parent.get("generation", -1)) + 1, "kind": family, "p": p, "v": Vector2.from_angle(rng.randf_range(0.0, TAU)) * 0.035, "age": 0, "energy": 0.58, "trait": trait, "phase": phase, "excited": 0.0, "refractory": 0.0, "radius": 0.008, "segments": PackedVector2Array(), "tips": PackedVector2Array([p]), "trail": PackedVector2Array([p])})
+	organisms.append({"id": id, "parent": int(parent.get("id", 0)), "lineage": int(parent.get("lineage", id)), "generation": int(parent.get("generation", -1)) + 1, "kind": family, "p": p, "prev_p": p, "v": Vector2.from_angle(rng.randf_range(0.0, TAU)) * 0.035, "age": 0, "energy": 0.58, "trait": trait, "phase": phase, "excited": 0.0, "refractory": 0.0, "radius": 0.008, "segments": PackedVector2Array(), "tips": PackedVector2Array([p]), "trail": PackedVector2Array([p])})
 	births += 1
 	return true
 
@@ -315,6 +315,7 @@ func step() -> void:
 			last_consumed += uptake
 		o.energy = clampf(float(o.energy) + uptake - 0.0048, 0.0, 1.0)
 		o.age += 1
+		o.prev_p = o.p
 		var strength: float = float(effective.interaction) if interacting else 0.0
 		if o.kind == 1:
 			var q: Vector2 = o.p - Vector2(0.5, 0.5)
@@ -340,8 +341,8 @@ func step() -> void:
 		if o.kind == 3:
 			o.refractory = maxf(0.0, float(o.refractory) - DT)
 			o.excited = maxf(0.0, float(o.excited) - DT * 2.4)
-			var stimulus = (float(sensed.excite) * 0.22 + float(signal_field[idx]) * 0.8) * float(effective.excitation) * strength
-			if o.refractory <= 0.0 and (stimulus > 0.31 or (tick % 120 == 1 and o.id % 41 == 1)):
+			var stimulus = (float(sensed.excite) * 1.15 + float(signal_field[idx]) * 0.8) * float(effective.excitation) * strength
+			if o.refractory <= 0.0 and (stimulus > 0.24 or (tick % 120 == 1 and o.id % 41 == 1)):
 				o.excited = 1.0
 				o.refractory = 1.35
 			o.phase = fposmod(float(o.phase) + DT * (0.5 + float(sensed.phase) * strength), TAU)
@@ -384,16 +385,20 @@ func metrics() -> Dictionary:
 	var total_resource: float = 0.0
 	var total_signal: float = 0.0
 	var phase_sum = Vector2.ZERO
+	var excited: int = 0
+	var families: Dictionary = {}
 	var lineages: Dictionary = {}
 	for o in organisms:
 		segments += int(o.segments.size() / 2)
 		energy += float(o.energy)
 		phase_sum += Vector2.from_angle(float(o.phase))
 		lineages[o.lineage] = true
+		families[o.kind] = int(families.get(o.kind, 0)) + 1
+		if o.excited > 0.2: excited += 1
 	for i in range(resource.size()):
 		total_resource += resource[i]
 		total_signal += signal_field[i]
-	return {"tick": tick, "population": organisms.size(), "lineages": lineages.size(), "births": births, "deaths": deaths, "segments": segments, "energy_mean": energy / maxi(1, organisms.size()), "resource_mean": total_resource / maxi(1, resource.size()), "signal_mean": total_signal / maxi(1, signal_field.size()), "synchrony": phase_sum.length() / maxi(1, organisms.size()), "consumed": consumed, "queries": queries, "events": events, "step_us": step_us, "field_us": field_us, "growth_us": growth_us}
+	return {"tick": tick, "population": organisms.size(), "lineages": lineages.size(), "family_counts": families, "excited_count": excited, "births": births, "deaths": deaths, "segments": segments, "energy_mean": energy / maxi(1, organisms.size()), "resource_mean": total_resource / maxi(1, resource.size()), "signal_mean": total_signal / maxi(1, signal_field.size()), "synchrony": phase_sum.length() / maxi(1, organisms.size()), "consumed": consumed, "queries": queries, "events": events, "step_us": step_us, "field_us": field_us, "growth_us": growth_us}
 
 func digest() -> String:
 	# Timing counters excluded. Same-engine deterministic replay, not cross-platform bit equality.
