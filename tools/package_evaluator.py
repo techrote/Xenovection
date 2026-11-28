@@ -56,7 +56,7 @@ def main() -> int:
     package.mkdir(parents=True, exist_ok=True)
     build = {"schema": "xenovection.build.v1", "source_sha": sha, "tree_sha": tree,
              "repository": "https://github.com/techrote/Xenovection", "godot": actual_engine,
-             "status": "Draft/HOLD", "primary_renderer": "Vulkan Forward+",
+             "status": "Draft/HOLD", "mission": "MAINLINE-CONVERGENCE-001", "primary_renderer": "Vulkan Forward+",
              "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
     (app / "build_info.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
     # Custom templates keep the package reproducible without a machine-wide install.
@@ -73,7 +73,7 @@ def main() -> int:
     try:
         run([options.godot, "--headless", "--path", str(app), "--editor", "--import"], cwd=root)
         if not options.skip_tests:
-            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
+            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "../tests/test_matter.gd", "../tests/test_synth.gd", "../tests/test_ecology.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
                 run([options.godot, "--headless", "--path", str(app), "--script", test], cwd=root)
             import sys
             run([sys.executable, str(root / "tests" / "verify_source_exact.py"), "--godot", options.godot], cwd=root)
@@ -91,6 +91,8 @@ def main() -> int:
         "Launch-Compatibility.cmd": '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method gl_compatibility --rendering-driver opengl3 %*\r\n',
         "Profile-This-PC.cmd": '@echo off\r\ncd /d "%~dp0"\r\n"Xenovection.console.exe" --rendering-method forward_plus --rendering-driver vulkan --disable-vsync -- --preset=hybrid --warmup=120 --profile-frames=600 --profile="%~dp0owner-performance.json"\r\necho Performance receipt: owner-performance.json\r\npause\r\n',
     }
+    launchers["Launch-Ecosystem.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method forward_plus --rendering-driver vulkan -- --ecosystem=0\r\n'
+    launchers["Profile-Ecosystem.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\n"Xenovection.console.exe" --rendering-method forward_plus --rendering-driver vulkan --disable-vsync -- --ecosystem=1 --eco-frames=600 --eco-profile="%~dp0owner-ecosystem-performance.json"\r\necho Performance receipt: owner-ecosystem-performance.json\r\npause\r\n'
     for filename, content in launchers.items():
         (package / filename).write_bytes(content.encode("utf-8"))
     hashes = {}
@@ -98,7 +100,7 @@ def main() -> int:
         if path.is_file() and path.name != "SHA256SUMS.json":
             hashes[path.relative_to(package).as_posix()] = hashlib.file_digest(path.open("rb"), "sha256").hexdigest()
     (package / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
-    archive = output / f"Xenovection-FOUND-002-Windows-{sha[:12]}.zip"
+    archive = output / f"Xenovection-MAINLINE-CONVERGENCE-001-Windows-{sha[:12]}.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as target:
         for path in sorted(package.rglob("*")):
             if path.is_file():

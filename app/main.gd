@@ -4,6 +4,9 @@ extends Node3D
 const SourceModel = preload("res://core/source_model.gd")
 const SelectionState = preload("res://core/selection_state.gd")
 const ModulationBus = preload("res://core/modulation_bus.gd")
+const SynthGraph = preload("res://core/synth_graph.gd")
+const SynthPanel = preload("res://ui/synth_panel.gd")
+const SynthExamples = preload("res://core/synth_examples.gd")
 const SpatialSelection = preload("res://interaction/spatial_selection.gd")
 const ExplorationCamera = preload("res://interaction/exploration_camera.gd")
 const FilamentRenderer = preload("res://rendering/filaments/filament_renderer.gd")
@@ -14,20 +17,28 @@ const FoundryProbe = preload("res://analysis/foundry_probe.gd")
 const SceneValidation = preload("res://core/scene_validation.gd")
 const SampleReplay = preload("res://core/sample_replay.gd")
 const Presets = preload("res://presets.gd")
+const Matter = preload("res://matter/laboratory.gd")
+const MatterPresets = preload("res://matter/presets.gd")
 
 var source = SourceModel.new()
 var selection = SelectionState.new()
 var bus = ModulationBus.new()
+var synth = SynthGraph.new()
+var synth_panel
+var synth_error := ""
+var synth_base_enabled := true
 var recorder = FrameRecorder.new()
 var probe = FoundryProbe.new()
 var replay = SampleReplay.new()
 var replay_enabled: bool = false
-var filaments = FilamentRenderer.new()
-var optical = OpticalRenderer.new()
-var camera = ExplorationCamera.new()
-var ui = InstrumentPanel.new()
+# Construct scene-owned Nodes only after the direct ecology launch redirect.
+var filaments
+var optical
+var camera
+var ui
 var dataset: Dictionary = {}
-var presets: Array = Presets.all()
+var presets: Array = Presets.all() + MatterPresets.all()
+var matter = Matter.new()
 var preset_index: int = 0
 var scientific: bool = false
 var density: int = 48
@@ -50,13 +61,30 @@ var _build: Dictionary = {"source_sha": "working-tree", "status": "Draft/HOLD"}
 
 func _ready() -> void:
 	_args = _read_arguments()
+	if _args.has("ecosystem") and not get_tree().has_meta("ecology_entered"):
+		get_tree().set_meta("ecology_entered", true)
+		get_tree().call_deferred("change_scene_to_file", "res://ecology/workspace.tscn")
+		return
+	# The source scene now owns these nodes. On a direct --ecosystem launch
+	# they must never be allocated as unattached Nodes/RIDs.
+	filaments = FilamentRenderer.new()
+	optical = OpticalRenderer.new()
+	camera = ExplorationCamera.new()
+	ui = InstrumentPanel.new()
 	_load_build_info()
 	_setup_world()
 	add_child(filaments)
 	add_child(optical)
+	add_child(matter)
 	add_child(camera)
 	camera.current = true
 	add_child(ui)
+	var ecology_page: VBoxContainer = ui._page(ui.tabs, "Life")
+	ui._section(ecology_page, "Artificial life", "Open an independent planar ecosystem workspace. Returning reloads the source instrument.")
+	var ecology_button := Button.new()
+	ecology_button.text = "Open Ecosystem"
+	ecology_button.pressed.connect(func(): get_tree().change_scene_to_file("res://ecology/workspace.tscn"))
+	ecology_page.add_child(ecology_button)
 	camera.navigation_changed.connect(_frame_canvas)
 	get_viewport().size_changed.connect(_frame_canvas)
 	ui.set_presets(presets)
@@ -70,6 +98,16 @@ func _ready() -> void:
 		if presets[index].id == str(_args.get("preset", "hybrid")):
 			preset_index = index
 	apply_preset(preset_index)
+	synth_panel = SynthPanel.new()
+	ui._page(ui.tabs, "Synth").add_child(synth_panel)
+	synth_panel.setup(self)
+	if _args.has("patch-example"):
+		var index := int(_args["patch-example"]) - 1
+		var examples := SynthExamples.all()
+		if index < 0 or index >= examples.size() or not install_synth_patch(examples[index].patch, true):
+			push_error("Patch example refused: " + synth_error)
+			get_tree().quit(1)
+			return
 	if _args.has("density"):
 		load_density(int(_args.density))
 	if _args.has("source"):
@@ -85,6 +123,10 @@ func _ready() -> void:
 		bus.paused = true
 	if _args.has("no-optical"):
 		optical_flags.enabled = false
+	if _args.has("legacy-optics"):
+		set_parameter("optical.optical_mix", 0.0)
+	if _args.has("close-optics"):
+		camera.set_pose({"distance": camera.orbit_distance * 0.58})
 	if _args.has("no-filaments"):
 		filament_flags.enabled = false
 	if _args.has("no-fibres"):
@@ -151,6 +193,7 @@ func _register_defaults() -> void:
 	bus.register_target("optical.sky_frequency", optical_flags.sky_frequency, -16.0, 16.0)
 	bus.register_target("optical.sky_pan", Vector2.ZERO, -100.0, 100.0)
 	bus.register_target("optical.material_tint", optical_flags.material_tint, 0.0, 1.0)
+	matter.register_targets(bus)
 	mod_depth = 1.0
 	mod_frequency = 0.08
 	mod_waveform = "sine"
@@ -165,9 +208,14 @@ func _rebuild_modulation() -> void:
 	bus.add_route({"id": "counter-resonance", "source": "counterphase", "target": "filament.resonance", "amplitude": 0.28 * mod_depth, "operation": "multiply"})
 	bus.add_route({"id": "spectral-drift", "source": "breath", "target": "optical.sky_frequency", "amplitude": Vector2(0.14, -0.1) * mod_depth, "operation": "add"})
 	bus.add_route({"id": "material-breath", "source": "breath", "target": "optical.material_tint", "amplitude": Color(0.035, 0.018, -0.015, 0) * mod_depth, "operation": "add"})
+	# Existing clock and typed bus; no second modulation engine.
+	bus.add_route({"id": "optical-depth-breath", "source": "counterphase", "target": "optical.optical_thickness", "amplitude": 0.12 * mod_depth, "operation": "multiply", "smoothing": 0.18})
+	bus.add_route({"id": "optical-phase-breath", "source": "breath", "target": "optical.interference_phase", "amplitude": 0.38 * mod_depth, "operation": "add"})
 	bus.register_source("sample", {"type": "manual", "value": 0.0})
 	bus.add_route({"id": "sample-phase", "source": "sample", "target": "filament.phase_speed", "amplitude": 0.55, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
 	bus.add_route({"id": "sample-field", "source": "sample", "target": "optical.sky_warp", "amplitude": 0.2, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
+	if not synth.patch.is_empty() and not synth.attach(bus):
+		synth_error = synth.last_error
 
 func load_density(channels: int) -> void:
 	density = clampi(channels, 4, 128)
@@ -227,6 +275,7 @@ func _bind_source() -> void:
 	_selection_changed()
 
 func apply_preset(index: int) -> void:
+	synth = SynthGraph.new()
 	preset_index = clampi(index, 0, presets.size() - 1)
 	var preset: Dictionary = presets[preset_index]
 	_register_defaults()
@@ -250,15 +299,67 @@ func apply_preset(index: int) -> void:
 		camera.focus_points(selection.get_selected_points())
 	camera.set_pose({"distance": preset.distance, "yaw": preset.yaw, "pitch": preset.pitch})
 	bus.reset()
+	matter.set_defaults(bus,preset)
 	ui.preset_picker.select(preset_index)
-	ui.set_tab(1 if preset.id in ["optical", "membrane"] else 0)
+	ui.set_tab(ui.tabs.get_node("Matter").get_index() if matter.active else (1 if preset.id in ["optical", "membrane"] or str(preset.id).begins_with("optical_") else 0))
 	ui.subtitle_label.text = str(preset.description).to_upper()
 	if _ready_done:
 		recorder.reset()
 		_sync_ui()
+	if is_instance_valid(synth_panel):
+		synth_panel.refresh()
+
+func install_synth_patch(data: Dictionary, recall: bool = false, morph: bool = false) -> bool:
+	synth_error = ""
+	var candidate = SynthGraph.new()
+	if not candidate.configure(data, bus):
+		synth_error = candidate.last_error
+		return false
+	if int(candidate.patch.preset) >= presets.size():
+		synth_error = "Scene is not present in this application."
+		return false
+	var previous = synth
+	var compatible: bool = morph and candidate.transition_from(previous)
+	if recall and not compatible:
+		apply_preset(int(candidate.patch.preset))
+		if not candidate.configure(data, bus):
+			synth_error = candidate.last_error
+			return false
+	if synth.patch.is_empty():
+		synth_base_enabled = bus.enabled
+	if not candidate.attach(bus):
+		if not synth.patch.is_empty():
+			synth.attach(bus)
+		synth_error = candidate.last_error
+		return false
+	synth = candidate
+	bus.enabled = true
+	if recall:
+		for clock in candidate.patch.clocks:
+			bus.set_clock(clock, candidate.patch.clocks[clock])
+		if not compatible:
+			bus.reset()
+		if is_instance_valid(synth_panel):
+			ui.set_tab(ui.tabs.get_node("Synth").get_index())
+		if morph:
+			synth_error = "0.8 s compatible morph." if compatible else "Different scene or routing: explicit cut."
+	_sync_ui()
+	if is_instance_valid(synth_panel): synth_panel.refresh()
+	return true
+
+func stop_synth() -> void:
+	if synth.patch.is_empty():
+		return
+	synth.detach(bus)
+	synth = SynthGraph.new()
+	bus.enabled = synth_base_enabled
+	_rebuild_modulation()
+	_sync_ui()
 
 func set_parameter(target: String, value: Variant) -> void:
-	if target == "modulation.enabled":
+	if target.begins_with("matter.edit."):
+		matter.edit(bus,target.trim_prefix("matter.edit."),value)
+	elif target == "modulation.enabled":
 		bus.enabled = bool(value)
 	elif target == "modulation.frequency":
 		mod_frequency = float(value)
@@ -300,6 +401,7 @@ func _process(delta: float) -> void:
 		return
 	var start: int = Time.get_ticks_usec()
 	_frame += 1
+	synth.advance(bus, delta, scientific)
 	var effective: Dictionary = bus.advance(delta)
 	if replay_enabled and not dataset.nodes.is_empty():
 		replay.advance(float(bus.get_clocks().filament))
@@ -326,6 +428,7 @@ func _process(delta: float) -> void:
 	var clocks: Dictionary = bus.get_clocks()
 	filaments.update_clocks(clocks)
 	optical.update_clocks(clocks)
+	matter.update(bus,effective,clocks,delta,scientific,_args.has("no-matter"))
 	_hud_elapsed += delta
 	if _hud_elapsed > 0.5:
 		_hud_elapsed = 0.0
@@ -359,7 +462,8 @@ func evidence_context() -> Dictionary:
 		"filaments": filaments.get_metrics(), "optical": optical.get_metrics(),
 		"clocks": bus.get_clocks(), "camera": _encode(camera.get_pose()),
 		"modulation": _encode(bus.snapshot()), "sample_replay": replay.get_metrics(),
-		"source_unchanged": _source_sha == dataset.manifest.revision}
+		"synthesis": synth.metrics(), "synth_patch": synth.snapshot(bus) if not synth.patch.is_empty() else {},
+		"matter": matter.metrics(), "source_unchanged": _source_sha == dataset.manifest.revision}
 
 func _update_performance() -> void:
 	var metric: Dictionary = recorder.snapshot()
@@ -420,17 +524,24 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_ESCAPE: handle_action("release")
 			KEY_F5: handle_action("save_scene")
 			KEY_F6: handle_action("load_scene")
+			KEY_F7: handle_action("synth")
 			KEY_F9: handle_action("export_selection")
 			KEY_F10: handle_action("profile")
 			KEY_F12: handle_action("screenshot")
 			KEY_Z:
 				if event.ctrl_pressed: handle_action("redo" if event.shift_pressed else "undo")
-			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7:
+			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9:
 				apply_preset(event.keycode - KEY_1)
+			KEY_0: apply_preset(9)
 			_:
 				return
 		get_viewport().set_input_as_handled()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if matter.active and not scientific:
+			matter.pick(camera,event.position)
+			_sync_ui()
+			get_viewport().set_input_as_handled()
+			return
 		_dragging = true
 		_drag_start = event.position
 		_drag_additive = event.shift_pressed
@@ -464,6 +575,23 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func handle_action(action: String) -> void:
+	if matter.active and not scientific:
+		if action.begins_with("matter_select_"):
+			matter.selected = clampi(int(action.trim_prefix("matter_select_")),0,Matter.COUNT-1)
+			_sync_ui()
+			return
+		match action:
+			"focus": camera.focus_points(matter.focus_points())
+			"isolate": matter.isolated = not matter.isolated
+			"reveal": matter.isolated = false
+			"matter_reintegrate": matter.rebuild(bus,matter.selected)
+			"matter_reseed": matter.edit(bus,"seed",fmod(float(bus.get_base(Matter.target(matter.selected,"seed")))+1.0,10000.0))
+			"matter_particles_reset": matter.reset_particles(bus)
+			"undo", "redo": matter.undo(bus,action == "redo")
+			_: pass
+		if action in ["focus","isolate","reveal","matter_reintegrate","matter_reseed","matter_particles_reset","undo","redo"]:
+			_sync_ui()
+			return
 	match action:
 		"pause": bus.paused = not bus.paused
 		"scientific": scientific = not scientific
@@ -478,7 +606,15 @@ func handle_action(action: String) -> void:
 			ui.toggle_clean()
 			_frame_canvas()
 		"reset": apply_preset(preset_index)
-		"reset_time": bus.reset()
+		"reset_time":
+			bus.reset()
+			if not synth.patch.is_empty(): synth.reset()
+			matter.reset_particles(bus)
+		"synth":
+			if ui.clean_view: ui.toggle_clean()
+			ui.rail.show()
+			ui.set_tab(ui.tabs.get_node("Synth").get_index())
+			_frame_canvas()
 		"focus": camera.focus_points(selection.get_selected_points())
 		"isolate": selection.set_isolated(not selection.get_visual_state().isolate)
 		"reveal": selection.reveal()
@@ -520,6 +656,7 @@ func _sync_ui() -> void:
 		return
 	ui.set_transport(scientific, bus.paused)
 	ui.sync_clocks(bus.clocks)
+	ui.sync_matter(matter.active,matter.selected,matter.isolated,matter.params(bus,matter.selected))
 	for key: String in bus.targets:
 		if bus.get_base(key) is float or bus.get_base(key) is int:
 			ui.sync_value(key, bus.get_base(key))
@@ -575,7 +712,7 @@ func save_scene(path: String) -> void:
 		"camera": _encode(camera.get_pose()), "clocks": _encode(bus.clocks),
 		"scientific": scientific, "paused": bus.paused, "modulation_enabled": bus.enabled,
 		"mod_depth": mod_depth, "mod_frequency": mod_frequency, "mod_waveform": mod_waveform,
-		"replay_enabled": replay_enabled})
+		"replay_enabled": replay_enabled, "synth_patch": synth.snapshot(bus) if not synth.patch.is_empty() else {}, "matter": matter.snapshot()})
 
 func load_scene(path: String) -> bool:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -589,6 +726,10 @@ func load_scene(path: String) -> bool:
 	if not data is Dictionary or data.get("schema", "") != "xenovection.scene.v1":
 		ui.show_message("Invalid scene file")
 		return false
+	var matter_data: Variant = data.get("matter",{"schema":Matter.SCHEMA,"active":false,"selected":0,"isolated":false,"baked":[]})
+	if not Matter.valid_snapshot(matter_data):
+		ui.show_message("Scene refused: malformed procedural region state",8)
+		return false
 	var checked: Dictionary = SceneValidation.validate(data, dataset, bus.targets, FilamentRenderer.DEFAULTS, OpticalRenderer.DEFAULTS)
 	if not checked.ok:
 		ui.show_message("Scene refused: " + str(checked.get("error", "Invalid scene")), 8)
@@ -597,6 +738,19 @@ func load_scene(path: String) -> bool:
 	if str(data.get("source_revision", "")) != _source_sha:
 		ui.show_message("Scene belongs to a different source revision. Load that source first.", 8)
 		return false
+	var saved_patch = data.get("synth_patch", {})
+	if not saved_patch is Dictionary:
+		ui.show_message("Scene contains malformed patch data")
+		return false
+	if not saved_patch.is_empty():
+		var validator = SynthGraph.new()
+		if not validator.configure(saved_patch, bus) or int(validator.patch.preset) != int(data.get("preset_index", preset_index)) or int(validator.patch.preset) >= presets.size():
+			ui.show_message("Scene patch refused: " + validator.last_error, 8)
+			return false
+	stop_synth()
+	# Older v1 scenes omitted these destinations; do not inherit a live effect.
+	for name: String in ["optical_mix","optical_thickness","absorption","transmission","ior","interference_phase","interference_strength","spectral_bandwidth","dispersion_strength","reflection_intensity","optical_field","illumination_direction","illumination_intensity","illumination_balance","refraction_strength","layer_spacing","atmospheric_density","optical_diagnostic"]:
+		bus.set_base("optical." + name, OpticalRenderer.DEFAULTS[name])
 	for key: String in data.get("base_parameters", {}):
 		set_parameter(key, _decode(data.base_parameters[key]))
 	for key: String in data.get("filament_flags", {}):
@@ -622,7 +776,14 @@ func load_scene(path: String) -> bool:
 	ui.preset_picker.select(preset_index)
 	ui.subtitle_label.text = str(presets[preset_index].description).to_upper()
 	_rebuild_modulation()
+	matter.restore(bus,matter_data)
+	if not saved_patch.is_empty():
+		if not install_synth_patch(saved_patch):
+			ui.show_message("Scene patch could not bind: " + synth_error, 8)
+			return false
+		bus.enabled = bool(data.get("modulation_enabled", true))
 	_sync_ui()
+	if is_instance_valid(synth_panel): synth_panel.refresh()
 	ui.show_message("Scene restored · source IDs preserved")
 	return true
 

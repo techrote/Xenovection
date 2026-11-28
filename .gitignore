@@ -7,3 +7,9 @@ app/build_info.json
 experiments/found-001/source/**/*.uid
 .runtime/
 .DS_Store
+
+# Path-preloaded FOUND-003 scripts; editor-generated UID cache is not a source dependency.
+app/matter/*.uid
+tests/test_matter.gd.uid
+# Ecology scripts are referenced by path; generated UID metadata is not source.
+app/ecology/*.gd.uid

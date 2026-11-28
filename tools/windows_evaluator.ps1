@@ -144,9 +144,16 @@ try {
     Write-TreeEvidence -Stage 'after-historical-import'
     Invoke-Checked -Name 'editor-import' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--editor', '--import')
     Write-TreeEvidence -Stage 'after-app-import'
+    Invoke-Checked -Name 'ecology-world-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', 'res://ecology/world.gd')
+    Invoke-Checked -Name 'ecology-workspace-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', 'res://ecology/workspace.gd')
+    Invoke-Checked -Name 'ecology-gui-probe-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', (Join-Path $RepoRoot 'tests/gui_ecology_probe.gd'))
+
     $Tests = [ordered]@{
+        'matter-contracts' = (Join-Path $RepoRoot 'tests/test_matter.gd')
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
+        'synth-contracts' = (Join-Path $RepoRoot 'tests/test_synth.gd')
+        'ecology-contracts' = (Join-Path $RepoRoot 'tests/test_ecology.gd')
         'filament-contracts' = 'res://rendering/filaments/verify_filaments.gd'
         'optical-contracts' = 'res://rendering/optical/verify_optical.gd'
     }
@@ -215,7 +222,7 @@ try {
         $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', 'res://rendering/filaments/verify_filaments.gd', '--log-file', (Join-Path $Evidence 'filament-vulkan-engine.log'))
     ) -EngineLog (Join-Path $Evidence 'filament-vulkan-engine.log')
 
-    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow')) {
+    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow', 'optical_dichroic', 'optical_weather', 'optical_lens', 'optical_garden', 'optical_microfibres', 'optical_ecosystem')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
         $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
@@ -260,6 +267,16 @@ try {
         if ($Preset -eq 'membrane' -and -not $Profile.optical.surface_translucent) {
             throw 'Membrane qualification did not exercise the alpha material variant'
         }
+        if ($Preset.StartsWith('optical_') -and (-not $Profile.optical.optical_visible -or
+            $Profile.optical.optical_matter_mix -lt 0.99 -or $Profile.optical.proxy_source_edges -ne $Profile.selection.edge_ids.Count)) {
+            throw "Optical demonstrator did not exercise its authored material and source selection: $Preset"
+        }
+        if ($Preset -eq 'optical_lens' -and -not $Profile.optical.refraction_screen_copy_active) {
+            throw 'Liquid Lens did not exercise screen-copy refraction'
+        }
+        if ((@('optical_dichroic', 'optical_garden', 'optical_ecosystem') -contains $Preset) -and $Profile.optical.secondary_film_draws -ne 1) {
+            throw "Layered optical scene did not render its second film: $Preset"
+        }
         $Qualification.scenes += [ordered]@{
             preset = $Preset; status = 'EXECUTED'; capture = (Split-Path -Leaf $CapturePath)
             capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
@@ -271,10 +288,175 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    # SYNTH-002 source GUI input probe and exact extracted-package patch profiles.
+    $GuiPrefix = Join-Path $Evidence 'synth-gui'
+    Invoke-Checked -Name 'synth-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_synth_probe.gd'),
+            '--log-file', (Join-Path $Evidence 'synth-gui-engine.log'), '--', "--output-prefix=$GuiPrefix")
+    ) -TimeoutSeconds 300 -EngineLog (Join-Path $Evidence 'synth-gui-engine.log')
+    $null = Read-PngDimensions -Path ($GuiPrefix + '.png')
+    $Qualification.synth_patches = @()
+    $PatchNames = @('Vortex Conductor', 'Weather Instrument', 'Filament Sequencer', 'Spectral Layers', 'Autonomous Organism', 'XY Morphosis')
+    $PatchPresets = @('flow', 'membrane', 'filaments', 'optical', 'hybrid', 'membrane')
+    for ($Index = 1; $Index -le 6; $Index++) {
+        $ProfilePath = Join-Path $Evidence ("synth-$Index.json")
+        $CapturePath = Join-Path $Evidence ("synth-$Index.png")
+        $EngineLog = Join-Path $Evidence ("synth-$Index-engine.log")
+        $Frames = $(if ($Index -eq 6) { 600 } else { 90 })
+        $Clock = [System.Diagnostics.Stopwatch]::StartNew()
+        Invoke-Checked -Name ("synth-$Index-packaged") -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--patch-example=$Index", '--hide-panel',
+                '--warmup=60', "--profile-frames=$Frames", "--profile=$ProfilePath", '--capture-frame=45', "--capture=$CapturePath")
+        ) -TimeoutSeconds 480 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.build.source_sha -ne $SourceSha -or $Profile.preset -ne $PatchPresets[$Index - 1] -or
+            -not $Profile.source_unchanged -or -not $Profile.synthesis.active -or $Profile.synthesis.fixed_ticks -lt 1 -or
+            $Profile.synthesis.route_count -lt 1 -or $Profile.synthesis.samples -lt 1 -or $Profile.samples -lt $Frames -or
+            $Profile.platform.headless -or $Profile.platform.driver -ne 'vulkan' -or -not $Profile.platform.software_device) {
+            throw "Incomplete packaged synthesis profile: $Index"
+        }
+        $Qualification.synth_patches += [ordered]@{
+            name = $PatchNames[$Index - 1]; preset = $Profile.preset; source_sha = $Profile.build.source_sha
+            capture = (Split-Path -Leaf $CapturePath); capture_dimensions = $Dimensions
+            capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            profile = (Split-Path -Leaf $ProfilePath); samples = $Profile.samples
+            execution_wall_seconds = [Math]::Round($Clock.Elapsed.TotalSeconds, 3)
+            wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
+            graph = $Profile.synthesis; device = $Profile.platform.device
+        }
+    }
+    # A real input route test on the same source and pinned graphics stack.
+    $GuiLog = Join-Path $Evidence 'gui-input-engine.log'
+    $GuiPrefix = Join-Path $Evidence 'gui-input'
+    Invoke-Checked -Name 'graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path',(Join-Path $RepoRoot 'app'),'--script',(Join-Path $RepoRoot 'tests/gui_input_probe.gd'),
+            '--log-file',$GuiLog,'--',"--output-prefix=$GuiPrefix")
+    ) -TimeoutSeconds 480 -EngineLog $GuiLog
+    foreach ($Preset in @('nursery','garden','living','films','condensation','ecosystem')) {
+        $ProfilePath = Join-Path $Evidence ($Preset + '.json')
+        $CapturePath = Join-Path $Evidence ($Preset + '.png')
+        $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
+        Invoke-Checked -Name ($Preset + '-procedural-vulkan') -Executable $Application -Arguments (
+            $Graphics + @('--log-file',$EngineLog,'--',"--preset=$Preset",'--hide-panel',
+                '--warmup=45','--profile-frames=60',"--profile=$ProfilePath",
+                '--capture-frame=30',"--capture=$CapturePath")
+        ) -TimeoutSeconds 300 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.preset -ne $Preset -or $Profile.build.source_sha -ne $SourceSha -or
+            -not $Profile.source_unchanged -or -not $Profile.matter.active -or -not $Profile.matter.visible -or
+            $Profile.matter.regions.Count -ne 3 -or $Profile.draw_calls_3d -lt 1 -or $Profile.samples -lt 60 -or
+            $Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
+            $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
+            -not $Profile.platform.software_device -or
+            $Profile.render_target_pixels[0] -ne $Dimensions[0] -or $Profile.render_target_pixels[1] -ne $Dimensions[1]) {
+            throw "Incomplete procedural packaged execution: $Preset"
+        }
+        $Qualification.scenes += [ordered]@{
+            preset=$Preset; status='EXECUTED'; capture=(Split-Path -Leaf $CapturePath)
+            capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            capture_dimensions=$Dimensions; profile=(Split-Path -Leaf $ProfilePath)
+            samples=$Profile.samples; device=$Profile.platform.device
+            wall_p50_ms=$Profile.wall_frame.p50_ms; wall_p95_ms=$Profile.wall_frame.p95_ms
+            draw_calls_3d=$Profile.draw_calls_3d; generated_regions=$Profile.matter.regions
+        }
+    }
+    # Isolate the cost of the generated layer on the identical dense scene.
+    $DisabledProfile = Join-Path $Evidence 'ecosystem-disabled.json'
+    $DisabledLog = Join-Path $Evidence 'ecosystem-disabled-engine.log'
+    Invoke-Checked -Name 'ecosystem-disabled' -Executable $Application -Arguments (
+        $Graphics + @('--log-file',$DisabledLog,'--','--preset=ecosystem','--hide-panel','--no-matter',
+            '--warmup=45','--profile-frames=60',"--profile=$DisabledProfile")
+    ) -TimeoutSeconds 240 -EngineLog $DisabledLog
+    $Disabled = Get-Content -Raw $DisabledProfile | ConvertFrom-Json
+    if ($Disabled.matter.visible -or $Disabled.samples -lt 60 -or $Disabled.build.source_sha -ne $SourceSha) {
+        throw 'Effect-disabled comparison did not suppress the procedural layer'
+    }
+    $Qualification.effect_disabled = 'ecosystem-disabled.json'
+    # Additional views and effect-disabled comparison from the extracted executable.
+    $Qualification.comparisons = @()
+    foreach ($Preset in @('optical_dichroic','optical_weather','optical_lens','optical_garden','optical_microfibres','optical_ecosystem')) {
+        $CapturePath = Join-Path $Evidence ($Preset + '-close.png')
+        $ProfilePath = Join-Path $Evidence ($Preset + '-close.json')
+        $EngineLog = Join-Path $Evidence ($Preset + '-close-engine.log')
+        Invoke-Checked -Name ($Preset + '-close') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel', '--close-optics',
+                '--warmup=45', '--profile-frames=15', "--profile=$ProfilePath", '--capture-frame=30', "--capture=$CapturePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        $Qualification.comparisons += [ordered]@{preset=$Preset; mode='close'; capture=(Split-Path -Leaf $CapturePath);
+            capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant(); dimensions=$Dimensions;
+            profile=(Split-Path -Leaf $ProfilePath)}
+    }
+    foreach ($Preset in @('optical_weather','optical_lens','optical_garden','optical_ecosystem')) {
+        $ProfilePath = Join-Path $Evidence ($Preset + '-legacy.json')
+        $EngineLog = Join-Path $Evidence ($Preset + '-legacy-engine.log')
+        Invoke-Checked -Name ($Preset + '-legacy') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel', '--legacy-optics',
+                '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Disabled = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        if ($Disabled.optical.optical_matter_mix -ne 0 -or $Disabled.optical.secondary_film_draws -ne 0 -or $Disabled.optical.refraction_screen_copy_active) {
+            throw "Legacy comparison retained experimental optical passes: $Preset"
+        }
+        $Qualification.comparisons += [ordered]@{preset=$Preset; mode='legacy-optics'; profile=(Split-Path -Leaf $ProfilePath);
+            wall_p50_ms=$Disabled.wall_frame.p50_ms; wall_p95_ms=$Disabled.wall_frame.p95_ms; draw_calls_3d=$Disabled.draw_calls_3d}
+    }
+    Invoke-Checked -Name 'ecology-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_ecology_probe.gd'),
+            '--log-file', (Join-Path $Evidence 'ecology-gui-engine.log'), '--', "--output-prefix=$(Join-Path $Evidence 'ecology-gui')")
+    ) -EngineLog (Join-Path $Evidence 'ecology-gui-engine.log') -TimeoutSeconds 240
+    $GuiReceipt = Get-Content -Raw (Join-Path $Evidence 'ecology-gui.json') | ConvertFrom-Json
+    if ($GuiReceipt.status -ne 'PASS' -or $GuiReceipt.checks -lt 12) { throw 'Ecology graphical input receipt incomplete' }
+    $Qualification.ecology_gui = $GuiReceipt
+    $Qualification.ecology = @()
+    for ($PresetIndex = 0; $PresetIndex -lt 6; $PresetIndex++) {
+        $Name = "ecosystem-$PresetIndex"
+        $ProfilePath = Join-Path $Evidence ($Name + '.json')
+        $CapturePath = Join-Path $Evidence ($Name + '.png')
+        $EngineLog = Join-Path $Evidence ($Name + '-engine.log')
+        Invoke-Checked -Name ($Name + '-extracted-vulkan') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--ecosystem=$PresetIndex", '--eco-steps=360',
+                '--eco-clean', "--eco-profile=$ProfilePath", "--eco-capture=$CapturePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.build.source_sha -ne $SourceSha -or $Profile.ecology_schema -ne 'xenovection.ecology.observations.v1' -or
+            $Profile.configuration.preset -ne $PresetIndex -or $Profile.simulation.tick -ne 360 -or
+            $Profile.simulation.population -gt 192 -or $Profile.samples -lt 59 -or $Profile.wall_frame.p50_ms -le 0 -or
+            $Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
+            $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
+            -not $Profile.platform.software_device -or $Profile.digest -notmatch '^[0-9a-f]{64}$') {
+            throw "Invalid extracted ecology profile: $Name"
+        }
+        if ($PresetIndex -eq 0 -and $Profile.simulation.segments -lt 1) { throw 'Mycelial topology missing' }
+        if ($Profile.simulation.signal_mean -le 0) { throw "No shared signal in $Name" }
+        $Qualification.ecology += [ordered]@{
+            preset = $PresetIndex; status = 'EXECUTED'; capture = (Split-Path -Leaf $CapturePath)
+            capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            capture_dimensions = $Dimensions; profile = (Split-Path -Leaf $ProfilePath)
+            ticks = $Profile.simulation.tick; population = $Profile.simulation.population
+            segments = $Profile.simulation.segments; digest = $Profile.digest
+            wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
+            mode = '360 fixed steps in batches of four; software rendering; not wall-clock ecology throughput'
+        }
+    }
+    # Independent extracted control: disable the complete inter-organism interaction path.
+    $Control = Join-Path $Evidence 'ecosystem-vortex-control.json'
+    $ControlLog = Join-Path $Evidence 'ecosystem-vortex-control-engine.log'
+    Invoke-Checked -Name 'ecosystem-vortex-interaction-disabled' -Executable $Application -Arguments (
+        $Graphics + @('--log-file', $ControlLog, '--', '--ecosystem=1', '--eco-steps=360', '--eco-no-interactions', '--eco-clean', "--eco-profile=$Control")
+    ) -TimeoutSeconds 240 -EngineLog $ControlLog
+    $Off = Get-Content -Raw $Control | ConvertFrom-Json
+    $On = Get-Content -Raw (Join-Path $Evidence 'ecosystem-1.json') | ConvertFrom-Json
+    if ($Off.build.source_sha -ne $SourceSha -or $Off.simulation.tick -ne 360 -or $Off.configuration.interactions -or
+        $Off.simulation.signal_mean -ne 0 -or $Off.simulation.queries -ne 0 -or
+        $Off.spatial_digest -eq $On.spatial_digest) { throw 'Extracted vortex interaction control failed' }
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Six baseline and six ecology native Windows PNGs; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'

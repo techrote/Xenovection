@@ -1,0 +1,41 @@
+name: ECOSYSTEM-001 Windows evaluator
+
+on:
+  pull_request:
+    branches: [main]
+    paths: ['app/ecology/**', 'tests/test_ecology.gd', '.github/workflows/ecosystem.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'feature/ecosystem-001-artificial-life'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache@v4
+        with:
+          path: .runtime
+          key: xenovection-windows-godot-4.7.2-mesa-26.3.1-v1
+      - name: Qualify exact extracted application, baseline and ecosystems
+        shell: pwsh
+        run: ./tools/windows_evaluator.ps1
+      - name: Upload exact-head evaluator and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xenovection-Ecosystem-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            build/Xenovection-ECOSYSTEM-001-Windows-*.zip
+            build/package-receipt.json
+            build/windows-evidence/**
+          if-no-files-found: error
+          retention-days: 30

@@ -1,4 +1,4 @@
-XENOVECTION — FOUND-002
+XENOVECTION — MAINLINE-CONVERGENCE-001
 Native GPU visual synthesis · Draft/HOLD owner evaluator
 
 RUN
@@ -15,6 +15,20 @@ TRY THIS FIRST
 5. Press G to inspect exact source topology without decorative effects.
 6. Press G again, then U, to return that selected region to moving hairlines.
 
+MODULAR SYNTH
+F7 opens Synth. Recall one of six example patches; Perform opens the XY pad,
+manual macros, envelope triggers, tempo and independent clocks. Patch opens the
+source/route editor. Blank starts a new patch; New component, choose kind and
+clock, Apply component, then New route, choose signal and searchable destination,
+signed depth and offset, Apply route. Routes may be bypassed or soloed.
+Save/Load uses a private user JSON slot; Import/Export opens a file chooser.
+Morph loads the slot with a 0.8s transition only for identical scene/wiring.
+Undo/Redo are patch edits; Ctrl+Z remains original selection undo.
+Recall resets to the example scene. Stop or keys 1–7 return to baseline.
+Patch edits restart graph phase/history. Pause freezes state; analytical clocks
+can reverse but stateful delay, slew and walks do not reverse their history.
+F5/F6 includes authored patch settings in scene snapshots, not runtime history.
+
 CONTROLS
 MMB: orbit. Shift+MMB: pan. Hold RMB: capture pointer and fly with WASD/QE.
 Shift accelerates flight; Ctrl slows it. Release RMB or press Esc to release.
@@ -22,7 +36,7 @@ Click: exact source node/edge. Drag: through-depth source-region selection.
 Shift adds to selection. F focuses selection. I isolates/reveals it.
 M materialises a knot. U removes the proxy. Ctrl+Z / Ctrl+Shift+Z undo/redo visuals.
 Space pauses all clocks; V reverses them. Clocks tab controls each separately.
-R resets the preset. Keys 1–7 select presets. Tab hides the panel; H hides the HUD.
+R resets the preset. Keys 1–9 and 0 select the first ten presets; all thirteen are available in the picker. Tab hides the panel; H hides the HUD.
 F5 saves scene; F6 recalls it. F9 exports exact selection. F10 exports metrics.
 F12 captures the actual viewport. Exports are in %APPDATA%\Godot\app_userdata\Xenovection.
 
@@ -51,3 +65,40 @@ BUILD AND LICENSES
 BUILD.json identifies source/engine/specimen; SHA256SUMS.json identifies payload.
 Godot Engine 4.7.2 and third-party notices are included under licenses/.
 The optical fields are original mathematical implementations, not copied donor code.
+
+PROCEDURAL MATTER
+Choose presets 08–13 in the header, open Matter. Select any of three region
+slots, toggle visibility, edit placement, then focus (F) or isolate (I).
+Condensation changes the actual gap between persistent strips; at 1 the strips
+meet in a film. Shell wraps the same domain. Pores and growth change the film.
+Flow mode integrates seeded fields on the CPU when topology is edited or when
+Reintegrate is clicked. Strength, origin and mix animate the local GPU distortion
+immediately; Reintegrate bakes them into flow geometry. Particles advance with
+bounded positive filament-clock steps, pause on reverse; reset restarts them.
+F5/F6 preserves region IDs, bases and baked field settings; history-dependent
+particle positions restart, not a reversible simulation snapshot. Ctrl+Z undoes
+region edits. G hides generated matter and exposes exact source data.
+
+OPTICAL-003 — six additional editable optical studies, numbered 14–19.
+Optics > Optical matter: mix 0 = accepted legacy appearance; mix 1 enables the optical model.
+Thickness is authored in micrometres, not measured geometry; absorption is per micrometre.
+Layer spacing creates one shared-mesh offset film. Refraction > 0 selects an opaque-background
+screen-copy experiment; transparent strands and other films cannot appear in that copy.
+Use the existing independent Sky, Palette, Normal and Displacement clocks. Diagnostic 1/2/3
+shows estimated path, RGB transmission or Fresnel. Reset via preset; F5/F6 saves/recalls authored controls.
+Use Forward+; the screen depth test is specifically reverse-Z Forward+.
+
+ECOSYSTEM WORKSPACE
+Run Launch-Ecosystem.cmd, or select Life > Open Ecosystem in the original instrument.
+Six seeded ecosystems; choose the preset in the rail. Space pauses; Step advances
+one 1/30 second tick. R resets to authored conditions. Set a seed before reset.
+Select a tool, then click the ecology canvas to inspect, plant, place a resource
+source/sink, or excite/inhibit the shared signal. Field view and quality do not
+alter simulation. The interactions toggle disables consumption, deposits and
+neighbor coupling, enabling paired comparisons. Reproduction is opt-in except
+Terrarium. F5/F6 save/recall initial configurations, not simulation snapshots.
+F10 exports a bounded trace to the application user-data folder. Tab hides the
+rail. Escape returns to the source instrument (reloads its starting state).
+Profile-Ecosystem.cmd collects a live Vortex Colony 600-frame profile.
+Planar ecology is an artistic computational model, not a biological simulation.
+The membrane perforation rings are a visual approximation, not optical holes.
