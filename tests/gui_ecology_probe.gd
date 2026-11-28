@@ -22,16 +22,24 @@ func check(ok: bool, description: String) -> void:
 		failures.append(description)
 		print("FAIL: ", description)
 
+func screen_point(p: Vector2) -> Vector2:
+	# Control.get_global_rect() is expressed in the root viewport's logical
+	# canvas. Input.parse_input_event expects screen coordinates. Keep this
+	# identical to the already-qualified general graphical-input probe so
+	# window decoration, DPI and stretch transforms cannot offset gestures.
+	return root.get_screen_transform() * p
+
 func click(p: Vector2) -> void:
+	var mapped := screen_point(p)
 	var motion = InputEventMouseMotion.new()
-	motion.position = p
-	motion.global_position = p
+	motion.position = mapped
+	motion.global_position = mapped
 	Input.parse_input_event(motion)
 	await frames(1)
 	for pressed in [true, false]:
 		var e = InputEventMouseButton.new()
-		e.position = p
-		e.global_position = p
+		e.position = mapped
+		e.global_position = mapped
 		e.button_index = MOUSE_BUTTON_LEFT
 		e.pressed = pressed
 		e.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed else 0
@@ -42,6 +50,7 @@ func key(code: Key) -> void:
 	for pressed in [true, false]:
 		var event = InputEventKey.new()
 		event.keycode = code
+		event.physical_keycode = code
 		event.pressed = pressed
 		Input.parse_input_event(event)
 		await frames(2)
@@ -73,6 +82,7 @@ func _run() -> void:
 	var tabs: TabContainer = main.ui.tabs
 	tabs.current_tab = tabs.get_tab_count() - 1
 	await frames(4)
+	check(button.is_visible_in_tree() and button.get_global_rect().has_area(), "Life entry control is laid out and visible before input")
 	await click(button.get_global_rect().get_center())
 	await frames(8)
 	app = current_scene
