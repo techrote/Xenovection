@@ -24,12 +24,14 @@ func setup(host) -> void:
 	_button("Show spatial ecology", func(): application.set_workspace("spatial", true))
 	enabled_control = CheckButton.new()
 	enabled_control.text = "Ecology active"
+	enabled_control.focus_mode = Control.FOCUS_NONE
 	enabled_control.set_meta("target", "ecology.enabled")
 	add_child(enabled_control)
 	enabled_control.toggled.connect(func(value):
 		if not syncing: application.set_ecology_enabled(value))
 	edit_control = CheckButton.new()
 	edit_control.text = "Edit ecology in viewport"
+	edit_control.focus_mode = Control.FOCUS_NONE
 	edit_control.button_pressed = true
 	edit_control.tooltip_text = "While Life is selected, left clicks map to the fixed numerical plane. Camera navigation keeps its own mouse buttons."
 	add_child(edit_control)

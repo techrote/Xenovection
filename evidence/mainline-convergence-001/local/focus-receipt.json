@@ -1,0 +1,32 @@
+{
+  "schema": "xenovection.gui-focus-comparison.v1",
+  "finding": "Focused CheckButton toggles on Space release in addition to the global transport action on press. FOCUS_NONE preserves ecology activation and one transport action.",
+  "reproductions": [
+    {
+      "active_after_space": false,
+      "active_before_space": true,
+      "corrected": false,
+      "expected_behavior_reproduced": true,
+      "focus_after_step": "EcologyActive",
+      "focus_mode": 2,
+      "global_space_events": 1,
+      "schema": "xenovection.gui-focus-reproduction.v1",
+      "scope": "Actual Control event routing via Viewport.push_input in headless Godot; not Windows graphical qualification",
+      "step_presses": 1,
+      "log": "focus-adverse.log"
+    },
+    {
+      "active_after_space": true,
+      "active_before_space": true,
+      "corrected": true,
+      "expected_behavior_reproduced": true,
+      "focus_after_step": "none",
+      "focus_mode": 0,
+      "global_space_events": 1,
+      "schema": "xenovection.gui-focus-reproduction.v1",
+      "scope": "Actual Control event routing via Viewport.push_input in headless Godot; not Windows graphical qualification",
+      "step_presses": 1,
+      "log": "focus-corrected.log"
+    }
+  ]
+}

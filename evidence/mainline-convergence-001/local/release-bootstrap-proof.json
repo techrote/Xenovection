@@ -1,0 +1,69 @@
+{
+  "schema": "xenovection.release-bootstrap-proof.v1",
+  "scope": "Actual official Linux release export-template execution; focused dispatch and startup proof, not Windows Vulkan qualification",
+  "source_working_tree_base": "24ca7ce829866868c98226aa56902506bdf839cb",
+  "bootstrap_sha256": "b506e4be1f8ff563912d9aa726340dd12f69447f1354414a1f6698eea1b46e84",
+  "bootstrap_scene_sha256": "8da9bbebc73f38399c22296a94d39648d628b022662e73eaeaae1ae41b40261c",
+  "project_settings_sha256": "cea4aa86bd7164f1f9cc83f00fe5d841d50eba640cf9b3209c4c1684197eb193",
+  "official_template_download": {
+    "official_asset_url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz",
+    "archive_bytes": 1281349702,
+    "archive_full_sha256": "not recomputed: only exact member range retrieved",
+    "member": "templates/linux_release.x86_64",
+    "compressed_bytes": 28311148,
+    "member_bytes": 73519416,
+    "member_crc32": "272fec0c",
+    "central_directory_crc32": "272fec0c",
+    "member_sha256": "d9f79ab89b5ae369aeed11c6052d402e8218cd503bf85b4a235f9c30c46a7c63",
+    "range_requests": 6,
+    "downloaded_bytes": 28314814
+  },
+  "exported_executable_bytes": 73519416,
+  "exported_executable_sha256": "d9f79ab89b5ae369aeed11c6052d402e8218cd503bf85b4a235f9c30c46a7c63",
+  "pack_bytes": 718924,
+  "pack_sha256": "5dc36b1a0747854a70aebe6666c4d27575a4735cf570b775531b46c71008d4c1",
+  "exact_staged_scripts": 20,
+  "all_staged_hashes_match_source_and_manifest": true,
+  "executions": [
+    {
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_core.gd"
+      ],
+      "exit_code": 0,
+      "checks": 71,
+      "failures": 0,
+      "marker": "XENOVECTION_QUALIFICATION_SCRIPT_STARTED test_core.gd",
+      "log": "release-bootstrap-core.log"
+    },
+    {
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_convergence.gd"
+      ],
+      "exit_code": 0,
+      "checks": 68,
+      "failures": 0,
+      "marker": "XENOVECTION_QUALIFICATION_SCRIPT_STARTED test_convergence.gd",
+      "log": "release-bootstrap-convergence.log"
+    },
+    {
+      "arguments": [
+        "--headless",
+        "--quit-after",
+        "40"
+      ],
+      "exit_code": 0,
+      "normal_startup_count": 1,
+      "log": "release-bootstrap-normal.log"
+    }
+  ],
+  "engine_errors_or_leaks": [],
+  "limits": [
+    "No display server or Vulkan graphics exercised.",
+    "Working-copy bootstrap file identity is explicit; no claim that the earlier failed Windows candidate contains this correction.",
+    "Template ZIP member CRC verified; full1.28GB archive SHA was not recomputed after bounded HTTP-range extraction."
+  ]
+}

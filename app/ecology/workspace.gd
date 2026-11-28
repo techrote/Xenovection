@@ -204,16 +204,19 @@ func _build_ui() -> void:
 	seed_box.step = 1
 	rail.add_child(seed_box)
 	interaction_button = CheckButton.new()
+	interaction_button.focus_mode = Control.FOCUS_NONE
 	interaction_button.text = "Shared ecological interactions"
 	rail.add_child(interaction_button)
 	interaction_button.toggled.connect(func(v): 
 		if not syncing: world.config.interactions = v)
 	reproduction_button = CheckButton.new()
+	reproduction_button.focus_mode = Control.FOCUS_NONE
 	reproduction_button.text = "Birth / death / inheritance"
 	rail.add_child(reproduction_button)
 	reproduction_button.toggled.connect(func(v):
 		if not syncing: world.config.reproduce = v)
 	mod_button = CheckButton.new()
+	mod_button.focus_mode = Control.FOCUS_NONE
 	mod_button.text = "Shared slow growth/excitation patch" if hosted else "Slow growth/excitation modulation"
 	rail.add_child(mod_button)
 	mod_button.toggled.connect(func(v):

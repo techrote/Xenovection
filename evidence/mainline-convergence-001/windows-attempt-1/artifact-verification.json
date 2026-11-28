@@ -1,0 +1,11 @@
+{
+  "run_id": 46155543695,
+  "artifact_id": 15267149516,
+  "source_sha": "24ca7ce829866868c98226aa56902506bdf839cb",
+  "source_tree": "07c74a12cf4daa5ea0e4f7a4b4ac41aabd5edc5b",
+  "outer_bytes": 38835705,
+  "outer_sha256": "cd64033bf95951ac2df74110e67d21c0e6f189d2d2e989fc849fe26c6804b503",
+  "outer_hash_verified": true,
+  "disposition": "FAIL: official release template ignored editor-only --script; no extracted assertions or graphical gates qualified",
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46155543695/artifacts/15267149516"
+}

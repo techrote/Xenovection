@@ -1,0 +1,13 @@
+{
+  "official_asset_url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz",
+  "archive_bytes": 1281349702,
+  "archive_full_sha256": "not recomputed: only exact member range retrieved",
+  "member": "templates/linux_release.x86_64",
+  "compressed_bytes": 28311148,
+  "member_bytes": 73519416,
+  "member_crc32": "272fec0c",
+  "central_directory_crc32": "272fec0c",
+  "member_sha256": "d9f79ab89b5ae369aeed11c6052d402e8218cd503bf85b4a235f9c30c46a7c63",
+  "range_requests": 6,
+  "downloaded_bytes": 28314814
+}

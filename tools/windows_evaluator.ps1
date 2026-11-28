@@ -73,6 +73,26 @@ function Invoke-Checked {
     if (-not $Passed) { throw "$Name failed (exit $ExitCode; timeout=$(-not $Finished); engine_error=$HasEngineError). See $Log" }
 }
 
+function Invoke-ExtractedScript {
+    param(
+        [Parameter(Mandatory)][string]$Name,
+        [Parameter(Mandatory)][string]$ScriptName,
+        [string[]]$EngineArguments = @('--headless'),
+        [string[]]$UserArguments = @(),
+        [int]$TimeoutSeconds = 600,
+        [string]$EngineLog = ''
+    )
+    # Official release templates disable the editor-only --script path override.
+    # The application bootstrap runs the exact embedded script on its SceneTree.
+    Invoke-Checked -Name $Name -Executable $Application -Arguments (
+        $EngineArguments + @('--', ('--qualification-script=' + $ScriptName)) + $UserArguments
+    ) -TimeoutSeconds $TimeoutSeconds -EngineLog $EngineLog
+    $DispatchLog = Get-Content -Raw (Join-Path $Evidence ($Name + '.log'))
+    if ($DispatchLog -notmatch [regex]::Escape('XENOVECTION_QUALIFICATION_SCRIPT_STARTED ' + $ScriptName)) {
+        throw "Extracted executable did not dispatch the requested qualification script: $ScriptName"
+    }
+}
+
 function Assert-FileHash {
     param([string]$Path, [string]$Expected)
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { throw "Missing file: $Path" }
@@ -238,17 +258,15 @@ try {
     foreach ($Script in @('test_core.gd', 'test_integration.gd', 'test_matter.gd', 'test_synth.gd',
         'test_ecology.gd', 'test_compositions.gd', 'test_matter_optics.gd', 'test_convergence_ecology.gd',
         'test_convergence.gd', 'verify_filaments.gd', 'verify_optical.gd')) {
-        Invoke-Checked -Name ('extracted-' + $Script.Replace('.gd', '')) -Executable $Application -Arguments @(
-            '--headless', '--script', ('res://qualification/' + $Script)
-        ) -TimeoutSeconds 600
+        $ScriptTimeout = $(if ($Script -eq 'test_core.gd') { 60 } else { 600 })
+        Invoke-ExtractedScript -Name ('extracted-' + $Script.Replace('.gd', '')) -ScriptName $Script -TimeoutSeconds $ScriptTimeout
     }
-    Invoke-Checked -Name 'extracted-full-resource-soak' -Executable $Application -Arguments @(
-        '--headless', '--script', 'res://qualification/test_soak.gd', '--',
+    Invoke-ExtractedScript -Name 'extracted-full-resource-soak' -ScriptName 'test_soak.gd' -UserArguments @(
         "--receipt=$(Join-Path $Evidence 'extracted-soak.json')"
     ) -TimeoutSeconds 900
     $ExtractedBits = Join-Path $Evidence 'extracted-source-f64.bin'
-    Invoke-Checked -Name 'extracted-source-export' -Executable $Application -Arguments @(
-        '--headless', '--script', 'res://qualification/export_source_bits.gd', '--', "--output=$ExtractedBits"
+    Invoke-ExtractedScript -Name 'extracted-source-export' -ScriptName 'export_source_bits.gd' -UserArguments @(
+        "--output=$ExtractedBits"
     )
     Invoke-Checked -Name 'extracted-source-binary64-exactness' -Executable 'python' -Arguments @(
         (Join-Path $RepoRoot 'tests/verify_source_exact.py'), '--bits', $ExtractedBits,
@@ -260,10 +278,9 @@ try {
     foreach ($Probe in @('material', 'spatial_ecology', 'convergence')) {
         $ProbePrefix = Join-Path $Evidence ('gui-' + $Probe)
         $ProbeLog = $ProbePrefix + '-engine.log'
-        Invoke-Checked -Name ('extracted-graphical-' + $Probe) -Executable $Application -Arguments (
-            $Graphics + @('--script', ('res://qualification/gui_' + $Probe + '_probe.gd'),
-                '--log-file', $ProbeLog, '--', "--output-prefix=$ProbePrefix")
-        ) -TimeoutSeconds 600 -EngineLog $ProbeLog
+        Invoke-ExtractedScript -Name ('extracted-graphical-' + $Probe) -ScriptName ('gui_' + $Probe + '_probe.gd') -EngineArguments (
+            $Graphics + @('--log-file', $ProbeLog)
+        ) -UserArguments @("--output-prefix=$ProbePrefix") -TimeoutSeconds 600 -EngineLog $ProbeLog
         $ProbeReceipt = Get-Content -Raw ($ProbePrefix + '.json') | ConvertFrom-Json
         if ($ProbeReceipt.status -ne 'PASS' -or $ProbeReceipt.checks -lt 15) {
             throw "Incomplete graphical interoperability receipt: $Probe"
@@ -341,10 +358,9 @@ try {
     }
     # SYNTH-002 source GUI input probe and exact extracted-package patch profiles.
     $GuiPrefix = Join-Path $Evidence 'synth-gui'
-    Invoke-Checked -Name 'synth-graphical-input' -Executable $Application -Arguments (
-        $Graphics + @('--script', 'res://qualification/gui_synth_probe.gd',
-            '--log-file', (Join-Path $Evidence 'synth-gui-engine.log'), '--', "--output-prefix=$GuiPrefix")
-    ) -TimeoutSeconds 300 -EngineLog (Join-Path $Evidence 'synth-gui-engine.log')
+    Invoke-ExtractedScript -Name 'synth-graphical-input' -ScriptName 'gui_synth_probe.gd' -EngineArguments (
+        $Graphics + @('--log-file', (Join-Path $Evidence 'synth-gui-engine.log'))
+    ) -UserArguments @("--output-prefix=$GuiPrefix") -TimeoutSeconds 300 -EngineLog (Join-Path $Evidence 'synth-gui-engine.log')
     $null = Read-PngDimensions -Path ($GuiPrefix + '.png')
     $Qualification.synth_patches = @()
     $PatchNames = @('Vortex Conductor', 'Weather Instrument', 'Filament Sequencer', 'Spectral Layers', 'Autonomous Organism', 'XY Morphosis')
@@ -380,10 +396,9 @@ try {
     # A real input route test on the same source and pinned graphics stack.
     $GuiLog = Join-Path $Evidence 'gui-input-engine.log'
     $GuiPrefix = Join-Path $Evidence 'gui-input'
-    Invoke-Checked -Name 'graphical-input' -Executable $Application -Arguments (
-        $Graphics + @('--script','res://qualification/gui_input_probe.gd',
-            '--log-file',$GuiLog,'--',"--output-prefix=$GuiPrefix")
-    ) -TimeoutSeconds 480 -EngineLog $GuiLog
+    Invoke-ExtractedScript -Name 'graphical-input' -ScriptName 'gui_input_probe.gd' -EngineArguments (
+        $Graphics + @('--log-file', $GuiLog)
+    ) -UserArguments @("--output-prefix=$GuiPrefix") -TimeoutSeconds 480 -EngineLog $GuiLog
     foreach ($Preset in @('nursery','garden','living','films','condensation','ecosystem')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
@@ -454,10 +469,9 @@ try {
         $Qualification.comparisons += [ordered]@{preset=$Preset; mode='legacy-optics'; profile=(Split-Path -Leaf $ProfilePath);
             wall_p50_ms=$Disabled.wall_frame.p50_ms; wall_p95_ms=$Disabled.wall_frame.p95_ms; draw_calls_3d=$Disabled.draw_calls_3d}
     }
-    Invoke-Checked -Name 'ecology-graphical-input' -Executable $Application -Arguments (
-        $Graphics + @('--script', 'res://qualification/gui_ecology_probe.gd',
-            '--log-file', (Join-Path $Evidence 'ecology-gui-engine.log'), '--', "--output-prefix=$(Join-Path $Evidence 'ecology-gui')")
-    ) -EngineLog (Join-Path $Evidence 'ecology-gui-engine.log') -TimeoutSeconds 240
+    Invoke-ExtractedScript -Name 'ecology-graphical-input' -ScriptName 'gui_ecology_probe.gd' -EngineArguments (
+        $Graphics + @('--log-file', (Join-Path $Evidence 'ecology-gui-engine.log'))
+    ) -UserArguments @("--output-prefix=$(Join-Path $Evidence 'ecology-gui')") -EngineLog (Join-Path $Evidence 'ecology-gui-engine.log') -TimeoutSeconds 240
     $GuiReceipt = Get-Content -Raw (Join-Path $Evidence 'ecology-gui.json') | ConvertFrom-Json
     if ($GuiReceipt.status -ne 'PASS' -or $GuiReceipt.checks -lt 18) { throw 'Ecology graphical input receipt incomplete' }
     $Qualification.ecology_gui = $GuiReceipt
@@ -557,8 +571,8 @@ try {
         $NoOptics.build.source_sha -ne $SourceSha -or $NoOptics.samples -lt 90) {
         throw 'Integrated effect-disabled optical comparison failed'
     }
-    Invoke-Checked -Name 'graphical-capture-health' -Executable $Application -Arguments @(
-        '--headless', '--script', 'res://qualification/verify_captures.gd', '--', "--capture-directory=$Evidence",
+    Invoke-ExtractedScript -Name 'graphical-capture-health' -ScriptName 'verify_captures.gd' -UserArguments @(
+        "--capture-directory=$Evidence",
         "--output=$(Join-Path $Evidence 'capture-health.json')"
     ) -TimeoutSeconds 180
     $Qualification.capture_health = Get-Content -Raw (Join-Path $Evidence 'capture-health.json') | ConvertFrom-Json
