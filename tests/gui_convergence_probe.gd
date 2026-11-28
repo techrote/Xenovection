@@ -9,6 +9,7 @@ var previous_save := PackedByteArray()
 var had_save := false
 var interaction_trace: Array[Dictionary] = []
 var captured_menu_failure := false
+var last_click_hold_usec := 0
 
 func _initialize() -> void:
 	for argument in OS.get_cmdline_user_args():
@@ -184,6 +185,7 @@ func choose(control: OptionButton, index: int) -> void:
 	var trace := {"event": "option", "path": str(control.get_path()),
 		"requested": index, "requested_text": control.get_item_text(index),
 		"selected_before": control.selected, "visible_in_tree": control.is_visible_in_tree(),
+		"popup_before_pointer": control.get_popup().visible,
 		"disabled": control.disabled, "rect_before": str(control.get_global_rect()),
 		"screen_transform": str(root.get_screen_transform()), "form_before": form_state()}
 	interaction_trace.append(trace)
@@ -194,6 +196,7 @@ func choose(control: OptionButton, index: int) -> void:
 	trace.popup_window_id = popup.get_window_id()
 	trace.popup_position = str(popup.position)
 	trace.popup_size = str(popup.size)
+	trace.click_hold_usec = last_click_hold_usec
 	trace.selected_after_pointer = control.selected
 	trace.focused_items = [popup.get_focused_item()]
 	check(popup.visible, "Actual pointer opens option menu")
@@ -261,24 +264,30 @@ func motion(point: Vector2) -> void:
 	await frames(1)
 
 func mouse(point: Vector2, code: MouseButton, pressed: bool, factor := 1.0) -> void:
+	mouse_event(point, code, pressed, factor)
+	await frames(1)
+
+func mouse_event(point: Vector2, code: MouseButton, pressed: bool, factor := 1.0) -> void:
 	var mapped := root.get_screen_transform() * point
 	var event := InputEventMouseButton.new()
 	event.position = mapped
 	event.global_position = mapped
 	event.button_index = code
 	event.pressed = pressed
+	event.button_mask = MOUSE_BUTTON_MASK_LEFT if pressed and code == MOUSE_BUTTON_LEFT else 0
 	event.factor = factor
 	Input.parse_input_event(event)
 	input_events += 1
-	await frames(1)
 
 func click(point: Vector2) -> void:
-	# Match the independently Windows-qualified material/spatial event sequence.
-	# A release-time motion can fall inside a newly opened popup near the bottom
-	# of the viewport and activate an item before keyboard navigation begins.
+	# A click is one motion followed by a prompt press/release pair. Waiting for
+	# a software-rendered frame while held turns it into a long press: an upward
+	# popup can overlap the button and legitimately select the item on release.
 	await motion(point)
-	await mouse(point, MOUSE_BUTTON_LEFT, true)
-	await mouse(point, MOUSE_BUTTON_LEFT, false)
+	var pressed_at := Time.get_ticks_usec()
+	mouse_event(point, MOUSE_BUTTON_LEFT, true)
+	mouse_event(point, MOUSE_BUTTON_LEFT, false)
+	last_click_hold_usec = Time.get_ticks_usec() - pressed_at
 	await frames(2)
 
 func frames(count: int) -> void:

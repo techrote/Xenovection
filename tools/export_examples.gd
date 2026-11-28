@@ -23,6 +23,7 @@ func _run() -> void:
 	application.set_process(false)
 	application.ecology.set_process(false)
 	var rows: Array = []
+	var patches: Array = []
 	for index in range(application.presets.size()):
 		application.apply_preset(index)
 		application._process(0.0)
@@ -40,20 +41,27 @@ func _run() -> void:
 				push_error("Could not export integrated patch: " + filename)
 				quit(1)
 				return
+			patches.append({"id": "patch." + str(preset.stable_id), "title": preset.title,
+				"preset_id": preset.stable_id, "patch": "patches/" + filename})
 	var instruments: Array = Examples.all()
 	for index in range(instruments.size()):
 		if not application.install_synth_patch(instruments[index].patch, true):
 			push_error("Cannot export retained instrument: " + application.synth_error)
 			quit(1)
 			return
-		if not Graph.write_patch(output.path_join("patches").path_join("synth-%02d.json" % (index + 1)), application.synth.snapshot(application.bus)):
+		var patch_filename := "synth-%02d.json" % (index + 1)
+		var authored: Dictionary = application.synth.snapshot(application.bus)
+		if not Graph.write_patch(output.path_join("patches").path_join(patch_filename), authored):
 			quit(1)
 			return
+		patches.append({"id": "patch.synth.%02d" % (index + 1), "title": instruments[index].title,
+			"preset_id": authored.preset_id, "patch": "patches/" + patch_filename})
 	var manifest := FileAccess.open(output.path_join("INDEX.json"), FileAccess.WRITE)
-	manifest.store_string(JSON.stringify({"schema": "xenovection.examples.v1", "scenes": rows,
-		"history_scope": "Authored initial states; transient numerical histories restart."}, "\t"))
+	manifest.store_string(JSON.stringify({"schema": "xenovection.examples.v1", "scenes": rows, "patches": patches,
+		"history_scope": "Authored initial states; transient numerical histories restart.",
+		"patch_recall_scope": "Patch recall reapplies its referenced composition; use a whole scene to retain matter, optical and ecology initial authoring together."}, "\t"))
 	manifest.close()
 	root.remove_child(application)
 	application.free()
-	print("EXPORTED_EXAMPLES ", rows.size(), " compositions; ", instruments.size(), " retained instruments")
+	print("EXPORTED_EXAMPLES ", rows.size(), " compositions; ", patches.size(), " indexed patches")
 	quit(0)

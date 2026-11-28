@@ -1,0 +1,16 @@
+{
+  "source_sha": "114768ca41b198c4f06f849bb448664b4f2708e9",
+  "tree_sha": "ca2e3ffff6480a15f81a96201981a8428faee03a",
+  "run_id": 46160476697,
+  "artifact_id": 15270016591,
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46160476697/artifacts/15270016591",
+  "outer_bytes": 40929441,
+  "outer_sha256": "d70f4942f3d6114a1228b72b466dfab4150c2948ff9064c1696af122dd711915",
+  "inner": {
+    "archive": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-114768ca41b1.zip",
+    "bytes": 38967825,
+    "sha256": "25b16b98d4de6b0b9b5f5fbf1a4b4521fccc44e5b86b27f7a6079b37d9378b55"
+  },
+  "workflow_status": "FAIL",
+  "disposition": "Adverse evidence; not the definitive evaluator"
+}

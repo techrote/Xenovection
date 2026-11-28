@@ -69,6 +69,22 @@ REQUIRED_GATES.update("composition-%s-%s" % (name, view) for name in COMPOSITION
 REQUIRED_LAUNCHERS = {"Launch-Xenovection.cmd", "Launch-Compatibility.cmd", "Launch-Ecosystem.cmd",
                       "Launch-Integrated.cmd", "Profile-This-PC.cmd", "Profile-Ecosystem.cmd", "Profile-Integrated.cmd"}
 REQUIRED_LICENSES = {"licenses/GODOT_LICENSE.txt", "licenses/GODOT_COPYRIGHT.txt"}
+GUI_RECEIPTS = {
+    "gui-material": {"suite": "graphical-generated-optical-authoring", "checks": 42,
+                     "pngs": ["-legacy", "-optical", "-authoring"]},
+    "gui-spatial_ecology": {"suite": "spatial ecology real graphical input", "checks": 60,
+                            "pngs": ["", "-material-low", "-material-high"]},
+    "gui-convergence": {"suite": "graphical-integrated-authoring", "checks": 90,
+                        "pngs": ["-authoring", "-composition"]},
+    # The inherited SYNTH receipt deliberately has no status or suite field.
+    "synth-gui": {"suite": None, "checks": 10, "pngs": [""]},
+    "gui-input": {"suite": "graphical-input-routing", "checks": 37, "pngs": [""]},
+    "ecology-gui": {"suite": "ecology graphical input", "checks": 18, "pngs": [""]},
+}
+ENGINE_ERROR = re.compile(
+    r"SCRIPT ERROR:|Parse Error:|Shader compilation failed|^ERROR:|ObjectDB instances leaked|resources still in use|RIDs of type",
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 class InvalidArtifact(ValueError):
@@ -138,8 +154,15 @@ def unique_json_pairs(pairs):
 def read_json(archive: zipfile.ZipFile, files: dict, name: str) -> Any:
     require(name in files, "Missing JSON receipt: " + name)
     require(files[name].file_size <= MAX_JSON_BYTES, "JSON size bound exceeded: " + name)
-    return json.loads(archive.read(name).decode("utf-8-sig"), object_pairs_hook=unique_json_pairs,
-                      parse_constant=lambda value: (_ for _ in ()).throw(InvalidArtifact("Non-finite JSON value: " + value)))
+    result = json.loads(archive.read(name).decode("utf-8-sig"), object_pairs_hook=unique_json_pairs,
+                        parse_constant=lambda value: (_ for _ in ()).throw(InvalidArtifact("Non-finite JSON value: " + value)))
+    require(isinstance(result, dict), "Expected a JSON object: " + name)
+    return result
+
+
+def member_digest(archive: zipfile.ZipFile, name: str) -> str:
+    with archive.open(name) as stream:
+        return digest_stream(stream)[0]
 
 
 def check_build(build: dict, source: str, tree: str, label: str) -> None:
@@ -191,6 +214,7 @@ def check_examples(archive: zipfile.ZipFile, files: dict) -> dict:
     patch_names.update(PREFIX + "samples/patches/synth-%02d.json" % i for i in range(1, 7))
     actual_patches = {name for name in files if name.startswith(PREFIX + "samples/patches/")}
     require(actual_patches == patch_names, "Exactly six integrated and six inherited patches required")
+    patch_presets = {}
     for name in sorted(patch_names):
         patch = read_json(archive, files, name)
         require(patch.get("schema") == "xenovection.patch.v1" and patch.get("preset_id") in SCENE_IDS,
@@ -198,11 +222,37 @@ def check_examples(archive: zipfile.ZipFile, files: dict) -> dict:
         require(isinstance(patch.get("sources"), list) and len(patch["sources"]) <= 48
                 and isinstance(patch.get("routes"), list) and len(patch["routes"]) <= 96,
                 "Patch graph bounds invalid: " + name)
+        patch_presets[name] = patch["preset_id"]
+    indexed_patches = 0
+    # Earlier valid v1 payloads omitted patch rows. Keep their payload integrity
+    # result meaningful, while final campaign completeness requires all 12 rows.
+    if "patches" in index:
+        patch_rows = index["patches"]
+        require(isinstance(patch_rows, list) and len(patch_rows) == 12, "Exactly 12 patch index rows required")
+        expected_ids = {"patch.composition." + name for name in COMPOSITIONS}
+        expected_ids.update("patch.synth.%02d" % i for i in range(1, 7))
+        ids = [row.get("id") for row in patch_rows]
+        require(len(set(ids)) == 12 and set(ids) == expected_ids, "Patch index IDs are duplicated or incomplete")
+        indexed_paths = set()
+        for row in patch_rows:
+            relative = safe_path(row.get("patch"))
+            name = PREFIX + "samples/" + relative
+            expected_filename = (row["id"].removeprefix("patch.") if row["id"].startswith("patch.composition.")
+                                 else row["id"].removeprefix("patch.").replace("synth.", "synth-")) + ".json"
+            require(relative == "patches/" + expected_filename, "Patch index path/identity mismatch")
+            require(name in patch_presets and row.get("preset_id") == patch_presets[name],
+                    "Patch index referenced preset differs from authored patch: " + name)
+            require(isinstance(row.get("title"), str) and bool(row["title"].strip()), "Patch index title is empty")
+            indexed_paths.add(name)
+        require(indexed_paths == actual_patches, "Patch file-set differs from INDEX.json")
+        indexed_patches = len(patch_rows)
     return {"indexed_scenes": 25, "unique_stable_ids": 25, "scene_schema": "xenovection.scene.v2",
-            "integrated_patches": 6, "inherited_patches": 6, "patch_schema": "xenovection.patch.v1"}
+            "integrated_patches": 6, "inherited_patches": 6, "indexed_patches": indexed_patches,
+            "patch_schema": "xenovection.patch.v1"}
 
 
-def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: str, tree: str, script_custody: dict) -> dict:
+def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: str, tree: str, script_custody: dict,
+                   examples: dict) -> dict:
     name = "windows-evidence/qualification.json"
     if name not in files:
         return {"status": "INCOMPLETE", "recorded_status": "MISSING", "failures": ["Missing Windows qualification receipt"]}
@@ -218,6 +268,7 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
     check(q.get("embedded_build") == package["build"], "Qualification embedded BUILD differs from package receipt")
     check(q.get("script_custody") == script_custody, "Executed script custody differs from payload manifest")
     check(q.get("physical_gpu_qualified") is False, "Hosted receipt must preserve physical-GPU qualification boundary")
+    check(examples.get("indexed_patches") == 12, "Final campaign requires 12 discoverable indexed patches")
     steps = q.get("steps", [])
     names = [step.get("name") for step in steps]
     check(len(names) == len(set(names)), "Duplicate qualification gate names")
@@ -226,14 +277,70 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
     bad_steps = [step.get("name") for step in steps if step.get("status") != "PASS" or step.get("exit_code") != 0
                  or step.get("timeout") is not False or step.get("engine_error_detected") is not False]
     check(not bad_steps, "Failed/timed-out/engine-error qualification gates exist")
+    retained_logs = {path for path in files if path.startswith("windows-evidence/") and path.endswith("-engine.log")}
     for step in steps:
         log_name = "windows-evidence/" + safe_path(step.get("log", ""))
         check(log_name in files, "Missing gate log: " + log_name)
+        if log_name in files:
+            retained_logs.add(log_name)
         requests = [arg.split("=", 1)[1] for arg in step.get("arguments", []) if str(arg).startswith("--qualification-script=")]
-        if requests and log_name in files:
+        if requests and log_name in files and files[log_name].file_size <= MAX_JSON_BYTES:
             content = outer.read(log_name).decode("utf-8-sig", errors="replace")
             check(len(requests) == 1 and "XENOVECTION_QUALIFICATION_SCRIPT_STARTED " + requests[0] in content,
                   "Missing exact release-dispatch marker: " + str(step.get("name")))
+    engine_matches = []
+    for log_name in sorted(retained_logs):
+        if files[log_name].file_size > MAX_JSON_BYTES:
+            check(False, "Retained gate/engine log exceeds bounded scan size: " + log_name)
+            continue
+        content = outer.read(log_name).decode("utf-8-sig", errors="replace")
+        for number, line in enumerate(content.splitlines(), 1):
+            if ENGINE_ERROR.search(line):
+                engine_matches.append({"file": log_name, "line": number, "text": line[:500]})
+    check(not engine_matches, "Retained gate/engine logs contain actual script, shader, engine or resource errors")
+    gui_checks = []
+    for stem, contract in GUI_RECEIPTS.items():
+        receipt_path = "windows-evidence/" + stem + ".json"
+        check(receipt_path in files, "Missing required GUI receipt: " + receipt_path)
+        if receipt_path not in files:
+            continue
+        gui = read_json(outer, files, receipt_path)
+        count = gui.get("checks", 0)
+        valid = isinstance(count, int) and not isinstance(count, bool) and count >= contract["checks"] and gui.get("failures") == []
+        if contract["suite"] is not None:
+            valid = valid and gui.get("suite") == contract["suite"] and gui.get("status") == "PASS"
+        if "passed" in gui:
+            valid = valid and gui["passed"] == count
+        check(valid, "Incomplete/failed actual GUI assertions: " + stem)
+        if "renderer" in gui or stem == "synth-gui":
+            check(gui.get("renderer") == "forward_plus", "GUI receipt used the wrong renderer: " + stem)
+        if "display" in gui:
+            check(str(gui["display"]).lower() == "windows", "GUI receipt is not a Windows display: " + stem)
+        if "source_revision" in gui:
+            check(gui["source_revision"] == "sha256:" + SPECIMEN, "GUI source revision changed: " + stem)
+        if stem == "gui-input":
+            check(gui.get("capture_result") == 0, "Inherited GUI capture did not save successfully")
+        if stem == "gui-convergence":
+            check(gui.get("build", {}).get("source_sha") == source and gui.get("build", {}).get("tree_sha") == tree,
+                  "Integrated GUI build/source identity mismatch")
+        if stem == "gui-spatial_ecology":
+            seed = gui.get("seed_authoring", {})
+            check(seed.get("pending_seed") == seed.get("displayed_seed_after_refresh") == seed.get("reset_seed") == 81234
+                  and seed.get("previous_world_seed") != 81234
+                  and seed.get("recalled_composition") == "composition.light_terrarium"
+                  and seed.get("recalled_seed") == 51571,
+                  "Missing pending-seed edit/refresh/reset/composition-recall witness")
+        captures = []
+        for suffix in contract["pngs"]:
+            path = "windows-evidence/" + stem + suffix + ".png"
+            check(path in files, "Missing required GUI capture: " + path)
+            if path in files:
+                with outer.open(path) as stream:
+                    header = stream.read(24)
+                check(files[path].file_size > 24 and header[:8] == b"\x89PNG\r\n\x1a\n", "Invalid required GUI PNG: " + path)
+                captures.append({"file": path, "sha256": member_digest(outer, path)})
+        gui_checks.append({"file": receipt_path, "checks": count, "minimum_checks": contract["checks"],
+                           "assertions_pass": valid, "captures": captures})
     expected_scenes = set(SOURCE_PRESETS) | set(MATTER_PRESETS) | {"optical_" + item for item in OPTICAL_PRESETS}
     check({row.get("preset") for row in q.get("scenes", [])} == expected_scenes and len(q.get("scenes", [])) == 19,
           "Incomplete inherited source/matter/optical scene population")
@@ -271,7 +378,7 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
             capture = "windows-evidence/" + safe_path(row["capture"])
             check(capture in files, "Missing referenced capture: " + capture)
             if capture in files:
-                actual = hashlib.sha256(outer.read(capture)).hexdigest()
+                actual = member_digest(outer, capture)
                 check(actual == row.get("capture_sha256"), "Capture digest mismatch: " + capture)
                 capture_hashes += 1
     audit = q.get("capture_health", {})
@@ -282,7 +389,7 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
         audited_paths.add(path)
         check(path in files and row.get("status") == "PASS", "Missing/failed audited capture: " + path)
         if path in files:
-            check(hashlib.sha256(outer.read(path)).hexdigest() == row.get("sha256"), "Capture-audit digest mismatch: " + path)
+            check(member_digest(outer, path) == row.get("sha256"), "Capture-audit digest mismatch: " + path)
     actual_captures = {path for path in files if path.startswith("windows-evidence/") and path.lower().endswith(".png")}
     check(bool(audit_rows) and len(audit_rows) == len(audited_paths) == audit.get("captures_checked")
           and audited_paths == actual_captures, "Capture-health receipt does not cover every uploaded PNG exactly once")
@@ -300,6 +407,7 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
             "missing_required_gates": missing, "failed_gates": bad_steps,
             "capture_hashes_verified": capture_hashes, "recorded_failure": q.get("failure"),
             "profile_source_tree_identities_checked": profile_identities, "audited_pngs_checked": len(audit_rows),
+            "gui_receipts": gui_checks, "retained_logs_scanned": len(retained_logs), "engine_error_matches": engine_matches,
             "physical_gpu_qualified": False, "failures": errors}
 
 
@@ -387,11 +495,12 @@ def verify(args) -> dict:
                                 "Invalid qualification script source digest")
                     report["script_custody_entries"] = len(script_custody)
                     report["payload_status"] = "PASS"
-            workflow = workflow_check(outer, outer_files, package, args.source_sha, args.tree_sha, script_custody)
+            workflow = workflow_check(outer, outer_files, package, args.source_sha, args.tree_sha, script_custody,
+                                      report["examples"])
             report["workflow"] = workflow
             report["workflow_qualification_status"] = workflow["status"]
             report["overall_status"] = "PASS" if workflow["status"] == "PASS" else "FAIL"
-    except (InvalidArtifact, OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile, RuntimeError, struct.error) as error:
+    except (InvalidArtifact, OSError, ValueError, KeyError, TypeError, AttributeError, IndexError, zipfile.BadZipFile, RuntimeError, struct.error) as error:
         report["failures"].append(str(error))
     return report
 

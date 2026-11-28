@@ -1,0 +1,20 @@
+{
+  "scope": "Headless actual Control events through Viewport.push_input; Windows graphical qualification remains required",
+  "checks": 5,
+  "status": "PASS",
+  "pending_seed": 81234,
+  "recalled_composition": "composition.light_terrarium",
+  "recalled_seed": 51571,
+  "input_sequence": [
+    "Life keyboard shortcut",
+    "pointer focus pending seed",
+    "Ctrl+A and digit key events",
+    "wait 0.7 seconds before Enter",
+    "Enter and wait 0.7 seconds",
+    "pointer Reset",
+    "pointer composition menu and arrow/Enter selection",
+    "Life keyboard shortcut"
+  ],
+  "runtime_change": "Life.refresh mirrors the authoritative pending seed_box, without changing the numerical solver or reset semantics",
+  "test_note": "The full spatial GUI preserves the original 53 checks and material comparison captures, then adds the seed authoring/recall witness. Its final capture and metrics show the explicitly recalled composition, not the earlier frozen material-comparison state."
+}

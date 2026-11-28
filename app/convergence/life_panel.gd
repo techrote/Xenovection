@@ -132,7 +132,7 @@ func refresh() -> void:
 	syncing = true
 	enabled_control.set_pressed_no_signal(ecology.simulation_enabled)
 	preset_picker.select(int(ecology.world.config.preset))
-	seed_control.set_value_no_signal(float(ecology.world.config.seed))
+	seed_control.set_value_no_signal(float(ecology.seed_box.value))
 	pause_control.text = "Resume ecology" if ecology.paused else "Pause ecology"
 	tool_picker.select(ecology.tools.selected)
 	family_picker.select(ecology.family.selected)

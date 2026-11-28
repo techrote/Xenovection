@@ -1,0 +1,42 @@
+{
+  "schema": "xenovection.material-visual-review.v1",
+  "reviewer": "Specialist B independent guide and native-input failure review",
+  "source_sha": "114768ca41b198c4f06f849bb448664b4f2708e9",
+  "tree_sha": "ca2e3ffff6480a15f81a96201981a8428faee03a",
+  "workflow_run": 46160476697,
+  "overall_status": "FAIL at integrated GUI menu interaction; no whole-application qualification claim",
+  "files": [
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "sha256": "fe0e602508a5e1dc29ce88e078b3aa796f351cffff751555a4755d0461ee8610"
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "sha256": "c6d63750ae264f07c819a730b68ae135d453454f875ac6402fedcd4dd7743ea8"
+    },
+    {
+      "file": "gui-convergence-first-menu-failure.png",
+      "sha256": "abca5e3832448fc8b8fae97f3e281e5b35362fedec73a2aac627e28447a94f8f"
+    }
+  ],
+  "observations": [
+    "The independent opaque cyan numerical-domain frame is clearly legible at both low and high organism material gain. Its placement and apparent colour remain fixed across the comparison.",
+    "The existing thin cylindrical guide has intermittent subpixel coverage at this overview, but all four domain edges remain recognizable. No extra transparent pass, invalid geometry, or screen-filling extrusion is visible.",
+    "Removing the guide from material modulation leaves a small but genuine organism/source-marker image response: 151 changed samples out of 156500, mean RGB difference 0.0000916453. The underlying retained scientific geometry stays dominant.",
+    "The first-menu-failure image confirms the source-kind control reads mix, while the graph still has zero sources/routes. Combined with the event trace, this is a prematurely committed dropdown release, not a missing or unrendered control.",
+    "The complete integrated authoring witness remains failed and its final composition image cannot be treated as a successful authoring demonstration."
+  ],
+  "popup_mechanism": {
+    "qualified_engine": "4.7.2-stable",
+    "official_popup_source": "https://github.com/godotengine/godot/blob/4.7.2-stable/scene/gui/popup_menu.cpp",
+    "official_input_source": "https://github.com/godotengine/godot/blob/4.7.2-stable/core/input/input.cpp",
+    "finding": "PopupMenu ignores the opening button release only below 400 ms while in the grabbed-click state. A delayed release may select the menu item under the original pointer when the menu opens upward over the button. Input updates held-button state from pressed/button-index.",
+    "scope": "Source inspection corroborates A\u2019s independently executed held-versus-paired-click reproduction; this review does not modify the tests."
+  },
+  "material_comparison": {
+    "changed_samples": 151,
+    "mean_rgb_difference": 9.16452646231689e-05,
+    "samples": 156500
+  },
+  "scope": "Native Windows Vulkan Forward+ llvmpipe; not physical GPU throughput or owner acceptance."
+}

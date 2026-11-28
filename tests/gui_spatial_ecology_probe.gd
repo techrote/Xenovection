@@ -8,6 +8,7 @@ var life
 var scroll: ScrollContainer
 var material_comparison: Dictionary = {}
 var option_trace: Array[Dictionary] = []
+var seed_authoring: Dictionary = {}
 
 func _initialize() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -42,12 +43,13 @@ func click(point: Vector2) -> void:
 		Input.parse_input_event(event)
 		await frames(2)
 
-func key(code: Key, window_id: int = 0) -> void:
+func key(code: Key, window_id: int = 0, control: bool = false) -> void:
 	for pressed in [true, false]:
 		var event = InputEventKey.new()
 		event.window_id = window_id
 		event.keycode = code
 		event.physical_keycode = code
+		event.ctrl_pressed = control
 		event.pressed = pressed
 		Input.parse_input_event(event)
 		await frames(2)
@@ -291,7 +293,43 @@ func _run() -> void:
 	check(float(material_comparison.get("mean_rgb_difference", 0.0)) > 0.000001 and int(material_comparison.get("changed_samples", 0)) >= 5, "Full-optical eco.material has measurable viewport response with all clocks frozen")
 	check(world.digest() == numerical_digest and app.spatial_ecology.topology_builds == geometry_builds, "Optical material comparison leaves numerical history and shared topology unchanged")
 	await key(KEY_H)
+	await seed_controls()
 	await finish()
+
+func seed_controls() -> void:
+	var previous_seed: int = app.ecology.world.config.seed
+	await reveal(life.seed_control)
+	var edit: LineEdit = life.seed_control.get_line_edit()
+	await click(edit.get_global_rect().get_center())
+	await key(KEY_A, 0, true)
+	for character in "81234":
+		for pressed in [true, false]:
+			var event = InputEventKey.new()
+			event.keycode = character.unicode_at(0)
+			event.physical_keycode = event.keycode
+			event.unicode = character.unicode_at(0)
+			event.pressed = pressed
+			Input.parse_input_event(event)
+			await frames(1)
+	await create_timer(0.7).timeout
+	check(edit.text == "81234", "Actual pending seed text survives a HUD refresh before Enter")
+	await key(KEY_ENTER)
+	await create_timer(0.7).timeout
+	seed_authoring = {"previous_world_seed": previous_seed, "pending_seed": app.ecology.seed_box.value,
+		"displayed_seed_after_refresh": life.seed_control.value}
+	check(int(life.seed_control.value) == 81234 and int(app.ecology.seed_box.value) == 81234 and int(app.ecology.world.config.seed) == previous_seed, "Actual seed entry remains visible across refresh without changing the running seed")
+	await press("Reset ecology")
+	seed_authoring.reset_seed = app.ecology.world.config.seed
+	check(int(app.ecology.world.config.seed) == 81234 and app.ecology.world.tick == 0, "Actual Reset applies the displayed pending seed exactly")
+	var index: int = app.Catalogue.index_of(app.presets, "composition.light_terrarium")
+	var recalled_seed: int = int(app.presets[index].ecology_config.seed)
+	await choose(app.ui.preset_picker, index)
+	await key(KEY_F4)
+	seed_authoring.recalled_composition = app.presets[app.preset_index].stable_id
+	seed_authoring.recalled_seed = app.ecology.world.config.seed
+	check(int(app.ecology.world.config.seed) == recalled_seed and int(app.ecology.seed_box.value) == recalled_seed and int(life.seed_control.value) == recalled_seed and recalled_seed != 81234, "Actual composition recall replaces both pending and displayed ecology seed")
+	if not app.ecology.paused:
+		await press("Pause ecology")
 
 func finish() -> void:
 	await frames(4)
@@ -300,7 +338,8 @@ func finish() -> void:
 	var receipt = {"suite": "spatial ecology real graphical input", "checks": checks, "failures": failures,
 		"status": "PASS" if failures.is_empty() else "FAIL", "ecology": app.ecology.convergence_metrics(),
 		"representation": app.spatial_ecology.metrics(), "digest": app.ecology.world.digest(),
-		"material_comparison": material_comparison, "option_trace": option_trace}
+		"material_comparison": material_comparison, "option_trace": option_trace,
+		"seed_authoring": seed_authoring}
 	var file = FileAccess.open(prefix + ".json", FileAccess.WRITE)
 	if file == null:
 		failures.append("Cannot write spatial graphical receipt")

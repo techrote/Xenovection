@@ -83,6 +83,9 @@ eco.*. Inactive domains are identified; topology controls are base-only.
 Save/Load uses the private patch slot; Import/Export selects named JSON files.
 Morph transitions compatible scene/wiring over 0.8 seconds. Patches in samples
 are ordinary editable graphs, not hard-coded showcase playback.
+Load/Import/Recall reapplies a patch's referenced starting composition and
+restarts its histories unless a compatible Morph is used. Save/Open a whole
+scene to retain matter, optical and ecology initial authoring together.
 Patch edits restart graph phase/history. Reversing analytical clocks does not
 reverse delay, slew, particle or organism history.
 

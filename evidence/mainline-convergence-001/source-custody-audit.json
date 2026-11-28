@@ -1,0 +1,93 @@
+{
+  "schema": "xenovection.inherited-source-custody.v1",
+  "application_sha": "114768ca41b198c4f06f849bb448664b4f2708e9",
+  "source_tree": "ca2e3ffff6480a15f81a96201981a8428faee03a",
+  "status": "PASS",
+  "scope": "Source-byte and semantic test migration audit; executable qualification is a separate receipt.",
+  "protected_ancestors": [
+    "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+    "e4365ab393415dc833f19e6116633e844b530d42",
+    "c1d367a466430cc45afc41c9b97c0a9dac922447",
+    "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+    "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9"
+  ],
+  "byte_identical_sources": [
+    {
+      "predecessor_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "path": "tests/test_core.gd",
+      "byte_equal": true,
+      "sha256": "f34a4f2e08957a7d202a0102c27fba988c03165ec01ac497f7ab74fb3b351e60"
+    },
+    {
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "path": "tests/test_soak.gd",
+      "byte_equal": true,
+      "sha256": "1511b79bde83f14afa44fd13c68ae350740d66fc97730941fd2bd99f1e3604ce"
+    },
+    {
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "path": "app/rendering/filaments/verify_filaments.gd",
+      "byte_equal": true,
+      "sha256": "66a8176414196f2ca6da0371713ab668ce836b3b1863573ed33013ad84f3c7b1"
+    },
+    {
+      "predecessor_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "path": "app/rendering/optical/verify_optical.gd",
+      "byte_equal": true,
+      "sha256": "b2720c51c99da1043004f190f67d6937d28e4cf15f739868f55f01d4325b750c"
+    },
+    {
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "path": "tests/test_ecology.gd",
+      "byte_equal": true,
+      "sha256": "c72f9ee9d673540179018ea4def5554d5c33fb02d96ed2e1d2995b215fe8980c"
+    },
+    {
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "path": "app/ecology/world.gd",
+      "byte_equal": true,
+      "sha256": "d090c6bbf18819d686e937cb252101ccc30f5e4aaa7cb60fdec622b0cb28fda4"
+    },
+    {
+      "predecessor_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "path": "tests/gui_synth_probe.gd",
+      "byte_equal": true,
+      "sha256": "02661eda8c5bcb214c2c77c7008f7f45da06817b72bc95b08a37ec3a25cd9289"
+    },
+    {
+      "predecessor_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "path": "experiments/found-001/source/tests/verify_specimen.py",
+      "byte_equal": true,
+      "sha256": "08075da60d6dfbd900fcc4a194468d5bb35a04abb2f38a7012214ccb89e09855"
+    }
+  ],
+  "reviewed_test_migrations": [
+    {
+      "path": "tests/test_synth.gd",
+      "predecessor_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "change": "Replaced exact total preset count7 with exact identity/order of all original seven plus opt-in assertion. All graph behavior assertions retained."
+    },
+    {
+      "path": "tests/test_matter.gd",
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "change": "Replaced exact total13 and numeric selection with explicit retained baseline+matter identities/order and stable-ID lookup. Original six generated scene and morphology/resource assertions retained."
+    },
+    {
+      "path": "tests/test_integration.gd",
+      "predecessor_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "change": "All six optical scenes resolved by stable identities rather than colliding indices08-13. Added six identity-existence checks; all original optical/source assertions retained."
+    },
+    {
+      "path": "tests/gui_input_probe.gd",
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "change": "Original cross-source refusal tested with explicit legacyv1 fixture via actual F6. Actual F5-createdv2 file additionally recalled across built-in sources with exact source/projection/selection checks. Three additive checks; no original case removed."
+    },
+    {
+      "path": "tests/gui_ecology_probe.gd",
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "change": "Actual F4 replaces direct tab assignment; actual entry asserts persistent hosted workspace instead of replacement scene. Existing planting/resource/pause/configuration/capture checks retained; three additional Escape/re-entry identity/digest checks."
+    }
+  ],
+  "removed_inherited_behavioral_cases": 0,
+  "relaxed_numerical_tolerances": 0
+}

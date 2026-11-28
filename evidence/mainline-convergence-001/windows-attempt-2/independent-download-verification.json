@@ -143,11 +143,54 @@
     "recorded_failure": "extracted-graphical-spatial_ecology failed (exit 1; timeout=False; engine_error=False). See D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-graphical-spatial_ecology.log",
     "profile_source_tree_identities_checked": 0,
     "audited_pngs_checked": 0,
+    "gui_receipts": [
+      {
+        "file": "windows-evidence/gui-material.json",
+        "checks": 42,
+        "minimum_checks": 42,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-material-legacy.png",
+            "sha256": "8a409964013fe19f9f5b8954b6c120440b716ad1676d1742b0783fa8e5cc4ad5"
+          },
+          {
+            "file": "windows-evidence/gui-material-optical.png",
+            "sha256": "d276678488033a35ae7b1822d3fa676ed2a489db7c21c80d99e28d0db29b12c0"
+          },
+          {
+            "file": "windows-evidence/gui-material-authoring.png",
+            "sha256": "bd6b186212024de6cc0129c8ad53c9eb5058950e09e22d6115fb7ce2db1f46ee"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-spatial_ecology.json",
+        "checks": 9,
+        "minimum_checks": 53,
+        "assertions_pass": false,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-spatial_ecology.png",
+            "sha256": "b420f7099c27d517124894e52102c519f43ac454cb854e6e2547de3e38bda60c"
+          }
+        ]
+      }
+    ],
+    "retained_logs_scanned": 41,
+    "engine_error_matches": [],
     "physical_gpu_qualified": false,
     "failures": [
       "Recorded Windows qualification is FAIL",
       "Required Windows gates are missing",
       "Failed/timed-out/engine-error qualification gates exist",
+      "Incomplete/failed actual GUI assertions: gui-spatial_ecology",
+      "Missing required GUI capture: windows-evidence/gui-spatial_ecology-material-low.png",
+      "Missing required GUI capture: windows-evidence/gui-spatial_ecology-material-high.png",
+      "Missing required GUI receipt: windows-evidence/gui-convergence.json",
+      "Missing required GUI receipt: windows-evidence/synth-gui.json",
+      "Missing required GUI receipt: windows-evidence/gui-input.json",
+      "Missing required GUI receipt: windows-evidence/ecology-gui.json",
       "Incomplete inherited source/matter/optical scene population",
       "Incomplete inherited synth population",
       "Incomplete inherited ecology population",

@@ -142,11 +142,75 @@
     "recorded_failure": "extracted-graphical-convergence failed (exit 1; timeout=False; engine_error=False). See D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-graphical-convergence.log",
     "profile_source_tree_identities_checked": 0,
     "audited_pngs_checked": 0,
+    "gui_receipts": [
+      {
+        "file": "windows-evidence/gui-material.json",
+        "checks": 42,
+        "minimum_checks": 42,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-material-legacy.png",
+            "sha256": "891936e228c3f2b3a5bed6203c58eb990cda1dcf73be0ce8282a07b733824ec9"
+          },
+          {
+            "file": "windows-evidence/gui-material-optical.png",
+            "sha256": "c80dfb4ca9ebb365df1d4512d1a8a582c719135380b47f2fd898d99c5fad0e79"
+          },
+          {
+            "file": "windows-evidence/gui-material-authoring.png",
+            "sha256": "a189a72013c3c1963b0c763e50273742a3ee2928f1cd437652fd0d897382994d"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-spatial_ecology.json",
+        "checks": 53,
+        "minimum_checks": 53,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-spatial_ecology.png",
+            "sha256": "3f816514dd56bbc69c551e613e290682558f1eb67788651b712b0f678f6ecb29"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-low.png",
+            "sha256": "2d0e52f30cefbc2ee9bf37557a20218318c4cdf5ebdd5c4cc1358985d101fed2"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-high.png",
+            "sha256": "debc7d799a07064ea61cdcb274c04e1fe87f53a63ee3661c45173a8985af27e4"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-convergence.json",
+        "checks": 89,
+        "minimum_checks": 90,
+        "assertions_pass": false,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-convergence-authoring.png",
+            "sha256": "38175b758585cc81bf609b3443e462829554ab63cfdbc10dcd154a03bb79c1c8"
+          },
+          {
+            "file": "windows-evidence/gui-convergence-composition.png",
+            "sha256": "e1ccb7a2c275e1aee8bc0297733643d11e269591f94c6eebef0cbfcca035ee87"
+          }
+        ]
+      }
+    ],
+    "retained_logs_scanned": 43,
+    "engine_error_matches": [],
     "physical_gpu_qualified": false,
     "failures": [
       "Recorded Windows qualification is FAIL",
       "Required Windows gates are missing",
       "Failed/timed-out/engine-error qualification gates exist",
+      "Incomplete/failed actual GUI assertions: gui-convergence",
+      "Missing required GUI receipt: windows-evidence/synth-gui.json",
+      "Missing required GUI receipt: windows-evidence/gui-input.json",
+      "Missing required GUI receipt: windows-evidence/ecology-gui.json",
       "Incomplete inherited source/matter/optical scene population",
       "Incomplete inherited synth population",
       "Incomplete inherited ecology population",
