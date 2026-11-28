@@ -3,6 +3,7 @@ extends SceneTree
 var failures: Array[String] = []
 var checks: int = 0
 var app
+var layout: Dictionary = {}
 var prefix: String = "user://gui-ecology"
 const SAVE = "user://ecosystem-configuration.json"
 
@@ -64,6 +65,36 @@ func find_button(node: Node, label: String) -> Button:
 			return result
 	return null
 
+func rect_values(rect: Rect2) -> Array:
+	return [rect.position.x, rect.position.y, rect.size.x, rect.size.y]
+
+func inspect_layout() -> void:
+	var viewport: Rect2 = root.get_visible_rect()
+	var panel: Rect2 = app.panel.get_global_rect()
+	var clip: Rect2 = app.panel.get_child(0).get_global_rect()
+	var area: Rect2 = app._area()
+	var controls: Array = [app.interaction_button, app.reproduction_button, app.mod_button]
+	for row in app.sliders.values():
+		controls.append(row[0])
+	var horizontal_fit = true
+	var bounds: Array = []
+	for control in controls:
+		var rect: Rect2 = control.get_global_rect()
+		horizontal_fit = horizontal_fit and rect.position.x >= clip.position.x - 0.01 and rect.end.x <= clip.end.x + 0.01
+		bounds.append({"type": control.get_class(), "left": rect.position.x, "right": rect.end.x})
+	var error: float = 0.0
+	for point in [Vector2(0.05, 0.05), Vector2(0.5, 0.5), Vector2(0.95, 0.95)]:
+		var mapped: Vector2 = app._screen(point, area)
+		error = maxf(error, point.distance_to((mapped - area.position) / area.size))
+	layout = {"viewport": rect_values(viewport), "panel": rect_values(panel),
+		"panel_minimum_width": app.panel.get_combined_minimum_size().x,
+		"scroll_clip": rect_values(clip), "world_area": rect_values(area),
+		"control_horizontal_bounds": bounds, "roundtrip_max_error": error}
+	check(viewport.encloses(panel) and panel.size.x >= app.panel.get_combined_minimum_size().x and panel.end.x <= viewport.end.x - 11.0, "Planar rail honors its minimum width while remaining inside the right viewport edge")
+	check(horizontal_fit, "All planar checkbox indicators and slider endpoints fit the scroll clip horizontally")
+	check(Rect2(Vector2.ZERO, app.size).encloses(area) and area.end.x < app.panel.position.x, "Numerical interaction area remains bounded and separate from the actual rail width")
+	check(error < 0.000001, "Planar drawing and inverse numerical coordinates roundtrip after rail layout")
+
 func _run() -> void:
 	if DisplayServer.get_name() == "headless":
 		quit(2)
@@ -89,6 +120,7 @@ func _run() -> void:
 	if app == null or not app.is_visible_in_tree():
 		quit(1)
 		return
+	inspect_layout()
 	await key(KEY_SPACE)
 	check(app.paused, "Actual Space pauses simulation")
 	var frozen = app.world.tick
@@ -106,6 +138,8 @@ func _run() -> void:
 	await click(area.position + area.size * Vector2(0.5, 0.5))
 	check(app.world.organisms.size() == count + 1, "Real canvas click plants selected organism")
 	var planted: Dictionary = app.world.organisms[-1]
+	layout.pointer_plant_error = planted.p.distance_to(Vector2(0.5, 0.5))
+	check(float(layout.pointer_plant_error) < 0.00001, "Actual pointer planting preserves the intended numerical coordinate after rail layout")
 	app.tools.select(0)
 	await click(app._screen(planted.p, area))
 	check(app.selected == planted.id, "Real canvas click selects planted identity")
@@ -145,7 +179,7 @@ func _run() -> void:
 	check(error == OK, "Actual graphical workspace capture")
 	var file = FileAccess.open(prefix + ".json", FileAccess.WRITE)
 	if file != null:
-		file.store_string(JSON.stringify({"suite": "ecology graphical input", "checks": checks, "failures": failures, "status": "PASS" if failures.is_empty() else "FAIL"}, "\t"))
+		file.store_string(JSON.stringify({"suite": "ecology graphical input", "checks": checks, "failures": failures, "status": "PASS" if failures.is_empty() else "FAIL", "layout": layout}, "\t"))
 	else:
 		failures.append("Cannot write receipt")
 	if had_save:

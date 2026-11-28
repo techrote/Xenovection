@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path, PurePosixPath
 import re
 import stat
@@ -79,7 +80,7 @@ GUI_RECEIPTS = {
     # The inherited SYNTH receipt deliberately has no status or suite field.
     "synth-gui": {"suite": None, "checks": 10, "pngs": [""]},
     "gui-input": {"suite": "graphical-input-routing", "checks": 37, "pngs": [""]},
-    "ecology-gui": {"suite": "ecology graphical input", "checks": 18, "pngs": [""]},
+    "ecology-gui": {"suite": "ecology graphical input", "checks": 23, "pngs": [""]},
 }
 ENGINE_ERROR = re.compile(
     r"SCRIPT ERROR:|Parse Error:|Shader compilation failed|^ERROR:|ObjectDB instances leaked|resources still in use|RIDs of type",
@@ -330,6 +331,27 @@ def workflow_check(outer: zipfile.ZipFile, files: dict, package: dict, source: s
                   and seed.get("recalled_composition") == "composition.light_terrarium"
                   and seed.get("recalled_seed") == 51571,
                   "Missing pending-seed edit/refresh/reset/composition-recall witness")
+        if stem == "ecology-gui":
+            layout = gui.get("layout", {})
+            viewport, panel, area, clip = (layout.get(key, []) for key in ("viewport", "panel", "world_area", "scroll_clip"))
+            rectangles = (viewport, panel, area, clip)
+            valid_rectangles = all(isinstance(rect, list) and len(rect) == 4
+                                   and all(isinstance(value, (int, float)) and not isinstance(value, bool)
+                                           and math.isfinite(value) for value in rect)
+                                   and rect[2] > 0 and rect[3] > 0 for rect in rectangles)
+            check(valid_rectangles, "Missing finite planar layout measurements")
+            if valid_rectangles:
+                check(panel[0] >= viewport[0] and panel[1] >= viewport[1]
+                      and panel[0] + panel[2] <= viewport[0] + viewport[2] - 11
+                      and panel[1] + panel[3] <= viewport[1] + viewport[3]
+                      and area[0] + area[2] < panel[0], "Planar rail or numerical area overflows its qualified bounds")
+                controls = layout.get("control_horizontal_bounds", [])
+                check(len(controls) >= 11 and all(row.get("left", -1) >= clip[0] - 0.01
+                      and row.get("right", float("inf")) <= clip[0] + clip[2] + 0.01 for row in controls),
+                      "Planar checkbox indicators or slider endpoints overflow the scroll clip")
+            check(0 <= layout.get("roundtrip_max_error", float("inf")) < 0.000001
+                  and 0 <= layout.get("pointer_plant_error", float("inf")) < 0.00001,
+                  "Missing planar coordinate roundtrip and actual pointer planting witness")
         captures = []
         for suffix in contract["pngs"]:
             path = "windows-evidence/" + stem + suffix + ".png"

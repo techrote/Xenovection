@@ -1,0 +1,103 @@
+{
+  "cases": [
+    {
+      "minimum_width": 364.0,
+      "panel": [
+        624.0,
+        12.0,
+        364.0,
+        601.0
+      ],
+      "plant_error": 0.0,
+      "requested": "(1000, 625)",
+      "roundtrip_error": 0.0,
+      "viewport": [
+        0.0,
+        0.0,
+        1000.0,
+        625.0
+      ],
+      "world_area": [
+        37.5,
+        62.0,
+        535.0,
+        535.0
+      ]
+    },
+    {
+      "minimum_width": 364.0,
+      "panel": [
+        1064.0,
+        12.0,
+        364.0,
+        876.0
+      ],
+      "plant_error": 0.0,
+      "requested": "(1440, 900)",
+      "roundtrip_error": 0.0,
+      "viewport": [
+        0.0,
+        0.0,
+        1440.0,
+        900.0
+      ],
+      "world_area": [
+        120.0,
+        62.0,
+        810.0,
+        810.0
+      ]
+    },
+    {
+      "minimum_width": 364.0,
+      "panel": [
+        624.0,
+        12.0,
+        364.0,
+        876.0
+      ],
+      "plant_error": 0.0,
+      "requested": "(1000, 900)",
+      "roundtrip_error": 7.45058059692383e-09,
+      "viewport": [
+        0.0,
+        0.0,
+        1000.0,
+        900.0
+      ],
+      "world_area": [
+        18.0,
+        180.0,
+        574.0,
+        574.0
+      ]
+    }
+  ],
+  "checks": 27,
+  "failures": [],
+  "scope": "Headless actual Control event routing via Viewport.push_input; full Windows graphical qualification remains required",
+  "status": "PASS",
+  "schema": "xenovection.planar-rail-correction-proof.v1",
+  "adverse_application_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+  "adverse_default_panel": {
+    "viewport_width": 1440,
+    "left": 1130,
+    "width": 364,
+    "right": 1494,
+    "overflow_pixels": 54
+  },
+  "inherited_label_panel": {
+    "left": 1130,
+    "width": 353,
+    "right": 1483,
+    "overflow_pixels": 43
+  },
+  "runtime_change": "Grow the anchored rail toward the viewport interior and reserve its measured width in drawing/input mapping.",
+  "gui_original_assertions": 18,
+  "gui_additive_assertions": 5,
+  "gui_required_total": 23,
+  "corrected_file_sha256": {
+    "app/ecology/workspace.gd": "da24b361946d863f0f5e707555e4f34740df356dc2a0f91fbda006334c1c05fc",
+    "tests/gui_ecology_probe.gd": "e9c53cadfb4662bb0071df2fa9d2f78a5359624d03bc59a1992fe27be8cd6493"
+  }
+}

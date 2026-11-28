@@ -161,6 +161,7 @@ func _option(values: Array, parent: Control) -> OptionButton:
 func _build_ui() -> void:
 	panel = PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_RIGHT_WIDE)
+	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	panel.offset_left = -310
 	panel.offset_right = -12
 	panel.offset_top = 12
@@ -330,7 +331,7 @@ func _return_to_instrument() -> void:
 		get_tree().change_scene_to_file("res://main.tscn")
 
 func _area() -> Rect2:
-	var available = Vector2(maxf(100.0, size.x - (324.0 if panel.visible else 0.0) - 36.0), maxf(100.0, size.y - 90.0))
+	var available = Vector2(maxf(100.0, size.x - (panel.size.x + 26.0 if panel.visible else 0.0) - 36.0), maxf(100.0, size.y - 90.0))
 	var side = minf(available.x, available.y)
 	return Rect2(Vector2(18, 62) + (available - Vector2.ONE * side) * 0.5, Vector2.ONE * side)
 
