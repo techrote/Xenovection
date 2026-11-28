@@ -458,22 +458,34 @@ try {
                 '--warmup=45', '--profile-frames=15', "--profile=$ProfilePath", '--capture-frame=30', "--capture=$CapturePath")
         ) -TimeoutSeconds 240 -EngineLog $EngineLog
         $Dimensions = Read-PngDimensions -Path $CapturePath
+        $CloseProfile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        if ($CloseProfile.build.source_sha -ne $SourceSha -or $CloseProfile.build.tree_sha -ne $SourceTree -or
+            $CloseProfile.preset -ne $Preset -or $CloseProfile.samples -lt 15 -or -not $CloseProfile.source_unchanged -or
+            $CloseProfile.platform.driver -ne 'vulkan' -or $CloseProfile.platform.rendering_method -ne 'forward_plus') {
+            throw "Incomplete or misidentified optical close view: $Preset"
+        }
         $Qualification.comparisons += [ordered]@{preset=$Preset; mode='close'; capture=(Split-Path -Leaf $CapturePath);
             capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant(); dimensions=$Dimensions;
             profile=(Split-Path -Leaf $ProfilePath)}
     }
     foreach ($Preset in @('optical_weather','optical_lens','optical_garden','optical_ecosystem')) {
+        $CapturePath = Join-Path $Evidence ($Preset + '-legacy.png')
         $ProfilePath = Join-Path $Evidence ($Preset + '-legacy.json')
         $EngineLog = Join-Path $Evidence ($Preset + '-legacy-engine.log')
         Invoke-Checked -Name ($Preset + '-legacy') -Executable $Application -Arguments (
             $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel', '--legacy-optics',
-                '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath")
+                '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath", '--capture-frame=45', "--capture=$CapturePath")
         ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Dimensions = Read-PngDimensions -Path $CapturePath
         $Disabled = Get-Content -Raw $ProfilePath | ConvertFrom-Json
-        if ($Disabled.optical.optical_matter_mix -ne 0 -or $Disabled.optical.secondary_film_draws -ne 0 -or $Disabled.optical.refraction_screen_copy_active) {
+        if ($Disabled.optical.optical_matter_mix -ne 0 -or $Disabled.optical.secondary_film_draws -ne 0 -or $Disabled.optical.refraction_screen_copy_active -or
+            $Disabled.build.source_sha -ne $SourceSha -or $Disabled.build.tree_sha -ne $SourceTree -or
+            $Disabled.preset -ne $Preset -or $Disabled.samples -lt 60 -or -not $Disabled.source_unchanged) {
             throw "Legacy comparison retained experimental optical passes: $Preset"
         }
         $Qualification.comparisons += [ordered]@{preset=$Preset; mode='legacy-optics'; profile=(Split-Path -Leaf $ProfilePath);
+            capture=(Split-Path -Leaf $CapturePath); capture_dimensions=$Dimensions;
+            capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant();
             wall_p50_ms=$Disabled.wall_frame.p50_ms; wall_p95_ms=$Disabled.wall_frame.p95_ms; draw_calls_3d=$Disabled.draw_calls_3d}
     }
     Invoke-ExtractedScript -Name 'ecology-graphical-input' -ScriptName 'gui_ecology_probe.gd' -EngineArguments (

@@ -7,6 +7,8 @@ var prefix := "user://gui-convergence"
 var input_events := 0
 var previous_save := PackedByteArray()
 var had_save := false
+var interaction_trace: Array[Dictionary] = []
+var captured_menu_failure := false
 
 func _initialize() -> void:
 	for argument in OS.get_cmdline_user_args():
@@ -105,6 +107,7 @@ func _run() -> void:
 	check(visible_samples(composition) > 80, "The graphically authored integrated composition renders visible matter")
 	var receipt := {"suite": "graphical-integrated-authoring", "status": "PASS" if failures.is_empty() else "FAIL",
 		"checks": checks, "passed": checks - failures.size(), "failures": failures, "input_events": input_events,
+		"interaction_trace": interaction_trace,
 		"composition_id": app.presets[app.preset_index].stable_id, "graph": app.synth.metrics(),
 		"ecology": app.ecology.convergence_metrics(), "matter": app.matter.metrics(),
 		"source_revision": source_identity, "renderer": RenderingServer.get_current_rendering_method(),
@@ -143,8 +146,19 @@ func click_button(label: String) -> void:
 	check(control != null, "Exposed authoring control: " + label)
 	if control == null: return
 	check(await expose(control), "Real scrolling exposes " + label)
+	var before := control.get_global_rect()
 	await click(control.get_global_rect().get_center())
 	await frames(2)
+	interaction_trace.append({"event": "button", "label": label, "rect_before": str(before),
+		"rect_after": str(control.get_global_rect()), "form": form_state()})
+
+func form_state() -> Dictionary:
+	var panel = app.synth_panel
+	return {"source_id": panel.source_id, "source_count": app.synth.nodes.size(),
+		"kind_index": panel.kind_picker.selected, "value": panel.value.value,
+		"value_text": panel.value.get_line_edit().text, "sequencer_steps": panel.steps.text,
+		"status": panel.status.text, "search": panel.target_search.text,
+		"route_count": app.synth.patch.get("routes", []).size()}
 
 func expose(control: Control) -> bool:
 	var parent: Node = control.get_parent()
@@ -158,6 +172,7 @@ func expose(control: Control) -> bool:
 		if area.has_point(point): return true
 		var position := Vector2(scroll.get_global_rect().end.x - 4.0, area.get_center().y)
 		var direction := MOUSE_BUTTON_WHEEL_DOWN if point.y > area.end.y else MOUSE_BUTTON_WHEEL_UP
+		await motion(position)
 		await mouse(position, direction, true, 4.0 if absf(point.y - area.get_center().y) > 350 else 1.0)
 		await mouse(position, direction, false)
 	return false
@@ -166,15 +181,36 @@ func choose(control: OptionButton, index: int) -> void:
 	check(index >= 0 and index < control.item_count, "Requested option exists")
 	if index < 0 or index >= control.item_count: return
 	check(await expose(control), "Real scrolling exposes option picker")
+	var trace := {"event": "option", "path": str(control.get_path()),
+		"requested": index, "requested_text": control.get_item_text(index),
+		"selected_before": control.selected, "visible_in_tree": control.is_visible_in_tree(),
+		"disabled": control.disabled, "rect_before": str(control.get_global_rect()),
+		"screen_transform": str(root.get_screen_transform()), "form_before": form_state()}
+	interaction_trace.append(trace)
 	await click(control.get_global_rect().get_center())
 	var popup := control.get_popup()
+	trace.rect_after = str(control.get_global_rect())
+	trace.popup_visible = popup.visible
+	trace.popup_window_id = popup.get_window_id()
+	trace.popup_position = str(popup.position)
+	trace.popup_size = str(popup.size)
+	trace.selected_after_pointer = control.selected
+	trace.focused_items = [popup.get_focused_item()]
 	check(popup.visible, "Actual pointer opens option menu")
-	if not popup.visible: return
+	if not popup.visible:
+		print("CONVERGENCE_FIRST_MENU_FAILURE ", JSON.stringify(trace))
+		if not captured_menu_failure and DisplayServer.get_name() != "headless":
+			captured_menu_failure = true
+			await capture(prefix + "-first-menu-failure.png")
+		return
 	for attempt in range(control.item_count + 3):
 		if popup.get_focused_item() == index: break
 		await key(KEY_DOWN if popup.get_focused_item() < index else KEY_UP)
+		trace.focused_items.append(popup.get_focused_item())
 	await key(KEY_ENTER)
 	await frames(3)
+	trace.selected_after_keyboard = control.selected
+	trace.form_after = form_state()
 	check(control.selected == index, "Actual keyboard commits the selected option")
 
 func slider(control: HSlider, fraction: float) -> void:
@@ -215,12 +251,17 @@ func key(code: Key, control := false, window_id := 0) -> void:
 		input_events += 1
 		await frames(1)
 
+func motion(point: Vector2) -> void:
+	var mapped := root.get_screen_transform() * point
+	var event := InputEventMouseMotion.new()
+	event.position = mapped
+	event.global_position = mapped
+	Input.parse_input_event(event)
+	input_events += 1
+	await frames(1)
+
 func mouse(point: Vector2, code: MouseButton, pressed: bool, factor := 1.0) -> void:
 	var mapped := root.get_screen_transform() * point
-	var motion := InputEventMouseMotion.new()
-	motion.position = mapped
-	motion.global_position = mapped
-	Input.parse_input_event(motion)
 	var event := InputEventMouseButton.new()
 	event.position = mapped
 	event.global_position = mapped
@@ -228,10 +269,14 @@ func mouse(point: Vector2, code: MouseButton, pressed: bool, factor := 1.0) -> v
 	event.pressed = pressed
 	event.factor = factor
 	Input.parse_input_event(event)
-	input_events += 2
+	input_events += 1
 	await frames(1)
 
 func click(point: Vector2) -> void:
+	# Match the independently Windows-qualified material/spatial event sequence.
+	# A release-time motion can fall inside a newly opened popup near the bottom
+	# of the viewport and activate an item before keyboard navigation begins.
+	await motion(point)
 	await mouse(point, MOUSE_BUTTON_LEFT, true)
 	await mouse(point, MOUSE_BUTTON_LEFT, false)
 	await frames(2)

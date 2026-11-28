@@ -1,0 +1,74 @@
+{
+  "schema": "xenovection.material-visual-review.v1",
+  "reviewer": "Specialist B independent optical/material visual review",
+  "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+  "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+  "workflow_run": 46158498122,
+  "overall_status": "FAIL at integrated GUI source authoring; this is partial visual evidence only",
+  "material_gui_checks": "42/42 PASS",
+  "spatial_gui_checks": "53/53 PASS",
+  "files": [
+    {
+      "file": "gui-material-legacy.png",
+      "sha256": "891936e228c3f2b3a5bed6203c58eb990cda1dcf73be0ce8282a07b733824ec9",
+      "dimensions": [
+        1000,
+        625
+      ]
+    },
+    {
+      "file": "gui-material-optical.png",
+      "sha256": "c80dfb4ca9ebb365df1d4512d1a8a582c719135380b47f2fd898d99c5fad0e79",
+      "dimensions": [
+        1000,
+        625
+      ]
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "sha256": "a189a72013c3c1963b0c763e50273742a3ee2928f1cd437652fd0d897382994d",
+      "dimensions": [
+        1000,
+        625
+      ]
+    },
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "sha256": "2d0e52f30cefbc2ee9bf37557a20218318c4cdf5ebdd5c4cc1358985d101fed2",
+      "dimensions": [
+        1000,
+        625
+      ]
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "sha256": "debc7d799a07064ea61cdcb274c04e1fe87f53a63ee3661c45173a8985af27e4",
+      "dimensions": [
+        1000,
+        625
+      ]
+    },
+    {
+      "file": "gui-convergence-composition.png",
+      "sha256": "e1ccb7a2c275e1aee8bc0297733643d11e269591f94c6eebef0cbfcca035ee87",
+      "dimensions": [
+        1000,
+        625
+      ]
+    }
+  ],
+  "observations": [
+    "The matter optical assignment again preserves membrane silhouette, apertures and independent green field geometry. The fully optical sheet is darker with restricted coloured highlights; no gross ribbon extrusion or transparency artifact is visible.",
+    "The spatial gain comparison visibly changes delicate organism bodies/branches while preserving camera, background, retained scientific source geometry and numerical population. The overall image is dominated by unchanged source ribbons and the central knot.",
+    "At low shared ecology material gain, most ecological details are almost invisible. At high gain, scattered cyan details and thin branch fragments are visible but remain subtle at this overview.",
+    "The numerical interaction frame itself changes brightness because it shares an organism family material. It is nearly absent at low gain and appears as dim discontinuous segments at high gain. This is an interaction-legibility concern, not an invalid geometry finding.",
+    "The failed integrated-authoring capture contains a small amber matter surface with scattered ecological detail. It does not establish a successful graph-authored integrated composition; that suite failed and its evidence must remain adverse."
+  ],
+  "material_comparison": {
+    "changed_samples": 574,
+    "mean_rgb_difference": 0.00025508154893177,
+    "samples": 156500
+  },
+  "recommendation": "Keep optical equations unchanged pending the integrated preset population. Consider an independent persistent unshaded numerical-domain guide material so interaction bounds remain legible across optical settings; root coordination requested before changes.",
+  "scope": "Hosted Windows Vulkan Forward+ llvmpipe images; no physical TITAN RTX performance or owner visual-acceptance claim."
+}

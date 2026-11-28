@@ -1,0 +1,821 @@
+{
+  "schema": "xenovection.windows-qualification.v1",
+  "status": "FAIL",
+  "platform": "Microsoft Windows 10.0.26100",
+  "physical_gpu_qualified": false,
+  "scope": "Native Windows executable, Vulkan Forward+ with pinned Mesa software rendering",
+  "vsync_requested": "Disabled; any driver fallback is recorded per scene from the engine log",
+  "profile_scope": "Retained per-suite workloads plus 90 measured frames for integrated views after 60 warm-up frames; screenshots precede measurement; full 36000-frame structural soak is separate",
+  "owner_titan_rtx_qualification": "Pending owner hardware execution and visual acceptance",
+  "steps": [
+    {
+      "name": "prepare-runtime",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\tools\\prepare_runtime.py",
+        "--runtime",
+        "D:\\a\\Xenovection\\Xenovection\\.runtime",
+        "--evidence",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 42.302,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "prepare-runtime.log"
+    },
+    {
+      "name": "numerical-dependency",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "-m",
+        "pip",
+        "install",
+        "--disable-pip-version-check",
+        "numpy==2.2.6"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.929,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "numerical-dependency.log"
+    },
+    {
+      "name": "historical-numerical",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\experiments\\found-001\\source\\tests\\verify_specimen.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.22,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "historical-numerical.log"
+    },
+    {
+      "name": "historical-godot-import",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\build\\historical-startup\\frankenfield_fieldstudy_001",
+        "--editor",
+        "--import"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.053,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "historical-godot-import.log"
+    },
+    {
+      "name": "historical-godot-startup",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\build\\historical-startup\\frankenfield_fieldstudy_001",
+        "--quit-after",
+        "10"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.861,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "historical-godot-startup.log"
+    },
+    {
+      "name": "editor-import",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--editor",
+        "--import"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.448,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "editor-import.log"
+    },
+    {
+      "name": "ecology-world-parse",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--check-only",
+        "--script",
+        "res://ecology/world.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.32,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "ecology-world-parse.log"
+    },
+    {
+      "name": "ecology-workspace-parse",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--check-only",
+        "--script",
+        "res://ecology/workspace.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.516,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "ecology-workspace-parse.log"
+    },
+    {
+      "name": "ecology-gui-probe-parse",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--check-only",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\gui_ecology_probe.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.318,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "ecology-gui-probe-parse.log"
+    },
+    {
+      "name": "matter-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_matter.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.581,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "matter-contracts.log"
+    },
+    {
+      "name": "core-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_core.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.581,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "core-contracts.log"
+    },
+    {
+      "name": "integrated-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_integration.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.979,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "integrated-contracts.log"
+    },
+    {
+      "name": "synth-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_synth.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 13.773,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "synth-contracts.log"
+    },
+    {
+      "name": "ecology-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_ecology.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 18.32,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "ecology-contracts.log"
+    },
+    {
+      "name": "composition-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_compositions.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.779,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "composition-contracts.log"
+    },
+    {
+      "name": "matter-optics-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_matter_optics.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.683,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "matter-optics-contracts.log"
+    },
+    {
+      "name": "spatial-ecology-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_convergence_ecology.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.542,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "spatial-ecology-contracts.log"
+    },
+    {
+      "name": "convergence-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "D:\\a\\Xenovection\\Xenovection\\tests\\test_convergence.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 16.935,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "convergence-contracts.log"
+    },
+    {
+      "name": "filament-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "res://rendering/filaments/verify_filaments.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.309,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "filament-contracts.log"
+    },
+    {
+      "name": "optical-contracts",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+      "arguments": [
+        "--headless",
+        "--path",
+        "D:\\a\\Xenovection\\Xenovection\\app",
+        "--script",
+        "res://rendering/optical/verify_optical.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.864,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "optical-contracts.log"
+    },
+    {
+      "name": "source-binary64-exactness",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\tests\\verify_source_exact.py",
+        "--godot",
+        "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+        "--receipt",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\source-binary64-exactness.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.673,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "source-binary64-exactness.log"
+    },
+    {
+      "name": "package",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\tools\\package_evaluator.py",
+        "--godot",
+        "D:\\a\\Xenovection\\Xenovection\\.runtime\\godot-4.7.2\\Godot_v4.7.2-stable_win64_console.exe",
+        "--templates",
+        "D:\\a\\Xenovection\\Xenovection\\.runtime\\templates-4.7.2",
+        "--source-sha",
+        "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+        "--output",
+        "D:\\a\\Xenovection\\Xenovection\\build",
+        "--skip-tests"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 42.808,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "package.log"
+    },
+    {
+      "name": "vulkan-preflight",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\tools\\prepare_runtime.py",
+        "--runtime",
+        "D:\\a\\Xenovection\\Xenovection\\.runtime",
+        "--evidence",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence",
+        "--probe-vulkan"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.149,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "vulkan-preflight.log"
+    },
+    {
+      "name": "extracted-test_core",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_core.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.047,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_core.log"
+    },
+    {
+      "name": "extracted-test_integration",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_integration.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 13.172,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_integration.log"
+    },
+    {
+      "name": "extracted-test_matter",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_matter.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.868,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_matter.log"
+    },
+    {
+      "name": "extracted-test_synth",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_synth.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 11.137,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_synth.log"
+    },
+    {
+      "name": "extracted-test_ecology",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_ecology.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 15.311,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_ecology.log"
+    },
+    {
+      "name": "extracted-test_compositions",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_compositions.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.55,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_compositions.log"
+    },
+    {
+      "name": "extracted-test_matter_optics",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_matter_optics.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.456,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_matter_optics.log"
+    },
+    {
+      "name": "extracted-test_convergence_ecology",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_convergence_ecology.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.132,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_convergence_ecology.log"
+    },
+    {
+      "name": "extracted-test_convergence",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_convergence.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 14.291,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-test_convergence.log"
+    },
+    {
+      "name": "extracted-verify_filaments",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=verify_filaments.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.277,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-verify_filaments.log"
+    },
+    {
+      "name": "extracted-verify_optical",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=verify_optical.gd"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.731,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-verify_optical.log"
+    },
+    {
+      "name": "extracted-full-resource-soak",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=test_soak.gd",
+        "--receipt=D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-soak.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 41.763,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-full-resource-soak.log"
+    },
+    {
+      "name": "extracted-source-export",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--headless",
+        "--",
+        "--qualification-script=export_source_bits.gd",
+        "--output=D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-source-f64.bin"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.455,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-source-export.log"
+    },
+    {
+      "name": "extracted-source-binary64-exactness",
+      "status": "PASS",
+      "executable": "python",
+      "arguments": [
+        "D:\\a\\Xenovection\\Xenovection\\tests\\verify_source_exact.py",
+        "--bits",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-source-f64.bin",
+        "--receipt",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-source-binary64-exactness.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.075,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-source-binary64-exactness.log"
+    },
+    {
+      "name": "extracted-graphical-material",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--disable-vsync",
+        "--windowed",
+        "--resolution",
+        "1000x650",
+        "--log-file",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-material-engine.log",
+        "--",
+        "--qualification-script=gui_material_probe.gd",
+        "--output-prefix=D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-material"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 43.111,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-graphical-material.log"
+    },
+    {
+      "name": "extracted-graphical-spatial_ecology",
+      "status": "PASS",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--disable-vsync",
+        "--windowed",
+        "--resolution",
+        "1000x650",
+        "--log-file",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-spatial_ecology-engine.log",
+        "--",
+        "--qualification-script=gui_spatial_ecology_probe.gd",
+        "--output-prefix=D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-spatial_ecology"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 232.742,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-graphical-spatial_ecology.log"
+    },
+    {
+      "name": "extracted-graphical-convergence",
+      "status": "FAIL",
+      "executable": "D:\\a\\Xenovection\\Xenovection\\build\\windows-test-copy\\Xenovection\\Xenovection.exe",
+      "arguments": [
+        "--rendering-method",
+        "forward_plus",
+        "--rendering-driver",
+        "vulkan",
+        "--audio-driver",
+        "Dummy",
+        "--disable-vsync",
+        "--windowed",
+        "--resolution",
+        "1000x650",
+        "--log-file",
+        "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-convergence-engine.log",
+        "--",
+        "--qualification-script=gui_convergence_probe.gd",
+        "--output-prefix=D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\gui-convergence"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 55.291,
+      "timeout": false,
+      "engine_error_detected": false,
+      "log": "extracted-graphical-convergence.log"
+    }
+  ],
+  "scenes": [],
+  "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+  "embedded_build": {
+    "schema": "xenovection.build.v1",
+    "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+    "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+    "repository": "https://github.com/techrote/Xenovection",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "status": "Draft/HOLD",
+    "mission": "MAINLINE-CONVERGENCE-001",
+    "primary_renderer": "Vulkan Forward+",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+  },
+  "source_tree": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+  "package": {
+    "archive": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-dc90fc2cac6e.zip",
+    "bytes": 38964405,
+    "sha256": "f709b04d1b364673e9597e45ac5ed0e2123329afb68806a5a887fcd0cfe563e7",
+    "build": {
+      "schema": "xenovection.build.v1",
+      "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+      "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+      "repository": "https://github.com/techrote/Xenovection",
+      "godot": "4.7.2.stable.official.ed1daf0bf",
+      "status": "Draft/HOLD",
+      "mission": "MAINLINE-CONVERGENCE-001",
+      "primary_renderer": "Vulkan Forward+",
+      "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+    },
+    "payload_files": 75
+  },
+  "verified_payload_files": 75,
+  "runner_elevated": true,
+  "icd_discovery": "Temporary hosted-CI HKLM software-driver registration; restored in finally",
+  "script_custody": {
+    "export_source_bits.gd": {
+      "source_path": "tests/export_source_bits.gd",
+      "sha256": "c5dd965e40c79836ff96a05a8ada8ad2284d86628e21d11e63b9bd8d0925e74d"
+    },
+    "gui_convergence_probe.gd": {
+      "source_path": "tests/gui_convergence_probe.gd",
+      "sha256": "976e8efe944e4df28a3dbd53ab61e84287ad0a7076cdd8275b5e335c777b45ba"
+    },
+    "gui_ecology_probe.gd": {
+      "source_path": "tests/gui_ecology_probe.gd",
+      "sha256": "6ea04de5e52fe0f2384f71055f490fd0c3503a8ed007e0d892247c5265370817"
+    },
+    "gui_input_probe.gd": {
+      "source_path": "tests/gui_input_probe.gd",
+      "sha256": "e4862c71b4e588ed34fd74e85b37d42a064421dfccdb07b9e5b907e2238d5b75"
+    },
+    "gui_material_probe.gd": {
+      "source_path": "tests/gui_material_probe.gd",
+      "sha256": "b0d23585f6680523c5e008ebb6c01d25f3489cf6ea46074c915e4b842fc2a3b2"
+    },
+    "gui_spatial_ecology_probe.gd": {
+      "source_path": "tests/gui_spatial_ecology_probe.gd",
+      "sha256": "947cac80d52bc6a448edfae793027c952d5aaae8fa42ceedb0976ac36c2ce3c2"
+    },
+    "gui_synth_probe.gd": {
+      "source_path": "tests/gui_synth_probe.gd",
+      "sha256": "02661eda8c5bcb214c2c77c7008f7f45da06817b72bc95b08a37ec3a25cd9289"
+    },
+    "test_compositions.gd": {
+      "source_path": "tests/test_compositions.gd",
+      "sha256": "a93a7050dc10a2095a00774fe4daa8e3bc09353c0ea7fc9622e4abc1113cd218"
+    },
+    "test_convergence.gd": {
+      "source_path": "tests/test_convergence.gd",
+      "sha256": "aee815635d90513e0b781bf649a9421e257381c65ab17d9317cf4e5fc21c3625"
+    },
+    "test_convergence_ecology.gd": {
+      "source_path": "tests/test_convergence_ecology.gd",
+      "sha256": "26057a17e8ec5afa5aea863abe858ab056fd5a363bc42751766a3efbc6061065"
+    },
+    "test_core.gd": {
+      "source_path": "tests/test_core.gd",
+      "sha256": "f34a4f2e08957a7d202a0102c27fba988c03165ec01ac497f7ab74fb3b351e60"
+    },
+    "test_ecology.gd": {
+      "source_path": "tests/test_ecology.gd",
+      "sha256": "c72f9ee9d673540179018ea4def5554d5c33fb02d96ed2e1d2995b215fe8980c"
+    },
+    "test_integration.gd": {
+      "source_path": "tests/test_integration.gd",
+      "sha256": "7949a4cf5a6442f65fb8398415b431fbc1ddf7577f100784808d34c63585e66b"
+    },
+    "test_matter.gd": {
+      "source_path": "tests/test_matter.gd",
+      "sha256": "bd12c67a8287124809468e1b1c014f2d0a72054e907fecfdcc0ab60e9ab11567"
+    },
+    "test_matter_optics.gd": {
+      "source_path": "tests/test_matter_optics.gd",
+      "sha256": "e12b240798df099dc5896267a4e9fdabb48449e67862a05b84bb1f7d14a5056b"
+    },
+    "test_soak.gd": {
+      "source_path": "tests/test_soak.gd",
+      "sha256": "1511b79bde83f14afa44fd13c68ae350740d66fc97730941fd2bd99f1e3604ce"
+    },
+    "test_synth.gd": {
+      "source_path": "tests/test_synth.gd",
+      "sha256": "fb82b3f331231c7fda1f75096c18783dc6da5dc2e11fc6efc42dd264a31f114e"
+    },
+    "verify_captures.gd": {
+      "source_path": "tests/verify_captures.gd",
+      "sha256": "cb4532237cdf947c94f8ec5c4a1ad29fbce43f1050c65a47a65cb6214ec78b2a"
+    },
+    "verify_filaments.gd": {
+      "source_path": "app/rendering/filaments/verify_filaments.gd",
+      "sha256": "66a8176414196f2ca6da0371713ab668ce836b3b1863573ed33013ad84f3c7b1"
+    },
+    "verify_optical.gd": {
+      "source_path": "app/rendering/optical/verify_optical.gd",
+      "sha256": "b2720c51c99da1043004f190f67d6937d28e4cf15f739868f55f01d4325b750c"
+    }
+  },
+  "failure": "extracted-graphical-convergence failed (exit 1; timeout=False; engine_error=False). See D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-graphical-convergence.log",
+  "icd_registration_restored": true
+}

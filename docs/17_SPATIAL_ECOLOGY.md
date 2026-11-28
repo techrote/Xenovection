@@ -39,6 +39,10 @@ was insufficient until this correction.
 
 `ecology/spatial_adapter.gd` owns one record per stable organism identity. Four material
 instances, one sphere mesh and one cylinder mesh are shared across the representation.
+One additional persistent, opaque unshaded material marks the numerical interaction
+plane. Its muted cyan colour, normal depth testing and fixed opacity remain independent
+of organism optical properties and material gain; it is an authoring guide. Resource
+metrics distinguish the four family materials from this one guide material.
 Each organism owns a persistent body instance and a bounded MultiMesh buffer for branches
 or trails. Births allocate records, deaths release records, and new branches use reserved
 capacity. Ordinary movement, interpolation, radius changes, optical adjustments and camera

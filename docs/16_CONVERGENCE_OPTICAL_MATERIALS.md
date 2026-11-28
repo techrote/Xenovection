@@ -34,7 +34,7 @@ Each generated region retains one persistent strip mesh/material and one particl
 
 Only `mode`, `seed`, `count`, `field`, `secondary`, `integration` and `pathline` are base-only topology controls. The shared route registry rejects continuous routes to these destinations. Strength, blend, field origin, deformation, condensation, transforms and material controls remain continuously writable. Explicit reintegration is still available for authoring a new baked field curve.
 
-The spatial adapter shares two geometric meshes and four family materials. Organism IDs own their representation records; births and deaths allocate or release those records. Existing branch/trail capacity receives transform and custom-data uploads after completed snapshots. Local-axis cylinder scaling preserves both endpoints and the intended radius for every orientation.
+The spatial adapter shares two geometric meshes and four family materials. One additional persistent, opaque unshaded material keeps the numerical-domain frame readable independently of organism optical settings and gain. Organism IDs own their representation records; births and deaths allocate or release those records. Existing branch/trail capacity receives transform and custom-data uploads after completed snapshots. Local-axis cylinder scaling preserves both endpoints and the intended radius for every orientation.
 
 ## Evidence and practical limits
 

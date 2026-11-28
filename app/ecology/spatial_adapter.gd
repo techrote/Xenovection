@@ -15,6 +15,7 @@ var records: Dictionary = {}
 var latest_snapshot: Dictionary = {}
 var family_materials: Array[ShaderMaterial] = []
 var material_caches: Array[Dictionary] = []
+var guide_material: StandardMaterial3D
 var body_mesh: SphereMesh
 var branch_mesh: CylinderMesh
 var allocations: int = 0
@@ -61,11 +62,19 @@ func _ensure_resources() -> void:
 		material.set_shader_parameter("family_tint", FAMILY_TINTS[family])
 		family_materials.append(material)
 		material_caches.append({})
+	# This frame identifies the numerical interaction plane. It is an authoring
+	# guide, so organism optics and material gain must not erase its visibility.
+	guide_material = StandardMaterial3D.new()
+	guide_material.resource_name = "ui.ecology.domain_guide"
+	guide_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	guide_material.albedo_color = Color(0.18, 0.55, 0.68, 1.0)
+	guide_material.transparency = BaseMaterial3D.TRANSPARENCY_DISABLED
+	guide_material.disable_fog = true
 	topology_builds += 2
 	source_instances = _new_buffer(16, body_mesh, family_materials[0])
 	source_instances.name = "AuthoredResourceSources"
 	add_child(source_instances)
-	boundary_instances = _new_buffer(4, branch_mesh, family_materials[1])
+	boundary_instances = _new_buffer(4, branch_mesh, guide_material)
 	boundary_instances.name = "NumericalInteractionPlane"
 	add_child(boundary_instances)
 	var corners = [Vector2.ZERO, Vector2(1, 0), Vector2.ONE, Vector2(0, 1)]
@@ -288,7 +297,9 @@ func metrics() -> Dictionary:
 	samples.sort()
 	return {"numerical_domain": "planar", "representation": "bounded spatial snapshot adapter",
 		"organism_resources": records.size(), "allocations": allocations, "deallocations": deallocations,
-		"shared_meshes": 2 if body_mesh != null else 0, "shared_materials": family_materials.size(),
+		"shared_meshes": 2 if body_mesh != null else 0,
+		"shared_materials": family_materials.size() + int(guide_material != null),
+		"family_materials": family_materials.size(), "guide_materials": int(guide_material != null),
 		"topology_builds": topology_builds, "topology_events": topology_events,
 		"transform_uploads": transform_uploads, "upload_bytes": upload_bytes, "material_uniform_writes": material_writes,
 		"body_transform_updates": body_transform_updates, "instance_uniform_writes": instance_uniform_writes,

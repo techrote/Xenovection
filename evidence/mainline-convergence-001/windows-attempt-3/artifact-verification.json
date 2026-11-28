@@ -1,0 +1,45 @@
+{
+  "run_id": 46158498122,
+  "artifact_id": 15268134061,
+  "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+  "source_tree": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+  "outer_bytes": 40701333,
+  "outer_sha256": "25dc5eb68ac928fb5f7f196b81459884bed55a965e10a16c23fba6f8957b4028",
+  "outer_hash_verified": true,
+  "disposition": "FAIL: convergence actual-input witness could not open Synth component picker; downstream authoring assertions incomplete",
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46158498122/artifacts/15268134061",
+  "captures": [
+    {
+      "filename": "gui-convergence-authoring.png",
+      "sha256": "38175b758585cc81bf609b3443e462829554ab63cfdbc10dcd154a03bb79c1c8"
+    },
+    {
+      "filename": "gui-convergence-composition.png",
+      "sha256": "e1ccb7a2c275e1aee8bc0297733643d11e269591f94c6eebef0cbfcca035ee87"
+    },
+    {
+      "filename": "gui-material-authoring.png",
+      "sha256": "a189a72013c3c1963b0c763e50273742a3ee2928f1cd437652fd0d897382994d"
+    },
+    {
+      "filename": "gui-material-legacy.png",
+      "sha256": "891936e228c3f2b3a5bed6203c58eb990cda1dcf73be0ce8282a07b733824ec9"
+    },
+    {
+      "filename": "gui-material-optical.png",
+      "sha256": "c80dfb4ca9ebb365df1d4512d1a8a582c719135380b47f2fd898d99c5fad0e79"
+    },
+    {
+      "filename": "gui-spatial_ecology-material-high.png",
+      "sha256": "debc7d799a07064ea61cdcb274c04e1fe87f53a63ee3661c45173a8985af27e4"
+    },
+    {
+      "filename": "gui-spatial_ecology-material-low.png",
+      "sha256": "2d0e52f30cefbc2ee9bf37557a20218318c4cdf5ebdd5c4cc1358985d101fed2"
+    },
+    {
+      "filename": "gui-spatial_ecology.png",
+      "sha256": "3f816514dd56bbc69c551e613e290682558f1eb67788651b712b0f678f6ecb29"
+    }
+  ]
+}

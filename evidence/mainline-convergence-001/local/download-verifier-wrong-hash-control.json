@@ -1,0 +1,20 @@
+{
+  "schema": "xenovection.downloaded-artifact-verification.v1",
+  "mission": "MAINLINE-CONVERGENCE-001",
+  "verification_scope": "Independent archive integrity and recorded qualification evidence; no executable is run by this verifier",
+  "source_sha": "d02577d1d8315bf784e4bf92e142e089254ffcb6",
+  "tree_sha": "4f9eb90263d4f0db7dc3550971c761a8dd6704ab",
+  "payload_status": "FAIL",
+  "workflow_qualification_status": "NOT_EVALUATED",
+  "overall_status": "FAIL",
+  "owner_physical_gpu_acceptance": "Pending owner evaluation",
+  "failures": [
+    "Outer artifact SHA-256 mismatch"
+  ],
+  "outer": {
+    "filename": "convergence-candidate2-adverse.zip",
+    "bytes": 40162475,
+    "sha256": "0c8aaee3ebe6b53e4025d4742a7d7672b3857845dbdfc4c47dbbc4edcd6d9d5a",
+    "expected_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

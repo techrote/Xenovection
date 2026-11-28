@@ -62,10 +62,17 @@ func _run() -> void:
 	check(adapter.apply_snapshot(snapshot), "Snapshot adapter accepts typed bounded snapshot")
 	adapter.update_presentation(1.0)
 	var initial: Dictionary = adapter.metrics()
-	check(initial.organism_resources == world.organisms.size() and initial.shared_meshes == 2 and initial.shared_materials == 4, "One identity record per organism and shared resources")
+	check(initial.organism_resources == world.organisms.size() and initial.shared_meshes == 2 and initial.shared_materials == 5 and initial.family_materials == 4 and initial.guide_materials == 1, "One identity record per organism, four family materials and exactly one persistent guide")
+	var guide_id: int = adapter.guide_material.get_instance_id()
+	var guide_colour: Color = adapter.guide_material.albedo_color
+	check(adapter.boundary_instances.material_override == adapter.guide_material and adapter.guide_material.shading_mode == BaseMaterial3D.SHADING_MODE_UNSHADED and adapter.guide_material.transparency == BaseMaterial3D.TRANSPARENCY_DISABLED and not adapter.guide_material.no_depth_test, "Numerical plane uses a separate opaque unshaded guide with normal depth testing")
 	var handles: Dictionary = {}
+	var organism_resources_unchanged: bool = true
 	for id in adapter.records:
-		handles[id] = adapter.records[id].core.get_instance_id()
+		var record: Dictionary = adapter.records[id]
+		handles[id] = record.core.get_instance_id()
+		organism_resources_unchanged = organism_resources_unchanged and record.core.mesh == adapter.body_mesh and record.strands.multimesh.mesh == adapter.branch_mesh and record.core.material_override == adapter.family_materials[record.family] and record.strands.material_override == adapter.family_materials[record.family]
+	check(organism_resources_unchanged, "Adding the guide leaves every organism on its existing shared geometry and optical family material")
 	for i in range(12):
 		world.step()
 		adapter.apply_snapshot(producer.capture(world))
@@ -79,6 +86,7 @@ func _run() -> void:
 		adapter.update_presentation(float(i) / 20.0, {"parameters": {"enabled": true, "optical_mix": 1.0, "optical_thickness": 0.2 + float(i) * 0.01, "illumination_intensity": 1.0}}, {"sky": float(i), "palette": float(i)})
 	check(world.digest() == before, "Quality, interpolation, optical context and depth leave digest unchanged")
 	check(adapter.allocations == initial.allocations and adapter.topology_builds == initial.topology_builds, "Ordinary rendering reuses topology and identity resources")
+	check(adapter.guide_material.get_instance_id() == guide_id and adapter.guide_material.albedo_color == guide_colour, "Optical context, clocks and quality leave the numerical-domain guide unchanged")
 	var identities_stable = true
 	for id in handles:
 		identities_stable = identities_stable and adapter.records[id].core.get_instance_id() == handles[id]
@@ -102,6 +110,7 @@ func _run() -> void:
 	adapter.update_presentation()
 	material_gain = adapter.family_materials[0].get_shader_parameter("ecology_material_gain")
 	check(is_equal_approx(material_bus.get_base("eco.material"), 2.0) and is_equal_approx(material_gain, 1.4), "Ecology material scalar and presentation gain remain bounded")
+	check(adapter.guide_material.get_instance_id() == guide_id and adapter.guide_material.albedo_color == guide_colour and adapter.guide_material.albedo_color.a == 1.0, "Low and saturated organism material gain cannot dim or replace the domain guide")
 	world.apply_effective({})
 	world.plant(2, Vector2(0.5, 0.5))
 	adapter.apply_snapshot(producer.capture(world))
@@ -137,6 +146,7 @@ func _run() -> void:
 		adapter.update_presentation()
 		adapter.clear_organisms()
 	check(adapter.allocations == adapter.deallocations and adapter.topology_builds == 2, "Repeated activation cleanup preserves only shared geometry")
+	check(adapter.guide_material.get_instance_id() == guide_id and adapter.metrics().shared_materials == 5 and adapter.metrics().guide_materials == 1, "Repeated activation retains exactly one guide alongside four family materials")
 	receipts.append(adapter.metrics())
 	adapter.free()
 	camera.free()
