@@ -257,7 +257,7 @@ func apply_preset(index: int) -> void:
 	bus.reset()
 	matter.set_defaults(bus,preset)
 	ui.preset_picker.select(preset_index)
-	ui.set_tab(ui.tabs.get_tab_count()-1 if matter.active else (1 if preset.id in ["optical", "membrane"] else 0))
+	ui.set_tab(ui.tabs.get_node("Matter").get_index() if matter.active else (1 if preset.id in ["optical", "membrane"] else 0))
 	ui.subtitle_label.text = str(preset.description).to_upper()
 	if _ready_done:
 		recorder.reset()
@@ -434,8 +434,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F12: handle_action("screenshot")
 			KEY_Z:
 				if event.ctrl_pressed: handle_action("redo" if event.shift_pressed else "undo")
-			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7:
+			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, KEY_6, KEY_7, KEY_8, KEY_9:
 				apply_preset(event.keycode - KEY_1)
+			KEY_0: apply_preset(9)
 			_:
 				return
 		get_viewport().set_input_as_handled()

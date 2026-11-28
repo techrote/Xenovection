@@ -24,7 +24,7 @@ static func generator(kind: int, p: Vector3, t: float) -> Vector3:
 static func sample(p: Vector3, t: float, config: Dictionary) -> Vector3:
 	if not p.is_finite() or not is_finite(t):
 		return Vector3.ZERO
-	var phase := fposmod(t, 120.0)
+	var phase := clampf(t, -1000000.0, 1000000.0)
 	var origin: Vector3 = config.get("origin", Vector3.ZERO)
 	var moving := origin + Vector3(sin(phase * 0.23), cos(phase * 0.31), sin(phase * 0.17)) * 0.36
 	var a := p - moving

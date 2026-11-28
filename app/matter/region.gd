@@ -85,7 +85,7 @@ func rebuild(p: Dictionary) -> void:
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	surface.mesh = mesh
 	vertex_count = vertices.size()
-	triangle_count = indices.size() / 3
+	triangle_count = int(indices.size() / 3.0)
 	builds += 1
 	shader.set_shader_parameter("mode", built_mode)
 	shader.set_shader_parameter("row_count", float(rows))
@@ -121,12 +121,14 @@ func update(p: Dictionary, clocks: Dictionary, delta: float, advancing: bool, sh
 	for key in ["condensation","shell","thickness","roughness","absorption","opacity","pore_size","growth","strength","deformation","line_width","hue","trails"]:
 		shader.set_shader_parameter(key, p[key])
 	shader.set_shader_parameter("blend_field", p.mix)
+	shader.set_shader_parameter("field_kind", int(p.field))
+	shader.set_shader_parameter("secondary_kind", int(p.secondary))
 	shader.set_shader_parameter("field_origin", Vector3(p.origin_x,p.origin_y,p.origin_z))
-	shader.set_shader_parameter("flow_time", fposmod(float(clocks.filament), 1200.0))
-	shader.set_shader_parameter("shape_time", fposmod(float(clocks.displacement), 1200.0))
-	shader.set_shader_parameter("normal_time", fposmod(float(clocks.normal), 1200.0))
-	shader.set_shader_parameter("optical_time", fposmod(float(clocks.sky), 1200.0))
-	shader.set_shader_parameter("colour_time", fposmod(float(clocks.palette), 1200.0))
+	shader.set_shader_parameter("flow_time", clampf(float(clocks.filament), -1000000.0, 1000000.0))
+	shader.set_shader_parameter("shape_time", clampf(float(clocks.displacement), -1000000.0, 1000000.0))
+	shader.set_shader_parameter("normal_time", clampf(float(clocks.normal), -1000000.0, 1000000.0))
+	shader.set_shader_parameter("optical_time", clampf(float(clocks.sky), -1000000.0, 1000000.0))
+	shader.set_shader_parameter("colour_time", clampf(float(clocks.palette), -1000000.0, 1000000.0))
 	dots.visible = built_mode == 0 and p.particles >= 0.5
 	if not dots.visible or not advancing or not is_finite(delta) or delta <= 0.0:
 		return

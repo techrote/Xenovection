@@ -22,6 +22,8 @@ uniform float growth = 1.0;
 uniform float strength = 1.0;
 uniform float deformation = 0.45;
 uniform float blend_field = 0.5;
+uniform int field_kind = 0;
+uniform int secondary_kind = 2;
 uniform vec3 field_origin = vec3(0.0);
 uniform float line_width = 0.65;
 uniform float hue = 0.0;
@@ -30,12 +32,27 @@ varying vec2 domain;
 varying float field_value;
 varying float strip_side;
 
+vec3 generator(int kind, vec3 p, float t) {
+	float rr = dot(p,p);
+	vec3 radial = p / (0.45 + rr);
+	if (kind == 0) { return vec3(-p.y,p.x,0.18*sin(p.z+t))/(0.55+rr*0.25); }
+	if (kind == 1) { return -radial + vec3(0.0,0.15*sin(p.x+t),0.0); }
+	if (kind == 2) { return vec3(sin(p.y*1.7+t),sin(p.z*1.3-t),sin(p.x*1.5+0.3*t)); }
+	if (kind == 3) { return vec3(-p.z,0.65,p.x)/(0.8+rr*0.17); }
+	if (kind == 4) { return (3.0*p*p.y-vec3(0.0,1.0,0.0)*rr)/pow(0.5+rr,2.5); }
+	if (kind == 5) {
+		vec3 q = p*5.0+vec3(0.0,0.0,24.0);
+		return vec3(10.0*(q.y-q.x),q.x*(28.0-q.z)-q.y,q.x*q.y-(8.0/3.0)*q.z)*0.018;
+	}
+	return radial;
+}
 vec3 disturbance(vec3 p, float t) {
-	vec3 q = p - field_origin;
-	float mask = exp(-dot(q,q) * 0.065);
-	vec3 curl = vec3(sin(q.y * 1.6 + t), sin(q.z * 1.3 - t), sin(q.x * 1.4 + t * 0.3));
-	vec3 swirl = vec3(-q.y, q.x, sin(q.z + t)) / (0.8 + dot(q,q) * 0.25);
-	return mix(swirl, curl, blend_field) * mask * strength;
+	vec3 moving = field_origin+vec3(sin(t*0.23),cos(t*0.31),sin(t*0.17))*0.36;
+	vec3 a = p-moving;
+	vec3 b = p+field_origin+vec3(1.1,-0.6,0.5);
+	float mask = exp(-dot(b,b)*0.055);
+	vec3 f = (generator(field_kind,a,t)*(1.0-blend_field)+generator(secondary_kind,b,t)*blend_field*mask)*strength;
+	return f * min(1.0,4.0/max(length(f),0.00001));
 }
 
 vec3 film(vec2 uv) {
@@ -73,7 +90,7 @@ void vertex() {
 	} else {
 		// All strip edges converge to the same parameter coordinates at m=1.
 		// At m=0 they are distinct, curved hairline ribbons; not an opacity swap.
-		float width_fraction = mix(0.045, 1.0, condensation);
+		float width_fraction = mix(0.08, 1.0, condensation);
 		vec2 uv = vec2(VERTEX.x, VERTEX.y + strip_side * width_fraction / (2.0 * row_count));
 		domain = uv;
 		p = film(uv);
@@ -98,7 +115,7 @@ void fragment() {
 		vec2 local = fract(cells) - 0.5;
 		float weather = sin(cell.x * 0.71 + cell.y * 0.43 + shape_time * 0.53 + seed_phase);
 		float radius = clamp(pore_size + weather * 0.055 + field_value * 0.035, 0.0, 0.47);
-		float hole = smoothstep(radius - 0.025, radius + 0.025, length(local));
+		float hole = mix(smoothstep(radius - 0.025, radius + 0.025, length(local)),1.0,1.0-smoothstep(0.0,0.035,pore_size));
 		float lace = 1.0 - smoothstep(0.025,0.075,min(abs(local.x),abs(local.y)));
 		float boundary = 0.5 + 0.47 * sin(domain.x * 5.3 + domain.y * 4.5 + seed_phase + shape_time * 0.15);
 		float grown = smoothstep(boundary - 0.04, boundary + 0.04, growth);

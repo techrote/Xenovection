@@ -272,6 +272,13 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    # A real input route test on the same source and pinned graphics stack.
+    $GuiLog = Join-Path $Evidence 'gui-input-engine.log'
+    $GuiPrefix = Join-Path $Evidence 'gui-input'
+    Invoke-Checked -Name 'graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
+        $Graphics + @('--path',(Join-Path $RepoRoot 'app'),'--script',(Join-Path $RepoRoot 'tests/gui_input_probe.gd'),
+            '--log-file',$GuiLog,'--',"--output-prefix=$GuiPrefix")
+    ) -TimeoutSeconds 480 -EngineLog $GuiLog
     foreach ($Preset in @('nursery','garden','living','films','condensation','ecosystem')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
@@ -301,6 +308,18 @@ try {
             draw_calls_3d=$Profile.draw_calls_3d; generated_regions=$Profile.matter.regions
         }
     }
+    # Isolate the cost of the generated layer on the identical dense scene.
+    $DisabledProfile = Join-Path $Evidence 'ecosystem-disabled.json'
+    $DisabledLog = Join-Path $Evidence 'ecosystem-disabled-engine.log'
+    Invoke-Checked -Name 'ecosystem-disabled' -Executable $Application -Arguments (
+        $Graphics + @('--log-file',$DisabledLog,'--','--preset=ecosystem','--hide-panel','--no-matter',
+            '--warmup=45','--profile-frames=60',"--profile=$DisabledProfile")
+    ) -TimeoutSeconds 240 -EngineLog $DisabledLog
+    $Disabled = Get-Content -Raw $DisabledProfile | ConvertFrom-Json
+    if ($Disabled.matter.visible -or $Disabled.samples -lt 60 -or $Disabled.build.source_sha -ne $SourceSha) {
+        throw 'Effect-disabled comparison did not suppress the procedural layer'
+    }
+    $Qualification.effect_disabled = 'ecosystem-disabled.json'
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'

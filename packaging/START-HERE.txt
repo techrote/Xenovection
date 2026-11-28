@@ -22,7 +22,7 @@ Click: exact source node/edge. Drag: through-depth source-region selection.
 Shift adds to selection. F focuses selection. I isolates/reveals it.
 M materialises a knot. U removes the proxy. Ctrl+Z / Ctrl+Shift+Z undo/redo visuals.
 Space pauses all clocks; V reverses them. Clocks tab controls each separately.
-R resets the preset. Keys 1–7 select presets. Tab hides the panel; H hides the HUD.
+R resets the preset. Keys 1–9 and 0 select the first ten presets; all thirteen are available in the picker. Tab hides the panel; H hides the HUD.
 F5 saves scene; F6 recalls it. F9 exports exact selection. F10 exports metrics.
 F12 captures the actual viewport. Exports are in %APPDATA%\Godot\app_userdata\Xenovection.
 

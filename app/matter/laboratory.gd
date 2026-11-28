@@ -105,12 +105,12 @@ func _apply(bus, slot: int, key: String, value: float) -> void:
 		rebuild(bus,slot)
 
 func undo(bus, redo: bool) -> void:
-	var from: Array = redo_history if redo else history
-	var to: Array = history if redo else redo_history
-	if from.is_empty(): return
-	var item: Dictionary = from.pop_back()
+	var source_history: Array = redo_history if redo else history
+	var destination_history: Array = history if redo else redo_history
+	if source_history.is_empty(): return
+	var item: Dictionary = source_history.pop_back()
 	_apply(bus,int(item.slot),str(item.key),float(item.new if redo else item.old))
-	to.append(item)
+	destination_history.append(item)
 	selected = int(item.slot)
 
 func pick(camera: Camera3D, screen: Vector2) -> void:
