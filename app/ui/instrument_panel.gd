@@ -36,6 +36,7 @@ var _show_box: bool = false
 var clean_view: bool = false
 var tabs: TabContainer
 var source_layers: VBoxContainer
+var matter_label: Label
 
 func _ready() -> void:
 	layer = 8
@@ -311,6 +312,7 @@ func _build_rail() -> void:
 	_button(data, "Save scene  [F5]", "save_scene")
 	_button(data, "Recall scene  [F6]", "load_scene")
 	_button(data, "Save performance receipt  [F10]", "profile")
+	_build_matter_page()
 
 func _build_inspector() -> void:
 	inspector = PanelContainer.new()
@@ -427,3 +429,50 @@ func _draw_box() -> void:
 	if _show_box:
 		_box_control.draw_rect(_box, Color(MINT, 0.075), true)
 		_box_control.draw_rect(_box, Color(MINT, 0.8), false, 1.0)
+
+func _build_matter_page() -> void:
+	var page := _page(tabs,"Matter")
+	_section(page,"Generated regions","Choose a procedural preset (08–13). Region controls are independent of the immutable source. F focuses; I isolates.")
+	matter_label = _label("Select a procedural preset",12,MINT)
+	page.add_child(matter_label)
+	var row := HBoxContainer.new()
+	page.add_child(row)
+	for i in range(3): _button(row,"Region %d" % (i+1),"matter_select_%d" % i)
+	_toggle(page,"Region visible","matter.edit.visible",false)
+	_section(page,"Topology","0 = integrated flow; 1 = strip / film domain. Field IDs: 0 vortex, 1 sink, 2 curl, 3 helix, 4 dipole, 5 Lorenz, 6 source. Reintegrate to bake live field edits into flow paths.")
+	_slider(page,"Representation","matter.edit.mode",0,1,1,1)
+	_slider(page,"Seed","matter.edit.seed",0,9999,1,73)
+	_slider(page,"Strip population","matter.edit.count",24,192,12,96)
+	_slider(page,"Primary field","matter.edit.field",0,6,1,0)
+	_slider(page,"Secondary field","matter.edit.secondary",0,6,1,2)
+	_slider(page,"Blend","matter.edit.mix",0,1,0.01,0.42)
+	_slider(page,"Integration step","matter.edit.integration",0.005,0.12,0.005,0.055)
+	_toggle(page,"Time-dependent pathlines","matter.edit.pathline",false)
+	_button(page,"Reintegrate / bake field","matter_reintegrate")
+	_button(page,"Reseed","matter_reseed")
+	_toggle(page,"Advected particle population","matter.edit.particles",false)
+	_button(page,"Reset particles","matter_particles_reset")
+	_section(page,"Matter","Condensation changes strip geometry, shell wraps the shared parameter domain. Flow strength, origin and blending affect both geometry and colour.")
+	for spec: Array in [
+		["Condensation","condensation",0,1,0.005,0.7],["Shell wrapping","shell",0,1,0.005,0],
+		["Field deformation","deformation",0,1.5,0.01,0.45],["Field strength","strength",0,3,0.01,1],
+		["Field origin X","origin_x",-4,4,0.05,0],["Field origin Y","origin_y",-4,4,0.05,0],["Field origin Z","origin_z",-4,4,0.05,0],
+		["Pores","pore_size",0,0.47,0.005,0.22],["Growth / erosion","growth",0,1,0.005,1],
+		["Optical thickness","thickness",0,1,0.005,0.42],["Roughness","roughness",0,1,0.01,0.26],
+		["Absorption","absorption",0,2,0.01,0.2],["Opacity","opacity",0,1,0.005,0.45],
+		["Hairline width (pixels)","line_width",0.2,3,0.05,0.65],["Spectral hue","hue",0,1,0.005,0],
+		["Travelling highlights","trails",0,1,0.01,0.35]]:
+		_slider(page,spec[0],"matter.edit."+spec[1],spec[2],spec[3],spec[4],spec[5])
+	_section(page,"Placement")
+	for spec: Array in [["X","x",-9,9,0.05,0],["Y","y",-9,9,0.05,0],["Z","z",-9,9,0.05,0],
+		["Rotation","rotation",-3.14,3.14,0.02,0],["Scale","scale",0.2,2,0.01,1]]:
+		_slider(page,spec[0],"matter.edit."+spec[1],spec[2],spec[3],spec[4],spec[5])
+	_button(page,"Focus region","focus")
+	_button(page,"Isolate / reveal","isolate")
+	_button(page,"Save scene [F5]","save_scene")
+	_button(page,"Recall scene [F6]","load_scene")
+
+func sync_matter(active: bool, selected: int, isolated: bool, values: Dictionary) -> void:
+	if not is_instance_valid(matter_label): return
+	matter_label.text = "Generated region %d%s" % [selected+1," · isolated" if isolated else ""] if active else "Select a procedural preset"
+	for key in values: sync_value("matter.edit."+key,values[key])

@@ -91,3 +91,7 @@ The repository began with research and design documentation. FOUND-001 was a sta
 - [Modulation bus #7](https://github.com/techrote/Xenovection/issues/7) and [optional data taps #8](https://github.com/techrote/Xenovection/issues/8).
 
 **Custody:** the exact historical fixed ZIP has been recovered and preserved unmodified under [`experiments/found-001/`](experiments/found-001/). Its archive and specimen hashes match issue #3. The [custody receipt](experiments/found-001/CUSTODY.md) distinguishes this baseline from the successor implementation.
+
+## FOUND-003 procedural laboratory (Draft/HOLD)
+
+Six additional procedural presets, generated-region editing and a geometric strand-to-film domain are described in [the FOUND-003 controls and limitations](docs/13_FOUND_003_MATTER.md). The candidate package name is `Xenovection-FOUND-003-Windows-<revision>.zip`. Qualification and owner physical acceptance are pending; original FOUND-002 evidence above retains its exact scope.

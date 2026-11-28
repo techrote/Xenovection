@@ -14,6 +14,8 @@ const FoundryProbe = preload("res://analysis/foundry_probe.gd")
 const SceneValidation = preload("res://core/scene_validation.gd")
 const SampleReplay = preload("res://core/sample_replay.gd")
 const Presets = preload("res://presets.gd")
+const Matter = preload("res://matter/laboratory.gd")
+const MatterPresets = preload("res://matter/presets.gd")
 
 var source = SourceModel.new()
 var selection = SelectionState.new()
@@ -27,7 +29,8 @@ var optical = OpticalRenderer.new()
 var camera = ExplorationCamera.new()
 var ui = InstrumentPanel.new()
 var dataset: Dictionary = {}
-var presets: Array = Presets.all()
+var presets: Array = Presets.all() + MatterPresets.all()
+var matter = Matter.new()
 var preset_index: int = 0
 var scientific: bool = false
 var density: int = 48
@@ -54,6 +57,7 @@ func _ready() -> void:
 	_setup_world()
 	add_child(filaments)
 	add_child(optical)
+	add_child(matter)
 	add_child(camera)
 	camera.current = true
 	add_child(ui)
@@ -151,6 +155,7 @@ func _register_defaults() -> void:
 	bus.register_target("optical.sky_frequency", optical_flags.sky_frequency, -16.0, 16.0)
 	bus.register_target("optical.sky_pan", Vector2.ZERO, -100.0, 100.0)
 	bus.register_target("optical.material_tint", optical_flags.material_tint, 0.0, 1.0)
+	matter.register_targets(bus)
 	mod_depth = 1.0
 	mod_frequency = 0.08
 	mod_waveform = "sine"
@@ -250,15 +255,18 @@ func apply_preset(index: int) -> void:
 		camera.focus_points(selection.get_selected_points())
 	camera.set_pose({"distance": preset.distance, "yaw": preset.yaw, "pitch": preset.pitch})
 	bus.reset()
+	matter.set_defaults(bus,preset)
 	ui.preset_picker.select(preset_index)
-	ui.set_tab(1 if preset.id in ["optical", "membrane"] else 0)
+	ui.set_tab(ui.tabs.get_tab_count()-1 if matter.active else (1 if preset.id in ["optical", "membrane"] else 0))
 	ui.subtitle_label.text = str(preset.description).to_upper()
 	if _ready_done:
 		recorder.reset()
 		_sync_ui()
 
 func set_parameter(target: String, value: Variant) -> void:
-	if target == "modulation.enabled":
+	if target.begins_with("matter.edit."):
+		matter.edit(bus,target.trim_prefix("matter.edit."),value)
+	elif target == "modulation.enabled":
 		bus.enabled = bool(value)
 	elif target == "modulation.frequency":
 		mod_frequency = float(value)
@@ -326,6 +334,7 @@ func _process(delta: float) -> void:
 	var clocks: Dictionary = bus.get_clocks()
 	filaments.update_clocks(clocks)
 	optical.update_clocks(clocks)
+	matter.update(bus,effective,clocks,delta,scientific,_args.has("no-matter"))
 	_hud_elapsed += delta
 	if _hud_elapsed > 0.5:
 		_hud_elapsed = 0.0
@@ -359,7 +368,7 @@ func evidence_context() -> Dictionary:
 		"filaments": filaments.get_metrics(), "optical": optical.get_metrics(),
 		"clocks": bus.get_clocks(), "camera": _encode(camera.get_pose()),
 		"modulation": _encode(bus.snapshot()), "sample_replay": replay.get_metrics(),
-		"source_unchanged": _source_sha == dataset.manifest.revision}
+		"matter": matter.metrics(), "source_unchanged": _source_sha == dataset.manifest.revision}
 
 func _update_performance() -> void:
 	var metric: Dictionary = recorder.snapshot()
@@ -431,6 +440,11 @@ func _unhandled_input(event: InputEvent) -> void:
 				return
 		get_viewport().set_input_as_handled()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if matter.active and not scientific:
+			matter.pick(camera,event.position)
+			_sync_ui()
+			get_viewport().set_input_as_handled()
+			return
 		_dragging = true
 		_drag_start = event.position
 		_drag_additive = event.shift_pressed
@@ -464,6 +478,23 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func handle_action(action: String) -> void:
+	if matter.active and not scientific:
+		if action.begins_with("matter_select_"):
+			matter.selected = clampi(int(action.trim_prefix("matter_select_")),0,Matter.COUNT-1)
+			_sync_ui()
+			return
+		match action:
+			"focus": camera.focus_points(matter.focus_points())
+			"isolate": matter.isolated = not matter.isolated
+			"reveal": matter.isolated = false
+			"matter_reintegrate": matter.rebuild(bus,matter.selected)
+			"matter_reseed": matter.edit(bus,"seed",fmod(float(bus.get_base(Matter.target(matter.selected,"seed")))+1.0,10000.0))
+			"matter_particles_reset": matter.reset_particles(bus)
+			"undo", "redo": matter.undo(bus,action == "redo")
+			_: pass
+		if action in ["focus","isolate","reveal","matter_reintegrate","matter_reseed","matter_particles_reset","undo","redo"]:
+			_sync_ui()
+			return
 	match action:
 		"pause": bus.paused = not bus.paused
 		"scientific": scientific = not scientific
@@ -478,7 +509,9 @@ func handle_action(action: String) -> void:
 			ui.toggle_clean()
 			_frame_canvas()
 		"reset": apply_preset(preset_index)
-		"reset_time": bus.reset()
+		"reset_time":
+			bus.reset()
+			matter.reset_particles(bus)
 		"focus": camera.focus_points(selection.get_selected_points())
 		"isolate": selection.set_isolated(not selection.get_visual_state().isolate)
 		"reveal": selection.reveal()
@@ -520,6 +553,7 @@ func _sync_ui() -> void:
 		return
 	ui.set_transport(scientific, bus.paused)
 	ui.sync_clocks(bus.clocks)
+	ui.sync_matter(matter.active,matter.selected,matter.isolated,matter.params(bus,matter.selected))
 	for key: String in bus.targets:
 		if bus.get_base(key) is float or bus.get_base(key) is int:
 			ui.sync_value(key, bus.get_base(key))
@@ -575,7 +609,7 @@ func save_scene(path: String) -> void:
 		"camera": _encode(camera.get_pose()), "clocks": _encode(bus.clocks),
 		"scientific": scientific, "paused": bus.paused, "modulation_enabled": bus.enabled,
 		"mod_depth": mod_depth, "mod_frequency": mod_frequency, "mod_waveform": mod_waveform,
-		"replay_enabled": replay_enabled})
+		"replay_enabled": replay_enabled, "matter": matter.snapshot()})
 
 func load_scene(path: String) -> bool:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -588,6 +622,10 @@ func load_scene(path: String) -> bool:
 	var data: Variant = JSON.parse_string(file.get_as_text())
 	if not data is Dictionary or data.get("schema", "") != "xenovection.scene.v1":
 		ui.show_message("Invalid scene file")
+		return false
+	var matter_data: Variant = data.get("matter",{"schema":Matter.SCHEMA,"active":false,"selected":0,"isolated":false,"baked":[]})
+	if not Matter.valid_snapshot(matter_data):
+		ui.show_message("Scene refused: malformed procedural region state",8)
 		return false
 	var checked: Dictionary = SceneValidation.validate(data, dataset, bus.targets, FilamentRenderer.DEFAULTS, OpticalRenderer.DEFAULTS)
 	if not checked.ok:
@@ -622,6 +660,7 @@ func load_scene(path: String) -> bool:
 	ui.preset_picker.select(preset_index)
 	ui.subtitle_label.text = str(presets[preset_index].description).to_upper()
 	_rebuild_modulation()
+	matter.restore(bus,matter_data)
 	_sync_ui()
 	ui.show_message("Scene restored · source IDs preserved")
 	return true

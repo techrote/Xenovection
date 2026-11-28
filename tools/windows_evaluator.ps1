@@ -145,6 +145,7 @@ try {
     Invoke-Checked -Name 'editor-import' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--editor', '--import')
     Write-TreeEvidence -Stage 'after-app-import'
     $Tests = [ordered]@{
+        'matter-contracts' = (Join-Path $RepoRoot 'tests/test_matter.gd')
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
         'filament-contracts' = 'res://rendering/filaments/verify_filaments.gd'
@@ -271,10 +272,39 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    foreach ($Preset in @('nursery','garden','living','films','condensation','ecosystem')) {
+        $ProfilePath = Join-Path $Evidence ($Preset + '.json')
+        $CapturePath = Join-Path $Evidence ($Preset + '.png')
+        $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
+        Invoke-Checked -Name ($Preset + '-procedural-vulkan') -Executable $Application -Arguments (
+            $Graphics + @('--log-file',$EngineLog,'--',"--preset=$Preset",'--hide-panel',
+                '--warmup=45','--profile-frames=60',"--profile=$ProfilePath",
+                '--capture-frame=30',"--capture=$CapturePath")
+        ) -TimeoutSeconds 300 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.preset -ne $Preset -or $Profile.build.source_sha -ne $SourceSha -or
+            -not $Profile.source_unchanged -or -not $Profile.matter.active -or -not $Profile.matter.visible -or
+            $Profile.matter.regions.Count -ne 3 -or $Profile.draw_calls_3d -lt 1 -or $Profile.samples -lt 60 -or
+            $Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
+            $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
+            -not $Profile.platform.software_device -or
+            $Profile.render_target_pixels[0] -ne $Dimensions[0] -or $Profile.render_target_pixels[1] -ne $Dimensions[1]) {
+            throw "Incomplete procedural packaged execution: $Preset"
+        }
+        $Qualification.scenes += [ordered]@{
+            preset=$Preset; status='EXECUTED'; capture=(Split-Path -Leaf $CapturePath)
+            capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            capture_dimensions=$Dimensions; profile=(Split-Path -Leaf $ProfilePath)
+            samples=$Profile.samples; device=$Profile.platform.device
+            wall_p50_ms=$Profile.wall_frame.p50_ms; wall_p95_ms=$Profile.wall_frame.p95_ms
+            draw_calls_3d=$Profile.draw_calls_3d; generated_regions=$Profile.matter.regions
+        }
+    }
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Twelve rendered native Windows PNGs; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'
