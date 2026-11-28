@@ -31,6 +31,7 @@ uniform float trails = 0.35;
 varying vec2 domain;
 varying float field_value;
 varying float strip_side;
+varying float pixel_half_extent;
 
 vec3 generator(int kind, vec3 p, float t) {
 	float rr = dot(p,p);
@@ -73,6 +74,7 @@ vec3 film(vec2 uv) {
 
 void vertex() {
 	strip_side = UV.y * 2.0 - 1.0;
+	pixel_half_extent = 0.0;
 	vec3 p;
 	if (mode == 0) {
 		p = VERTEX;
@@ -80,13 +82,21 @@ void vertex() {
 		field_value = length(local_field);
 		p += local_field * deformation * 0.5;
 		domain = UV;
-		vec3 tangent = normalize(mat3(MODELVIEW_MATRIX) * NORMAL);
-		vec2 perpendicular = vec2(-tangent.y, tangent.x);
-		perpendicular /= max(length(perpendicular), 0.0001);
-		vec3 view_p = (MODELVIEW_MATRIX * vec4(p,1.0)).xyz;
-		float world_per_pixel = max(-view_p.z, 0.025) * 2.0 / max(PROJECTION_MATRIX[1][1] * VIEWPORT_SIZE.y, 1.0);
-		view_p.xy += perpendicular * strip_side * max(0.65, line_width * 0.5) * world_per_pixel;
-		VERTEX = view_p;
+		vec4 view_point = MODELVIEW_MATRIX * vec4(p,1.0);
+		vec4 view_tangent = MODELVIEW_MATRIX * vec4(NORMAL,0.0);
+		vec4 clip = PROJECTION_MATRIX * view_point;
+		vec4 clip_tangent = PROJECTION_MATRIX * view_tangent;
+		// Perspective-correct quotient derivative, matching the qualified
+		// filament renderer. A view-space XY tangent can fold ribbons into
+		// screen-filling wedges when a path has substantial depth motion.
+		vec2 pixel_tangent = (clip_tangent.xy * clip.w - clip.xy * clip_tangent.w) * VIEWPORT_SIZE;
+		float tangent_length = length(pixel_tangent);
+		vec2 normal_pixels = tangent_length > 0.000001 ? vec2(-pixel_tangent.y,pixel_tangent.x) / tangent_length : vec2(1.0,0.0);
+		float width = max(line_width,0.05);
+		pixel_half_extent = width * 0.5 + 0.75;
+		clip.xy += normal_pixels * strip_side * pixel_half_extent * 2.0 / VIEWPORT_SIZE * clip.w;
+		POSITION = clip;
+		VERTEX = view_point.xyz;
 	} else {
 		// All strip edges converge to the same parameter coordinates at m=1.
 		// At m=0 they are distinct, curved hairline ribbons; not an opacity swap.
@@ -95,7 +105,9 @@ void vertex() {
 		domain = uv;
 		p = film(uv);
 		field_value = length(disturbance(p, shape_time * 0.35 + seed_phase));
-		VERTEX = (MODELVIEW_MATRIX * vec4(p,1.0)).xyz;
+		vec4 view_point = MODELVIEW_MATRIX * vec4(p,1.0);
+		VERTEX = view_point.xyz;
+		POSITION = PROJECTION_MATRIX * view_point;
 	}
 	NORMAL = vec3(0.0,0.0,1.0);
 }
@@ -107,8 +119,11 @@ void fragment() {
 	vec3 tint = 0.55 + 0.38 * cos(TAU * (vec3(0.01,0.29,0.59) + hue + colour_time * 0.014 + field_value * 0.09));
 	if (mode == 0) {
 		float bead = pow(max(0.0, sin(TAU * (domain.x * 2.0 - time_phase) + seed_phase)), 14.0);
+		float width = max(line_width,0.05);
+		float distance_px = abs(strip_side) * pixel_half_extent;
+		float coverage = clamp(width * 0.5 + 0.5 - distance_px,0.0,min(width,1.0));
 		ALBEDO = mix(tint * (0.6 + lum), vec3(0.75,0.93,1.0), bead * trails);
-		ALPHA = opacity * edge * min(1.0, line_width) * (0.72 + bead * trails * 0.28);
+		ALPHA = opacity * coverage * (0.72 + bead * trails * 0.28);
 	} else {
 		vec2 cells = domain * vec2(24.0,30.0);
 		vec2 cell = floor(cells);
