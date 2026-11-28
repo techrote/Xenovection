@@ -1,0 +1,33 @@
+{
+  "schema": "xenovection.patch-index-verifier-controls.v1",
+  "status": "PASS",
+  "checks": 5,
+  "cases": [
+    {
+      "case": "Actual candidate5 authored export",
+      "status": "PASS",
+      "indexed_patches": 12
+    },
+    {
+      "case": "duplicate_id",
+      "status": "EXPECTED_REJECTION",
+      "reason": "Patch index IDs are duplicated or incomplete"
+    },
+    {
+      "case": "wrong_preset",
+      "status": "EXPECTED_REJECTION",
+      "reason": "Patch index referenced preset differs from authored patch: Xenovection/samples/patches/composition.spectral_vortex.json"
+    },
+    {
+      "case": "wrong_path",
+      "status": "EXPECTED_REJECTION",
+      "reason": "Patch index path/identity mismatch"
+    },
+    {
+      "case": "Historical v1 index without patch rows remains payload-valid",
+      "status": "PASS",
+      "indexed_patches": 0
+    }
+  ],
+  "scope": "Archive-only verifier; valid sample bytes came from actual candidate5 example export. Deliberate index mutations exist only in memory."
+}

@@ -1,0 +1,185 @@
+{
+  "schema": "xenovection.downloaded-artifact-verification.v1",
+  "mission": "MAINLINE-CONVERGENCE-001",
+  "verification_scope": "Independent archive integrity and recorded qualification evidence; no executable is run by this verifier",
+  "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+  "tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+  "payload_status": "PASS",
+  "workflow_qualification_status": "FAIL",
+  "overall_status": "FAIL",
+  "owner_physical_gpu_acceptance": "Pending owner evaluation",
+  "failures": [],
+  "outer": {
+    "filename": "Xenovection-Windows-4f8f9210-final-evidence.zip",
+    "bytes": 61750951,
+    "sha256": "a2fbf6607b4c6458e4d4178c2bf202f13d513b5718130b9d82ff453410b1f84f",
+    "expected_sha256": "a2fbf6607b4c6458e4d4178c2bf202f13d513b5718130b9d82ff453410b1f84f"
+  },
+  "inner": {
+    "filename": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-4f8f9210d3ea.zip",
+    "bytes": 38970805,
+    "sha256": "613429cfc8cbca9b99a27db813adef33b220bee05a98e9d6bdb1cf8cdf37c65c"
+  },
+  "build": {
+    "schema": "xenovection.build.v1",
+    "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+    "tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+    "repository": "https://github.com/techrote/Xenovection",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "status": "Draft/HOLD",
+    "mission": "MAINLINE-CONVERGENCE-001",
+    "primary_renderer": "Vulkan Forward+",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+  },
+  "payload_files_verified": 75,
+  "pe_headers": [
+    {
+      "file": "Xenovection.exe",
+      "machine": "AMD64",
+      "optional_header": "PE32+",
+      "sections": 12
+    },
+    {
+      "file": "Xenovection.console.exe",
+      "machine": "AMD64",
+      "optional_header": "PE32+",
+      "sections": 10
+    }
+  ],
+  "pck": {
+    "bytes": 702856,
+    "format": 4,
+    "engine": [
+      4,
+      7,
+      2
+    ]
+  },
+  "bundled_ci_loader_dlls": [],
+  "examples": {
+    "indexed_scenes": 25,
+    "unique_stable_ids": 25,
+    "scene_schema": "xenovection.scene.v2",
+    "integrated_patches": 6,
+    "inherited_patches": 6,
+    "indexed_patches": 12,
+    "patch_schema": "xenovection.patch.v1"
+  },
+  "script_custody_entries": 20,
+  "workflow": {
+    "status": "FAIL",
+    "recorded_status": "PASS",
+    "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+    "tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+    "observed_gates": 101,
+    "required_gates": 101,
+    "missing_required_gates": [],
+    "failed_gates": [],
+    "capture_hashes_verified": 53,
+    "recorded_failure": null,
+    "profile_source_tree_identities_checked": 53,
+    "audited_pngs_checked": 65,
+    "gui_receipts": [
+      {
+        "file": "windows-evidence/gui-material.json",
+        "checks": 42,
+        "minimum_checks": 42,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-material-legacy.png",
+            "sha256": "1e4e465463cf668a635dcc13349257b031e883de8164d93415499ba8e49769b7"
+          },
+          {
+            "file": "windows-evidence/gui-material-optical.png",
+            "sha256": "db2fcf425a0fb131c9c3eb7ef103b60b43b5e9a6154aaa8481a4982298666b6e"
+          },
+          {
+            "file": "windows-evidence/gui-material-authoring.png",
+            "sha256": "cf9f36a173dfaa41724543ff3536320a1aae7b500c92c821874ff83d74815fa8"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-spatial_ecology.json",
+        "checks": 60,
+        "minimum_checks": 60,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-spatial_ecology.png",
+            "sha256": "1be10683bf18613dba633022e1409983529caeab1f2b99badfacbecb6b6459b0"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-low.png",
+            "sha256": "5ef3cbb76d603729d98a7c4b92383f89bd8836952dd1dbfb113a40e5027a457c"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-high.png",
+            "sha256": "193069a5727e767f04915973049dc6911aef24625f161cf505cbed488c96d44d"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-convergence.json",
+        "checks": 90,
+        "minimum_checks": 90,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-convergence-authoring.png",
+            "sha256": "25bf71cb820f2f43bef2fbcb51bfb134319593a761245250a8f0c4f29397c211"
+          },
+          {
+            "file": "windows-evidence/gui-convergence-composition.png",
+            "sha256": "08e835d1df6b921333468a70bbde5b16621aed66f5cbaa182ee9b6d51a57e0eb"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/synth-gui.json",
+        "checks": 10,
+        "minimum_checks": 10,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/synth-gui.png",
+            "sha256": "fd494050da3520c299587651df21f8827dcb2923c2d903e55dc5208c60dd36b7"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-input.json",
+        "checks": 37,
+        "minimum_checks": 37,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-input.png",
+            "sha256": "67c245635329b762f603f4b4914d19da8f90fb598c10ef99edf72866f6c1cf0c"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/ecology-gui.json",
+        "checks": 18,
+        "minimum_checks": 23,
+        "assertions_pass": false,
+        "captures": [
+          {
+            "file": "windows-evidence/ecology-gui.png",
+            "sha256": "571f001f42d8615605aa39c63cf0dd0d7c052520764d90681b2c6f006a7870db"
+          }
+        ]
+      }
+    ],
+    "retained_logs_scanned": 164,
+    "engine_error_matches": [],
+    "physical_gpu_qualified": false,
+    "failures": [
+      "Incomplete/failed actual GUI assertions: ecology-gui",
+      "Missing finite planar layout measurements",
+      "Missing planar coordinate roundtrip and actual pointer planting witness"
+    ]
+  }
+}

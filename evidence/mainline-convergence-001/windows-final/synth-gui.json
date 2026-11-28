@@ -1,0 +1,19 @@
+{
+	"checks": 10,
+	"device": "llvmpipe (LLVM 23.1.6, 256 bits)",
+	"failures": [],
+	"metrics": {
+		"active": true,
+		"dropped_seconds": 0.0,
+		"fixed_ticks": 383,
+		"graph_p50_usec": 79.0,
+		"graph_p95_usec": 146.0,
+		"missing_targets": [],
+		"preset": 3,
+		"route_count": 9,
+		"samples": 383,
+		"schema": "xenovection.patch.v1",
+		"source_count": 9
+	},
+	"renderer": "forward_plus"
+}

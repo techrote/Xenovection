@@ -1,0 +1,41 @@
+{
+  "schema": "xenovection.adverse-visual-review.v1",
+  "reviewed_at_utc": "2026-11-28T17:14:47.383601+00:00",
+  "reviewer_role": "Specialist B independent rendering and UI review",
+  "application_sha": "a3cd1a1409a32a1a32effdbe087579773bb5f84e",
+  "source_tree_sha": "645ab15216b47550e78b4a887982c7155f435d8a",
+  "windows_run_id": 46168349433,
+  "artifact_id": 15273360539,
+  "campaign_status": "FAIL",
+  "review_status": "ADVERSE_EVIDENCE_CONFIRMED",
+  "files": [
+    {
+      "file": "gui-convergence-first-menu-failure.png",
+      "sha256": "f5046f52d72416448cb86856f34a8165e5d2c2ba871501214438b1fc3e3d2b0e",
+      "bytes": 178485
+    },
+    {
+      "file": "gui-convergence-authoring.png",
+      "sha256": "27fe3c5d9e762ecf8bd4de56d00f9a4a5c29eb1acf276760d40ad70cbb41ba63",
+      "bytes": 188056
+    },
+    {
+      "file": "gui-convergence.json",
+      "sha256": "e90f4d0559b30ef041207bdd8aa833ba42ca6785826a97799a6c18aca8d3f4c6",
+      "bytes": 19142
+    }
+  ],
+  "visual_observations": [
+    "The first failure capture retains finite generated geometry and the cyan numerical-domain frame. It shows an empty target search and filament.resonance selected rather than the intended ecology destination.",
+    "The later authoring capture shows one valid manual component and a long, wrapped optical target value above Undo/Redo and all authoring controls.",
+    "No black render, exploded mesh or optical shader artefact is apparent in these two captures; the failing authoring state is real and must not be accepted as a complete integrated patch."
+  ],
+  "trace_observations": [
+    "Source-kind selection succeeds with a 26 microsecond paired click and creates the manual source. This is distinct from the previously corrected held-click failure.",
+    "New route changes from logical y305 to y328, a 23 pixel vertical displacement. Apply component and an earlier Apply route show additional 8 pixel vertical shifts.",
+    "At the failing target-menu event the popup is already open before the intended pointer gesture, search is empty, requested text is eco.alignment rather than eco.growth, and selected_after_pointer becomes 20.",
+    "Only two routes remain in the final graph and the integrated witness reports 81/90; downstream modulation/undo/scene-recall assertions therefore fail."
+  ],
+  "source_corroboration": "synth_panel.gd places an autowrapped live Label above the authoring controls and rewrites it every 0.15 seconds with variable-length values and diagnostic lists. Changing its minimum height can move controls between real pointer events. This source/trace agreement supports the reflow diagnosis; a fixed-height scrolling diagnostic region must be independently qualified.",
+  "scope": "Read-only inspection of exact downloaded adverse captures and trace. No rendering or application code modified by this reviewer."
+}

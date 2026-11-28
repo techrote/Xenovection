@@ -1,0 +1,684 @@
+{
+  "schema": "xenovection.visual-review.v1",
+  "reviewer_role": "Specialist B \u2014 procedural matter, optics and graphical engineering",
+  "reviewed_at_utc": "2026-11-28T17:00:39.719768+00:00",
+  "qualified_application_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+  "source_tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+  "windows_run_id": 46162094019,
+  "artifact_id": 15272291891,
+  "outer_artifact_sha256": "a2fbf6607b4c6458e4d4178c2bf202f13d513b5718130b9d82ff453410b1f84f",
+  "method": "Independent inspection of contact sheets for population comparison, then direct image-viewer inspection of every one of the 30 original PNGs. The orchestra optical overview was additionally inspected as comparison context. Original files were not edited. Hashes were recomputed and checked against capture-health; profile build identities were checked.",
+  "image_count": 30,
+  "status": "PASS_FOR_CAPTURE_REVIEW",
+  "blocking_visual_findings": [],
+  "images": [
+    {
+      "file": "nursery.png",
+      "sha256": "313cda18a77eb7986a1afe65a6f2d5ac2bc291ac4a7b889451a99f0ea15180f1",
+      "bytes": 226652,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Violet and green vortex ribbons remain separated, bounded in width, and readable, with fine particle marks. No extrusion wedges.",
+      "receipt": "nursery.json",
+      "receipt_sha256": "a6e8a52c71608e9aa3a0a109d73fc50e3fec6080be94fdfa295b7d56e89620ad"
+    },
+    {
+      "file": "garden.png",
+      "sha256": "204340dee5af0e16680140ee989a64a14c094b62c4d6e2dc205d1caa41f9a996",
+      "bytes": 130560,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Three distinct analytical-field forms are visible: a violet spiral, a blue helical group, and a green radial group. Thin strokes remain bounded.",
+      "receipt": "garden.json",
+      "receipt_sha256": "7b47b21fb095d5d12831043bb2813f8ec0baa7573d8c858043fcdce30d18d391"
+    },
+    {
+      "file": "living.png",
+      "sha256": "a302ee39d5e7aa0e5bf9fa8af573817429e52732a6d75c8609812c9148dacd8a",
+      "bytes": 327093,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Curved perforated violet film and green fine field are both visible. Apertures, outer edges, and deformation remain coherent.",
+      "receipt": "living.json",
+      "receipt_sha256": "fe5d523c3085bd3d3a2b1a8bfb2d8896cc7b08c1328cf00b33833738ddde7765"
+    },
+    {
+      "file": "films.png",
+      "sha256": "94ddafa43f342dc623b2fbd957276fc0527e72338d5d0a0db7dba773e1821687",
+      "bytes": 203894,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Three translucent perforated layers remain visible with offset silhouettes and overlap. The dense overlap is brighter but not a solid opaque screen.",
+      "receipt": "films.json",
+      "receipt_sha256": "05cd2b6d701b591f7fc9397241d26a46c29fe1ff27eca6bfd40396cbddb5a139"
+    },
+    {
+      "file": "condensation.png",
+      "sha256": "311a5a5a9e6d87911df84e8ceeebdbb1ef191bad6060d9779fe8f7a56443adb4",
+      "bytes": 364558,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The intermediate strip surface forms a coherent deformed sheet. Regular fine horizontal separation and silhouette are preserved.",
+      "receipt": "condensation.json",
+      "receipt_sha256": "a25a8bcb77d971429c5b297baf6cf6172b5c305af5865db398ffca9d03d482a9"
+    },
+    {
+      "file": "ecosystem.png",
+      "sha256": "06634246664ce81b0d67ca037a971745f308872e2d3cc4d79afa54ab0d26efaa",
+      "bytes": 207900,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-matter",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Violet ribbons, a yellow curved field, and a blue perforated shell remain distinct within the same view.",
+      "receipt": "ecosystem.json",
+      "receipt_sha256": "b184342590889c5ecc0a596c2221df5a53383a7ce6d6dddcbcecd069c31bddc8"
+    },
+    {
+      "file": "optical_dichroic.png",
+      "sha256": "acdfd906f484a6474eddb1a78dc91605e6fffa0927d7cea921cd3fdd3d1c9f67",
+      "bytes": 704611,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Nested curved translucent forms with restrained spectral bands are visible amid the selected scientific-source bundle.",
+      "receipt": "optical_dichroic.json",
+      "receipt_sha256": "1b4e9fa99c144aeabd41320a1e630f840e4f0498790cf15aef3130baa865cb13"
+    },
+    {
+      "file": "optical_weather.png",
+      "sha256": "758bdec48da718453d7b0e3cb9fbfcb39ab5cff215a26f044ce9b1a8f906e8bb",
+      "bytes": 629249,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "A perforated optical membrane is visible behind the selected source; source lines partially obscure its surface.",
+      "receipt": "optical_weather.json",
+      "receipt_sha256": "dd6ad06a9dd9bc49f885d8411761c687f8b083249cd6448caab61a3d8a00a3ef"
+    },
+    {
+      "file": "optical_lens.png",
+      "sha256": "4d8610650484c8681945521f495d9248a0649c6b0142b5fbfd6476c9a1666b14",
+      "bytes": 275177,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The isolated curved shell is visible against the analytic environment with cyan/red edge response. No full-screen refraction distortion or missing shell.",
+      "receipt": "optical_lens.json",
+      "receipt_sha256": "109c7e5b39d90294d9d7da0860bc9102e0222707f23d8c1541c4d227213e2951"
+    },
+    {
+      "file": "optical_garden.png",
+      "sha256": "f2c5dd2af8df0728d2f152db0e8d989158dc621c90e8001d2a247aa3166d375a",
+      "bytes": 561323,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Overlapping warm spectral perforated films are readable around the selected source. The centre is visually dense.",
+      "receipt": "optical_garden.json",
+      "receipt_sha256": "123f304e60d341d3b3e82358b02069b7433d0b7ed2fe5b1d08c0ddbc370fd1c1"
+    },
+    {
+      "file": "optical_microfibres.png",
+      "sha256": "62b71b7f7021863cc7cc3db891a772642cf8eb9b8ef087be014bc9e8963040f9",
+      "bytes": 485908,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The bright selected ribbon bundle is present inside a very dense background filament population. Fine optical color differences are difficult to separate at this distance.",
+      "receipt": "optical_microfibres.json",
+      "receipt_sha256": "955d58a3c1d0cdb3d467917df9754bfe4a60514dd0da3f8b0cee08e037ab54de"
+    },
+    {
+      "file": "optical_ecosystem.png",
+      "sha256": "5a5d1d18d808cb68a62a8fb622957cbd034c70f6248fc7d4f60ba7aac1c1f51e",
+      "bytes": 605291,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-overview",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The pale perforated membrane and luminous selected fibres remain present. Dense background source lines obscure some film detail.",
+      "receipt": "optical_ecosystem.json",
+      "receipt_sha256": "a9f9f24bf85750a7cf01f97ac80be72a94bb7718544acd10cc9de8c1f86f1743"
+    },
+    {
+      "file": "optical_dichroic-close.png",
+      "sha256": "1611fcbd1944391f24c39ad9f3703a986802af5f83196ab8816021042126d366",
+      "bytes": 816013,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The close view clearly separates nested curved surfaces, holes, and muted angle-dependent spectral bands.",
+      "receipt": "optical_dichroic-close.json",
+      "receipt_sha256": "c95dbadfd1270791b719e2c82c86bcd6d2a237bfeca887283279bd55c001521c"
+    },
+    {
+      "file": "optical_weather-close.png",
+      "sha256": "dbdc15f96dbc5023e4b34e0142ccb658e6448ec3aa24a7341b65a667b3afeb45",
+      "bytes": 764405,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Enlarged apertures and bounded outer membrane edges are visible through selected source lines. Dark material regions remain coherent.",
+      "receipt": "optical_weather-close.json",
+      "receipt_sha256": "b87b33c76a9429993f7e69eed1127274706063081b8a5333d3c1991c449f5add"
+    },
+    {
+      "file": "optical_lens-close.png",
+      "sha256": "6950ff64ffd0f28a4701a7d288132b6f19dd4b86c4e3949cc82a65291a813e0a",
+      "bytes": 385404,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The enlarged translucent shell retains curved openings and cyan/red rims with bounded background sampling cues.",
+      "receipt": "optical_lens-close.json",
+      "receipt_sha256": "0c90ea4ef325a071448e31e0c8a7e2ec90e69c0ec648d412bd37e0d43be57b8a"
+    },
+    {
+      "file": "optical_garden-close.png",
+      "sha256": "019d7f36ce66ab45e367955a36a572c21918905a23c58874f90dbc1f6f938130",
+      "bytes": 686841,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Overlapping perforations and warm/cool spectral regions are visible. The close crop intentionally excludes part of the outer surface.",
+      "receipt": "optical_garden-close.json",
+      "receipt_sha256": "6958b30af6d92febb780d91a8d9a45c5ae5862b4bf674c9e92b51dab1b19a34d"
+    },
+    {
+      "file": "optical_microfibres-close.png",
+      "sha256": "3fc11193bbae8f578d5d9af2846f2996487119beaf8ce653be80e3a94f9996d3",
+      "bytes": 730021,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Thin selected ribbons and individual source lines are visible; high filament density limits optical-material separation. No wedge-like ribbon expansion.",
+      "receipt": "optical_microfibres-close.json",
+      "receipt_sha256": "1d22b8caf6d95bdf8d30d3d34d1d19ad4587a3f8288e7bc9a5cdea1c8b3237d3"
+    },
+    {
+      "file": "optical_ecosystem-close.png",
+      "sha256": "5c1563f3c7c77ca06b8dd9561e1d9ba626e2455e7748fc4fa371588ee19f8cc8",
+      "bytes": 803376,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "inherited-optical-close",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Large perforated layers and bright source fibres remain coherent in the close crop; the dense centre is visually crowded.",
+      "receipt": "optical_ecosystem-close.json",
+      "receipt_sha256": "d1067e60d2be598874bd81cf2f160092555cd007cc8fe3df47056146abb67a69"
+    },
+    {
+      "file": "optical_weather-legacy.png",
+      "sha256": "3480a11fb21fefa26502191f379c5705ce08ddde30fc922802b18c9f73a0c0dd",
+      "bytes": 625648,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "optical-disabled-comparison",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The source and same membrane class remain present with a visibly weaker optical surface response; no scene disappearance.",
+      "receipt": "optical_weather-legacy.json",
+      "receipt_sha256": "58d6eba0aa8090e714b0d5eee30873a99395c7767be27596aec5fad4e725ed01"
+    },
+    {
+      "file": "optical_lens-legacy.png",
+      "sha256": "4f91de918bf7a1428cf2fc931545be8cdc1b24de2e54d280300d73037e277cb1",
+      "bytes": 265470,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "optical-disabled-comparison",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The curved legacy shell remains present against the analytic environment; its response is darker and lacks the full optical appearance. Background phase differs between independent runs.",
+      "receipt": "optical_lens-legacy.json",
+      "receipt_sha256": "a0854867e999df21fb636bbfb20100f9008b6382c42f592bf66623889fa272f7"
+    },
+    {
+      "file": "optical_garden-legacy.png",
+      "sha256": "137ae03da85fa941f64f3eec788be5add2ec729307ec7569340f8b636f2ac322",
+      "bytes": 544465,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "optical-disabled-comparison",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The selected source stays visible while the warm overlapping optical-film response is strongly reduced.",
+      "receipt": "optical_garden-legacy.json",
+      "receipt_sha256": "c1aef22ea2b6e9523a77f39b8fef5b0f8adc3d940c3c813d941f0f1deb5b73ab"
+    },
+    {
+      "file": "optical_ecosystem-legacy.png",
+      "sha256": "ce7665a500c936ced97e9151a4e0150b9f91cdb72c3167951e5cd46681a2aef7",
+      "bytes": 595368,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "optical-disabled-comparison",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The dense source remains visible while the pale layered optical membrane becomes very faint.",
+      "receipt": "optical_ecosystem-legacy.json",
+      "receipt_sha256": "c11402b44a4a88dd8f224721353f168e6450d64e2648160d20d99ebe78fbc3ec"
+    },
+    {
+      "file": "composition-spectral_vortex-overview.png",
+      "sha256": "d34b206bfd34d3cc0bbc5151c30d181818cf09254ae6d6d23676acbfaf6599a1",
+      "bytes": 156709,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "integrated-composition",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The two vortex regions and particles are present with cyan/red spectral coloration, but the fine optical filaments are substantially darker than inherited nursery. Overview legibility is weak.",
+      "receipt": "composition-spectral_vortex-overview.json",
+      "receipt_sha256": "ae80f51cf302c1f01b58c51e0fbdd33228fdae03540ff51cb637274b950a2a88"
+    },
+    {
+      "file": "composition-spectral_vortex-close.png",
+      "sha256": "b297cfd9a3bd2647f34e9556db0cc45a32a64672788194545267cfa3d58c3249",
+      "bytes": 270975,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "integrated-composition",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Larger optical filaments and small particles remain coherent. The larger view helps geometry inspection, but full optical assignment still gives low contrast against black.",
+      "receipt": "composition-spectral_vortex-close.json",
+      "receipt_sha256": "afca11ac6e3723d63d1c70276dc24123b33c437b71755ec0d69fdb1a7956e283"
+    },
+    {
+      "file": "composition-condensation_instrument-overview.png",
+      "sha256": "904a755b30aea2ed482593d76c01a46c15237991db574940e27b260b6750bc32",
+      "bytes": 228418,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "integrated-composition",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "A coherent deformed strand-to-film surface carries cyan/red optical structure. The outline and fine strip separation are readable, although darker than the inherited material.",
+      "receipt": "composition-condensation_instrument-overview.json",
+      "receipt_sha256": "51a8b9575f73ce4d7b788c9b157194aefd383f0f2d9d74c3281d731cfe0522c9"
+    },
+    {
+      "file": "composition-condensation_instrument-close.png",
+      "sha256": "56e0d976c35b711c9f997ec5e651ab09ec7a253fdd0a376cbdc30ac8151c989a",
+      "bytes": 473762,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "integrated-composition",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Fine separated strips and curved sheet deformation are clear; cyan/red bands follow the surface. The intentional close crop cuts off the upper edge.",
+      "receipt": "composition-condensation_instrument-close.json",
+      "receipt_sha256": "856b642db65bcfd96e0b5303196a46e2cdbf4e772ad12baa4fdb57d5a47601bb"
+    },
+    {
+      "file": "gui-material-legacy.png",
+      "sha256": "1e4e465463cf668a635dcc13349257b031e883de8164d93415499ba8e49769b7",
+      "bytes": 321579,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "graphical-material-authoring",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Paused legacy film has a bright violet surface, clear perforations, and the unchanged green field. This is the reference image for real-input material assignment.",
+      "receipt": "gui-material.json",
+      "receipt_sha256": "39de664ae20a95a0409bda9b41e1fa1503cf82df9a1a1603ff096d355db085f6"
+    },
+    {
+      "file": "gui-material-optical.png",
+      "sha256": "db2fcf425a0fb131c9c3eb7ef103b60b43b5e9a6154aaa8481a4982298666b6e",
+      "bytes": 291842,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "graphical-material-authoring",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "At the same paused clocks, the film silhouette and holes remain fixed while the material becomes transmissive and carries red/cyan highlights. The green field becomes visually dominant.",
+      "receipt": "gui-material.json",
+      "receipt_sha256": "39de664ae20a95a0409bda9b41e1fa1503cf82df9a1a1603ff096d355db085f6"
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "sha256": "cf9f36a173dfaa41724543ff3536320a1aae7b500c92c821874ff83d74815fa8",
+      "bytes": 356148,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "graphical-material-authoring",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "The Optics inspector is on screen with bounded thickness, transmission, illumination direction, and intensity controls. The authored optical film remains visible beside it.",
+      "receipt": "gui-material.json",
+      "receipt_sha256": "39de664ae20a95a0409bda9b41e1fa1503cf82df9a1a1603ff096d355db085f6"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics.png",
+      "sha256": "42711a748af627d9908b3d6c867d753f4b8f55c30496bbce48ee1b0a10af6e98",
+      "bytes": 193394,
+      "dimensions": [
+        1000,
+        625
+      ],
+      "group": "integrated-disabled-comparison",
+      "status": "PASS_FOR_CAPTURE_REVIEW",
+      "observation": "Three matter regions and living trails/branches are clearly distinguishable in legacy colors. The independent cyan domain guide remains readable. Full optical comparison is much darker.",
+      "receipt": "composition-orchestra-legacy-optics.json",
+      "receipt_sha256": "d76f917249d3fb5979794fcc2c0498e6f19ec339b97b3f08452cfda9f07f49db"
+    }
+  ],
+  "supplemental_comparison": {
+    "file": "composition-matter_orchestra-overview.png",
+    "sha256": "5bff6278da51fe13a370a38a96b21f05b24f6b196491eeca1902a21f9e7352a9",
+    "observation": "Full optics gives cyan/red material response to matter and living trails/bodies while the cyan domain guide stays readable. It is markedly darker than legacy; the three matter regions and small organisms are harder to distinguish. No missing or exploded geometry is apparent."
+  },
+  "visual_limitations": [
+    "Spectral Vortex Nursery has weak default contrast at full optical assignment, including the close view; it is populated rather than empty.",
+    "Full optical Hybrid Matter Orchestra is materially darker than its legacy comparison. Living marks and field structure are more legible with lower optical assignment or adjusted authored lighting.",
+    "Inherited Microfibres and Optical Ecosystem retain dense source populations that obscure some selected optical-material detail.",
+    "Subpixel line coverage can appear dotted in still captures. Animation stability and physical display contrast remain owner-evaluation questions.",
+    "Independent preset runs are qualitative effect-disabled comparisons, not pixel-locked material measurements. The material GUI pair is paused at identical clocks and is the controlled material comparison."
+  ],
+  "scope_limits": [
+    "This receipt applies only to candidate5 and these exact captured images; a later layout-corrected candidate requires new qualification and image review.",
+    "Still captures establish visible geometry/material/UI health, not calibrated spectral transport, numerical histories, physical GPU throughput, or owner artistic acceptance.",
+    "Generated ribbons, films, particles, and ecology use shared analytic optical response. Screen/depth-copy refraction and the optional second shared-mesh film remain selected-source proxy capabilities.",
+    "The ecology numerical domain remains planar. Its spatial presentation does not establish three-dimensional numerical ecology."
+  ],
+  "material_gui_receipt": {
+    "file": "gui-material.json",
+    "sha256": "39de664ae20a95a0409bda9b41e1fa1503cf82df9a1a1603ff096d355db085f6",
+    "checks_passed": 42,
+    "real_input_events": 99,
+    "paused_mean_rgb_difference": 0.0413135520024604,
+    "geometry_builds": 1,
+    "geometry_upload_count": 1,
+    "screen_copy": false
+  },
+  "representative_profile_metrics": {
+    "nursery": {
+      "samples": 60,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 44.74,
+        "mean_ms": 38.20815,
+        "p50_ms": 36.915,
+        "p95_ms": 44.229,
+        "p99_ms": 44.74
+      },
+      "application_update_ms": {
+        "max_ms": 3.082,
+        "mean_ms": 2.2482,
+        "p50_ms": 2.133,
+        "p95_ms": 2.864,
+        "p99_ms": 3.082
+      },
+      "matter_geometry_builds": [
+        1,
+        1,
+        1
+      ],
+      "matter_geometry_upload_counts": [
+        1,
+        1,
+        1
+      ],
+      "matter_screen_copy": [
+        false,
+        false,
+        false
+      ],
+      "optical_proxy_builds": 0,
+      "optical_screen_copy": false,
+      "secondary_film_draws": 0
+    },
+    "optical_lens": {
+      "samples": 60,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 77.706,
+        "mean_ms": 69.09225,
+        "p50_ms": 68.788,
+        "p95_ms": 74.408,
+        "p99_ms": 77.706
+      },
+      "application_update_ms": {
+        "max_ms": 3.303,
+        "mean_ms": 2.0787,
+        "p50_ms": 2.016,
+        "p95_ms": 2.719,
+        "p99_ms": 3.303
+      },
+      "matter_geometry_builds": [],
+      "matter_geometry_upload_counts": [],
+      "matter_screen_copy": [],
+      "optical_proxy_builds": 1,
+      "optical_screen_copy": true,
+      "secondary_film_draws": 0
+    },
+    "optical_microfibres": {
+      "samples": 60,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 972.845,
+        "mean_ms": 934.169116666666,
+        "p50_ms": 933.227,
+        "p95_ms": 966.378,
+        "p99_ms": 972.845
+      },
+      "application_update_ms": {
+        "max_ms": 4.184,
+        "mean_ms": 3.41771666666667,
+        "p50_ms": 3.315,
+        "p95_ms": 3.92,
+        "p99_ms": 4.184
+      },
+      "matter_geometry_builds": [],
+      "matter_geometry_upload_counts": [],
+      "matter_screen_copy": [],
+      "optical_proxy_builds": 1,
+      "optical_screen_copy": false,
+      "secondary_film_draws": 0
+    },
+    "composition-spectral_vortex-overview": {
+      "samples": 90,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 57.532,
+        "mean_ms": 55.9230444444445,
+        "p50_ms": 56.017,
+        "p95_ms": 56.92,
+        "p99_ms": 57.532
+      },
+      "application_update_ms": {
+        "max_ms": 4.64,
+        "mean_ms": 3.77994444444444,
+        "p50_ms": 3.758,
+        "p95_ms": 4.214,
+        "p99_ms": 4.64
+      },
+      "matter_geometry_builds": [
+        1,
+        1,
+        1
+      ],
+      "matter_geometry_upload_counts": [
+        1,
+        1,
+        1
+      ],
+      "matter_screen_copy": [
+        false,
+        false,
+        false
+      ],
+      "optical_proxy_builds": 0,
+      "optical_screen_copy": false,
+      "secondary_film_draws": 0
+    },
+    "composition-condensation_instrument-overview": {
+      "samples": 90,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 48.791,
+        "mean_ms": 46.6586777777778,
+        "p50_ms": 46.668,
+        "p95_ms": 47.704,
+        "p99_ms": 48.791
+      },
+      "application_update_ms": {
+        "max_ms": 3.378,
+        "mean_ms": 2.44971111111111,
+        "p50_ms": 2.438,
+        "p95_ms": 2.868,
+        "p99_ms": 3.378
+      },
+      "matter_geometry_builds": [
+        1,
+        1,
+        1
+      ],
+      "matter_geometry_upload_counts": [
+        1,
+        1,
+        1
+      ],
+      "matter_screen_copy": [
+        false,
+        false,
+        false
+      ],
+      "optical_proxy_builds": 0,
+      "optical_screen_copy": false,
+      "secondary_film_draws": 0
+    },
+    "composition-matter_orchestra-overview": {
+      "samples": 90,
+      "profile_viewport": [
+        1440.0,
+        900.0
+      ],
+      "wall_frame_ms": {
+        "max_ms": 131.898,
+        "mean_ms": 112.775888888889,
+        "p50_ms": 112.311,
+        "p95_ms": 121.724,
+        "p99_ms": 131.898
+      },
+      "application_update_ms": {
+        "max_ms": 30.779,
+        "mean_ms": 20.8179666666667,
+        "p50_ms": 19.733,
+        "p95_ms": 25.327,
+        "p99_ms": 30.779
+      },
+      "matter_geometry_builds": [
+        1,
+        1,
+        1
+      ],
+      "matter_geometry_upload_counts": [
+        1,
+        1,
+        1
+      ],
+      "matter_screen_copy": [
+        false,
+        false,
+        false
+      ],
+      "optical_proxy_builds": 0,
+      "optical_screen_copy": false,
+      "secondary_film_draws": 0
+    }
+  },
+  "performance_interpretation": [
+    "All figures are native Windows Vulkan Forward+ with hosted llvmpipe, not TITAN RTX throughput. Profiles provide the measured post-warmup interval; screenshot HUDs include earlier capture/startup effects and are not the final interval summary.",
+    "Wall-frame and application-update timings are measured elapsed CPU sections. RenderingServer device timing on llvmpipe remains software rendering.",
+    "Every recorded matter region in the reviewed preset profiles reports one geometry build and one topology upload despite ongoing parameter and optical changes. Allocated resources may exceed active resources because legacy and optical materials are retained persistently.",
+    "Geometry and particle upload byte totals are submission estimates, not measured PCIe or driver traffic. Material-uniform counters count setters, not GPU commands.",
+    "Spatial presentation timing excludes snapshot allocation/deallocation; solver, snapshot, presentation, graph and whole-application times must remain distinct.",
+    "The heavy inherited optical source scenes remain expensive under llvmpipe. Their workloads were retained; no physical-GPU performance conclusion follows."
+  ]
+}

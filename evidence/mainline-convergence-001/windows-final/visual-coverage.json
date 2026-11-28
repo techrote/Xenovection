@@ -1,0 +1,352 @@
+{
+  "schema": "xenovection.final-visual-coverage.v1",
+  "status": "PASS",
+  "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "images_checked": 65,
+  "scope": "Actual specialist capture inspection with source/tree/image hash binding; physical owner acceptance remains pending.",
+  "reviews": [
+    {
+      "file": "visual-review-source-synth.json",
+      "sha256": "3faffafd5e2c4006291126e9d593bdb43bebc7b773c12ec750bfce6c5ba350d5",
+      "images": 17
+    },
+    {
+      "file": "visual-review-matter-optics.json",
+      "sha256": "dba905232a6d2c53ccae128cf34307be865311dd7579a12f772f07a09215f153",
+      "images": 30
+    },
+    {
+      "file": "visual-review-ecology.json",
+      "sha256": "782ae46f00ad662f1a92a56e7d07a50187eba594a84ddda6ab37efe3b06f1ac3",
+      "images": 18
+    }
+  ],
+  "images": [
+    {
+      "file": "composition-condensation_instrument-close.png",
+      "sha256": "9efd9458ea8667570a3a176f4a4b78e2d2bd616f7ce43ed1feb55aadb213c1bd",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "composition-condensation_instrument-overview.png",
+      "sha256": "55495aee26a0f2cbe81424f37731859082b126e2336abc9dfd651b95719082f2",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "composition-excitable_garden-close.png",
+      "sha256": "acf039ca6fb3f9093149676541f5ab640f3ceddecb3464bb0d52442f8ad73132",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-excitable_garden-overview.png",
+      "sha256": "073666629ff60215ce6c7438f85132d9eff21aa42b424c88c8e75c0463aa3f05",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-light_terrarium-close.png",
+      "sha256": "7cfce6d63af11f0d21821e4171061f0748d62a349d5283b32b36adcc06b46fe1",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-light_terrarium-overview.png",
+      "sha256": "3b64b63d6dab148f6363c5aa174882bb4631be6ff628c9a812581387983b82e3",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-living_membrane-close.png",
+      "sha256": "48ed7b09752ebcf595021393cb798cd7f815612d24567c940973bc894b4f84c9",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-living_membrane-overview.png",
+      "sha256": "5be897e5d2d9e0c935ac0fd64c4bd977d6d3067ed063fad709af0bd3e9feab06",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-matter_orchestra-close.png",
+      "sha256": "ec6f74efb34054aebcbd4b60ecd095b3eff90325b5a48b1411884f2e00565aa4",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-matter_orchestra-overview.png",
+      "sha256": "5c87509547c780e13de1df38d815de4f47f8b4def7d5c9f9aaaa9648f1caf69b",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics.png",
+      "sha256": "53506e31309d524bd44f39d3536d1fec0d1609dd840996b7cc348bd9ac78ce6f",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "composition-spectral_vortex-close.png",
+      "sha256": "c49b3f29f87b397a580f440313619f3624f71e82f9dca509fed38ec83e4d781a",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "composition-spectral_vortex-overview.png",
+      "sha256": "8ab5178ae25d15682ea9d2319c83516275e211c884c4bce4e1ca493664a82d2d",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "condensation.png",
+      "sha256": "e80647ceba4f44073f2a127573f3791547af5ce931f48660446c5c91856be974",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "ecology-gui.png",
+      "sha256": "b8bc0f57af1cebc714001e23f7a62873dd8a04774cebb1b4bffd3a2a7a152452",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-0.png",
+      "sha256": "6c21b63cb2fb6ce178621a8835b13ce6b4baa5c7b1e4f41a69121d1bb6eadcba",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-1.png",
+      "sha256": "9b96fd941d3af5be4c5c11e5a79b9f345467fb63d0d43d535f28a87b5fff3548",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-2.png",
+      "sha256": "92fb9869bcd44de83370a802cbacd335028b50050ba26a306887d0f3078df90f",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-3.png",
+      "sha256": "215a5130903e14762df173776f9f1d3ee9ab71323f9bd17fc2f204bb94c18ecb",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-4.png",
+      "sha256": "d3972b6d941dff50e85e1e37c640d488020ca0b0cf478951253e8f23db8c68d0",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem-5.png",
+      "sha256": "1dde2b04158da6338304924af97b73adf0959ac301b448e65e97a5cefbee5167",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "ecosystem.png",
+      "sha256": "33d1bfa0690e6400205636a2c799d9ae35e0432700684c9cb3db4c20a5a4643a",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "filaments.png",
+      "sha256": "b1308a7af073891fa12c1038c0c07eb367b9d8a20bf750fcd54e58c0b4446955",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "films.png",
+      "sha256": "3ac4782d6196158954207f1e74bb25c9170ad1476223e50b3f778dfd3a3f00ce",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "flow.png",
+      "sha256": "2bc6be14bacb9ff2f298985cd27a4d9a167e34471a8b7591f62d1c64e6367f56",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "garden.png",
+      "sha256": "3128ab686e53d9b71d18a9e30358a66b21115a2e76fe9042d1c36e98c53c4daa",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "gui-convergence-authoring.png",
+      "sha256": "d901ee670d45309065fba66ec09e8da07f412a88fe05a82729a8c050003e42f0",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "gui-convergence-composition.png",
+      "sha256": "01e25fc45b68174ee7393fb47b7aa7c3c360f7f02ffba72ca57c549cb4d42f9e",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "gui-input.png",
+      "sha256": "12fde427e9f22e97e3492702ac4cdb5d4f92a263665ff0b1cf985840d44f0d79",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "sha256": "f42b9ce8afe21eba74320b3f963e981561a1cad2c90bbd3a6d6992e8be04f7b1",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "gui-material-legacy.png",
+      "sha256": "8a409964013fe19f9f5b8954b6c120440b716ad1676d1742b0783fa8e5cc4ad5",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "gui-material-optical.png",
+      "sha256": "d276678488033a35ae7b1822d3fa676ed2a489db7c21c80d99e28d0db29b12c0",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "sha256": "f6a2e65699d80b877b595a510a483c323947b9e058e7bc986fde8e3012b8e985",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "sha256": "758dab6076577c38b0ef60c285fc118e3d2aa459b96bdd0f94cf6911b4933024",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "gui-spatial_ecology.png",
+      "sha256": "56520f5a828fbd359463f2a90eed2cdd9b9ed32d57b59d315b66038895afe29a",
+      "review": "visual-review-ecology.json"
+    },
+    {
+      "file": "hybrid.png",
+      "sha256": "43019d204d667eb375380261746aebeba40153717b35bd0138cefff36bcf92e2",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "living.png",
+      "sha256": "3eb1925d5a6e8b900d1c85e155d76d137b27ab676aa59c1912fcd786832e5187",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "membrane.png",
+      "sha256": "9093fab3dc05b4a3f945d5f11df01e80ae22b9804be3352fec7f0a42b3079b5a",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "nursery.png",
+      "sha256": "cf663348432554fc698144848715f961ef46c359f49ce4e3298ba3e0eb9c052c",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical.png",
+      "sha256": "745c901184f51c521ab9f972d26108ee031a7b32f147c0760350ab26f97da330",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "optical_dichroic-close.png",
+      "sha256": "3fe15b495a8adff1572866f585368adb79a2bc3f951da9af88ab54fa2f39544f",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_dichroic.png",
+      "sha256": "a6d69ea03aecf576467d43cd3f125aa103b26d5296f7989dc6ef812283224487",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_ecosystem-close.png",
+      "sha256": "78c4b9b38636fc9ddee2ba19a0932b61632417a825dd482b081a2e529cce1004",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_ecosystem-legacy.png",
+      "sha256": "4d834655245489f27f9017c94d9bf4beaca2f9e2a65c98f1ec32ba023e356240",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_ecosystem.png",
+      "sha256": "9d203eb0828026febdf12ce1cf58478f91af395e7e4252e10635a0ae3f9472ce",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_garden-close.png",
+      "sha256": "8a95368fdf2b33e5dde82c8a186e2b371f56c4d3e751dbb9fe4447b6715151e5",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_garden-legacy.png",
+      "sha256": "fdb3256900fc5779a4c2387de891b5984c4ddfa6f229fd8aef0706d740e8ae81",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_garden.png",
+      "sha256": "2d049944f1c230fa496ffa5e37e1883ba23b8571d4ffaf19d687461580837145",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_lens-close.png",
+      "sha256": "30b71d38ac3262dbd00a55ca31b21aea49fa21b99b6bf77d72e593e108036ace",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_lens-legacy.png",
+      "sha256": "58c753f6b4e796faceaa8b2eea3a8a0fe6171ef9caf222412e2da8e6cce1a96d",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_lens.png",
+      "sha256": "72cfc35796854e8b7fde7274437808522d1b360c98d001c780914da884068dd0",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_microfibres-close.png",
+      "sha256": "27653925f006ccdfc05f55aa0596337b394c242a138ab13b2e18310f499c4e73",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_microfibres.png",
+      "sha256": "c3179afa7182ed778a13ab24a301f10a24a30087a784fe8fb80f3a214dae32ce",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_weather-close.png",
+      "sha256": "3cd7df74937df42bb5ff3c8698fd9140b4e7588c8cf05709ff476a24ba68ba59",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_weather-legacy.png",
+      "sha256": "eeefa3ac3e7a2aad16b2483f38a4ef42a6e91ad132c4b5d860e39b677ff78c4b",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "optical_weather.png",
+      "sha256": "4df292faa9f9db5862cb98adfe18c06eebfbcf5e1eb3676cdc989c745d274c97",
+      "review": "visual-review-matter-optics.json"
+    },
+    {
+      "file": "scientific.png",
+      "sha256": "34874f4057b2563051edfe9922979fe4ce2e307dc7689049265207e26cdbcded",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "stress.png",
+      "sha256": "0ccfeace7da581528a80c55fcc8be570a927d2307cf5991df2364cc5888aca20",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-1.png",
+      "sha256": "8eaaea82caee66872fb20ee98701fc643ae724bfcfac64e911ee3a0e038ce394",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-2.png",
+      "sha256": "c3640e4ebb955122da363038ca5e1f2f1d28fa1c81ded71f937453552a42f17c",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-3.png",
+      "sha256": "4239774abf6e7258db90038963ebe4bafdcc19735435beb19f0acfd6b3d4dcf6",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-4.png",
+      "sha256": "3df450d8b029571ff4811aa9e2c460f1babad8600f7c1a6e74e72abeb2b800a5",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-5.png",
+      "sha256": "fc3f607b88218e9e6588fefe28d4cb566a9d8238e65f003f9c6d1ac835f01f36",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-6.png",
+      "sha256": "62a2d22b86969c906201cf20ca527243b08b08cc96d255eb26335626644a4d70",
+      "review": "visual-review-source-synth.json"
+    },
+    {
+      "file": "synth-gui.png",
+      "sha256": "1583871caeb8c5e57fb68bc0de4cc1124c24ee7b842bff2dc9e1bd75ed1e6c9e",
+      "review": "visual-review-source-synth.json"
+    }
+  ]
+}

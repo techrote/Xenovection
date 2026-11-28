@@ -1,0 +1,14 @@
+{
+  "workflow_conclusion": "success",
+  "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "workflow_run_id": 46169673564,
+  "workflow_job_id": 141055008781,
+  "workflow_url": "https://github.com/techrote/Xenovection/actions/runs/46169673564",
+  "artifact_id": 15275470748,
+  "artifact_name": "Xenovection-Windows-f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46169673564/artifacts/15275470748",
+  "outer_bytes": 61764090,
+  "outer_sha256": "1e28f08b4f82789943cd46745135c7c9d8994e67651bf0f113f90a6fa9f7cce0",
+  "expires_at": "2026-12-28T18:15:09Z"
+}

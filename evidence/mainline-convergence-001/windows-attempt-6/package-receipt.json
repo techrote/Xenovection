@@ -1,0 +1,17 @@
+{
+  "archive": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-a3cd1a1409a3.zip",
+  "bytes": 38972747,
+  "sha256": "8556f86a4af2d5aaa7e290fb31ba2ee13c234df7e356a5251971e97e9751757c",
+  "build": {
+    "schema": "xenovection.build.v1",
+    "source_sha": "a3cd1a1409a32a1a32effdbe087579773bb5f84e",
+    "tree_sha": "645ab15216b47550e78b4a887982c7155f435d8a",
+    "repository": "https://github.com/techrote/Xenovection",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "status": "Draft/HOLD",
+    "mission": "MAINLINE-CONVERGENCE-001",
+    "primary_renderer": "Vulkan Forward+",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+  },
+  "payload_files": 75
+}

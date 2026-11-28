@@ -1,0 +1,2423 @@
+{
+	"capture_directory": "D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence",
+	"captures": [
+		{
+			"bright_samples": 13392,
+			"central_scene_lit_fraction": 0.467948717948718,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-condensation_instrument-close.png",
+			"lit_fraction": 0.341197452229299,
+			"luminance_lit_fraction": 0.261808917197452,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0450367878808931,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0708905600563806,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "377d0ca81528274dda52910cd03bd55765588898c479b648319e7b74737c334a",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0381560958921909,
+				0.0460435934364796,
+				0.0553330257534981
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "9efd9458ea8667570a3a176f4a4b78e2d2bd616f7ce43ed1feb55aadb213c1bd",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8039,
+			"central_scene_lit_fraction": 0.368078781122259,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-condensation_instrument-overview.png",
+			"lit_fraction": 0.204815286624204,
+			"luminance_lit_fraction": 0.130114649681529,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0277727528691505,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0604299725718532,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "2a89d725a2bd292314ec2d4303143f08d288676048fda03f7aeb617567d85e3f",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.018281364813447,
+				0.0295794308185577,
+				0.0378967449069023
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "55495aee26a0f2cbe81424f37731859082b126e2336abc9dfd651b95719082f2",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 5549,
+			"central_scene_lit_fraction": 0.0850055741360089,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-excitable_garden-close.png",
+			"lit_fraction": 0.141375796178344,
+			"luminance_lit_fraction": 0.076203821656051,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0243916681447677,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0634540529495561,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "1803191ea15f87f089d055d68246777a5fce57dec8a7aae28cbba2694be124f3",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0172240417450666,
+				0.0256157908588648,
+				0.0334863029420376
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "acf039ca6fb3f9093149676541f5ab640f3ceddecb3464bb0d52442f8ad73132",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 4526,
+			"central_scene_lit_fraction": 0.0478446674098848,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-excitable_garden-overview.png",
+			"lit_fraction": 0.115312101910828,
+			"luminance_lit_fraction": 0.0636942675159236,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.021464306760437,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0604411654873222,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "08cf6e7bb1e11fe4920c19a66e0f9fcc048389192ad6e526a0e06453df45b3b1",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0137814339250326,
+				0.0228779371827841,
+				0.030156996101141
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "073666629ff60215ce6c7438f85132d9eff21aa42b424c88c8e75c0463aa3f05",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 13978,
+			"central_scene_lit_fraction": 0.582311408398365,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-light_terrarium-close.png",
+			"lit_fraction": 0.356127388535032,
+			"luminance_lit_fraction": 0.277273885350318,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0559685127698953,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.091851092278487,
+			"maximum_channel_range": 0.949019610881805,
+			"pixel_sha256": "a67eaa2edd401d495386fc307f0bd5df233652b092f27b43aa9834ada465b92d",
+			"rgb_max": [
+				0.952941179275513,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0480945967137814,
+				0.057062704116106,
+				0.0682497918605804
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "7cfce6d63af11f0d21821e4171061f0748d62a349d5283b32b36adcc06b46fe1",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7137,
+			"central_scene_lit_fraction": 0.265793385358603,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-light_terrarium-overview.png",
+			"lit_fraction": 0.181834394904459,
+			"luminance_lit_fraction": 0.118394904458599,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0299949748991947,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0713158190637331,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "09aaff697314220a67efad1434c0699ab58e72a88ac29124b510dfd570538d40",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0216446053236723,
+				0.0315170399844646,
+				0.0395664609968662
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "3b64b63d6dab148f6363c5aa174882bb4631be6ff628c9a812581387983b82e3",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 17162,
+			"central_scene_lit_fraction": 0.549052396878484,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-living_membrane-close.png",
+			"lit_fraction": 0.437248407643312,
+			"luminance_lit_fraction": 0.376687898089172,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0811028603807471,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.108292105731615,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "464f99c1564d52baa3ce655a5aba4cc33de2e0b2b9e53baded8584e9c7e0022a",
+			"rgb_max": [
+				0.901960790157318,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0878045633435249,
+				0.0782004967331886,
+				0.0900238454341888
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "48ed7b09752ebcf595021393cb798cd7f815612d24567c940973bc894b4f84c9",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8906,
+			"central_scene_lit_fraction": 0.330639167595689,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-living_membrane-overview.png",
+			"lit_fraction": 0.226904458598726,
+			"luminance_lit_fraction": 0.170394904458599,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0428248427142359,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0881697988358161,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "a5b93535b184feb564a0c85b332122ea1b7829bd626ade6268bef54613a8eae9",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0379937030375004,
+				0.0434133969247341,
+				0.0511889755725861
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "5be897e5d2d9e0c935ac0fd64c4bd977d6d3067ed063fad709af0bd3e9feab06",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8479,
+			"central_scene_lit_fraction": 0.259290226681531,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-matter_orchestra-close.png",
+			"lit_fraction": 0.216025477707006,
+			"luminance_lit_fraction": 0.134929936305733,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0314266213627924,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0672389081610076,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "eef5c54a9835a7a4dfe0da331c5f7914272a7e3632a2f32f897320db16388a6d",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0249672215431929,
+				0.0323377959430218,
+				0.0414740331470966
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "ec6f74efb34054aebcbd4b60ecd095b3eff90325b5a48b1411884f2e00565aa4",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 5640,
+			"central_scene_lit_fraction": 0.16620215533259,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-matter_orchestra-overview.png",
+			"lit_fraction": 0.143694267515924,
+			"luminance_lit_fraction": 0.0836178343949045,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0230654820722593,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0598432111933167,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "9ecd2d9e31637d7ac0291e4ff376fcf8c24651b3b19a2de9b9498047abcbbf77",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0152708189561963,
+				0.0244827903807163,
+				0.0320956110954285
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "5c87509547c780e13de1df38d815de4f47f8b4def7d5c9f9aaaa9648f1caf69b",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 6657,
+			"central_scene_lit_fraction": 0.26049795615013,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-orchestra-legacy-optics.png",
+			"lit_fraction": 0.169605095541401,
+			"luminance_lit_fraction": 0.120305732484076,
+			"luminance_max": 0.895088613033295,
+			"luminance_mean": 0.0372766313235614,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0927896287970303,
+			"maximum_channel_range": 0.95686274766922,
+			"pixel_sha256": "ca15b3f289223bfd18e326cad65efce64c9a9bf3a7a6ce89cbd677808780e5d8",
+			"rgb_max": [
+				0.839215695858002,
+				0.95686274766922,
+				0.968627452850342
+			],
+			"rgb_mean": [
+				0.0267286524176598,
+				0.0386973321437836,
+				0.0541788712143898
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "53506e31309d524bd44f39d3536d1fec0d1609dd840996b7cc348bd9ac78ce6f",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 6208,
+			"central_scene_lit_fraction": 0.172333704942401,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-spectral_vortex-close.png",
+			"lit_fraction": 0.158165605095541,
+			"luminance_lit_fraction": 0.0842802547770701,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0232594424449975,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0560347451573873,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "fe646edd49c6fdd7812f221aff6b18319c067de77cdeebf9a113771c16e9d791",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0155476965010166,
+				0.0247056446969509,
+				0.0317801162600517
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "c49b3f29f87b397a580f440313619f3624f71e82f9dca509fed38ec83e4d781a",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 5236,
+			"central_scene_lit_fraction": 0.138517279821628,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "composition-spectral_vortex-overview.png",
+			"lit_fraction": 0.13340127388535,
+			"luminance_lit_fraction": 0.0732738853503185,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0212330781236694,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0558334103289356,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "f19dda87ed47b877f91f8eafead44a7492cd793054e59888bedd774ba6ece781",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.013369569554925,
+				0.0227318629622459,
+				0.0296303313225508
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "8ab5178ae25d15682ea9d2319c83516275e211c884c4bce4e1ca493664a82d2d",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 10343,
+			"central_scene_lit_fraction": 0.567725752508361,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "condensation.png",
+			"lit_fraction": 0.263515923566879,
+			"luminance_lit_fraction": 0.194802547770701,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0493128897619618,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0984396940766283,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "c29fca6f825848e833f6320d46c1ad8096d4596c5e4ccc3d982bf004662e755f",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0438233204185963,
+				0.0479322113096714,
+				0.0790785178542137
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "e80647ceba4f44073f2a127573f3791547af5ce931f48660446c5c91856be974",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 10550,
+			"central_scene_lit_fraction": 0.0756224451876626,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecology-gui.png",
+			"lit_fraction": 0.268789808917197,
+			"luminance_lit_fraction": 0.103515923566879,
+			"luminance_max": 1.0,
+			"luminance_mean": 0.0562511467049076,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.092218593511574,
+			"maximum_channel_range": 0.992156863212585,
+			"pixel_sha256": "72db6fb0829a9a0c6bf656d86507d33ed5eca5ea0caf88bbd09f7bda83fae08e",
+			"rgb_max": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"rgb_mean": [
+				0.0336561165750027,
+				0.0613316781818867,
+				0.0726012662053108
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "b8bc0f57af1cebc714001e23f7a62873dd8a04774cebb1b4bffd3a2a7a152452",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 6655,
+			"central_scene_lit_fraction": 0.398550724637681,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-0.png",
+			"lit_fraction": 0.169554140127389,
+			"luminance_lit_fraction": 0.0474649681528662,
+			"luminance_max": 0.877727091312408,
+			"luminance_mean": 0.0366722443497675,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.0658959122976946,
+			"maximum_channel_range": 0.945098042488098,
+			"pixel_sha256": "e40fe4964b391d04ea259b86e0729d5dc56424d40346093f919675a8e42b6b89",
+			"rgb_max": [
+				0.631372570991516,
+				0.960784316062927,
+				0.878431379795074
+			],
+			"rgb_mean": [
+				0.0157528724521399,
+				0.0415952019393444,
+				0.0497008040547371
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "6c21b63cb2fb6ce178621a8835b13ce6b4baa5c7b1e4f41a69121d1bb6eadcba",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 4239,
+			"central_scene_lit_fraction": 0.260033444816054,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-1.png",
+			"lit_fraction": 0.108,
+			"luminance_lit_fraction": 0.0692484076433121,
+			"luminance_max": 0.839250206947327,
+			"luminance_mean": 0.0445329848999383,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.0986284207979721,
+			"maximum_channel_range": 0.972549021244049,
+			"pixel_sha256": "c2bb28aa1e985768470f2d70a577520b74abc35713b603a9e4c42c9071faa765",
+			"rgb_max": [
+				0.549019634723663,
+				0.921568632125854,
+				1.0
+			],
+			"rgb_mean": [
+				0.0217122659087181,
+				0.0492827817797661,
+				0.0648413226008415
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "9b96fd941d3af5be4c5c11e5a79b9f345467fb63d0d43d535f28a87b5fff3548",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 12902,
+			"central_scene_lit_fraction": 0.802582683017466,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-2.png",
+			"lit_fraction": 0.328713375796178,
+			"luminance_lit_fraction": 0.251261146496815,
+			"luminance_max": 0.839250206947327,
+			"luminance_mean": 0.0559395069704883,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.0765162023362864,
+			"maximum_channel_range": 0.905882358551025,
+			"pixel_sha256": "d135a37e3415d3fc3039e4cdc75567367794138af371f423a28c3673b2921e07",
+			"rgb_max": [
+				0.858823537826538,
+				0.921568632125854,
+				0.878431379795074
+			],
+			"rgb_mean": [
+				0.0503276661038399,
+				0.0557005628943443,
+				0.0749007016420364
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "92fb9869bcd44de83370a802cbacd335028b50050ba26a306887d0f3078df90f",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7426,
+			"central_scene_lit_fraction": 0.424749163879599,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-3.png",
+			"lit_fraction": 0.189197452229299,
+			"luminance_lit_fraction": 0.0695541401273885,
+			"luminance_max": 0.878843903541565,
+			"luminance_mean": 0.0438902307992243,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.0890511257057703,
+			"maximum_channel_range": 0.972549021244049,
+			"pixel_sha256": "4f1b82ee9c47c0fae6b4554c5c85e42681e617485e6376360260ae81ecb228fd",
+			"rgb_max": [
+				0.635294139385223,
+				0.960784316062927,
+				1.0
+			],
+			"rgb_mean": [
+				0.020256046205759,
+				0.0494325682520866,
+				0.0588200204074383
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "215a5130903e14762df173776f9f1d3ee9ab71323f9bd17fc2f204bb94c18ecb",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 1121,
+			"central_scene_lit_fraction": 0.0827759197324415,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-4.png",
+			"lit_fraction": 0.0285605095541401,
+			"luminance_lit_fraction": 0.00955414012738853,
+			"luminance_max": 0.839250206947327,
+			"luminance_mean": 0.024234343126084,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.0324750650011316,
+			"maximum_channel_range": 0.952941179275513,
+			"pixel_sha256": "631f806975fa3e74b16700a5008d049541f46f729ca249e5bf7668c794e88fcc",
+			"rgb_max": [
+				0.960784316062927,
+				0.921568632125854,
+				0.878431379795074
+			],
+			"rgb_mean": [
+				0.0109979873523116,
+				0.0268257483839989,
+				0.0376143902540207
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "d3972b6d941dff50e85e1e37c640d488020ca0b0cf478951253e8f23db8c68d0",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 9125,
+			"central_scene_lit_fraction": 0.659884801189149,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem-5.png",
+			"lit_fraction": 0.232484076433121,
+			"luminance_lit_fraction": 0.179210191082803,
+			"luminance_max": 0.877727091312408,
+			"luminance_mean": 0.0572196136605066,
+			"luminance_min": 0.0148682361468673,
+			"luminance_stddev": 0.105236596429977,
+			"maximum_channel_range": 0.972549021244049,
+			"pixel_sha256": "9fbf1c5d123915b01647268c4e034587d09c785ae21347b72b8ad17c71a955bb",
+			"rgb_max": [
+				0.894117653369904,
+				0.960784316062927,
+				1.0
+			],
+			"rgb_mean": [
+				0.0433294735848904,
+				0.0595689192414284,
+				0.0749133676290512
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0156862754374743,
+				0.0274509806185961
+			],
+			"samples": 39250,
+			"sha256": "1dde2b04158da6338304924af97b73adf0959ac301b448e65e97a5cefbee5167",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7095,
+			"central_scene_lit_fraction": 0.312616127833519,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "ecosystem.png",
+			"lit_fraction": 0.180764331210191,
+			"luminance_lit_fraction": 0.131184713375796,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0401308236502491,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0943785252007112,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "15451298fae02a277d22ee610ce84d2c3132c693f02a54b4c6d3847c277844b1",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.034138448536396,
+				0.0398773960769176,
+				0.0601770393550396
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "33d1bfa0690e6400205636a2c799d9ae35e0432700684c9cb3db4c20a5a4643a",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 11507,
+			"central_scene_lit_fraction": 0.677350427350427,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "filaments.png",
+			"lit_fraction": 0.293171974522293,
+			"luminance_lit_fraction": 0.244229299363057,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0807046771096481,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.141333391604864,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "2ff7f1dbb363729c5c21d6bed83af915abb31d69d12344f1cd3d603cd69ba832",
+			"rgb_max": [
+				0.890196084976196,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.086501769721508,
+				0.0775426849722862,
+				0.0948286131024361
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "b1308a7af073891fa12c1038c0c07eb367b9d8a20bf750fcd54e58c0b4446955",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8793,
+			"central_scene_lit_fraction": 0.461352657004831,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "films.png",
+			"lit_fraction": 0.224025477707006,
+			"luminance_lit_fraction": 0.178242038216561,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0902030522280201,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.195074687411573,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "a45b65523a30f8e62b4d6cac461eeaf1a6438b5e7ea52135d65696d929d2d7d1",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0794629007577896,
+				0.0948495119810104,
+				0.0756398588418961
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "3ac4782d6196158954207f1e74bb25c9170ad1476223e50b3f778dfd3a3f00ce",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7640,
+			"central_scene_lit_fraction": 0.363247863247863,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "flow.png",
+			"lit_fraction": 0.194649681528662,
+			"luminance_lit_fraction": 0.144305732484076,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0406608914401453,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0920224579828463,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "df6b2b4e4568c2160145ea0b4e684f4ac0e54d832440e71f3df60e783a21f378",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0385377518832684,
+				0.0402573011815548,
+				0.0508256182074547
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "2bc6be14bacb9ff2f298985cd27a4d9a167e34471a8b7591f62d1c64e6367f56",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 5427,
+			"central_scene_lit_fraction": 0.159606094388703,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "garden.png",
+			"lit_fraction": 0.138267515923567,
+			"luminance_lit_fraction": 0.0911337579617834,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.032742866521108,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0928325166533344,
+			"maximum_channel_range": 0.929411768913269,
+			"pixel_sha256": "6656910a554b203fb0724a7716b39e8ee2675ecee59c19c9a47da38d08569629",
+			"rgb_max": [
+				0.933333337306976,
+				0.905882358551025,
+				0.937254905700684
+			],
+			"rgb_mean": [
+				0.0276795234531164,
+				0.0328700952231884,
+				0.0464187748730183
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "3128ab686e53d9b71d18a9e30358a66b21115a2e76fe9042d1c36e98c53c4daa",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39233,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-convergence-authoring.png",
+			"lit_fraction": 0.999566878980892,
+			"luminance_lit_fraction": 0.403363057324841,
+			"luminance_max": 1.0,
+			"luminance_mean": 0.0759139041030293,
+			"luminance_min": 0.0249654911458492,
+			"luminance_stddev": 0.0829041558621358,
+			"maximum_channel_range": 0.988235294818878,
+			"pixel_sha256": "fa293582df8d1fa958b6af23c649bb74de28286f80cb0d9aac6ed68ed30f11e1",
+			"rgb_max": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"rgb_mean": [
+				0.0476699396967888,
+				0.0799829065799713,
+				0.118930250406265
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0274509806185961,
+				0.0392156876623631
+			],
+			"samples": 39250,
+			"sha256": "d901ee670d45309065fba66ec09e8da07f412a88fe05a82729a8c050003e42f0",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-convergence-composition.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.143286624203822,
+			"luminance_max": 0.556821167469025,
+			"luminance_mean": 0.0576893583691803,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0317973284076435,
+			"maximum_channel_range": 0.607843160629272,
+			"pixel_sha256": "42500177014771295fd1771d621c0c0c3212ecc088eacb9078d0ed2ae0ae7d0a",
+			"rgb_max": [
+				0.631372570991516,
+				0.560784339904785,
+				0.619607865810394
+			],
+			"rgb_mean": [
+				0.0349755249917507,
+				0.0599729977548122,
+				0.102213382720947
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "01e25fc45b68174ee7393fb47b7aa7c3c360f7f02ffba72ca57c549cb4d42f9e",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 16413,
+			"central_scene_lit_fraction": 0.272949816401469,
+			"central_scene_samples": 13072,
+			"dimensions": [
+				1100,
+				687
+			],
+			"file": "gui-input.png",
+			"lit_fraction": 0.346997885835095,
+			"luminance_lit_fraction": 0.193868921775899,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0590783868468884,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.116381504675365,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "0cc74a23b790d0d9ab7518cece734cf1c93dd8b679655ad43697a20c12ae4faf",
+			"rgb_max": [
+				0.854901969432831,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0479229353368282,
+				0.060733824968338,
+				0.0754127129912376
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 47300,
+			"sha256": "12fde427e9f22e97e3492702ac4cdb5d4f92a263665ff0b1cf985840d44f0d79",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-material-authoring.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.719923566878981,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.104280216549612,
+			"luminance_min": 0.0451709814369679,
+			"luminance_stddev": 0.108793328002047,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "b4f6125c01c6d7ce313df020f4a73eeb655cbc70fc0c4616f4e98a977048886b",
+			"rgb_max": [
+				0.929411768913269,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0754503458738327,
+				0.109174981713295,
+				0.140748918056488
+			],
+			"rgb_min": [
+				0.0196078438311815,
+				0.0470588244497776,
+				0.0823529437184334
+			],
+			"samples": 39250,
+			"sha256": "f42b9ce8afe21eba74320b3f963e981561a1cad2c90bbd3a6d6992e8be04f7b1",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-material-legacy.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.628,
+			"luminance_max": 0.674512147903442,
+			"luminance_mean": 0.113010230118777,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.114535211556277,
+			"maximum_channel_range": 0.7843137383461,
+			"pixel_sha256": "e7dbfe5ba877b8db0ce8b13e6def30fcfc06ca58109ad020f73b8eb60ecae0b6",
+			"rgb_max": [
+				0.807843148708344,
+				0.682352960109711,
+				0.772549033164978
+			],
+			"rgb_mean": [
+				0.115748211741447,
+				0.105575166642666,
+				0.178666025400162
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "8a409964013fe19f9f5b8954b6c120440b716ad1676d1742b0783fa8e5cc4ad5",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-material-optical.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.620789808917197,
+			"luminance_max": 0.648473739624023,
+			"luminance_mean": 0.0866625351289845,
+			"luminance_min": 0.0440541170537472,
+			"luminance_stddev": 0.072716050610339,
+			"maximum_channel_range": 0.82745099067688,
+			"pixel_sha256": "0802050599ef12c2cba8156d2cb4b9e3e645d6ad870631cd96f4fced55b0e6e2",
+			"rgb_max": [
+				0.847058832645416,
+				0.678431391716003,
+				0.592156887054443
+			],
+			"rgb_mean": [
+				0.0626243874430656,
+				0.0900771394371986,
+				0.123728044331074
+			],
+			"rgb_min": [
+				0.0196078438311815,
+				0.0470588244497776,
+				0.0823529437184334
+			],
+			"samples": 39250,
+			"sha256": "d276678488033a35ae7b1822d3fa676ed2a489db7c21c80d99e28d0db29b12c0",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-spatial_ecology-material-high.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.223312101910828,
+			"luminance_max": 0.878442347049713,
+			"luminance_mean": 0.0754839973641429,
+			"luminance_min": 0.0485419631004334,
+			"luminance_stddev": 0.0681071599901587,
+			"maximum_channel_range": 0.858823537826538,
+			"pixel_sha256": "1c256d4dec497c517519bc413e1e14b3a87e0f8fba09cbd028a670f0b6135f74",
+			"rgb_max": [
+				0.882352948188782,
+				0.874509811401367,
+				0.905882358551025
+			],
+			"rgb_mean": [
+				0.0566143058240414,
+				0.0765388533473015,
+				0.12087494879961
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "f6a2e65699d80b877b595a510a483c323947b9e058e7bc986fde8e3012b8e985",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-spatial_ecology-material-low.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.223210191082803,
+			"luminance_max": 0.878442347049713,
+			"luminance_mean": 0.075389037032321,
+			"luminance_min": 0.048418041318655,
+			"luminance_stddev": 0.0678678389903187,
+			"maximum_channel_range": 0.858823537826538,
+			"pixel_sha256": "2fe84589c55178cb717b2207b9916054d2d4b93fa60c34f6de9e897e8f4db198",
+			"rgb_max": [
+				0.882352948188782,
+				0.874509811401367,
+				0.905882358551025
+			],
+			"rgb_mean": [
+				0.0565235503017902,
+				0.0764428451657295,
+				0.120779395103455
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0392156876623631,
+				0.062745101749897
+			],
+			"samples": 39250,
+			"sha256": "758dab6076577c38b0ef60c285fc118e3d2aa459b96bdd0f94cf6911b4933024",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 12977,
+			"central_scene_lit_fraction": 0.21256038647343,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "gui-spatial_ecology.png",
+			"lit_fraction": 0.330624203821656,
+			"luminance_lit_fraction": 0.181070063694268,
+			"luminance_max": 1.0,
+			"luminance_mean": 0.0435066004814758,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0911115969693237,
+			"maximum_channel_range": 0.996078431606293,
+			"pixel_sha256": "aa6607c52c15302bbda0f7b3146602d163296fc5cd5f87797a48225f40fcf91c",
+			"rgb_max": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"rgb_mean": [
+				0.0307928044348955,
+				0.0458353795111179,
+				0.0578308738768101
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "56520f5a828fbd359463f2a90eed2cdd9b9ed32d57b59d315b66038895afe29a",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "hybrid.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.602751592356688,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0982766344224571,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0879565450387723,
+			"maximum_channel_range": 0.878431379795074,
+			"pixel_sha256": "94cde396e58fbc1ea377db3a53656b40bb5fe2937391c5d86e145a0db172f059",
+			"rgb_max": [
+				0.901960790157318,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0887615978717804,
+				0.0968348681926727,
+				0.140673071146011
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "43019d204d667eb375380261746aebeba40153717b35bd0138cefff36bcf92e2",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 11255,
+			"central_scene_lit_fraction": 0.618171683389075,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "living.png",
+			"lit_fraction": 0.286751592356688,
+			"luminance_lit_fraction": 0.235668789808917,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.074929583402398,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.134839571977548,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "6d6776d2991fd0318acb35f2a0c02a7ca7acbaea92a7a3224c1d5b0623d22bce",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0850460007786751,
+				0.0679599121212959,
+				0.114063486456871
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "3eb1925d5a6e8b900d1c85e155d76d137b27ab676aa59c1912fcd786832e5187",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "membrane.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.696662420382166,
+			"luminance_max": 0.916015684604645,
+			"luminance_mean": 0.0951082907671192,
+			"luminance_min": 0.0454541184008121,
+			"luminance_stddev": 0.0806264988475052,
+			"maximum_channel_range": 0.886274516582489,
+			"pixel_sha256": "ef269ec8681e14b511f8a0af78c37e253137c128c378ba7cb611b882a5639fd7",
+			"rgb_max": [
+				0.894117653369904,
+				0.921568632125854,
+				0.925490200519562
+			],
+			"rgb_mean": [
+				0.0820265933871269,
+				0.094979465007782,
+				0.135091617703438
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0470588244497776,
+				0.0392156876623631
+			],
+			"samples": 39250,
+			"sha256": "9093fab3dc05b4a3f945d5f11df01e80ae22b9804be3352fec7f0a42b3079b5a",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7016,
+			"central_scene_lit_fraction": 0.303511705685619,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "nursery.png",
+			"lit_fraction": 0.178751592356688,
+			"luminance_lit_fraction": 0.129426751592357,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0402764781737807,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0980579047705002,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "9eea154e5ad05ac155f95d45cf3ddb99af6904b56d2b4778d96338e629f62e34",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0361469127237797,
+				0.0403943099081516,
+				0.0511520132422447
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "cf663348432554fc698144848715f961ef46c359f49ce4e3298ba3e0eb9c052c",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.790522292993631,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0982416994178751,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.12238582720881,
+			"maximum_channel_range": 0.972549021244049,
+			"pixel_sha256": "58f64e588c3d2dea13fc9a780d677bd769b89b1734a88fd21d291e50001a6460",
+			"rgb_max": [
+				0.988235294818878,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0793850347399712,
+				0.0998480394482613,
+				0.137893557548523
+			],
+			"rgb_min": [
+				0.0156862754374743,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "745c901184f51c521ab9f972d26108ee031a7b32f147c0760350ab26f97da330",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_dichroic-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.897095541401274,
+			"luminance_max": 0.943466663360596,
+			"luminance_mean": 0.181492449513951,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.120347784778532,
+			"maximum_channel_range": 0.898039221763611,
+			"pixel_sha256": "da7bdcca7a7fc581e3a8fe0cc4d601b107b65f1b33735f4a273d51e2f0408676",
+			"rgb_max": [
+				0.921568632125854,
+				0.949019610881805,
+				0.952941179275513
+			],
+			"rgb_mean": [
+				0.178694859147072,
+				0.178788349032402,
+				0.216560781002045
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0705882385373116
+			],
+			"samples": 39250,
+			"sha256": "3fe15b495a8adff1572866f585368adb79a2bc3f951da9af88ab54fa2f39544f",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_dichroic.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.838140127388535,
+			"luminance_max": 0.944300413131714,
+			"luminance_mean": 0.143874791629565,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0938969021258748,
+			"maximum_channel_range": 0.901960790157318,
+			"pixel_sha256": "5c4032f1fd397bc062667761139b501a1785afc3a2ce09a946f91001feee715f",
+			"rgb_max": [
+				0.925490200519562,
+				0.949019610881805,
+				0.952941179275513
+			],
+			"rgb_mean": [
+				0.137693911790848,
+				0.141869023442268,
+				0.18201507627964
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0549019612371922
+			],
+			"samples": 39250,
+			"sha256": "a6d69ea03aecf576467d43cd3f125aa103b26d5296f7989dc6ef812283224487",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_ecosystem-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.944356687898089,
+			"luminance_max": 0.956024289131165,
+			"luminance_mean": 0.217500788048954,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.137162244380237,
+			"maximum_channel_range": 0.937254905700684,
+			"pixel_sha256": "c5793099425a6abe2049834dfbb06c65882870d359ad2b3f04b3dcb08be9def9",
+			"rgb_max": [
+				0.960784316062927,
+				0.952941179275513,
+				0.972549021244049
+			],
+			"rgb_mean": [
+				0.232136771082878,
+				0.209658712148666,
+				0.252135992050171
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0784313753247261
+			],
+			"samples": 39250,
+			"sha256": "78c4b9b38636fc9ddee2ba19a0932b61632417a825dd482b081a2e529cce1004",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_ecosystem-legacy.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.893095541401274,
+			"luminance_max": 0.921069800853729,
+			"luminance_mean": 0.172661963238363,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.121664532333799,
+			"maximum_channel_range": 0.905882358551025,
+			"pixel_sha256": "b3f436c76e9f556411fecca71531cc3858c0ca813155e15ed3183640002f8495",
+			"rgb_max": [
+				0.929411768913269,
+				0.925490200519562,
+				0.945098042488098
+			],
+			"rgb_mean": [
+				0.191513478755951,
+				0.163607344031334,
+				0.206943556666374
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.062745101749897
+			],
+			"samples": 39250,
+			"sha256": "4d834655245489f27f9017c94d9bf4beaca2f9e2a65c98f1ec32ba023e356240",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_ecosystem.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.893095541401274,
+			"luminance_max": 0.921069800853729,
+			"luminance_mean": 0.17590629970942,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.127083257762653,
+			"maximum_channel_range": 0.901960790157318,
+			"pixel_sha256": "078469820d015e4817fcf1fdd867d3502ceb28488c89bbdef20d9c2cf5f3d560",
+			"rgb_max": [
+				0.925490200519562,
+				0.925490200519562,
+				0.945098042488098
+			],
+			"rgb_mean": [
+				0.194428697228432,
+				0.166939854621887,
+				0.210283368825912
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.062745101749897
+			],
+			"samples": 39250,
+			"sha256": "9d203eb0828026febdf12ce1cf58478f91af395e7e4252e10635a0ae3f9472ce",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_garden-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.953426751592357,
+			"luminance_max": 0.943466663360596,
+			"luminance_mean": 0.112215702640118,
+			"luminance_min": 0.0476925522089005,
+			"luminance_stddev": 0.0649133489445969,
+			"maximum_channel_range": 0.901960790157318,
+			"pixel_sha256": "85962b7a38acaa991e568d0c4ce647c16cfd46c574520d1b0472d9daa4908f77",
+			"rgb_max": [
+				0.921568632125854,
+				0.949019610881805,
+				0.952941179275513
+			],
+			"rgb_mean": [
+				0.129824012517929,
+				0.104091957211494,
+				0.140924394130707
+			],
+			"rgb_min": [
+				0.0196078438311815,
+				0.0509803928434849,
+				0.0666666701436043
+			],
+			"samples": 39250,
+			"sha256": "8a95368fdf2b33e5dde82c8a186e2b371f56c4d3e751dbb9fe4447b6715151e5",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_garden-legacy.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.873656050955414,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0995170630553536,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0598056590396242,
+			"maximum_channel_range": 0.858823537826538,
+			"pixel_sha256": "8d9c6b5e7618da41c7ffe4340d866d881ac42d5f876849e9c0a71863d5ccb8be",
+			"rgb_max": [
+				0.866666674613953,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.113311775028706,
+				0.0921360999345779,
+				0.13212887942791
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.062745101749897
+			],
+			"samples": 39250,
+			"sha256": "fdb3256900fc5779a4c2387de891b5984c4ddfa6f229fd8aef0706d740e8ae81",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_garden.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.873579617834395,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.101804216284281,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0626016990204607,
+			"maximum_channel_range": 0.858823537826538,
+			"pixel_sha256": "f7e5bcd78bad32864898f489f2a23b3343aa73c1d9192c6591e2ac47e8dc6202",
+			"rgb_max": [
+				0.866666674613953,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.11858905851841,
+				0.0936111211776733,
+				0.133634701371193
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.062745101749897
+			],
+			"samples": 39250,
+			"sha256": "2d049944f1c230fa496ffa5e37e1883ba23b8571d4ffaf19d687461580837145",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_lens-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.997095541401274,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.223425440961863,
+			"luminance_min": 0.0566682368516922,
+			"luminance_stddev": 0.11249205761555,
+			"maximum_channel_range": 0.850980401039124,
+			"pixel_sha256": "eb600bfeea0d7e93926c1dfdf3135724b1f0a4b3e2f99f69c9ae61da28a5baed",
+			"rgb_max": [
+				0.878431379795074,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.246489927172661,
+				0.214488536119461,
+				0.244283586740494
+			],
+			"rgb_min": [
+				0.0274509806185961,
+				0.0588235296308994,
+				0.10196078568697
+			],
+			"samples": 39250,
+			"sha256": "30b71d38ac3262dbd00a55ca31b21aea49fa21b99b6bf77d72e593e108036ace",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_lens-legacy.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.999184713375796,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.205703337837177,
+			"luminance_min": 0.0586188249289989,
+			"luminance_stddev": 0.10706955261993,
+			"maximum_channel_range": 0.843137264251709,
+			"pixel_sha256": "8da5ac87b759dd2f2e6c4108d2d93eef8199c08d908cdd650f649c59582a5a62",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.211264982819557,
+				0.201309531927109,
+				0.233304068446159
+			],
+			"rgb_min": [
+				0.0274509806185961,
+				0.0588235296308994,
+				0.10196078568697
+			],
+			"samples": 39250,
+			"sha256": "58c753f6b4e796faceaa8b2eea3a8a0fe6171ef9caf222412e2da8e6cce1a96d",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_lens.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.997146496815287,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.212965852411784,
+			"luminance_min": 0.0566682368516922,
+			"luminance_stddev": 0.107931956726286,
+			"maximum_channel_range": 0.843137264251709,
+			"pixel_sha256": "7fdc13f8fd76a71b31a48f247139940eb4c9b70551e9c5a1b15f62394afa1960",
+			"rgb_max": [
+				0.858823537826538,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.234333097934723,
+				0.204329997301102,
+				0.235910624265671
+			],
+			"rgb_min": [
+				0.0274509806185961,
+				0.0588235296308994,
+				0.10196078568697
+			],
+			"samples": 39250,
+			"sha256": "72cfc35796854e8b7fde7274437808522d1b360c98d001c780914da884068dd0",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_microfibres-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.836127388535032,
+			"luminance_max": 0.944583535194397,
+			"luminance_mean": 0.176098233915723,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.131164730141325,
+			"maximum_channel_range": 0.901960790157318,
+			"pixel_sha256": "84ebd86614b0ba3ce155aa0d4e25218283463eb1c6536886e60ce4767c1611c9",
+			"rgb_max": [
+				0.925490200519562,
+				0.949019610881805,
+				0.95686274766922
+			],
+			"rgb_mean": [
+				0.182370603084564,
+				0.170221403241158,
+				0.216017961502075
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0666666701436043
+			],
+			"samples": 39250,
+			"sha256": "27653925f006ccdfc05f55aa0596337b394c242a138ab13b2e18310f499c4e73",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_microfibres.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.656407643312102,
+			"luminance_max": 0.905383467674255,
+			"luminance_mean": 0.130773187641695,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.115309232673612,
+			"maximum_channel_range": 0.862745106220245,
+			"pixel_sha256": "c0e66d44d63489538fe24ceddda0eaf3d826f9681c9445eda42030082bf7ae09",
+			"rgb_max": [
+				0.882352948188782,
+				0.909803926944733,
+				0.929411768913269
+			],
+			"rgb_mean": [
+				0.124630600214005,
+				0.128310352563858,
+				0.173095002770424
+			],
+			"rgb_min": [
+				0.0196078438311815,
+				0.0509803928434849,
+				0.0901960805058479
+			],
+			"samples": 39250,
+			"sha256": "c3179afa7182ed778a13ab24a301f10a24a30087a784fe8fb80f3a214dae32ce",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_weather-close.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.852331210191083,
+			"luminance_max": 0.946554481983185,
+			"luminance_mean": 0.133124292885042,
+			"luminance_min": 0.0465396046638489,
+			"luminance_stddev": 0.083786846368849,
+			"maximum_channel_range": 0.905882358551025,
+			"pixel_sha256": "9e985d4a08963ac9e2269c1422a9f20636497982a6426acd0ad2ad7d205cd688",
+			"rgb_max": [
+				0.921568632125854,
+				0.952941179275513,
+				0.95686274766922
+			],
+			"rgb_mean": [
+				0.124681405723095,
+				0.132112562656403,
+				0.168015703558922
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0470588244497776,
+				0.0588235296308994
+			],
+			"samples": 39250,
+			"sha256": "3cd7df74937df42bb5ff3c8698fd9140b4e7588c8cf05709ff476a24ba68ba59",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_weather-legacy.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.831821656050955,
+			"luminance_max": 0.937893390655518,
+			"luminance_mean": 0.114204244429803,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0729383971359501,
+			"maximum_channel_range": 0.925490200519562,
+			"pixel_sha256": "ff273ecc559b05820f7d4aef9fc23221bb8ee1c1257f8388c2119e322a886472",
+			"rgb_max": [
+				0.905882358551025,
+				0.945098042488098,
+				0.960784316062927
+			],
+			"rgb_mean": [
+				0.103016749024391,
+				0.113680742681026,
+				0.152470886707306
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0470588244497776,
+				0.0352941192686558
+			],
+			"samples": 39250,
+			"sha256": "eeefa3ac3e7a2aad16b2483f38a4ef42a6e91ad132c4b5d860e39b677ff78c4b",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "optical_weather.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.830980891719745,
+			"luminance_max": 0.937893390655518,
+			"luminance_mean": 0.11475847965868,
+			"luminance_min": 0.0465756878256798,
+			"luminance_stddev": 0.0740330690752216,
+			"maximum_channel_range": 0.925490200519562,
+			"pixel_sha256": "6e11ec16ab52b9b3e91e9d6a1c38627e842fb894323b4aba3dec17d0b6b416bf",
+			"rgb_max": [
+				0.905882358551025,
+				0.945098042488098,
+				0.960784316062927
+			],
+			"rgb_mean": [
+				0.103825718164444,
+				0.114174552261829,
+				0.152874931693077
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0470588244497776,
+				0.0352941192686558
+			],
+			"samples": 39250,
+			"sha256": "4df292faa9f9db5862cb98adfe18c06eebfbcf5e1eb3676cdc989c745d274c97",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8604,
+			"central_scene_lit_fraction": 0.448903753251579,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "scientific.png",
+			"lit_fraction": 0.219210191082803,
+			"luminance_lit_fraction": 0.171337579617834,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0595972274136819,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.126854790080191,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "14ceb7ddd3116081b48288bca892465a6098f84f3d6a6a3ade7555db39b14d40",
+			"rgb_max": [
+				0.878431379795074,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0619177371263504,
+				0.0576089695096016,
+				0.0723331719636917
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "34874f4057b2563051edfe9922979fe4ce2e307dc7689049265207e26cdbcded",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 8513,
+			"central_scene_lit_fraction": 0.444165737643999,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "stress.png",
+			"lit_fraction": 0.216891719745223,
+			"luminance_lit_fraction": 0.169783439490446,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0581676467013468,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.12326410917125,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "6e331d5a325b7dc80b5b1932258673db37bd0d7c4244dd1146a007f7fa04efd8",
+			"rgb_max": [
+				0.854901969432831,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.058458786457777,
+				0.0569390319287777,
+				0.0693582221865654
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "0ccfeace7da581528a80c55fcc8be570a927d2307cf5991df2364cc5888aca20",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 7648,
+			"central_scene_lit_fraction": 0.363619472315124,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-1.png",
+			"lit_fraction": 0.194853503184713,
+			"luminance_lit_fraction": 0.144382165605096,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0390376618804327,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.0874948460238642,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "c228071d0fe181e553ff152ef48374c2e538d56a6df069377662819dbf177629",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0365414246916771,
+				0.0387461110949516,
+				0.0491995885968208
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "8eaaea82caee66872fb20ee98701fc643ae724bfcfac64e911ee3a0e038ce394",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-2.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.67024203821656,
+			"luminance_max": 0.916015684604645,
+			"luminance_mean": 0.0933644883196065,
+			"luminance_min": 0.0454541184008121,
+			"luminance_stddev": 0.0800776822924555,
+			"maximum_channel_range": 0.886274516582489,
+			"pixel_sha256": "d88b324d69dc4bee8e307b07eca0de292ec8ea3ab8716127660af96b707b3c7a",
+			"rgb_max": [
+				0.894117653369904,
+				0.921568632125854,
+				0.925490200519562
+			],
+			"rgb_mean": [
+				0.0786147266626358,
+				0.0935992747545242,
+				0.134640127420425
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0470588244497776,
+				0.0392156876623631
+			],
+			"samples": 39250,
+			"sha256": "c3640e4ebb955122da363038ca5e1f2f1d28fa1c81ded71f937453552a42f17c",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 11467,
+			"central_scene_lit_fraction": 0.673820141211446,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-3.png",
+			"lit_fraction": 0.292152866242038,
+			"luminance_lit_fraction": 0.242853503184713,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0739639406488603,
+			"luminance_min": 0.00729254959151149,
+			"luminance_stddev": 0.128451619344297,
+			"maximum_channel_range": 0.909803926944733,
+			"pixel_sha256": "6b2267c52d39dc4fffd10a00898d1ed996ab5f638012bf6500230b083a24e111",
+			"rgb_max": [
+				0.839215695858002,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.0788826420903206,
+				0.0711271241307259,
+				0.0874590650200844
+			],
+			"rgb_min": [
+				0.00392156885936856,
+				0.00784313771873713,
+				0.0117647061124444
+			],
+			"samples": 39250,
+			"sha256": "4239774abf6e7258db90038963ebe4bafdcc19735435beb19f0acfd6b3d4dcf6",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-4.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.57403821656051,
+			"luminance_max": 0.933744311332703,
+			"luminance_mean": 0.0958191058488598,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.123519121609746,
+			"maximum_channel_range": 0.976470589637756,
+			"pixel_sha256": "62fac2be1a05029f47c77f498bf719de080c418b11a7c074b00e555e9353fff0",
+			"rgb_max": [
+				1.0,
+				0.921568632125854,
+				0.941176474094391
+			],
+			"rgb_mean": [
+				0.075776718556881,
+				0.097803995013237,
+				0.135309293866158
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "3df450d8b029571ff4811aa9e2c460f1babad8600f7c1a6e74e72abeb2b800a5",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-5.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.597197452229299,
+			"luminance_max": 0.890036880970001,
+			"luminance_mean": 0.0980736630341619,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.0875685923142042,
+			"maximum_channel_range": 0.858823537826538,
+			"pixel_sha256": "fffd152434d9275a8812f029ab258872bc36006157b6a86f8d52dda2b54e1c59",
+			"rgb_max": [
+				0.882352948188782,
+				0.901960790157318,
+				0.921568632125854
+			],
+			"rgb_mean": [
+				0.087454579770565,
+				0.096921406686306,
+				0.140861943364143
+			],
+			"rgb_min": [
+				0.0235294122248888,
+				0.0509803928434849,
+				0.0941176488995552
+			],
+			"samples": 39250,
+			"sha256": "fc3f607b88218e9e6588fefe28d4cb566a9d8238e65f003f9c6d1ac835f01f36",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-6.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.725070063694268,
+			"luminance_max": 0.915181994438171,
+			"luminance_mean": 0.096529490194408,
+			"luminance_min": 0.0454541184008121,
+			"luminance_stddev": 0.080518958496039,
+			"maximum_channel_range": 0.886274516582489,
+			"pixel_sha256": "e4aed6b255c97f5a4f2221b09a7f7943265e70a8067e7d841f5b67847a27c6c2",
+			"rgb_max": [
+				0.890196084976196,
+				0.921568632125854,
+				0.925490200519562
+			],
+			"rgb_mean": [
+				0.0834212824702263,
+				0.0964223816990852,
+				0.136345759034157
+			],
+			"rgb_min": [
+				0.0117647061124444,
+				0.0470588244497776,
+				0.0392156876623631
+			],
+			"samples": 39250,
+			"sha256": "62a2d22b86969c906201cf20ca527243b08b08cc96d255eb26335626644a4d70",
+			"status": "PASS",
+			"stride": 4
+		},
+		{
+			"bright_samples": 39250,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 10764,
+			"dimensions": [
+				1000,
+				625
+			],
+			"file": "synth-gui.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 0.76828025477707,
+			"luminance_max": 0.919937252998352,
+			"luminance_mean": 0.109477117047758,
+			"luminance_min": 0.0482588261365891,
+			"luminance_stddev": 0.102212194653331,
+			"maximum_channel_range": 0.952941179275513,
+			"pixel_sha256": "b2a7c8c8cb5d143aed34bc706212e3c23c85530b2008cfeef8b7bcef63b007f1",
+			"rgb_max": [
+				0.960784316062927,
+				0.925490200519562,
+				0.929411768913269
+			],
+			"rgb_mean": [
+				0.0911464616656303,
+				0.111159712076187,
+				0.146802932024002
+			],
+			"rgb_min": [
+				0.00784313771873713,
+				0.0509803928434849,
+				0.0705882385373116
+			],
+			"samples": 39250,
+			"sha256": "1583871caeb8c5e57fb68bc0de4cc1124c24ee7b842bff2dc9e1bd75ed1e6c9e",
+			"status": "PASS",
+			"stride": 4
+		}
+	],
+	"captures_checked": 65,
+	"failures": [],
+	"identical_pixel_groups": [],
+	"policy": {
+		"bright_channel_threshold": 0.06,
+		"maximum_samples_per_image": 131072,
+		"minimum_bright_samples": 51,
+		"minimum_rgb_range": 0.00392156862745098,
+		"note": "Conservative corruption/black-frame gate. UI pixels can satisfy coverage; central-scene statistics and independent visual inspection remain necessary. No aesthetic acceptance is implied."
+	},
+	"schema": "xenovection.capture-audit.v1",
+	"status": "PASS",
+	"visual_review_required": true
+}

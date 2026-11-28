@@ -1,0 +1,140 @@
+{
+  "schema": "xenovection.remote-custody-feedback.v1",
+  "checked_utc": "2026-11-28 17:27:04 UTC",
+  "status": "PASS",
+  "protected_refs": [
+    {
+      "branch": "main",
+      "application_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "tree_sha": "bbf986bc0deebe0d36e058faf794dfbf39458986",
+      "expected_application_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "expected_tree_sha": "bbf986bc0deebe0d36e058faf794dfbf39458986",
+      "unchanged": true,
+      "url": "https://api.github.com/repos/techrote/Xenovection/branches/main"
+    },
+    {
+      "branch": "found-003/procedural-matter",
+      "application_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "tree_sha": "6bfbaf7c66641075af7bad2b25836a8d2128c106",
+      "expected_application_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "expected_tree_sha": "6bfbaf7c66641075af7bad2b25836a8d2128c106",
+      "unchanged": true,
+      "url": "https://api.github.com/repos/techrote/Xenovection/branches/found-003/procedural-matter"
+    },
+    {
+      "branch": "feature/synth-002-visual-instrument",
+      "application_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "tree_sha": "39df66c6d1214b3c66b69a5800a9b0f2116aae23",
+      "expected_application_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "expected_tree_sha": "39df66c6d1214b3c66b69a5800a9b0f2116aae23",
+      "unchanged": true,
+      "url": "https://api.github.com/repos/techrote/Xenovection/branches/feature/synth-002-visual-instrument"
+    },
+    {
+      "branch": "optical-003/spectral-matter",
+      "application_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "tree_sha": "8945a40e6f8eee0146cd1b2871ed5bb2837096e4",
+      "expected_application_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "expected_tree_sha": "8945a40e6f8eee0146cd1b2871ed5bb2837096e4",
+      "unchanged": true,
+      "url": "https://api.github.com/repos/techrote/Xenovection/branches/optical-003/spectral-matter"
+    },
+    {
+      "branch": "feature/ecosystem-001-artificial-life",
+      "application_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "tree_sha": "d1202f830e8ad953b523079b6c753e29d352d597",
+      "expected_application_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "expected_tree_sha": "d1202f830e8ad953b523079b6c753e29d352d597",
+      "unchanged": true,
+      "url": "https://api.github.com/repos/techrote/Xenovection/branches/feature/ecosystem-001-artificial-life"
+    }
+  ],
+  "integration": {
+    "pull_request": 18,
+    "url": "https://github.com/techrote/Xenovection/pull/18",
+    "title": "[Draft/HOLD] MAINLINE-CONVERGENCE-001 — unified computational matter instrument",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "hold_explicit": true,
+    "base_branch": "main",
+    "base_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+    "head_branch": "integration/mainline-convergence-001",
+    "head_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+    "updated_at": "2026-11-28T17:17:40Z"
+  },
+  "feedback": {
+    "issue17_comments": [
+      {
+        "id": 7240481982,
+        "author": "techrote",
+        "created_at": "2026-11-28T14:11:14Z",
+        "updated_at": "2026-11-28T14:11:14Z",
+        "classification": "Known mission linkage report"
+      }
+    ],
+    "pr18_conversation_comments": [
+      {
+        "id": 7240807399,
+        "author": "techrote",
+        "created_at": "2026-11-28T14:37:23Z",
+        "updated_at": "2026-11-28T14:37:23Z",
+        "subject": "## First unified qualification candidate",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7241074824,
+        "author": "techrote",
+        "created_at": "2026-11-28T14:57:47Z",
+        "updated_at": "2026-11-28T14:57:47Z",
+        "subject": "## Corrective candidate — release-template dispatch and transport focus",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7241280913,
+        "author": "techrote",
+        "created_at": "2026-11-28T15:12:01Z",
+        "updated_at": "2026-11-28T15:12:01Z",
+        "subject": "## Third exact-source campaign — native popup input correction",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7241564572,
+        "author": "techrote",
+        "created_at": "2026-11-28T15:33:59Z",
+        "updated_at": "2026-11-28T15:33:59Z",
+        "subject": "## Fourth exact-source campaign — native authoring input and persistent domain guide",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7241804933,
+        "author": "techrote",
+        "created_at": "2026-11-28T15:52:42Z",
+        "updated_at": "2026-11-28T15:52:42Z",
+        "subject": "## Fifth exact-source campaign — verified short-click semantics and pending-seed correction",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7242712222,
+        "author": "techrote",
+        "created_at": "2026-11-28T17:02:51Z",
+        "updated_at": "2026-11-28T17:02:51Z",
+        "subject": "Candidate 5 completed the entire Windows campaign successfully: [run 46162094019](https://github.com/techrote/Xenovection/actions/runs/46162094019), application `4f8f9210d3ea04300f",
+        "classification": "Known mission candidate/progress report published by principal"
+      },
+      {
+        "id": 7242904644,
+        "author": "techrote",
+        "created_at": "2026-11-28T17:17:40Z",
+        "updated_at": "2026-11-28T17:17:40Z",
+        "subject": "Candidate 6 failed the real integrated authoring gate at 81/90 after material 42/42 and spatial ecology 60/60 passed. The failure was investigated from the first adverse screenshot",
+        "classification": "Known mission candidate/progress report published by principal"
+      }
+    ],
+    "pr18_reviews": [],
+    "pr18_inline_review_comments": [],
+    "new_owner_instructions": [],
+    "blocking_feedback_found": false
+  },
+  "scope": "Read-only GitHub API inspection. No comment, branch, review or PR mutation was performed. This receipt does not qualify the in-progress candidate7 executable."
+}

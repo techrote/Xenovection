@@ -1,0 +1,16 @@
+{
+  "schema": "xenovection.candidate-disposition.v1",
+  "candidate": 5,
+  "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+  "tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+  "workflow_run_id": 46162094019,
+  "workflow_status": "SUCCESS",
+  "artifact_id": 15272291891,
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46162094019/artifacts/15272291891",
+  "outer_bytes": 61750951,
+  "outer_sha256": "a2fbf6607b4c6458e4d4178c2bf202f13d513b5718130b9d82ff453410b1f84f",
+  "automated_qualification": "PASS:101 gates,692 source and692 extracted assertions,257 GUI assertions,65 captures",
+  "independent_archive_verification": "PASS",
+  "visual_followup": "Planar diagnostic rail expands beyond the right viewport edge. Inherited label also overflows; hosted label worsens width by11 logical pixels. Preserved actual PNG and receipts; next candidate will fix inward panel growth and reserve numerical area using measured panel width. Other inspected scenes remain bounded/nonempty.",
+  "disposition": "Preserved successful automated candidate; not designated the final evaluator while layout correction is being qualified."
+}

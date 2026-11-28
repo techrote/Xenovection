@@ -1,0 +1,1631 @@
+{
+  "schema": "xenovection.archival-evidence-index.v1",
+  "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+  "tree_sha": "c2aed8e6d1c2e463f0e4a39ee4ae657c72d92c2c",
+  "qualification_status": "PASS",
+  "archive": {
+    "file": "qualification-records.zip",
+    "bytes": 699596,
+    "sha256": "9c40039ce237d0c17a5870a482bab8fba55e7def082d9e9cbe3a8b9b8a170f33"
+  },
+  "scope": "Exact downloaded JSON receipts, logs and binary64 streams. All original PNGs remain in the separately identified Actions artifact; selected images are also retained beside this archive.",
+  "members": [
+    {
+      "file": "after-app-import-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-app-import-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-complete-qualification-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-complete-qualification-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-historical-import-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-historical-import-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-tests-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-tests-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "capture-health.json",
+      "bytes": 64613,
+      "sha256": "303a85f5f8205c7abcd7c75fb281412f6c75ee7e6392f0ed3a9220974a606c83"
+    },
+    {
+      "file": "composition-condensation_instrument-close-engine.log",
+      "bytes": 1288,
+      "sha256": "c42cf43f381527016f53fc762db90a354311e69098d26d27120b53b928529778"
+    },
+    {
+      "file": "composition-condensation_instrument-close.json",
+      "bytes": 55142,
+      "sha256": "856b642db65bcfd96e0b5303196a46e2cdbf4e772ad12baa4fdb57d5a47601bb"
+    },
+    {
+      "file": "composition-condensation_instrument-close.log",
+      "bytes": 9282,
+      "sha256": "fc0d92c230e16e2d6a7024294917c031240c05d5570727e67a77b313a14be207"
+    },
+    {
+      "file": "composition-condensation_instrument-overview-engine.log",
+      "bytes": 1294,
+      "sha256": "5fe11ae5232a38d3d5e5c731b60a0e0ea4d427388fcbe1b8d715886772866441"
+    },
+    {
+      "file": "composition-condensation_instrument-overview.json",
+      "bytes": 55240,
+      "sha256": "51a8b9575f73ce4d7b788c9b157194aefd383f0f2d9d74c3281d731cfe0522c9"
+    },
+    {
+      "file": "composition-condensation_instrument-overview.log",
+      "bytes": 9288,
+      "sha256": "08b4365b9b94b1c907d62c903a22b32aa5b3bd24f979b322dbb761331743fd02"
+    },
+    {
+      "file": "composition-contracts.log",
+      "bytes": 6100,
+      "sha256": "123dfdb387ad37518de49d7ba0610b66b475d118255fb379cec76259c1d3880e"
+    },
+    {
+      "file": "composition-excitable_garden-close-engine.log",
+      "bytes": 1267,
+      "sha256": "fa1c846fc9c9c9d01a598fb98cd176e8b5c0696e3423327c22968c3faa6b2887"
+    },
+    {
+      "file": "composition-excitable_garden-close.json",
+      "bytes": 54774,
+      "sha256": "efd635b3b941576a8b0ecc098870239bcb1caa0e36a1661da7356c484215346f"
+    },
+    {
+      "file": "composition-excitable_garden-close.log",
+      "bytes": 9261,
+      "sha256": "dc71ee33474f519a1b552ad7ad62667e512b86d6df8cc96d4a6ac656fd2865f9"
+    },
+    {
+      "file": "composition-excitable_garden-overview-engine.log",
+      "bytes": 1273,
+      "sha256": "8b99e8ee87b223db86978477477f97d9bcb4a029a50bc345e46f77640968e15e"
+    },
+    {
+      "file": "composition-excitable_garden-overview.json",
+      "bytes": 54774,
+      "sha256": "8b34a1b50aeb3d796f91cf98779ee6cfa0dde0c11f0f6a7315ffcf6c467a7615"
+    },
+    {
+      "file": "composition-excitable_garden-overview.log",
+      "bytes": 9267,
+      "sha256": "f2bdab5a988eed3429aebeee996606245cc0a60ad2401f37d2ebe1cdf3e42281"
+    },
+    {
+      "file": "composition-light_terrarium-close-engine.log",
+      "bytes": 1264,
+      "sha256": "f5bddacfff3493dca90817987e120b18d5a9f5b24a627ea95d2283475c4e53a4"
+    },
+    {
+      "file": "composition-light_terrarium-close.json",
+      "bytes": 54782,
+      "sha256": "c0b1421d8dd3a6df645cbd169c741bf081a082a082c70bdfc6137e69867b0413"
+    },
+    {
+      "file": "composition-light_terrarium-close.log",
+      "bytes": 9258,
+      "sha256": "92e3459c81897b87a13598f16faa7378668484e98d900e8d74ab5c821620ed18"
+    },
+    {
+      "file": "composition-light_terrarium-overview-engine.log",
+      "bytes": 1270,
+      "sha256": "3ba42748394fecba7bea46fe29bc3490d49080cfd189f34d23147a667ee13dcc"
+    },
+    {
+      "file": "composition-light_terrarium-overview.json",
+      "bytes": 54786,
+      "sha256": "74bcde903efd75474a9112a0fed8e744203c96dca97dfbe576b1947a29b2e665"
+    },
+    {
+      "file": "composition-light_terrarium-overview.log",
+      "bytes": 9264,
+      "sha256": "c7a11c9691477c738e605b107db192c08f4b719d191aa980d48b3dd1f4cf3c61"
+    },
+    {
+      "file": "composition-living_membrane-close-engine.log",
+      "bytes": 1264,
+      "sha256": "ee4d753aa43831c92343579b67f80c62aeb5a45a39a28b5c91402b893be8e070"
+    },
+    {
+      "file": "composition-living_membrane-close.json",
+      "bytes": 55238,
+      "sha256": "5e947292cd46a37529bd84ac6f8a5882545dd6e87d8895a55f5216372662cec2"
+    },
+    {
+      "file": "composition-living_membrane-close.log",
+      "bytes": 9258,
+      "sha256": "dea363f89151fe1fd0a07e4d260fdad51210f114ed3c1dd33920f6042d72a433"
+    },
+    {
+      "file": "composition-living_membrane-overview-engine.log",
+      "bytes": 1270,
+      "sha256": "5935ced77eda876417dfa7c1e107accf8a03afa7e653cd2477080f7cc269ab11"
+    },
+    {
+      "file": "composition-living_membrane-overview.json",
+      "bytes": 55239,
+      "sha256": "17ba7598bb713a037cf31f457f983eded6a3bc6838fdbe74a26e137342d7e3e4"
+    },
+    {
+      "file": "composition-living_membrane-overview.log",
+      "bytes": 9264,
+      "sha256": "ad5f376de6da735d71166a311e21896e195706213d041f12f713d3004b057142"
+    },
+    {
+      "file": "composition-matter_orchestra-close-engine.log",
+      "bytes": 1267,
+      "sha256": "950446d0e09400f93798e86b00c3f74c5dceff593aea836074ffcaf6354755a3"
+    },
+    {
+      "file": "composition-matter_orchestra-close.json",
+      "bytes": 56165,
+      "sha256": "f44323a79965ed8464ce1113c3ca4562e32d93fc4d1dc3d4557c5073ba7d6100"
+    },
+    {
+      "file": "composition-matter_orchestra-close.log",
+      "bytes": 9261,
+      "sha256": "bba2cc1789cc785a1930d77cd8288ad1c93bcedf2cfec3ba1745df125a35130b"
+    },
+    {
+      "file": "composition-matter_orchestra-overview-engine.log",
+      "bytes": 1273,
+      "sha256": "0073aad579c7968b6a28dcc94f485ed41a3f154565912dbef2315a0ad6c95383"
+    },
+    {
+      "file": "composition-matter_orchestra-overview.json",
+      "bytes": 56154,
+      "sha256": "c96698045ce452959588635643bf0d21f5cfef914810381f62d65171f26e5d0a"
+    },
+    {
+      "file": "composition-matter_orchestra-overview.log",
+      "bytes": 9267,
+      "sha256": "91fd3a81a11781532cf1b717a7f23197d92624c7d3cce8875ee6f1db56eb779b"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics-engine.log",
+      "bytes": 1269,
+      "sha256": "874516aedf639e7cf7244db2927d60c9d42d404bc75e3f27b57fe83e5056ac67"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics.json",
+      "bytes": 56111,
+      "sha256": "d76f917249d3fb5979794fcc2c0498e6f19ec339b97b3f08452cfda9f07f49db"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics.log",
+      "bytes": 9263,
+      "sha256": "8bb17287d0e955f3ce882f2f33a581dffc4ea04f57aefea9b02a7b82f21feb20"
+    },
+    {
+      "file": "composition-spectral_vortex-close-engine.log",
+      "bytes": 1264,
+      "sha256": "ea4548dc3ca06921482dcae57b8ab8c8d8cc476c52681d39dafbd14a1935a20b"
+    },
+    {
+      "file": "composition-spectral_vortex-close.json",
+      "bytes": 55106,
+      "sha256": "afca11ac6e3723d63d1c70276dc24123b33c437b71755ec0d69fdb1a7956e283"
+    },
+    {
+      "file": "composition-spectral_vortex-close.log",
+      "bytes": 9258,
+      "sha256": "657253cdfad3b02168a5e5212e8466ff9a6f695001329c2c5de2526ea56e235b"
+    },
+    {
+      "file": "composition-spectral_vortex-overview-engine.log",
+      "bytes": 1270,
+      "sha256": "2601cb5aaf93f44bd8143f9d8e48983fc9fab4477c58fb1df3272ec0a9f0a318"
+    },
+    {
+      "file": "composition-spectral_vortex-overview.json",
+      "bytes": 55203,
+      "sha256": "ae80f51cf302c1f01b58c51e0fbdd33228fdae03540ff51cb637274b950a2a88"
+    },
+    {
+      "file": "composition-spectral_vortex-overview.log",
+      "bytes": 9264,
+      "sha256": "64c6c13b0671cdace26d670f77ee02c31b57329d66324ef066c60b3da78240d9"
+    },
+    {
+      "file": "condensation-engine.log",
+      "bytes": 1208,
+      "sha256": "ebd68cb8f51552e2920d925851fff1fa229863a2cfb42198bef496ce494883fb"
+    },
+    {
+      "file": "condensation-procedural-vulkan.log",
+      "bytes": 9202,
+      "sha256": "0097676794a55492526fc4b58dc1dcf7ca5b460e61b702318784800bade960d5"
+    },
+    {
+      "file": "condensation.json",
+      "bytes": 46509,
+      "sha256": "a25a8bcb77d971429c5b297baf6cf6172b5c305af5865db398ffca9d03d482a9"
+    },
+    {
+      "file": "convergence-contracts.log",
+      "bytes": 6188,
+      "sha256": "d888fd1f5332c18b180868991d91c4bb275da80307c5e5688762ac88efd8f97d"
+    },
+    {
+      "file": "core-contracts.log",
+      "bytes": 179,
+      "sha256": "a22fad9c13bcecbd26805bbc597d9519af4e74c3014824ae43341b40718875f9"
+    },
+    {
+      "file": "ecology-contracts.log",
+      "bytes": 8367,
+      "sha256": "9606c0a8096a7329f85939fb461a0f03cfd657d0ccdbde93382fd6710cc7d472"
+    },
+    {
+      "file": "ecology-graphical-input.log",
+      "bytes": 9082,
+      "sha256": "99d26164814647c0dbda0074a0bfdb83635a8c0752f7d56878b5587a05019717"
+    },
+    {
+      "file": "ecology-gui-engine.log",
+      "bytes": 1088,
+      "sha256": "e74cec97b604385255e72d21812084932c6c85106043305ac352c11a061d213e"
+    },
+    {
+      "file": "ecology-gui-probe-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "ecology-gui.json",
+      "bytes": 90,
+      "sha256": "07278cc504c98907eb196f5083672f5d747be64da8c069f0e4fa14079c8912f7"
+    },
+    {
+      "file": "ecology-workspace-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "ecology-world-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "ecosystem-0-engine.log",
+      "bytes": 1386,
+      "sha256": "1e8372f70f44637bdae3750da2c7a40cd80ce86c7f560896e4329e326ea3b725"
+    },
+    {
+      "file": "ecosystem-0-extracted-vulkan.log",
+      "bytes": 9379,
+      "sha256": "0024095bf6d86b0e56957c77134ee2801b1325337c21dc6f278a6135278f9bac"
+    },
+    {
+      "file": "ecosystem-0.json",
+      "bytes": 8881,
+      "sha256": "5fa61783e49065cd85be8825d8cf5ad6265d343e570342897f5310485ed25751"
+    },
+    {
+      "file": "ecosystem-1-engine.log",
+      "bytes": 1385,
+      "sha256": "ae222e2e8f3195132cdc22cf5f6ab978ca8f3af65ea0b74326c50a53c5a0d3fd"
+    },
+    {
+      "file": "ecosystem-1-extracted-vulkan.log",
+      "bytes": 9378,
+      "sha256": "fc9b9a682ef73328d8bc9ffb246d9396caa7ed6e9c8ee7686d6b50bcb866db0c"
+    },
+    {
+      "file": "ecosystem-1.json",
+      "bytes": 8838,
+      "sha256": "f74934e6a3ae49f97267cb0b5cddd4b71d74953ea580a6412443fb30d61f0ecc"
+    },
+    {
+      "file": "ecosystem-2-engine.log",
+      "bytes": 1370,
+      "sha256": "1aa3d90aeaa80b223f9bf93d5d7f9e790dd903f3580f2364ab9da27e58221d06"
+    },
+    {
+      "file": "ecosystem-2-extracted-vulkan.log",
+      "bytes": 9363,
+      "sha256": "47f300e934d94d098ceb2b4ee4e7004d49f375c865e7fc53f60048d147bc0d6b"
+    },
+    {
+      "file": "ecosystem-2.json",
+      "bytes": 8783,
+      "sha256": "6c0a4cd7360841c72450083a2fba28cdb2797fdb113710469c164bc0b53e945a"
+    },
+    {
+      "file": "ecosystem-3-engine.log",
+      "bytes": 1398,
+      "sha256": "cf834b66f52e0e1e1cfe75c490d9dbb87e597a8fdbc3d647e146d27c51ae7717"
+    },
+    {
+      "file": "ecosystem-3-extracted-vulkan.log",
+      "bytes": 9391,
+      "sha256": "42c5cfdc6af31e625026a5bad1eac58c9362f30e9f348c40b45be44c75070197"
+    },
+    {
+      "file": "ecosystem-3.json",
+      "bytes": 9068,
+      "sha256": "c278b71f013e11e94eab02ee726eed421a1c28fa277ec2924d3bacc22b389774"
+    },
+    {
+      "file": "ecosystem-4-engine.log",
+      "bytes": 1391,
+      "sha256": "4af2f99682f69f1b3278fd6d2635769c7447a985b7d5aa5321ad093d42769cf0"
+    },
+    {
+      "file": "ecosystem-4-extracted-vulkan.log",
+      "bytes": 9384,
+      "sha256": "8ad9a4c4188793712e923893ded30f829821599c2fe186fe5ae3b1e0b676c4c9"
+    },
+    {
+      "file": "ecosystem-4.json",
+      "bytes": 8962,
+      "sha256": "ddb9237c8e6f1aff19bde47493ea47c112969938d3dcdfc6bcd0b4fd931f3750"
+    },
+    {
+      "file": "ecosystem-5-engine.log",
+      "bytes": 1414,
+      "sha256": "5711788499b6211861317e7624301a5d5fd2eb12639feaaa030bbc555df384ab"
+    },
+    {
+      "file": "ecosystem-5-extracted-vulkan.log",
+      "bytes": 9407,
+      "sha256": "7f01186377d9de0f790e544860c25acbed1c83500351fa74362d3109834ffb1b"
+    },
+    {
+      "file": "ecosystem-5.json",
+      "bytes": 9267,
+      "sha256": "0c3003a81811ebf693bc90a2ed694232f2817175731fb5c70e2bd4db37df7012"
+    },
+    {
+      "file": "ecosystem-disabled-engine.log",
+      "bytes": 1113,
+      "sha256": "9679165ce5fff1b54537f7e8b695af4ba648f4f1118e6aa468e5885403257db0"
+    },
+    {
+      "file": "ecosystem-disabled.json",
+      "bytes": 46362,
+      "sha256": "b321c0f55b64098cea993ddade35bba86f9d12909e2bbc2c634fd2af6d785c0c"
+    },
+    {
+      "file": "ecosystem-disabled.log",
+      "bytes": 9106,
+      "sha256": "4b0f866585ce037a1765e97f3b1979d4adc4a44c78f946138e53b848b8bfb12a"
+    },
+    {
+      "file": "ecosystem-engine.log",
+      "bytes": 1199,
+      "sha256": "cddc752b23f9537ac28425e7038b37b33062a3a0027c2137c7916cd19950b4be"
+    },
+    {
+      "file": "ecosystem-procedural-vulkan.log",
+      "bytes": 9193,
+      "sha256": "89a9c3b8e5832e4b1a703d53b80655393cdf073f1692425fd39dad05c85d2c31"
+    },
+    {
+      "file": "ecosystem-vortex-control-engine.log",
+      "bytes": 1341,
+      "sha256": "fb0dd93b83c37f7c4c8b4778ef6ba29c38ff004f54735919651a9a2b5742ba58"
+    },
+    {
+      "file": "ecosystem-vortex-control.json",
+      "bytes": 8393,
+      "sha256": "2de22c35f2d8af8a10384777177ebfb94521a113a6d126fa9b80d5890c73f182"
+    },
+    {
+      "file": "ecosystem-vortex-interaction-disabled.log",
+      "bytes": 9334,
+      "sha256": "6398447da4be6737056dedcc2adb282649e704813cba42adb0ddf502e682c1e4"
+    },
+    {
+      "file": "ecosystem.json",
+      "bytes": 46518,
+      "sha256": "b184342590889c5ecc0a596c2221df5a53383a7ce6d6dddcbcecd069c31bddc8"
+    },
+    {
+      "file": "editor-import.log",
+      "bytes": 3952,
+      "sha256": "13b332df751c9bb324f1e82ff6df1417747b15baa8eebe90d3feb38d2e0a29f9"
+    },
+    {
+      "file": "extracted-full-resource-soak.log",
+      "bytes": 1808,
+      "sha256": "d7e0bb79d98bb52deae4edd844944c09cfa9aac15c37c1d8b7c6c37ce1175ab8"
+    },
+    {
+      "file": "extracted-graphical-convergence.log",
+      "bytes": 24596,
+      "sha256": "2e57460c443f239ab7d157080233944cf1a004600d06c17177a6c2f68f661fb0"
+    },
+    {
+      "file": "extracted-graphical-material.log",
+      "bytes": 13076,
+      "sha256": "a245229cc783b6e7b2693fa5755a9ffde4ce5f28da74eef3269c08ecc3975e29"
+    },
+    {
+      "file": "extracted-graphical-spatial_ecology.log",
+      "bytes": 9098,
+      "sha256": "79ce0fbf2874f627830e26dabf6b953aaec327802af9c13a50d05d04c2eeace0"
+    },
+    {
+      "file": "extracted-soak.json",
+      "bytes": 1118,
+      "sha256": "a3393d99df2f80f0981340d2affbdf19829a88620c6b0d666c332e9964164fb6"
+    },
+    {
+      "file": "extracted-source-binary64-exactness.json",
+      "bytes": 826,
+      "sha256": "99954f78d61a29fbef9ee9ffcd26f44a9e8e6fdc26a91a2e7b553960bf8ef4c7"
+    },
+    {
+      "file": "extracted-source-binary64-exactness.log",
+      "bytes": 828,
+      "sha256": "0ca2548e49a4029ef4ace8afc8e6976c81cab4a9b4eb05d8a7f2f611ef0a0bc1"
+    },
+    {
+      "file": "extracted-source-export.log",
+      "bytes": 352,
+      "sha256": "55f5f4868831a4f3c16312c9ffc20ebad9faddc9b9627dda07f7f714ccbf52da"
+    },
+    {
+      "file": "extracted-source-f64.bin",
+      "bytes": 92544,
+      "sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629"
+    },
+    {
+      "file": "extracted-test_compositions.log",
+      "bytes": 6163,
+      "sha256": "e1881a290d4248487a9e7c7d44d87a86d4737d762da68bc6de091093231e30c0"
+    },
+    {
+      "file": "extracted-test_convergence.log",
+      "bytes": 6620,
+      "sha256": "09ab617596a8ea1a070bcd9fed4ff9a3eac62348a838fd04be8a82bc430475fb"
+    },
+    {
+      "file": "extracted-test_convergence_ecology.log",
+      "bytes": 3448,
+      "sha256": "61e34c1e13601d2911a714e68058d91f56819c3417359b9bdf358fd2ae21dd67"
+    },
+    {
+      "file": "extracted-test_core.log",
+      "bytes": 234,
+      "sha256": "cea0c3b194d21c82932f46fe1164964d2e82ed6348f71bae16b9e5abbbdb1991"
+    },
+    {
+      "file": "extracted-test_ecology.log",
+      "bytes": 8407,
+      "sha256": "3a357016ee37b4b3401ba8e8305105fc867b10386c98633ca0f5cb74c52e719a"
+    },
+    {
+      "file": "extracted-test_integration.log",
+      "bytes": 1002,
+      "sha256": "ed0e093dfe522197d5ee59762966ebd45f73c8334768e83600dc7db87467bd53"
+    },
+    {
+      "file": "extracted-test_matter.log",
+      "bytes": 2216,
+      "sha256": "fe53d8270fdf2228da4183e570109127301b04d82316d27e9bdce1f05abbeca3"
+    },
+    {
+      "file": "extracted-test_matter_optics.log",
+      "bytes": 3071,
+      "sha256": "04640a476bea2f6aa0f0b7d154623f657f22ba3d288f1041cd02c203ccc722d9"
+    },
+    {
+      "file": "extracted-test_synth.log",
+      "bytes": 5190,
+      "sha256": "e98fdcba8d760edb1da5c0e8e62be1e888c53119df14047d1f8d3f4d35d19f6d"
+    },
+    {
+      "file": "extracted-verify_filaments.log",
+      "bytes": 286,
+      "sha256": "ac2d5bc81633f83eea1f1279540753912cefc53c9d5139b50f1e00b10b4be651"
+    },
+    {
+      "file": "extracted-verify_optical.log",
+      "bytes": 347,
+      "sha256": "056bd1275a223af7511a7ebeace7cf0f19de370f93fa811768977bb492cbed7d"
+    },
+    {
+      "file": "filament-contracts.log",
+      "bytes": 224,
+      "sha256": "7a325c0618583949e0b8a001df4de0c1f791e7243677645e55c632e597160611"
+    },
+    {
+      "file": "filament-vulkan-buffer-roundtrip.log",
+      "bytes": 8501,
+      "sha256": "cc01308c37aef09d435564756b4caea1e7c7d3ffe86f9e4bd0fd7f442ab179ab"
+    },
+    {
+      "file": "filament-vulkan-engine.log",
+      "bytes": 510,
+      "sha256": "0e2ec652a02735fab4ff3eb9e52daaa79a92dd2e369a6f0d3590b1513984a5b0"
+    },
+    {
+      "file": "filaments-engine.log",
+      "bytes": 1199,
+      "sha256": "9baf1e33d44a216f79f5e969fbe113dc28a7e2f2c718066184f71ae766e76bd8"
+    },
+    {
+      "file": "filaments-playable-vulkan.log",
+      "bytes": 9193,
+      "sha256": "436a2419a1bce8d03c1806fa6a6d0dd8dfc327c0b986ef4a698f69f384c66cbd"
+    },
+    {
+      "file": "filaments.json",
+      "bytes": 44338,
+      "sha256": "b93e99fc40cd9f210551539cbb3e545adfb516f91de463a4aa2e973668c5ef29"
+    },
+    {
+      "file": "films-engine.log",
+      "bytes": 1187,
+      "sha256": "0883d42f2739ef5c3f007b2b4e6ed856e583b557bab1669deee907c388ab6030"
+    },
+    {
+      "file": "films-procedural-vulkan.log",
+      "bytes": 9181,
+      "sha256": "43eefac5bca9dab48ffa511f2c1fe526c7074dee8f3e9bf585ce57be656685fd"
+    },
+    {
+      "file": "films.json",
+      "bytes": 46497,
+      "sha256": "05cd2b6d701b591f7fc9397241d26a46c29fe1ff27eca6bfd40396cbddb5a139"
+    },
+    {
+      "file": "flow-engine.log",
+      "bytes": 1184,
+      "sha256": "1fa5a29978d63a9cdf1ff0798d35ad9b436a45f6c1eee920cf4303d6e3735f70"
+    },
+    {
+      "file": "flow-playable-vulkan.log",
+      "bytes": 9178,
+      "sha256": "9584d3db1faa1c8eeeb6ad63eb5720ce200089e99e30cd28cf3138f8891dda7c"
+    },
+    {
+      "file": "flow.json",
+      "bytes": 44209,
+      "sha256": "b05a0ed46feef9858c8248af59dbb1df2150da59e4123813a9f8caea70d22221"
+    },
+    {
+      "file": "garden-engine.log",
+      "bytes": 1190,
+      "sha256": "c135be702a251c338e00cacbe53ba35354309d751f2cb331c0c1ca7033b8919e"
+    },
+    {
+      "file": "garden-procedural-vulkan.log",
+      "bytes": 9184,
+      "sha256": "a375367bcbfd66454db1bafd154135ec5aaf3a429c1e07e8767560adf20cc25b"
+    },
+    {
+      "file": "garden.json",
+      "bytes": 46487,
+      "sha256": "7b47b21fb095d5d12831043bb2813f8ec0baa7573d8c858043fcdce30d18d391"
+    },
+    {
+      "file": "graphical-capture-health.log",
+      "bytes": 339,
+      "sha256": "f5e48a858341c9f7d25e7e8425c417968b43c1be18e30d15e0e0b2167f07a31f"
+    },
+    {
+      "file": "graphical-input.log",
+      "bytes": 9478,
+      "sha256": "e1f5701865084c6a5e2b8ae8eb4d178b0510989b6fd97f02cc4897b2c8eb1e87"
+    },
+    {
+      "file": "gui-convergence-engine.log",
+      "bytes": 16602,
+      "sha256": "d3dd8c90405a0045889de8202e018db2db6fb6866630d90f261d5d071b5796bf"
+    },
+    {
+      "file": "gui-convergence.json",
+      "bytes": 18943,
+      "sha256": "c5a14b3ba13fb705f29856a23a247709f5d4c78913be8cb00b92ea9f8406b94d"
+    },
+    {
+      "file": "gui-input-engine.log",
+      "bytes": 1484,
+      "sha256": "fc489ac5052af7b5610c4f1b0c5e1f7d3921311dc90e7cdeb10b2c4f4ef5e207"
+    },
+    {
+      "file": "gui-input.json",
+      "bytes": 460,
+      "sha256": "504e035ff63e911631062b5912ae3351d778b85545a9f5677cbc0792a74c1957"
+    },
+    {
+      "file": "gui-material-engine.log",
+      "bytes": 5040,
+      "sha256": "3048d6c360bf9cfba6bb397558e9e3e9e76318e1d5d050cc6b96b41fcdc0f8c0"
+    },
+    {
+      "file": "gui-material.json",
+      "bytes": 1520,
+      "sha256": "39de664ae20a95a0409bda9b41e1fa1503cf82df9a1a1603ff096d355db085f6"
+    },
+    {
+      "file": "gui-spatial_ecology-engine.log",
+      "bytes": 1104,
+      "sha256": "c6fce6862f0e44012e477a90d27c6e1e5f5606c47542991d1fbb0a4aa675dc11"
+    },
+    {
+      "file": "gui-spatial_ecology.json",
+      "bytes": 4285,
+      "sha256": "06585c74e4afe6ad39a0e20a7b95e29b9981a6e8224df3970690922fcaacfc08"
+    },
+    {
+      "file": "historical-godot-import.log",
+      "bytes": 1035,
+      "sha256": "e8b5a4c2091d3e950bf2e1a3e8fd0f8ab3fb644ea6eac84865fb73747716671f"
+    },
+    {
+      "file": "historical-godot-startup.log",
+      "bytes": 156,
+      "sha256": "e39a919c14d17169ff10d91841efb97344ce676aca0fc07e39ba5f02108b0964"
+    },
+    {
+      "file": "historical-numerical.log",
+      "bytes": 331,
+      "sha256": "f2e65845ef92b1d870475b29c6815c226fb9315b9df028e0d9faec7fc8f86b79"
+    },
+    {
+      "file": "hybrid-engine.log",
+      "bytes": 1190,
+      "sha256": "446252d2608b70250d5e54d5db9d84d68b56a6593b3add076056877d3a8e4b3b"
+    },
+    {
+      "file": "hybrid-playable-vulkan.log",
+      "bytes": 9184,
+      "sha256": "61b50198ce58750124f2dfcf6d97ce867f5c48fecdf3077e9e83e4a015c2d3e5"
+    },
+    {
+      "file": "hybrid.json",
+      "bytes": 46192,
+      "sha256": "bd20088af9a80862761c5601c1016ca0a512bf2333cd3c4c48859cbb5673975a"
+    },
+    {
+      "file": "initial-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "initial-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "integrated-contracts.log",
+      "bytes": 570,
+      "sha256": "80c8e56ea3a4d9c21fb9c456f84962dbb79751f78bb68bc17a6ce7ec73a27ae3"
+    },
+    {
+      "file": "living-engine.log",
+      "bytes": 1190,
+      "sha256": "b9da732e0bce9f2c30d118dd5747c1960b983ea599bf9a3bb5558cdac19bac24"
+    },
+    {
+      "file": "living-procedural-vulkan.log",
+      "bytes": 9184,
+      "sha256": "3401114297cc5751826845694fb590d2338f488788806cfdb25d1c9b1872bf6d"
+    },
+    {
+      "file": "living.json",
+      "bytes": 46494,
+      "sha256": "fe5d523c3085bd3d3a2b1a8bfb2d8896cc7b08c1328cf00b33833738ddde7765"
+    },
+    {
+      "file": "matter-contracts.log",
+      "bytes": 1789,
+      "sha256": "8fa657680e36d8199a996eedacee434198770b91d0ca214a23d7374226b62c20"
+    },
+    {
+      "file": "matter-optics-contracts.log",
+      "bytes": 3007,
+      "sha256": "44c7cb6923d99d275719d8f45d59b3e8bb25f70be8ec2d052a6f60bbcf0efd88"
+    },
+    {
+      "file": "membrane-engine.log",
+      "bytes": 1196,
+      "sha256": "5d2d8353ceb8fb310ce6782bde4b06031bfdc3c6cd9fee9f0eab21e4109a38af"
+    },
+    {
+      "file": "membrane-playable-vulkan.log",
+      "bytes": 9190,
+      "sha256": "ca7dae9aa468f214f59cb2abb0cf3e9ed74b43a8b17b2bf5e8ef3e108b2f07b8"
+    },
+    {
+      "file": "membrane.json",
+      "bytes": 47855,
+      "sha256": "d8f419b1e04f4dc8849021de9121fbaa118f4581968fa6fbb53b8147d85c7d39"
+    },
+    {
+      "file": "numerical-dependency.log",
+      "bytes": 309,
+      "sha256": "7f6aac62e9c51d5b45ce8042178f93ca2e17af033f9115093eed29acabcd39fa"
+    },
+    {
+      "file": "nursery-engine.log",
+      "bytes": 1193,
+      "sha256": "efc1e0e28642951b8df16219a48e1460e2977b11fb29439bd40cc2720c7677d6"
+    },
+    {
+      "file": "nursery-procedural-vulkan.log",
+      "bytes": 9187,
+      "sha256": "75103ed8a6dfd764b2ff90989d837560c67b2e1b2ac2774ad5ae60a7b5141353"
+    },
+    {
+      "file": "nursery.json",
+      "bytes": 46379,
+      "sha256": "a6e8a52c71608e9aa3a0a109d73fc50e3fec6080be94fdfa295b7d56e89620ad"
+    },
+    {
+      "file": "optical-contracts.log",
+      "bytes": 287,
+      "sha256": "ffba6e893398d6ebcc6265b62190b147890e61fb912b8e70c138ac1f739eae10"
+    },
+    {
+      "file": "optical-engine.log",
+      "bytes": 1193,
+      "sha256": "9713f69f805d558f083128fab4512434ae0085a5a7332290ca40078826959fe1"
+    },
+    {
+      "file": "optical-playable-vulkan.log",
+      "bytes": 9187,
+      "sha256": "a9389c6d253c5032f9891b95130fbc5f4a158ecf55719e3fca012c41efd2e99a"
+    },
+    {
+      "file": "optical.json",
+      "bytes": 46962,
+      "sha256": "bdbb46883c1e806ab7a8dff95329c2502938b6e6d764ec1d88891bf7a2092ad0"
+    },
+    {
+      "file": "optical_dichroic-close-engine.log",
+      "bytes": 1232,
+      "sha256": "9158e9a8b7626afc00dc465334f23e7963c677f88be8489a63d7500f4b0885c9"
+    },
+    {
+      "file": "optical_dichroic-close.json",
+      "bytes": 47000,
+      "sha256": "c95dbadfd1270791b719e2c82c86bcd6d2a237bfeca887283279bd55c001521c"
+    },
+    {
+      "file": "optical_dichroic-close.log",
+      "bytes": 9226,
+      "sha256": "422ed1363a2fd662e59de57264cbe8da9effd94efdcff9c76e583bd9b13d229b"
+    },
+    {
+      "file": "optical_dichroic-engine.log",
+      "bytes": 1220,
+      "sha256": "be68808e4691b6dbf3cd3587cb08f7311bf69283a5010454e7d4b916d43b03e2"
+    },
+    {
+      "file": "optical_dichroic-playable-vulkan.log",
+      "bytes": 9214,
+      "sha256": "47b4f4abc2c4ff9e26649470fb802d97adea4f2781ec8fc957e9bbc628636d68"
+    },
+    {
+      "file": "optical_dichroic.json",
+      "bytes": 47010,
+      "sha256": "1b4e9fa99c144aeabd41320a1e630f840e4f0498790cf15aef3130baa865cb13"
+    },
+    {
+      "file": "optical_ecosystem-close-engine.log",
+      "bytes": 1235,
+      "sha256": "de0e4392ae79fdc65c6de8da22f2418b4aba11a81a50499c76628e148a97841f"
+    },
+    {
+      "file": "optical_ecosystem-close.json",
+      "bytes": 47894,
+      "sha256": "d1067e60d2be598874bd81cf2f160092555cd007cc8fe3df47056146abb67a69"
+    },
+    {
+      "file": "optical_ecosystem-close.log",
+      "bytes": 9229,
+      "sha256": "9bf445de88552c48fc9d7ad2a06080ce6915c1c876dde1bcd17252b5373afc29"
+    },
+    {
+      "file": "optical_ecosystem-engine.log",
+      "bytes": 1223,
+      "sha256": "ee69520880a778943911088b4f13ecab53ec9a29d1d6cabff6bd05411cc1524d"
+    },
+    {
+      "file": "optical_ecosystem-legacy-engine.log",
+      "bytes": 1237,
+      "sha256": "6136d60af78dfe7b0fb4256d600e10a6b801182660f8322b6a862a1174cda28f"
+    },
+    {
+      "file": "optical_ecosystem-legacy.json",
+      "bytes": 47881,
+      "sha256": "c11402b44a4a88dd8f224721353f168e6450d64e2648160d20d99ebe78fbc3ec"
+    },
+    {
+      "file": "optical_ecosystem-legacy.log",
+      "bytes": 9231,
+      "sha256": "940496b75e5f3cc4b0b6e804b9981f8808d25a84399311feed54bb9f5e835138"
+    },
+    {
+      "file": "optical_ecosystem-playable-vulkan.log",
+      "bytes": 9217,
+      "sha256": "b2dad0690d13142c2da2ffd4499d9aebb73dd0eb0d625031f6c445b7b3d538f8"
+    },
+    {
+      "file": "optical_ecosystem.json",
+      "bytes": 47893,
+      "sha256": "a9f9f24bf85750a7cf01f97ac80be72a94bb7718544acd10cc9de8c1f86f1743"
+    },
+    {
+      "file": "optical_garden-close-engine.log",
+      "bytes": 1226,
+      "sha256": "3278a887679eddab0173094b25c60adc008a0fd3d4642dbe78e4f8338f737ebc"
+    },
+    {
+      "file": "optical_garden-close.json",
+      "bytes": 47882,
+      "sha256": "6958b30af6d92febb780d91a8d9a45c5ae5862b4bf674c9e92b51dab1b19a34d"
+    },
+    {
+      "file": "optical_garden-close.log",
+      "bytes": 9220,
+      "sha256": "9b5e633e37d434d915c1bb68fb594799379faf2e5f36851a160ad739b7389a27"
+    },
+    {
+      "file": "optical_garden-engine.log",
+      "bytes": 1214,
+      "sha256": "eb46b349e6c3a4039681a7340ce6eb3f57e689b329f1229770872d3cd992285b"
+    },
+    {
+      "file": "optical_garden-legacy-engine.log",
+      "bytes": 1228,
+      "sha256": "f192ce02127824e69dfbbe7308146a525b08306c65f694651b185b9ae91806a6"
+    },
+    {
+      "file": "optical_garden-legacy.json",
+      "bytes": 47877,
+      "sha256": "c1aef22ea2b6e9523a77f39b8fef5b0f8adc3d940c3c813d941f0f1deb5b73ab"
+    },
+    {
+      "file": "optical_garden-legacy.log",
+      "bytes": 9222,
+      "sha256": "2160eb64e1881258defdd912bfe68d686be1d1c661062fe3275cfb230bfaf946"
+    },
+    {
+      "file": "optical_garden-playable-vulkan.log",
+      "bytes": 9208,
+      "sha256": "70cfc0f13e49796dfb2dcec951f3c1cfc05dd3a10bb2d1d3f29bbc951659c290"
+    },
+    {
+      "file": "optical_garden.json",
+      "bytes": 47871,
+      "sha256": "123f304e60d341d3b3e82358b02069b7433d0b7ed2fe5b1d08c0ddbc370fd1c1"
+    },
+    {
+      "file": "optical_lens-close-engine.log",
+      "bytes": 1220,
+      "sha256": "d61b7d4b56d7994f3c1e00d1bff4f0cd4fa313c1154e18a12cf69b6e529dd313"
+    },
+    {
+      "file": "optical_lens-close.json",
+      "bytes": 46950,
+      "sha256": "0c90ea4ef325a071448e31e0c8a7e2ec90e69c0ec648d412bd37e0d43be57b8a"
+    },
+    {
+      "file": "optical_lens-close.log",
+      "bytes": 9214,
+      "sha256": "855cbc110ae63ac73c9327fc329cf3fdead09d69e0b2b9561718dae5486c39dd"
+    },
+    {
+      "file": "optical_lens-engine.log",
+      "bytes": 1208,
+      "sha256": "2bfa392c2fe3c8c830b393aec0afa48a14e9ff2d7960c2eb3e18336db91b709f"
+    },
+    {
+      "file": "optical_lens-legacy-engine.log",
+      "bytes": 1222,
+      "sha256": "39b69ee17f6f711bdafdcb75fd2e534e426a4ae01f3cfba037441b5d57d9e1b2"
+    },
+    {
+      "file": "optical_lens-legacy.json",
+      "bytes": 46938,
+      "sha256": "a0854867e999df21fb636bbfb20100f9008b6382c42f592bf66623889fa272f7"
+    },
+    {
+      "file": "optical_lens-legacy.log",
+      "bytes": 9216,
+      "sha256": "2e1ca106de95975b5660651cfb7de4a160775d3556c35250d84c94301e746b48"
+    },
+    {
+      "file": "optical_lens-playable-vulkan.log",
+      "bytes": 9202,
+      "sha256": "cdb86205e397ea5a04008f5537c6c486b49e9fec7ed9937ae50cecc217d897bd"
+    },
+    {
+      "file": "optical_lens.json",
+      "bytes": 46946,
+      "sha256": "109c7e5b39d90294d9d7da0860bc9102e0222707f23d8c1541c4d227213e2951"
+    },
+    {
+      "file": "optical_microfibres-close-engine.log",
+      "bytes": 1241,
+      "sha256": "88f2775542be2f3177b933e137e284b886456f87bc8af677362b0f91b11cd130"
+    },
+    {
+      "file": "optical_microfibres-close.json",
+      "bytes": 47014,
+      "sha256": "1d22b8caf6d95bdf8d30d3d34d1d19ad4587a3f8288e7bc9a5cdea1c8b3237d3"
+    },
+    {
+      "file": "optical_microfibres-close.log",
+      "bytes": 9235,
+      "sha256": "f320fb23be5ef0da6e0150c67743950859f9db69cfb3aebbce71db06e6f4f686"
+    },
+    {
+      "file": "optical_microfibres-engine.log",
+      "bytes": 1229,
+      "sha256": "6b7d286ab6a97dc3cc4d0935303a835e06310884e0d70f08dbe50c66ea15ca29"
+    },
+    {
+      "file": "optical_microfibres-playable-vulkan.log",
+      "bytes": 9223,
+      "sha256": "4c12f9b059ca5c3e3a66f15e3bc6e3051f2078134d69114f68d2137ff752f850"
+    },
+    {
+      "file": "optical_microfibres.json",
+      "bytes": 47016,
+      "sha256": "955d58a3c1d0cdb3d467917df9754bfe4a60514dd0da3f8b0cee08e037ab54de"
+    },
+    {
+      "file": "optical_weather-close-engine.log",
+      "bytes": 1229,
+      "sha256": "1bdca14c3cf60c48d9898d6c5b212d3fd80c5e87bb9bc906789b7cca4f25c865"
+    },
+    {
+      "file": "optical_weather-close.json",
+      "bytes": 47879,
+      "sha256": "b87b33c76a9429993f7e69eed1127274706063081b8a5333d3c1991c449f5add"
+    },
+    {
+      "file": "optical_weather-close.log",
+      "bytes": 9223,
+      "sha256": "341026db31aa49f9952d8872435b4bfec8bfeab72c78e69a35e7b25419372ed1"
+    },
+    {
+      "file": "optical_weather-engine.log",
+      "bytes": 1217,
+      "sha256": "ab706b9c68a909bce9a80a7b055aaf3602d048e4b82955c2f21ea2c0c0c5fcdb"
+    },
+    {
+      "file": "optical_weather-legacy-engine.log",
+      "bytes": 1231,
+      "sha256": "5e16e83ed3f051c7d4dc45d3cd2a2ca71dd5c5bf517ff20b2a594c6e9beaef48"
+    },
+    {
+      "file": "optical_weather-legacy.json",
+      "bytes": 47882,
+      "sha256": "58d6eba0aa8090e714b0d5eee30873a99395c7767be27596aec5fad4e725ed01"
+    },
+    {
+      "file": "optical_weather-legacy.log",
+      "bytes": 9225,
+      "sha256": "18461a50f06fe9e7652720b2158bbfb701f68f687a8e23cb7137ec400a98e02c"
+    },
+    {
+      "file": "optical_weather-playable-vulkan.log",
+      "bytes": 9211,
+      "sha256": "dc9705ec22e23af8510074784c61345a24bd5bb2c572d5c3dc2c8392e4c2d04b"
+    },
+    {
+      "file": "optical_weather.json",
+      "bytes": 47874,
+      "sha256": "dd6ad06a9dd9bc49f885d8411761c687f8b083249cd6448caab61a3d8a00a3ef"
+    },
+    {
+      "file": "package-receipt.json",
+      "bytes": 696,
+      "sha256": "a8e93d158e7b40e06895bb5a2defd8da6fbb5e64c2b59080de82d9562c2b9910"
+    },
+    {
+      "file": "package.log",
+      "bytes": 17857,
+      "sha256": "cc8a67f37098c51f2dbf02ad9729a5c0aebab43cbcea7c6048f7f32754233c30"
+    },
+    {
+      "file": "prepare-runtime.log",
+      "bytes": 4862,
+      "sha256": "efaaeab0c36ebeb9b383cbc5e2dc22623bee60f660dba5c9548f4d51421d59e4"
+    },
+    {
+      "file": "qualification.json",
+      "bytes": 245795,
+      "sha256": "17f38256a526f13828128e958a47408735ff2dd8e60829f8d3ab0d91cdd0032f"
+    },
+    {
+      "file": "runtime/Vulkan-Headers-checkout.log",
+      "bytes": 54,
+      "sha256": "55c5e924ceb21ca312dc5d97bec5ca3024c193449102c2f4adfd54cda9cfef62"
+    },
+    {
+      "file": "runtime/Vulkan-Headers-fetch.log",
+      "bytes": 128,
+      "sha256": "24a972d199bcfd147267204e1eb14ce6ee22d2048eb23711f4ee8d6149043e56"
+    },
+    {
+      "file": "runtime/Vulkan-Headers-init.log",
+      "bytes": 117,
+      "sha256": "cd142140a68555b6b720b9265e991f7561221178608bc3d188c62a67cbd42a56"
+    },
+    {
+      "file": "runtime/Vulkan-Headers-remote.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "runtime/Vulkan-Loader-checkout.log",
+      "bytes": 56,
+      "sha256": "15aabcac6931469dddef5a6aed27eea02b94462886ec3f8470447ce320e0d28f"
+    },
+    {
+      "file": "runtime/Vulkan-Loader-fetch.log",
+      "bytes": 127,
+      "sha256": "7ea65dbc03e20cd2f5143d0a59d2ca64b6420a27f4c07ff04a06123bc7aad010"
+    },
+    {
+      "file": "runtime/Vulkan-Loader-init.log",
+      "bytes": 116,
+      "sha256": "15ba945a973ddd14f14c718cce6789f476ee283d0545774c3f1e7e7d47fa292b"
+    },
+    {
+      "file": "runtime/Vulkan-Loader-remote.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "runtime/headers-configure.log",
+      "bytes": 900,
+      "sha256": "f5676040d7f33996aed3ffc00ade2d5a48c6fffb8b7d3e73942beea037b5af7e"
+    },
+    {
+      "file": "runtime/headers-install.log",
+      "bytes": 9036,
+      "sha256": "44f5547b94272d44c45e1d9fe8659cce26e2e22ffa69032c2e44bede7af4401c"
+    },
+    {
+      "file": "runtime/loader-build.log",
+      "bytes": 1416,
+      "sha256": "0d4c3c05b37818f8ff10bb1438b7c7f8fbd56404fcc3264eed77b485411c9e63"
+    },
+    {
+      "file": "runtime/loader-configure.log",
+      "bytes": 858,
+      "sha256": "44e8aaf15960635e8d46848b9224e1c00515cab76fc5225b314fa2178c33e4c1"
+    },
+    {
+      "file": "runtime/mesa-extract.log",
+      "bytes": 523,
+      "sha256": "284fc8f721921340549f5e492f4710767c5b6b3dc4dfca91affeedd194f1c853"
+    },
+    {
+      "file": "runtime.json",
+      "bytes": 2518,
+      "sha256": "f05acaf64bc868a61a26f19202b884b377749a6000c130628121754a37f4347d"
+    },
+    {
+      "file": "scientific-engine.log",
+      "bytes": 1202,
+      "sha256": "8c3549f9862cf081ff1eafa6c75f4c0f92624f9f29034f95ed77f443d9645345"
+    },
+    {
+      "file": "scientific-playable-vulkan.log",
+      "bytes": 9196,
+      "sha256": "68b147093f1c1d3f6132ed26c19f1a2619dff46eb70d428c6ae9d0e665551388"
+    },
+    {
+      "file": "scientific.json",
+      "bytes": 44346,
+      "sha256": "7c89f19c4168d95aa37b8aba8afb64326dcc97b8085b89810c97dac7f904d297"
+    },
+    {
+      "file": "source-binary64-exactness.json",
+      "bytes": 993,
+      "sha256": "485fb6534aeb21205d6c8696f2616a5563d64d5f2414cd07f694a59ecab4c505"
+    },
+    {
+      "file": "source-binary64-exactness.log",
+      "bytes": 995,
+      "sha256": "3c48114ca0f564bb19a551b404b76c055f7a5f809bea54e50d3a27cbe047c11c"
+    },
+    {
+      "file": "spatial-ecology-contracts.log",
+      "bytes": 3382,
+      "sha256": "995f16bd51853bd5aad490db0541747b9ba482901c621a5a8c47bbe6d4a32737"
+    },
+    {
+      "file": "stress-engine.log",
+      "bytes": 1185,
+      "sha256": "56950ea53195876a50c4379425aaf2dd0222d4c4916cf0aa7193a87a7e985914"
+    },
+    {
+      "file": "stress-playable-vulkan.log",
+      "bytes": 9179,
+      "sha256": "815b6ad4809301458d7c1c597d30d349c464fcb95fc8902bc89977d9d48cd368"
+    },
+    {
+      "file": "stress.json",
+      "bytes": 44137,
+      "sha256": "9edaa38814ef059240f669162d224fcf7a9ceedaf004dad6d7f49840ccc2e4dc"
+    },
+    {
+      "file": "synth-1-engine.log",
+      "bytes": 1190,
+      "sha256": "f4ff3517bf92eda37fb2863bc6813f1206a81ce44076817c60f07db0fe70e20c"
+    },
+    {
+      "file": "synth-1-packaged.log",
+      "bytes": 9184,
+      "sha256": "2117fc18bf93b4ae031c7c61cad009b237c5e0bd600698b3422bdad55d667ad7"
+    },
+    {
+      "file": "synth-1.json",
+      "bytes": 52110,
+      "sha256": "d40bb14d369e2dea653bd654e2ff6f3e5a5a64caac049b8f500d753e427ef52d"
+    },
+    {
+      "file": "synth-2-engine.log",
+      "bytes": 1194,
+      "sha256": "c24f1326d62f5a33234d4abfe61af7b8e93a04c45b68d6b61d8b3e476c6525d4"
+    },
+    {
+      "file": "synth-2-packaged.log",
+      "bytes": 9188,
+      "sha256": "0533630f53406a75e5d8466b0b3d7e0a14a6d1ec2d99493091154020a9e15ca6"
+    },
+    {
+      "file": "synth-2.json",
+      "bytes": 55701,
+      "sha256": "49e0dc187c7ad2e268a99ecb65e0e331ba8b9847e5c4a277356b48010d3c30f4"
+    },
+    {
+      "file": "synth-3-engine.log",
+      "bytes": 1195,
+      "sha256": "08cf46eee496950f7a4c98179a362d4392820cad9b4f399793c3eac61ef80508"
+    },
+    {
+      "file": "synth-3-packaged.log",
+      "bytes": 9189,
+      "sha256": "677111af27c37705a1a9f2eb7ca2239833a0013e8bf78a2850150362fbacb087"
+    },
+    {
+      "file": "synth-3.json",
+      "bytes": 52125,
+      "sha256": "b0441cc382fa6e89d020098ad5f3759116a54d59cbfe27b7427301d1e697fbf6"
+    },
+    {
+      "file": "synth-4-engine.log",
+      "bytes": 1193,
+      "sha256": "bc354cdd73f03b64ec4dfc52c82f0ec01e30080311cbadf741fa525b7d0c5f8f"
+    },
+    {
+      "file": "synth-4-packaged.log",
+      "bytes": 9187,
+      "sha256": "e42e3ddfb72f500fc6a50728a31f0b90f91b36365c358687270db458eb5da558"
+    },
+    {
+      "file": "synth-4.json",
+      "bytes": 55370,
+      "sha256": "7a839bf51aa95cc32413a503e645670d38f17c4c507063c2e4118a4a6d6f510a"
+    },
+    {
+      "file": "synth-5-engine.log",
+      "bytes": 1192,
+      "sha256": "da2132f2576b1b2db3712d14888259e280268b0c909b1c07187cf8459b4db828"
+    },
+    {
+      "file": "synth-5-packaged.log",
+      "bytes": 9186,
+      "sha256": "d55ccc070f7cc0456961f1a0900c7ed491bda49739296d0b54ce1c23a65a0c14"
+    },
+    {
+      "file": "synth-5.json",
+      "bytes": 55603,
+      "sha256": "2f910c5764d4ddb5aae58c3e5ac5f4a72a77c8f97fe021aca5c183a474264de0"
+    },
+    {
+      "file": "synth-6-engine.log",
+      "bytes": 1194,
+      "sha256": "b378a7e49b75d0f1b0c04a9cad4a71318f1cedbb95b47e4e2d2562c9fb0e4d1f"
+    },
+    {
+      "file": "synth-6-packaged.log",
+      "bytes": 9188,
+      "sha256": "70657e01290de973b09a4fe35c25c0b80997eb181d6158da8ef3750f6959076d"
+    },
+    {
+      "file": "synth-6.json",
+      "bytes": 55698,
+      "sha256": "f84b1dc05a7fdd9a53cf6aa798b8956f2e7027f6d2e7a7a6324bacadfb1afeda"
+    },
+    {
+      "file": "synth-contracts.log",
+      "bytes": 4764,
+      "sha256": "1ac03d25ed74075073a270b684b61d271cecd27896b2a0c97492f717ccf2250e"
+    },
+    {
+      "file": "synth-graphical-input.log",
+      "bytes": 9454,
+      "sha256": "12e6e52729b83abc655bc1eef765a06a2c0c49135762d03996254a730ed701d0"
+    },
+    {
+      "file": "synth-gui-engine.log",
+      "bytes": 1450,
+      "sha256": "57ea7e36a268470bd5237f2a81d4ca4e8ec9d3c413a6038d754b60021f8d96cb"
+    },
+    {
+      "file": "synth-gui.json",
+      "bytes": 381,
+      "sha256": "c694034c32726802dfd9dab8e745a5b5c17dc278228b79f1a248703cd1a704c1"
+    },
+    {
+      "file": "vulkan-preflight.json",
+      "bytes": 1039,
+      "sha256": "7f7d3fe95b6223954e4c5797d9ea88cbb36397ced6dd673652989cc5377013be"
+    },
+    {
+      "file": "vulkan-preflight.log",
+      "bytes": 6424,
+      "sha256": "13b6f802d7a16b35a5bdc9e086f79e52f182bb7ed98f47cbf3d348db44e59baf"
+    }
+  ],
+  "images": [
+    {
+      "file": "composition-condensation_instrument-close.png",
+      "bytes": 473762,
+      "sha256": "56e0d976c35b711c9f997ec5e651ab09ec7a253fdd0a376cbdc30ac8151c989a"
+    },
+    {
+      "file": "composition-condensation_instrument-overview.png",
+      "bytes": 228418,
+      "sha256": "904a755b30aea2ed482593d76c01a46c15237991db574940e27b260b6750bc32"
+    },
+    {
+      "file": "composition-excitable_garden-close.png",
+      "bytes": 286068,
+      "sha256": "117992eecdc57585e94548efbf442dc4b8ec477f0175b8704810e3ed3f7c5fc2"
+    },
+    {
+      "file": "composition-excitable_garden-overview.png",
+      "bytes": 163194,
+      "sha256": "f7af4120275fd5192fbb490ad743070e67b545eb7dad4a48d1ce7f7174486602"
+    },
+    {
+      "file": "composition-light_terrarium-close.png",
+      "bytes": 357682,
+      "sha256": "2b0630c0ab8ace5fc4c12f37d2694194da2d15018e2919a9acdea7dc3e456a7c"
+    },
+    {
+      "file": "composition-light_terrarium-overview.png",
+      "bytes": 176534,
+      "sha256": "8591401d0baa545da5f6b27b9f35f4153418b44eb4c6cf012627ed69dfb682ff"
+    },
+    {
+      "file": "composition-living_membrane-close.png",
+      "bytes": 421944,
+      "sha256": "b5178e49510c4f3cfdbabb13a92ec2dd96bf6c0a1bcd97cc3f92569c75e66043"
+    },
+    {
+      "file": "composition-living_membrane-overview.png",
+      "bytes": 224393,
+      "sha256": "1f3a89ea18461b3fe97fdef59df804907cf1c4e61fb7beda03248a12e9523273"
+    },
+    {
+      "file": "composition-matter_orchestra-close.png",
+      "bytes": 322887,
+      "sha256": "f29a057864a52306fe9ed9ef7dfa4c233b468d80ed9275b77e24c0ebf65d7bf7"
+    },
+    {
+      "file": "composition-matter_orchestra-overview.png",
+      "bytes": 157587,
+      "sha256": "5bff6278da51fe13a370a38a96b21f05b24f6b196491eeca1902a21f9e7352a9"
+    },
+    {
+      "file": "composition-orchestra-legacy-optics.png",
+      "bytes": 193394,
+      "sha256": "42711a748af627d9908b3d6c867d753f4b8f55c30496bbce48ee1b0a10af6e98"
+    },
+    {
+      "file": "composition-spectral_vortex-close.png",
+      "bytes": 270975,
+      "sha256": "b297cfd9a3bd2647f34e9556db0cc45a32a64672788194545267cfa3d58c3249"
+    },
+    {
+      "file": "composition-spectral_vortex-overview.png",
+      "bytes": 156709,
+      "sha256": "d34b206bfd34d3cc0bbc5151c30d181818cf09254ae6d6d23676acbfaf6599a1"
+    },
+    {
+      "file": "condensation.png",
+      "bytes": 364558,
+      "sha256": "311a5a5a9e6d87911df84e8ceeebdbb1ef191bad6060d9779fe8f7a56443adb4"
+    },
+    {
+      "file": "ecology-gui.png",
+      "bytes": 55111,
+      "sha256": "571f001f42d8615605aa39c63cf0dd0d7c052520764d90681b2c6f006a7870db"
+    },
+    {
+      "file": "ecosystem-0.png",
+      "bytes": 63643,
+      "sha256": "6c21b63cb2fb6ce178621a8835b13ce6b4baa5c7b1e4f41a69121d1bb6eadcba"
+    },
+    {
+      "file": "ecosystem-1.png",
+      "bytes": 171490,
+      "sha256": "9b96fd941d3af5be4c5c11e5a79b9f345467fb63d0d43d535f28a87b5fff3548"
+    },
+    {
+      "file": "ecosystem-2.png",
+      "bytes": 178700,
+      "sha256": "92fb9869bcd44de83370a802cbacd335028b50050ba26a306887d0f3078df90f"
+    },
+    {
+      "file": "ecosystem-3.png",
+      "bytes": 120695,
+      "sha256": "215a5130903e14762df173776f9f1d3ee9ab71323f9bd17fc2f204bb94c18ecb"
+    },
+    {
+      "file": "ecosystem-4.png",
+      "bytes": 28115,
+      "sha256": "d3972b6d941dff50e85e1e37c640d488020ca0b0cf478951253e8f23db8c68d0"
+    },
+    {
+      "file": "ecosystem-5.png",
+      "bytes": 237823,
+      "sha256": "1dde2b04158da6338304924af97b73adf0959ac301b448e65e97a5cefbee5167"
+    },
+    {
+      "file": "ecosystem.png",
+      "bytes": 207900,
+      "sha256": "06634246664ce81b0d67ca037a971745f308872e2d3cc4d79afa54ab0d26efaa"
+    },
+    {
+      "file": "filaments.png",
+      "bytes": 303877,
+      "sha256": "0615d90cf08fccf8f6d876e3aee0f1d871c6245e17326e2e5c2cf01206c8463e"
+    },
+    {
+      "file": "films.png",
+      "bytes": 203894,
+      "sha256": "94ddafa43f342dc623b2fbd957276fc0527e72338d5d0a0db7dba773e1821687"
+    },
+    {
+      "file": "flow.png",
+      "bytes": 210437,
+      "sha256": "290297abb1bcd4409f7dd94e023ee85cf5dd2be3030a6928410aa040d9432a5f"
+    },
+    {
+      "file": "garden.png",
+      "bytes": 130560,
+      "sha256": "204340dee5af0e16680140ee989a64a14c094b62c4d6e2dc205d1caa41f9a996"
+    },
+    {
+      "file": "gui-convergence-authoring.png",
+      "bytes": 171681,
+      "sha256": "25bf71cb820f2f43bef2fbcb51bfb134319593a761245250a8f0c4f29397c211"
+    },
+    {
+      "file": "gui-convergence-composition.png",
+      "bytes": 88329,
+      "sha256": "08e835d1df6b921333468a70bbde5b16621aed66f5cbaa182ee9b6d51a57e0eb"
+    },
+    {
+      "file": "gui-input.png",
+      "bytes": 299883,
+      "sha256": "67c245635329b762f603f4b4914d19da8f90fb598c10ef99edf72866f6c1cf0c"
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "bytes": 356148,
+      "sha256": "cf9f36a173dfaa41724543ff3536320a1aae7b500c92c821874ff83d74815fa8"
+    },
+    {
+      "file": "gui-material-legacy.png",
+      "bytes": 321579,
+      "sha256": "1e4e465463cf668a635dcc13349257b031e883de8164d93415499ba8e49769b7"
+    },
+    {
+      "file": "gui-material-optical.png",
+      "bytes": 291842,
+      "sha256": "db2fcf425a0fb131c9c3eb7ef103b60b43b5e9a6154aaa8481a4982298666b6e"
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "bytes": 141560,
+      "sha256": "193069a5727e767f04915973049dc6911aef24625f161cf505cbed488c96d44d"
+    },
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "bytes": 140724,
+      "sha256": "5ef3cbb76d603729d98a7c4b92383f89bd8836952dd1dbfb113a40e5027a457c"
+    },
+    {
+      "file": "gui-spatial_ecology.png",
+      "bytes": 183242,
+      "sha256": "1be10683bf18613dba633022e1409983529caeab1f2b99badfacbecb6b6459b0"
+    },
+    {
+      "file": "hybrid.png",
+      "bytes": 302612,
+      "sha256": "e1c05003d2133f053f8a7660e605bcf1921d8b39d40c7cb601968ceb9fb605c7"
+    },
+    {
+      "file": "living.png",
+      "bytes": 327093,
+      "sha256": "a302ee39d5e7aa0e5bf9fa8af573817429e52732a6d75c8609812c9148dacd8a"
+    },
+    {
+      "file": "membrane.png",
+      "bytes": 643351,
+      "sha256": "50511e28795e4c82e227d5e31307837abd501f4695a9518d80250cf37bfb4c5b"
+    },
+    {
+      "file": "nursery.png",
+      "bytes": 226652,
+      "sha256": "313cda18a77eb7986a1afe65a6f2d5ac2bc291ac4a7b889451a99f0ea15180f1"
+    },
+    {
+      "file": "optical.png",
+      "bytes": 213821,
+      "sha256": "bbb91605a61b12575b14f32b3c87f69c2eaab743d7f007088f5163b9ec1eb0dc"
+    },
+    {
+      "file": "optical_dichroic-close.png",
+      "bytes": 816013,
+      "sha256": "1611fcbd1944391f24c39ad9f3703a986802af5f83196ab8816021042126d366"
+    },
+    {
+      "file": "optical_dichroic.png",
+      "bytes": 704611,
+      "sha256": "acdfd906f484a6474eddb1a78dc91605e6fffa0927d7cea921cd3fdd3d1c9f67"
+    },
+    {
+      "file": "optical_ecosystem-close.png",
+      "bytes": 803376,
+      "sha256": "5c1563f3c7c77ca06b8dd9561e1d9ba626e2455e7748fc4fa371588ee19f8cc8"
+    },
+    {
+      "file": "optical_ecosystem-legacy.png",
+      "bytes": 595368,
+      "sha256": "ce7665a500c936ced97e9151a4e0150b9f91cdb72c3167951e5cd46681a2aef7"
+    },
+    {
+      "file": "optical_ecosystem.png",
+      "bytes": 605291,
+      "sha256": "5a5d1d18d808cb68a62a8fb622957cbd034c70f6248fc7d4f60ba7aac1c1f51e"
+    },
+    {
+      "file": "optical_garden-close.png",
+      "bytes": 686841,
+      "sha256": "019d7f36ce66ab45e367955a36a572c21918905a23c58874f90dbc1f6f938130"
+    },
+    {
+      "file": "optical_garden-legacy.png",
+      "bytes": 544465,
+      "sha256": "137ae03da85fa941f64f3eec788be5add2ec729307ec7569340f8b636f2ac322"
+    },
+    {
+      "file": "optical_garden.png",
+      "bytes": 561323,
+      "sha256": "f2c5dd2af8df0728d2f152db0e8d989158dc621c90e8001d2a247aa3166d375a"
+    },
+    {
+      "file": "optical_lens-close.png",
+      "bytes": 385404,
+      "sha256": "6950ff64ffd0f28a4701a7d288132b6f19dd4b86c4e3949cc82a65291a813e0a"
+    },
+    {
+      "file": "optical_lens-legacy.png",
+      "bytes": 265470,
+      "sha256": "4f91de918bf7a1428cf2fc931545be8cdc1b24de2e54d280300d73037e277cb1"
+    },
+    {
+      "file": "optical_lens.png",
+      "bytes": 275177,
+      "sha256": "4d8610650484c8681945521f495d9248a0649c6b0142b5fbfd6476c9a1666b14"
+    },
+    {
+      "file": "optical_microfibres-close.png",
+      "bytes": 730021,
+      "sha256": "3fc11193bbae8f578d5d9af2846f2996487119beaf8ce653be80e3a94f9996d3"
+    },
+    {
+      "file": "optical_microfibres.png",
+      "bytes": 485908,
+      "sha256": "62b71b7f7021863cc7cc3db891a772642cf8eb9b8ef087be014bc9e8963040f9"
+    },
+    {
+      "file": "optical_weather-close.png",
+      "bytes": 764405,
+      "sha256": "dbdc15f96dbc5023e4b34e0142ccb658e6448ec3aa24a7341b65a667b3afeb45"
+    },
+    {
+      "file": "optical_weather-legacy.png",
+      "bytes": 625648,
+      "sha256": "3480a11fb21fefa26502191f379c5705ce08ddde30fc922802b18c9f73a0c0dd"
+    },
+    {
+      "file": "optical_weather.png",
+      "bytes": 629249,
+      "sha256": "758bdec48da718453d7b0e3cb9fbfcb39ab5cff215a26f044ce9b1a8f906e8bb"
+    },
+    {
+      "file": "scientific.png",
+      "bytes": 217409,
+      "sha256": "07e7ff910fff6af77f62cd713529cccdfb27eee9ea7dc2eafad2b777beeba0bf"
+    },
+    {
+      "file": "stress.png",
+      "bytes": 195470,
+      "sha256": "aeca211a0fc8c6e909d787feb5757737506aaca46962f08bfe9597166ad83403"
+    },
+    {
+      "file": "synth-1.png",
+      "bytes": 208902,
+      "sha256": "d179948443e9a61d3fdfbb44009a94be0193060ec9eb808d518ee4c0b2af29d7"
+    },
+    {
+      "file": "synth-2.png",
+      "bytes": 643270,
+      "sha256": "4d3ce948c1fc496dc28cd4bc91c3dcc1ad172814fb8a9d97b3b199f3d9a41966"
+    },
+    {
+      "file": "synth-3.png",
+      "bytes": 298973,
+      "sha256": "276c3518dd640ba13e79f6110d1452a90fbe3102c13614d2a4fd4ded10f66cb1"
+    },
+    {
+      "file": "synth-4.png",
+      "bytes": 231340,
+      "sha256": "bab1a6dad230b38815e793675d03bffb9b9ebb7a5ec50b3446de1629950e5df7"
+    },
+    {
+      "file": "synth-5.png",
+      "bytes": 305075,
+      "sha256": "f66c0ab4c3edb7ebec996604b6304d3c7f6aaeb808fa90ca97b580a4284b8931"
+    },
+    {
+      "file": "synth-6.png",
+      "bytes": 648982,
+      "sha256": "418afde2c289e1b149dc6cdca8253bac453f43a798845483febfe239d4b70c4e"
+    },
+    {
+      "file": "synth-gui.png",
+      "bytes": 627792,
+      "sha256": "fd494050da3520c299587651df21f8827dcb2923c2d903e55dc5208c60dd36b7"
+    }
+  ]
+}

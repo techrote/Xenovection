@@ -1,0 +1,231 @@
+{
+  "schema": "xenovection.downloaded-artifact-verification.v1",
+  "mission": "MAINLINE-CONVERGENCE-001",
+  "verification_scope": "Independent archive integrity and recorded qualification evidence; no executable is run by this verifier",
+  "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+  "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+  "payload_status": "PASS",
+  "workflow_qualification_status": "FAIL",
+  "overall_status": "FAIL",
+  "owner_physical_gpu_acceptance": "Pending owner evaluation",
+  "failures": [],
+  "outer": {
+    "filename": "convergence-candidate3-adverse.zip",
+    "bytes": 40701333,
+    "sha256": "25dc5eb68ac928fb5f7f196b81459884bed55a965e10a16c23fba6f8957b4028",
+    "expected_sha256": "25dc5eb68ac928fb5f7f196b81459884bed55a965e10a16c23fba6f8957b4028"
+  },
+  "inner": {
+    "filename": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-dc90fc2cac6e.zip",
+    "bytes": 38964405,
+    "sha256": "f709b04d1b364673e9597e45ac5ed0e2123329afb68806a5a887fcd0cfe563e7"
+  },
+  "build": {
+    "schema": "xenovection.build.v1",
+    "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+    "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+    "repository": "https://github.com/techrote/Xenovection",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "status": "Draft/HOLD",
+    "mission": "MAINLINE-CONVERGENCE-001",
+    "primary_renderer": "Vulkan Forward+",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+  },
+  "payload_files_verified": 75,
+  "pe_headers": [
+    {
+      "file": "Xenovection.exe",
+      "machine": "AMD64",
+      "optional_header": "PE32+",
+      "sections": 12
+    },
+    {
+      "file": "Xenovection.console.exe",
+      "machine": "AMD64",
+      "optional_header": "PE32+",
+      "sections": 10
+    }
+  ],
+  "pck": {
+    "bytes": 697640,
+    "format": 4,
+    "engine": [
+      4,
+      7,
+      2
+    ]
+  },
+  "bundled_ci_loader_dlls": [],
+  "examples": {
+    "indexed_scenes": 25,
+    "unique_stable_ids": 25,
+    "scene_schema": "xenovection.scene.v2",
+    "integrated_patches": 6,
+    "inherited_patches": 6,
+    "indexed_patches": 0,
+    "patch_schema": "xenovection.patch.v1"
+  },
+  "script_custody_entries": 20,
+  "workflow": {
+    "status": "FAIL",
+    "recorded_status": "FAIL",
+    "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+    "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+    "observed_gates": 40,
+    "required_gates": 101,
+    "missing_required_gates": [
+      "composition-condensation_instrument-close",
+      "composition-condensation_instrument-overview",
+      "composition-excitable_garden-close",
+      "composition-excitable_garden-overview",
+      "composition-light_terrarium-close",
+      "composition-light_terrarium-overview",
+      "composition-living_membrane-close",
+      "composition-living_membrane-overview",
+      "composition-matter_orchestra-close",
+      "composition-matter_orchestra-overview",
+      "composition-orchestra-legacy-optics",
+      "composition-spectral_vortex-close",
+      "composition-spectral_vortex-overview",
+      "condensation-procedural-vulkan",
+      "ecology-graphical-input",
+      "ecosystem-0-extracted-vulkan",
+      "ecosystem-1-extracted-vulkan",
+      "ecosystem-2-extracted-vulkan",
+      "ecosystem-3-extracted-vulkan",
+      "ecosystem-4-extracted-vulkan",
+      "ecosystem-5-extracted-vulkan",
+      "ecosystem-disabled",
+      "ecosystem-procedural-vulkan",
+      "ecosystem-vortex-interaction-disabled",
+      "filament-vulkan-buffer-roundtrip",
+      "filaments-playable-vulkan",
+      "films-procedural-vulkan",
+      "flow-playable-vulkan",
+      "garden-procedural-vulkan",
+      "graphical-capture-health",
+      "graphical-input",
+      "hybrid-playable-vulkan",
+      "living-procedural-vulkan",
+      "membrane-playable-vulkan",
+      "nursery-procedural-vulkan",
+      "optical-playable-vulkan",
+      "optical_dichroic-close",
+      "optical_dichroic-playable-vulkan",
+      "optical_ecosystem-close",
+      "optical_ecosystem-legacy",
+      "optical_ecosystem-playable-vulkan",
+      "optical_garden-close",
+      "optical_garden-legacy",
+      "optical_garden-playable-vulkan",
+      "optical_lens-close",
+      "optical_lens-legacy",
+      "optical_lens-playable-vulkan",
+      "optical_microfibres-close",
+      "optical_microfibres-playable-vulkan",
+      "optical_weather-close",
+      "optical_weather-legacy",
+      "optical_weather-playable-vulkan",
+      "scientific-playable-vulkan",
+      "stress-playable-vulkan",
+      "synth-1-packaged",
+      "synth-2-packaged",
+      "synth-3-packaged",
+      "synth-4-packaged",
+      "synth-5-packaged",
+      "synth-6-packaged",
+      "synth-graphical-input"
+    ],
+    "failed_gates": [
+      "extracted-graphical-convergence"
+    ],
+    "capture_hashes_verified": 0,
+    "recorded_failure": "extracted-graphical-convergence failed (exit 1; timeout=False; engine_error=False). See D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-graphical-convergence.log",
+    "profile_source_tree_identities_checked": 0,
+    "audited_pngs_checked": 0,
+    "gui_receipts": [
+      {
+        "file": "windows-evidence/gui-material.json",
+        "checks": 42,
+        "minimum_checks": 42,
+        "assertions_pass": true,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-material-legacy.png",
+            "sha256": "891936e228c3f2b3a5bed6203c58eb990cda1dcf73be0ce8282a07b733824ec9"
+          },
+          {
+            "file": "windows-evidence/gui-material-optical.png",
+            "sha256": "c80dfb4ca9ebb365df1d4512d1a8a582c719135380b47f2fd898d99c5fad0e79"
+          },
+          {
+            "file": "windows-evidence/gui-material-authoring.png",
+            "sha256": "a189a72013c3c1963b0c763e50273742a3ee2928f1cd437652fd0d897382994d"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-spatial_ecology.json",
+        "checks": 53,
+        "minimum_checks": 60,
+        "assertions_pass": false,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-spatial_ecology.png",
+            "sha256": "3f816514dd56bbc69c551e613e290682558f1eb67788651b712b0f678f6ecb29"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-low.png",
+            "sha256": "2d0e52f30cefbc2ee9bf37557a20218318c4cdf5ebdd5c4cc1358985d101fed2"
+          },
+          {
+            "file": "windows-evidence/gui-spatial_ecology-material-high.png",
+            "sha256": "debc7d799a07064ea61cdcb274c04e1fe87f53a63ee3661c45173a8985af27e4"
+          }
+        ]
+      },
+      {
+        "file": "windows-evidence/gui-convergence.json",
+        "checks": 89,
+        "minimum_checks": 90,
+        "assertions_pass": false,
+        "captures": [
+          {
+            "file": "windows-evidence/gui-convergence-authoring.png",
+            "sha256": "38175b758585cc81bf609b3443e462829554ab63cfdbc10dcd154a03bb79c1c8"
+          },
+          {
+            "file": "windows-evidence/gui-convergence-composition.png",
+            "sha256": "e1ccb7a2c275e1aee8bc0297733643d11e269591f94c6eebef0cbfcca035ee87"
+          }
+        ]
+      }
+    ],
+    "retained_logs_scanned": 43,
+    "engine_error_matches": [],
+    "physical_gpu_qualified": false,
+    "failures": [
+      "Recorded Windows qualification is FAIL",
+      "Final campaign requires 12 discoverable indexed patches",
+      "Required Windows gates are missing",
+      "Failed/timed-out/engine-error qualification gates exist",
+      "Incomplete/failed actual GUI assertions: gui-spatial_ecology",
+      "Missing pending-seed edit/refresh/reset/composition-recall witness",
+      "Incomplete/failed actual GUI assertions: gui-convergence",
+      "Missing required GUI receipt: windows-evidence/synth-gui.json",
+      "Missing required GUI receipt: windows-evidence/gui-input.json",
+      "Missing required GUI receipt: windows-evidence/ecology-gui.json",
+      "Incomplete inherited source/matter/optical scene population",
+      "Incomplete inherited synth population",
+      "Incomplete inherited ecology population",
+      "Incomplete integrated overview/close population",
+      "Incomplete optical close/disabled comparison population",
+      "Missing final disabled-optics capture/receipt: optical_weather-legacy.png",
+      "Missing final disabled-optics capture/receipt: optical_lens-legacy.png",
+      "Missing final disabled-optics capture/receipt: optical_garden-legacy.png",
+      "Missing final disabled-optics capture/receipt: optical_ecosystem-legacy.png",
+      "Capture-health audit missing or unsuccessful",
+      "Capture-health receipt does not cover every uploaded PNG exactly once"
+    ]
+  }
+}
