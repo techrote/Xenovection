@@ -1,4 +1,4 @@
-XENOVECTION — FOUND-002
+XENOVECTION — FOUND-003
 Native GPU visual synthesis · Draft/HOLD owner evaluator
 
 RUN
@@ -22,7 +22,7 @@ Click: exact source node/edge. Drag: through-depth source-region selection.
 Shift adds to selection. F focuses selection. I isolates/reveals it.
 M materialises a knot. U removes the proxy. Ctrl+Z / Ctrl+Shift+Z undo/redo visuals.
 Space pauses all clocks; V reverses them. Clocks tab controls each separately.
-R resets the preset. Keys 1–7 select presets. Tab hides the panel; H hides the HUD.
+R resets the preset. Keys 1–9 and 0 select the first ten presets; all thirteen are available in the picker. Tab hides the panel; H hides the HUD.
 F5 saves scene; F6 recalls it. F9 exports exact selection. F10 exports metrics.
 F12 captures the actual viewport. Exports are in %APPDATA%\Godot\app_userdata\Xenovection.
 
@@ -51,3 +51,16 @@ BUILD AND LICENSES
 BUILD.json identifies source/engine/specimen; SHA256SUMS.json identifies payload.
 Godot Engine 4.7.2 and third-party notices are included under licenses/.
 The optical fields are original mathematical implementations, not copied donor code.
+
+PROCEDURAL MATTER
+Choose presets 08–13 in the header, open Matter. Select any of three region
+slots, toggle visibility, edit placement, then focus (F) or isolate (I).
+Condensation changes the actual gap between persistent strips; at 1 the strips
+meet in a film. Shell wraps the same domain. Pores and growth change the film.
+Flow mode integrates seeded fields on the CPU when topology is edited or when
+Reintegrate is clicked. Strength, origin and mix animate the local GPU distortion
+immediately; Reintegrate bakes them into flow geometry. Particles advance with
+bounded positive filament-clock steps, pause on reverse; reset restarts them.
+F5/F6 preserves region IDs, bases and baked field settings; history-dependent
+particle positions restart, not a reversible simulation snapshot. Ctrl+Z undoes
+region edits. G hides generated matter and exposes exact source data.
