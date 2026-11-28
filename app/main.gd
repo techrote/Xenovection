@@ -4,6 +4,9 @@ extends Node3D
 const SourceModel = preload("res://core/source_model.gd")
 const SelectionState = preload("res://core/selection_state.gd")
 const ModulationBus = preload("res://core/modulation_bus.gd")
+const SynthGraph = preload("res://core/synth_graph.gd")
+const SynthPanel = preload("res://ui/synth_panel.gd")
+const SynthExamples = preload("res://core/synth_examples.gd")
 const SpatialSelection = preload("res://interaction/spatial_selection.gd")
 const ExplorationCamera = preload("res://interaction/exploration_camera.gd")
 const FilamentRenderer = preload("res://rendering/filaments/filament_renderer.gd")
@@ -18,6 +21,10 @@ const Presets = preload("res://presets.gd")
 var source = SourceModel.new()
 var selection = SelectionState.new()
 var bus = ModulationBus.new()
+var synth = SynthGraph.new()
+var synth_panel
+var synth_error := ""
+var synth_base_enabled := true
 var recorder = FrameRecorder.new()
 var probe = FoundryProbe.new()
 var replay = SampleReplay.new()
@@ -70,6 +77,16 @@ func _ready() -> void:
 		if presets[index].id == str(_args.get("preset", "hybrid")):
 			preset_index = index
 	apply_preset(preset_index)
+	synth_panel = SynthPanel.new()
+	ui._page(ui.tabs, "Synth").add_child(synth_panel)
+	synth_panel.setup(self)
+	if _args.has("patch-example"):
+		var index := int(_args["patch-example"]) - 1
+		var examples := SynthExamples.all()
+		if index < 0 or index >= examples.size() or not install_synth_patch(examples[index].patch, true):
+			push_error("Patch example refused: " + synth_error)
+			get_tree().quit(1)
+			return
 	if _args.has("density"):
 		load_density(int(_args.density))
 	if _args.has("source"):
@@ -168,6 +185,8 @@ func _rebuild_modulation() -> void:
 	bus.register_source("sample", {"type": "manual", "value": 0.0})
 	bus.add_route({"id": "sample-phase", "source": "sample", "target": "filament.phase_speed", "amplitude": 0.55, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
 	bus.add_route({"id": "sample-field", "source": "sample", "target": "optical.sky_warp", "amplitude": 0.2, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
+	if not synth.patch.is_empty() and not synth.attach(bus):
+		synth_error = synth.last_error
 
 func load_density(channels: int) -> void:
 	density = clampi(channels, 4, 128)
@@ -227,6 +246,7 @@ func _bind_source() -> void:
 	_selection_changed()
 
 func apply_preset(index: int) -> void:
+	synth = SynthGraph.new()
 	preset_index = clampi(index, 0, presets.size() - 1)
 	var preset: Dictionary = presets[preset_index]
 	_register_defaults()
@@ -256,6 +276,51 @@ func apply_preset(index: int) -> void:
 	if _ready_done:
 		recorder.reset()
 		_sync_ui()
+	if is_instance_valid(synth_panel):
+		synth_panel.refresh()
+
+func install_synth_patch(data: Dictionary, recall: bool = false, morph: bool = false) -> bool:
+	synth_error = ""
+	var candidate = SynthGraph.new()
+	if not candidate.configure(data, bus):
+		synth_error = candidate.last_error
+		return false
+	var previous = synth
+	var compatible: bool = morph and candidate.transition_from(previous)
+	if recall and not compatible:
+		apply_preset(int(candidate.patch.preset))
+		if not candidate.configure(data, bus):
+			synth_error = candidate.last_error
+			return false
+	if synth.patch.is_empty():
+		synth_base_enabled = bus.enabled
+	if not candidate.attach(bus):
+		if not synth.patch.is_empty():
+			synth.attach(bus)
+		synth_error = candidate.last_error
+		return false
+	synth = candidate
+	bus.enabled = true
+	if recall:
+		for clock in candidate.patch.clocks:
+			bus.set_clock(clock, candidate.patch.clocks[clock])
+		if not compatible:
+			bus.reset()
+		if is_instance_valid(synth_panel):
+			ui.set_tab(ui.tabs.get_tab_count() - 1)
+		if morph:
+			synth_error = "0.8 s compatible morph." if compatible else "Different scene or routing: explicit cut."
+	_sync_ui()
+	return true
+
+func stop_synth() -> void:
+	if synth.patch.is_empty():
+		return
+	synth.detach(bus)
+	synth = SynthGraph.new()
+	bus.enabled = synth_base_enabled
+	_rebuild_modulation()
+	_sync_ui()
 
 func set_parameter(target: String, value: Variant) -> void:
 	if target == "modulation.enabled":
@@ -300,6 +365,7 @@ func _process(delta: float) -> void:
 		return
 	var start: int = Time.get_ticks_usec()
 	_frame += 1
+	synth.advance(bus, delta, scientific)
 	var effective: Dictionary = bus.advance(delta)
 	if replay_enabled and not dataset.nodes.is_empty():
 		replay.advance(float(bus.get_clocks().filament))
@@ -359,6 +425,7 @@ func evidence_context() -> Dictionary:
 		"filaments": filaments.get_metrics(), "optical": optical.get_metrics(),
 		"clocks": bus.get_clocks(), "camera": _encode(camera.get_pose()),
 		"modulation": _encode(bus.snapshot()), "sample_replay": replay.get_metrics(),
+		"synthesis": synth.metrics(), "synth_patch": synth.snapshot(bus) if not synth.patch.is_empty() else {},
 		"source_unchanged": _source_sha == dataset.manifest.revision}
 
 func _update_performance() -> void:
@@ -420,6 +487,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_ESCAPE: handle_action("release")
 			KEY_F5: handle_action("save_scene")
 			KEY_F6: handle_action("load_scene")
+			KEY_F7: handle_action("synth")
 			KEY_F9: handle_action("export_selection")
 			KEY_F10: handle_action("profile")
 			KEY_F12: handle_action("screenshot")
@@ -478,7 +546,14 @@ func handle_action(action: String) -> void:
 			ui.toggle_clean()
 			_frame_canvas()
 		"reset": apply_preset(preset_index)
-		"reset_time": bus.reset()
+		"reset_time":
+			bus.reset()
+			if not synth.patch.is_empty(): synth.reset()
+		"synth":
+			if ui.clean_view: ui.toggle_clean()
+			ui.rail.show()
+			ui.set_tab(ui.tabs.get_tab_count() - 1)
+			_frame_canvas()
 		"focus": camera.focus_points(selection.get_selected_points())
 		"isolate": selection.set_isolated(not selection.get_visual_state().isolate)
 		"reveal": selection.reveal()
@@ -597,6 +672,7 @@ func load_scene(path: String) -> bool:
 	if str(data.get("source_revision", "")) != _source_sha:
 		ui.show_message("Scene belongs to a different source revision. Load that source first.", 8)
 		return false
+	stop_synth()
 	for key: String in data.get("base_parameters", {}):
 		set_parameter(key, _decode(data.base_parameters[key]))
 	for key: String in data.get("filament_flags", {}):
@@ -623,6 +699,7 @@ func load_scene(path: String) -> bool:
 	ui.subtitle_label.text = str(presets[preset_index].description).to_upper()
 	_rebuild_modulation()
 	_sync_ui()
+	if is_instance_valid(synth_panel): synth_panel.refresh()
 	ui.show_message("Scene restored · source IDs preserved")
 	return true
 
