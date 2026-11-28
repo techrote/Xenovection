@@ -22,10 +22,11 @@ var recorder = FrameRecorder.new()
 var probe = FoundryProbe.new()
 var replay = SampleReplay.new()
 var replay_enabled: bool = false
-var filaments = FilamentRenderer.new()
-var optical = OpticalRenderer.new()
-var camera = ExplorationCamera.new()
-var ui = InstrumentPanel.new()
+# Construct scene-owned Nodes only after the direct ecology launch redirect.
+var filaments
+var optical
+var camera
+var ui
 var dataset: Dictionary = {}
 var presets: Array = Presets.all()
 var preset_index: int = 0
@@ -54,6 +55,12 @@ func _ready() -> void:
 		get_tree().set_meta("ecology_entered", true)
 		get_tree().call_deferred("change_scene_to_file", "res://ecology/workspace.tscn")
 		return
+	# The source scene now owns these nodes. On a direct --ecosystem launch
+	# they must never be allocated as unattached Nodes/RIDs.
+	filaments = FilamentRenderer.new()
+	optical = OpticalRenderer.new()
+	camera = ExplorationCamera.new()
+	ui = InstrumentPanel.new()
 	_load_build_info()
 	_setup_world()
 	add_child(filaments)
