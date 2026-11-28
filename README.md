@@ -1,5 +1,9 @@
 # Xenovection
 
+## SYNTH-002 — modular visual instrument (Draft/HOLD)
+
+Press **F7** to open the Synth rail. Recall an example, choose **Perform** for XY and macros or **Patch** to wire sources and destinations. The seven original presets remain available. See [SYNTH-002 controls and contract](docs/13_SYNTH_002_INSTRUMENT.md). The branch evaluator archive is named `Xenovection-SYNTH-002-Windows-<revision>.zip`; extract the complete folder and run `Launch-Xenovection.cmd`. Qualification and physical TITAN RTX acceptance are separate.
+
 **A native-GPU playground for procedural visual synthesis, dense spatial information and direct, game-like interaction.**
 
 Xenovection is an **independent visual instrument and experimental art engine**, not an LLM model editor and not an ANN-specific visualiser. It must be impressive and useful with synthetic, recorded or arbitrary live data, or with no data connected. Its founding visual vocabulary includes ultra-fine filaments, oscillating fields, animated environment illumination, continuous colour LUTs, reflectance/refraction, mesh displacement, translucent membranes and volumetric phenomena. The implemented subset is identified below.
@@ -54,6 +58,10 @@ The historical numerical verifier requires NumPy. The renderer folders contain f
 
 [Development measurements and receipts](evidence/found-002/README.md) identify the tested revisions, density sweep, disabled-pass costs, exact numerical comparison and adversarial interaction checks. The final Actions artifact separately records the packaged Windows source SHA, native graphical captures and software-renderer qualification.
 
+## ECOSYSTEM-001 (Draft/HOLD)
+
+Open **Life > Open Ecosystem** from the original source instrument, or run `Launch-Ecosystem.cmd` in the ECOSYSTEM-001 package. Six separately seeded artificial-life environments share bounded resource/signal fields, local neighborhood coupling, explicit fixed-step simulation, developmental branching, growth, trails and optional inheritance. The ecology view is planar and independent of the source instrument; returning reloads the original scene. See [ecology controls, model, experimental protocol and limitations](docs/14_ECOSYSTEM_001.md). Exact-head hosted Windows evidence and owner hardware measurements are distinct. Do not treat source delivery as qualification.
+
 ## Founding architecture
 
 | Record | Contents |
@@ -91,3 +99,7 @@ The repository began with research and design documentation. FOUND-001 was a sta
 - [Modulation bus #7](https://github.com/techrote/Xenovection/issues/7) and [optional data taps #8](https://github.com/techrote/Xenovection/issues/8).
 
 **Custody:** the exact historical fixed ZIP has been recovered and preserved unmodified under [`experiments/found-001/`](experiments/found-001/). Its archive and specimen hashes match issue #3. The [custody receipt](experiments/found-001/CUSTODY.md) distinguishes this baseline from the successor implementation.
+
+## FOUND-003 procedural laboratory (Draft/HOLD)
+
+Six additional procedural presets, generated-region editing and a geometric strand-to-film domain are described in [the FOUND-003 controls and limitations](docs/13_FOUND_003_MATTER.md). The candidate package name is `Xenovection-FOUND-003-Windows-<revision>.zip`. Qualification and owner physical acceptance are pending; original FOUND-002 evidence above retains its exact scope.

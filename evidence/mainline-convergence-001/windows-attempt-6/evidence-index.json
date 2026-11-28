@@ -1,0 +1,376 @@
+{
+  "schema": "xenovection.archival-evidence-index.v1",
+  "source_sha": "a3cd1a1409a32a1a32effdbe087579773bb5f84e",
+  "tree_sha": "645ab15216b47550e78b4a887982c7155f435d8a",
+  "qualification_status": "FAIL",
+  "archive": {
+    "file": "qualification-records.zip",
+    "bytes": 153948,
+    "sha256": "acab97f4639d2af875ab29c72a8fada0d667db37b1679332a6a1dac4597e38b9"
+  },
+  "scope": "Exact downloaded JSON receipts, logs and binary64 streams. All original PNGs remain in the separately identified Actions artifact; selected images are also retained beside this archive.",
+  "members": [
+    {
+      "file": "after-app-import-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-app-import-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-historical-import-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-historical-import-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-tests-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "after-tests-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "composition-contracts.log",
+      "bytes": 6100,
+      "sha256": "795ff023527e1157aaaad66666c3180d04e17eadbd61aff6084f067b4549a960"
+    },
+    {
+      "file": "convergence-contracts.log",
+      "bytes": 6188,
+      "sha256": "d888fd1f5332c18b180868991d91c4bb275da80307c5e5688762ac88efd8f97d"
+    },
+    {
+      "file": "core-contracts.log",
+      "bytes": 179,
+      "sha256": "a22fad9c13bcecbd26805bbc597d9519af4e74c3014824ae43341b40718875f9"
+    },
+    {
+      "file": "ecology-contracts.log",
+      "bytes": 8344,
+      "sha256": "5a489b6604489aa5b51cdef36aa2a3ff8a6fda26767ec74d946d1bef602025c1"
+    },
+    {
+      "file": "ecology-gui-probe-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "ecology-workspace-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "ecology-world-parse.log",
+      "bytes": 77,
+      "sha256": "99a1f5c05f8b42a98c1353a644c0527b7fbdebfb7a944acd272ccf7d46cc34a6"
+    },
+    {
+      "file": "editor-import.log",
+      "bytes": 3952,
+      "sha256": "13b332df751c9bb324f1e82ff6df1417747b15baa8eebe90d3feb38d2e0a29f9"
+    },
+    {
+      "file": "extracted-full-resource-soak.log",
+      "bytes": 1808,
+      "sha256": "ff7fb02366c1a95f23395ee8dd5284faeb6bb00c4c8f6fa9b497e1fb7084fa2b"
+    },
+    {
+      "file": "extracted-graphical-convergence.log",
+      "bytes": 26372,
+      "sha256": "06e741fad35ae76b44a01f72dca809f6b8c8ffaf7b8e9846fe06f6680c334706"
+    },
+    {
+      "file": "extracted-graphical-material.log",
+      "bytes": 13076,
+      "sha256": "6a9a4b3d55071498d1a07aee5adfe722a30e62b70f44d0be17d85e1574710473"
+    },
+    {
+      "file": "extracted-graphical-spatial_ecology.log",
+      "bytes": 9098,
+      "sha256": "88f6a45196d399cf590a82f726ba1398314f4690728dda505149658cc5d71db2"
+    },
+    {
+      "file": "extracted-soak.json",
+      "bytes": 1118,
+      "sha256": "61c27d880741d98c74867e25efac3006f07466717a1e69c043fc26b1fead2a2e"
+    },
+    {
+      "file": "extracted-source-binary64-exactness.json",
+      "bytes": 826,
+      "sha256": "99954f78d61a29fbef9ee9ffcd26f44a9e8e6fdc26a91a2e7b553960bf8ef4c7"
+    },
+    {
+      "file": "extracted-source-binary64-exactness.log",
+      "bytes": 828,
+      "sha256": "0ca2548e49a4029ef4ace8afc8e6976c81cab4a9b4eb05d8a7f2f611ef0a0bc1"
+    },
+    {
+      "file": "extracted-source-export.log",
+      "bytes": 352,
+      "sha256": "55f5f4868831a4f3c16312c9ffc20ebad9faddc9b9627dda07f7f714ccbf52da"
+    },
+    {
+      "file": "extracted-source-f64.bin",
+      "bytes": 92544,
+      "sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629"
+    },
+    {
+      "file": "extracted-test_compositions.log",
+      "bytes": 6163,
+      "sha256": "3a8c612b9efd01b41199a17cc81aad2805b0a306d41f532a69acc92d3b566666"
+    },
+    {
+      "file": "extracted-test_convergence.log",
+      "bytes": 6620,
+      "sha256": "3e665e74f392d6618a255a84216c08f28a6c27b98b77c1280ad48ca4c15c6a2a"
+    },
+    {
+      "file": "extracted-test_convergence_ecology.log",
+      "bytes": 3448,
+      "sha256": "1c82a906b20a0aadd50cf1aa6e21cc934b6872a7cb5d1f1880ca5a11a65101f1"
+    },
+    {
+      "file": "extracted-test_core.log",
+      "bytes": 234,
+      "sha256": "cea0c3b194d21c82932f46fe1164964d2e82ed6348f71bae16b9e5abbbdb1991"
+    },
+    {
+      "file": "extracted-test_ecology.log",
+      "bytes": 8397,
+      "sha256": "f6714380e6990fde17f949a9585e969d59dcf9f56321242e0cf107c16d575c52"
+    },
+    {
+      "file": "extracted-test_integration.log",
+      "bytes": 1002,
+      "sha256": "f75352ddc7ebcb0960329c06c3e8231a43e9645cf615d160d5f048ab25c927d6"
+    },
+    {
+      "file": "extracted-test_matter.log",
+      "bytes": 2216,
+      "sha256": "dbe45bc299d6fd935cbe2ed855cd49d2b2735e01e08c2f491ecdbf63d4b59151"
+    },
+    {
+      "file": "extracted-test_matter_optics.log",
+      "bytes": 3071,
+      "sha256": "04640a476bea2f6aa0f0b7d154623f657f22ba3d288f1041cd02c203ccc722d9"
+    },
+    {
+      "file": "extracted-test_synth.log",
+      "bytes": 5183,
+      "sha256": "e2314f1c7083ec6035b08bba1060972d076c012c3fafc96e51e5678c30c2413b"
+    },
+    {
+      "file": "extracted-verify_filaments.log",
+      "bytes": 286,
+      "sha256": "ac2d5bc81633f83eea1f1279540753912cefc53c9d5139b50f1e00b10b4be651"
+    },
+    {
+      "file": "extracted-verify_optical.log",
+      "bytes": 347,
+      "sha256": "056bd1275a223af7511a7ebeace7cf0f19de370f93fa811768977bb492cbed7d"
+    },
+    {
+      "file": "filament-contracts.log",
+      "bytes": 224,
+      "sha256": "7a325c0618583949e0b8a001df4de0c1f791e7243677645e55c632e597160611"
+    },
+    {
+      "file": "gui-convergence-engine.log",
+      "bytes": 18368,
+      "sha256": "0b1d5b8d7f371888c8e71b63b04fc7e475ef1b961f066e1eeb6540dc80e855b3"
+    },
+    {
+      "file": "gui-convergence.json",
+      "bytes": 19142,
+      "sha256": "e90f4d0559b30ef041207bdd8aa833ba42ca6785826a97799a6c18aca8d3f4c6"
+    },
+    {
+      "file": "gui-material-engine.log",
+      "bytes": 5040,
+      "sha256": "e6dbe9c043b8e2df81ace805b20a184c3bb3df63233e2061db86d714167abdf9"
+    },
+    {
+      "file": "gui-material.json",
+      "bytes": 1520,
+      "sha256": "276d9def128119300c2b68f4326587f18d6abc53cdfd3fdfc582697f1005bbb8"
+    },
+    {
+      "file": "gui-spatial_ecology-engine.log",
+      "bytes": 1104,
+      "sha256": "3f5406e66ea72a9dfe62af954777a73d50cd33b1e052cd52e2a69ef6b9209ef1"
+    },
+    {
+      "file": "gui-spatial_ecology.json",
+      "bytes": 4283,
+      "sha256": "7c72044ce51fc2cdd90c74a6c071cfed1f17ea409d27dc94934646e42a3ee48f"
+    },
+    {
+      "file": "historical-godot-import.log",
+      "bytes": 1035,
+      "sha256": "e8b5a4c2091d3e950bf2e1a3e8fd0f8ab3fb644ea6eac84865fb73747716671f"
+    },
+    {
+      "file": "historical-godot-startup.log",
+      "bytes": 156,
+      "sha256": "e39a919c14d17169ff10d91841efb97344ce676aca0fc07e39ba5f02108b0964"
+    },
+    {
+      "file": "historical-numerical.log",
+      "bytes": 331,
+      "sha256": "f2e65845ef92b1d870475b29c6815c226fb9315b9df028e0d9faec7fc8f86b79"
+    },
+    {
+      "file": "initial-git-diff.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "initial-git-status.log",
+      "bytes": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "file": "integrated-contracts.log",
+      "bytes": 570,
+      "sha256": "80c8e56ea3a4d9c21fb9c456f84962dbb79751f78bb68bc17a6ce7ec73a27ae3"
+    },
+    {
+      "file": "matter-contracts.log",
+      "bytes": 1789,
+      "sha256": "8fa657680e36d8199a996eedacee434198770b91d0ca214a23d7374226b62c20"
+    },
+    {
+      "file": "matter-optics-contracts.log",
+      "bytes": 3007,
+      "sha256": "44c7cb6923d99d275719d8f45d59b3e8bb25f70be8ec2d052a6f60bbcf0efd88"
+    },
+    {
+      "file": "numerical-dependency.log",
+      "bytes": 309,
+      "sha256": "96df42a022eb155cfff30f92f745d6ad09de1328d52574a3450d12777722b73a"
+    },
+    {
+      "file": "optical-contracts.log",
+      "bytes": 287,
+      "sha256": "ffba6e893398d6ebcc6265b62190b147890e61fb912b8e70c138ac1f739eae10"
+    },
+    {
+      "file": "package-receipt.json",
+      "bytes": 696,
+      "sha256": "561ce0b70db12504b7f6a01332dbac0d13aacb1d4ee3d2cd69583e1035729017"
+    },
+    {
+      "file": "package.log",
+      "bytes": 17857,
+      "sha256": "679c0fcb39f5be2e53468b16584c4c059d193daeba4f34038968d16f8ec31577"
+    },
+    {
+      "file": "prepare-runtime.log",
+      "bytes": 2901,
+      "sha256": "89d83eae94fec6d44cf90210b16fe1f6231159853e6e7ba753808a06361776a6"
+    },
+    {
+      "file": "qualification.json",
+      "bytes": 28929,
+      "sha256": "e5d61131d64ccb0e6ce95a5591ca117c0d15dbd247858d61e823bae024c87fae"
+    },
+    {
+      "file": "runtime/mesa-extract.log",
+      "bytes": 523,
+      "sha256": "284fc8f721921340549f5e492f4710767c5b6b3dc4dfca91affeedd194f1c853"
+    },
+    {
+      "file": "runtime.json",
+      "bytes": 2518,
+      "sha256": "f05acaf64bc868a61a26f19202b884b377749a6000c130628121754a37f4347d"
+    },
+    {
+      "file": "source-binary64-exactness.json",
+      "bytes": 993,
+      "sha256": "31769abf07c4573a0f2699aec8039749ea366da09a8688a78830da7b337652bc"
+    },
+    {
+      "file": "source-binary64-exactness.log",
+      "bytes": 995,
+      "sha256": "a46ba18419e4efb80468f84cac3c566567fc76ae1b695328ad5b8d07320828b8"
+    },
+    {
+      "file": "spatial-ecology-contracts.log",
+      "bytes": 3378,
+      "sha256": "6355b57d814120822c024204b9e58b9c98c0070006eae9b032ca386caff1281d"
+    },
+    {
+      "file": "synth-contracts.log",
+      "bytes": 4757,
+      "sha256": "d15ac2142040a3490ba8c971f4fe0bcc5488cceedef9ec4c14fe4459efbca7e2"
+    },
+    {
+      "file": "vulkan-preflight.json",
+      "bytes": 1039,
+      "sha256": "7f7d3fe95b6223954e4c5797d9ea88cbb36397ced6dd673652989cc5377013be"
+    },
+    {
+      "file": "vulkan-preflight.log",
+      "bytes": 6424,
+      "sha256": "13b6f802d7a16b35a5bdc9e086f79e52f182bb7ed98f47cbf3d348db44e59baf"
+    }
+  ],
+  "images": [
+    {
+      "file": "gui-convergence-authoring.png",
+      "bytes": 188056,
+      "sha256": "27fe3c5d9e762ecf8bd4de56d00f9a4a5c29eb1acf276760d40ad70cbb41ba63"
+    },
+    {
+      "file": "gui-convergence-composition.png",
+      "bytes": 104818,
+      "sha256": "0b96c75e12405a323b5155572f97c3756828842e6724fea232f71afe705644f3"
+    },
+    {
+      "file": "gui-convergence-first-menu-failure.png",
+      "bytes": 178485,
+      "sha256": "f5046f52d72416448cb86856f34a8165e5d2c2ba871501214438b1fc3e3d2b0e"
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "bytes": 354649,
+      "sha256": "279032a3addd15028b12755992f173ec3d84540c199d1cc63799d91f0c0f451a"
+    },
+    {
+      "file": "gui-material-legacy.png",
+      "bytes": 318801,
+      "sha256": "bd5c0c8ef9e14ec8945f359b2a9c831d7e51c7747aeb234c1248c0ee10fe4138"
+    },
+    {
+      "file": "gui-material-optical.png",
+      "bytes": 288211,
+      "sha256": "aaa7afd5638de23ca282d582752160b5b851796839ae9a9f6abf603d9c1d4cd7"
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "bytes": 142369,
+      "sha256": "1ca80e4cc00ad11fa71d643990e2fb0ba9768cdca5458255710dd7e60cd21a35"
+    },
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "bytes": 141705,
+      "sha256": "871016dbcd555528494315c325b7c163cceb7c1309b5dcd79acabfbf1a97dde1"
+    },
+    {
+      "file": "gui-spatial_ecology.png",
+      "bytes": 180105,
+      "sha256": "23323dd01d84d4f740008dd38903ffdb6d17c48cf06d90278dfafa4ba82bc0cc"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schema": "xenovection.inherited-source-custody.v1",
+  "application_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "source_tree": "69175c86890fcae1212cff70bd039e586c720a87",
+  "status": "PASS",
+  "scope": "Source-byte and semantic test migration audit; executable qualification is a separate receipt.",
+  "protected_ancestors": [
+    "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+    "e4365ab393415dc833f19e6116633e844b530d42",
+    "c1d367a466430cc45afc41c9b97c0a9dac922447",
+    "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+    "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9"
+  ],
+  "byte_identical_sources": [
+    {
+      "predecessor_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "path": "tests/test_core.gd",
+      "byte_equal": true,
+      "sha256": "f34a4f2e08957a7d202a0102c27fba988c03165ec01ac497f7ab74fb3b351e60",
+      "bytes": 20859
+    },
+    {
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "path": "tests/test_soak.gd",
+      "byte_equal": true,
+      "sha256": "1511b79bde83f14afa44fd13c68ae350740d66fc97730941fd2bd99f1e3604ce",
+      "bytes": 11023
+    },
+    {
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "path": "app/rendering/filaments/verify_filaments.gd",
+      "byte_equal": true,
+      "sha256": "66a8176414196f2ca6da0371713ab668ce836b3b1863573ed33013ad84f3c7b1",
+      "bytes": 7554
+    },
+    {
+      "predecessor_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "path": "app/rendering/optical/verify_optical.gd",
+      "byte_equal": true,
+      "sha256": "b2720c51c99da1043004f190f67d6937d28e4cf15f739868f55f01d4325b750c",
+      "bytes": 11595
+    },
+    {
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "path": "tests/test_ecology.gd",
+      "byte_equal": true,
+      "sha256": "c72f9ee9d673540179018ea4def5554d5c33fb02d96ed2e1d2995b215fe8980c",
+      "bytes": 8053
+    },
+    {
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "path": "app/ecology/world.gd",
+      "byte_equal": true,
+      "sha256": "d090c6bbf18819d686e937cb252101ccc30f5e4aaa7cb60fdec622b0cb28fda4",
+      "bytes": 17219
+    },
+    {
+      "predecessor_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "path": "tests/gui_synth_probe.gd",
+      "byte_equal": true,
+      "sha256": "02661eda8c5bcb214c2c77c7008f7f45da06817b72bc95b08a37ec3a25cd9289",
+      "bytes": 5212
+    },
+    {
+      "predecessor_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "path": "experiments/found-001/source/tests/verify_specimen.py",
+      "byte_equal": true,
+      "sha256": "08075da60d6dfbd900fcc4a194468d5bb35a04abb2f38a7012214ccb89e09855",
+      "bytes": 1665
+    }
+  ],
+  "reviewed_test_migrations": [
+    {
+      "path": "tests/test_synth.gd",
+      "predecessor_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "change": "Replaced exact total preset count 7 with exact identity/order of all original seven and the original opt-in assertion. All original 49 graph/authoring checks retained. Four additive checks cover long wrapped status/live diagnostics, stable authoring/search rectangles, fixed diagnostic viewport height, and accessible complete diagnostic overflow.",
+      "predecessor_file_sha256": "05b5b8786e5c322115a6cae0aa512ff549b7a355c83d9d90edd0438bf291e2a9",
+      "candidate_file_sha256": "d3e0f827a62ded31cf1835f79c8259171c342ba29c1bd64b8db61aa5631db327",
+      "review_status": "PASS_BEHAVIORAL_COVERAGE_RETAINED",
+      "assertion_progression": [
+        {
+          "source_sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+          "scope": "qualified predecessor",
+          "checks": 49
+        },
+        {
+          "source_sha": "a3cd1a1409a32a1a32effdbe087579773bb5f84e",
+          "scope": "retained integrated graph/authoring suite",
+          "checks": 49
+        },
+        {
+          "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+          "scope": "retained suite with bounded diagnostic layout assertions",
+          "checks": 53
+        }
+      ]
+    },
+    {
+      "path": "tests/test_matter.gd",
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "change": "Replaced exact total13 and numeric selection with explicit retained baseline+matter identities/order and stable-ID lookup. Original six generated scene and morphology/resource assertions retained.",
+      "predecessor_file_sha256": "f920880a0974f134e41eb4d61aa0f4ae8350b5aeb659d1af112c1b2847c3c668",
+      "candidate_file_sha256": "bd12c67a8287124809468e1b1c014f2d0a72054e907fecfdcc0ab60e9ab11567",
+      "review_status": "PASS_BEHAVIORAL_COVERAGE_RETAINED"
+    },
+    {
+      "path": "tests/test_integration.gd",
+      "predecessor_sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "change": "All six optical scenes resolved by stable identities rather than colliding indices08-13. Added six identity-existence checks; all original optical/source assertions retained.",
+      "predecessor_file_sha256": "c91fe788036fd76a0fc3cb9bbf06fce34ace21b69e51585999ca7395c7f59b33",
+      "candidate_file_sha256": "7949a4cf5a6442f65fb8398415b431fbc1ddf7577f100784808d34c63585e66b",
+      "review_status": "PASS_BEHAVIORAL_COVERAGE_RETAINED"
+    },
+    {
+      "path": "tests/gui_input_probe.gd",
+      "predecessor_sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "change": "Original cross-source refusal tested with explicit legacyv1 fixture via actual F6. Actual F5-createdv2 file additionally recalled across built-in sources with exact source/projection/selection checks. Three additive checks; no original case removed.",
+      "predecessor_file_sha256": "8f55c62cee28ac2d4392bdcfeaa3c62e8b3f5c839479f0fc964ce2bf5b212d3a",
+      "candidate_file_sha256": "e4862c71b4e588ed34fd74e85b37d42a064421dfccdb07b9e5b907e2238d5b75",
+      "review_status": "PASS_BEHAVIORAL_COVERAGE_RETAINED"
+    },
+    {
+      "path": "tests/gui_ecology_probe.gd",
+      "predecessor_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "change": "Actual F4 replaces direct tab assignment; actual entry asserts the persistent hosted workspace instead of scene replacement. All original planting/resource/pause/configuration/capture checks remain. Three hosted Escape/re-entry identity/digest checks and five final panel/checkbox/slider/coordinate/actual-pointer checks are additive.",
+      "predecessor_file_sha256": "ca4cbaa16c79258575debd02a8f3729de160c869841a03aead3e32bc2644d44e",
+      "candidate_file_sha256": "e9c53cadfb4662bb0071df2fa9d2f78a5359624d03bc59a1992fe27be8cd6493",
+      "review_status": "PASS_BEHAVIORAL_COVERAGE_RETAINED",
+      "assertion_progression": [
+        {
+          "source_sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+          "scope": "qualified predecessor",
+          "checks": 15
+        },
+        {
+          "source_sha": "4f8f9210d3ea04300fd8d92157af88d795650ca4",
+          "scope": "hosted integrated workspace",
+          "checks": 18
+        },
+        {
+          "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+          "scope": "hosted workspace with bounded rail and pointer mapping",
+          "checks": 23
+        }
+      ]
+    }
+  ],
+  "removed_inherited_behavioral_cases": 0,
+  "relaxed_numerical_tolerances": 0,
+  "reviewed_at_utc": "2026-11-28T17:18:30.635496+00:00",
+  "reviewer_role": "Independent Specialist A source-custody and semantic migration review",
+  "method": "Read exact protected and candidate Git objects; recompute all listed SHA-256 hashes; verify every protected commit is an ancestor; independently inspect all five complete predecessor-to-candidate test diffs. No runtime or test files modified.",
+  "immutable_specimen_copies": [
+    {
+      "path": "app/data/synthetic_foundry.json",
+      "bytes": 132524,
+      "sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c",
+      "exact_original_specimen_bytes": true
+    },
+    {
+      "path": "experiments/found-001/source/data/synthetic_foundry.json",
+      "bytes": 132524,
+      "sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c",
+      "exact_original_specimen_bytes": true
+    }
+  ],
+  "protected_ancestor_checks": 5,
+  "exact_source_hash_checks": 8,
+  "semantic_migration_reviews": 5,
+  "candidate_runtime_qualification": "Separate Windows run 46169673564; this source audit does not itself establish executable qualification.",
+  "latest_semantic_review": "Candidate7 adds four Synth diagnostic-layout assertions; all other reviewed migrations are byte-identical to the complete candidate6 audit. The Synth source diff and unchanged original assertions were independently reviewed before freeze."
+}

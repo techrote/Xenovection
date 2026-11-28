@@ -1,0 +1,74 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+XENOVECTION_QUALIFICATION_SCRIPT_STARTED test_convergence.gd
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+PASS Application and ecology share exactly one authoritative modulation bus
+PASS Unified application exposes all25 unique persistent compositions
+PASS One bounded registry contains every required domain
+PASS Stable shared bus after composition recall: integrated_spectral_vortex
+PASS Integrated matter and graph execute together: integrated_spectral_vortex
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_spectral_vortex
+PASS Continuous cross-domain performance reuses geometry: integrated_spectral_vortex
+PASS Integrated composition preserves exact scientific source: integrated_spectral_vortex
+PASS Matter-only composition does not accidentally evolve ecology: integrated_spectral_vortex
+PASS Stable shared bus after composition recall: integrated_living_membrane
+PASS Integrated matter and graph execute together: integrated_living_membrane
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_living_membrane
+PASS Continuous cross-domain performance reuses geometry: integrated_living_membrane
+PASS Integrated composition preserves exact scientific source: integrated_living_membrane
+PASS Ecology samples every fourth graph tick: integrated_living_membrane
+PASS Identity-owned spatial resources represent current living population: integrated_living_membrane
+PASS Solver applies resolved shared growth only at boundary: integrated_living_membrane
+PASS Stable shared bus after composition recall: integrated_excitable_garden
+PASS Integrated matter and graph execute together: integrated_excitable_garden
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_excitable_garden
+PASS Continuous cross-domain performance reuses geometry: integrated_excitable_garden
+PASS Integrated composition preserves exact scientific source: integrated_excitable_garden
+PASS Ecology samples every fourth graph tick: integrated_excitable_garden
+PASS Identity-owned spatial resources represent current living population: integrated_excitable_garden
+PASS Solver applies resolved shared growth only at boundary: integrated_excitable_garden
+PASS Stable shared bus after composition recall: integrated_condensation_instrument
+PASS Integrated matter and graph execute together: integrated_condensation_instrument
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_condensation_instrument
+PASS Continuous cross-domain performance reuses geometry: integrated_condensation_instrument
+PASS Integrated composition preserves exact scientific source: integrated_condensation_instrument
+PASS Matter-only composition does not accidentally evolve ecology: integrated_condensation_instrument
+PASS Stable shared bus after composition recall: integrated_light_terrarium
+PASS Integrated matter and graph execute together: integrated_light_terrarium
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_light_terrarium
+PASS Continuous cross-domain performance reuses geometry: integrated_light_terrarium
+PASS Integrated composition preserves exact scientific source: integrated_light_terrarium
+PASS Ecology samples every fourth graph tick: integrated_light_terrarium
+PASS Identity-owned spatial resources represent current living population: integrated_light_terrarium
+PASS Solver applies resolved shared growth only at boundary: integrated_light_terrarium
+PASS Stable shared bus after composition recall: integrated_matter_orchestra
+PASS Integrated matter and graph execute together: integrated_matter_orchestra
+PASS Integrated graph advances48 fixed ticks with all destinations: integrated_matter_orchestra
+PASS Continuous cross-domain performance reuses geometry: integrated_matter_orchestra
+PASS Integrated composition preserves exact scientific source: integrated_matter_orchestra
+PASS Ecology samples every fourth graph tick: integrated_matter_orchestra
+PASS Identity-owned spatial resources represent current living population: integrated_matter_orchestra
+PASS Solver applies resolved shared growth only at boundary: integrated_matter_orchestra
+PASS Repeated workspace changes preserve paused numerical state and lifecycle
+PASS Workspace transitions reuse organism resources and registry without duplicate ownership
+PASS Representation quality changes do not alter numerical ecology
+PASS Camera changes cannot alter numerical ecology
+PASS Full composition save binds stable identity and v2 schema
+PASS Saved composition includes ecology initial configuration and representation separately
+PASS Mixed-domain composition loads after unrelated baseline recall
+PASS Scene recall keeps shared modulation identity
+PASS Unified recall restores optical and generated-matter authored parameters
+PASS Unified recall restores complete editable patch without transient histories
+PASS Unified recall explicitly restarts ecology while restoring pause, quality and authored parameters
+PASS Composition recall reconstructs exact built-in source after baseline scene4
+PASS Composition recall reconstructs exact built-in source after baseline scene6
+PASS Composition recall reconstructs exact built-in source after baseline scene5
+PASS Invalid ecology envelope is rejected before scene mutation
+PASS Invalid mixed-domain recall is atomic across solver, optics, camera and source selection
+PASS Missing graph destination refuses entire composition before ecology reset
+PASS Legacy FOUND08 recalls correct composition and clears unrelated ecology
+PASS Legacy OPTICAL08 recalls distinct optical composition and clears generated state
+PASS Explicit ecology deactivation releases every organism-owned resource
+PASS Scientific mode isolates exact source from all generated, optical and ecological compositions
+CONVERGENCE_APPLICATION {"checks":68,"failures":[]}

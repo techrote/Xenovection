@@ -138,9 +138,30 @@ func _run() -> void:
 		and int(flow_saved.preset_index) == 6, "F5 stores exact spatial source, projection and preset identity")
 	await key(KEY_3)
 	var incompatible_reference: Dictionary = application.selection.get_reference()
+	# Keep the inherited source-mismatch refusal as a real v1 migration gate.
+	# New v2 scenes additionally describe verified builtins for cross-source recall.
+	var legacy_flow: Dictionary = flow_saved.duplicate(true)
+	legacy_flow.schema = "xenovection.scene.v1"
+	for field in ["preset_id", "source_descriptor", "ecology", "workspace", "history_scope"]:
+		legacy_flow.erase(field)
+	var migration_file := FileAccess.open("user://scene.json", FileAccess.WRITE)
+	check(migration_file != null, "Legacy scene fixture can be written for actual recall")
+	if migration_file != null:
+		migration_file.store_string(JSON.stringify(legacy_flow, "\t"))
+		migration_file.close()
 	await key(KEY_F6)
 	check(application.selection.get_reference() == incompatible_reference and application.preset_index == 2,
-		"F6 refuses a saved flow scene on the historical source without mutating selection or preset")
+		"F6 refuses a legacy v1 flow scene on the historical source without mutating selection or preset")
+	migration_file = FileAccess.open("user://scene.json", FileAccess.WRITE)
+	check(migration_file != null, "Actual F5-created v2 scene can be restored for additive recall coverage")
+	if migration_file != null:
+		migration_file.store_string(JSON.stringify(flow_saved, "\t"))
+		migration_file.close()
+	await key(KEY_F6)
+	check(application.selection.get_reference() == flow_reference and application.preset_index == 6
+		and application.dataset.manifest.revision == flow_saved.source_revision
+		and application.dataset.manifest.projection_revision == flow_saved.source_projection_revision,
+		"F6 reconstructs the exact builtin flow source from a v2 scene after historical optical authoring")
 	await key(KEY_7)
 	await key(KEY_F6)
 	check(application.selection.get_reference() == flow_reference and application.preset_index == 6
@@ -167,6 +188,26 @@ func _run() -> void:
 	await key(KEY_F6)
 	check(application.selection.get_reference() == flow_reference,
 		"Exact source projection restoration makes the saved flow scene usable again")
+	# Generated-region controls use the same actual event path.
+	await key(KEY_8)
+	check(application.preset_index == 7 and application.matter.active,"Actual key 8 opens the procedural nursery")
+	await click_control("Region 2")
+	check(application.matter.selected == 1,"Actual Region 2 button selects its stable generated slot")
+	await key(KEY_I)
+	check(application.matter.isolated and not application.matter.regions[0].visible and application.matter.regions[1].visible,"Actual I key isolates generated region")
+	await key(KEY_I)
+	await key(KEY_G)
+	check(application.scientific and not application.matter.visible and application.dataset.manifest.revision == original_revision,"Actual G key restores original scientific source")
+	await key(KEY_G)
+	await key(KEY_SPACE)
+	var stopped: Dictionary = application.bus.get_clocks()
+	await frames(2)
+	check(application.bus.paused and application.bus.get_clocks() == stopped,"Generated scene respects actual transport")
+	await key(KEY_SPACE)
+	await key(KEY_F5)
+	await key(KEY_1)
+	await key(KEY_F6)
+	check(application.matter.active and application.matter.selected == 1 and application.preset_index == 7,"Actual F5/F6 restores procedural region selection")
 	await frames(2)
 	await RenderingServer.frame_post_draw
 	var image: Image = root.get_texture().get_image()

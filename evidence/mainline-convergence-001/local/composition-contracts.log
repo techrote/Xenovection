@@ -1,0 +1,72 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS Seven baseline, six matter, six optical and six integrated compositions retained
+PASS All composition stable and legacy identities are unique
+PASS Accepted baseline picker order preserved: hybrid
+PASS Accepted baseline picker order preserved: filaments
+PASS Accepted baseline picker order preserved: optical
+PASS Accepted baseline picker order preserved: membrane
+PASS Accepted baseline picker order preserved: scientific
+PASS Accepted baseline picker order preserved: stress
+PASS Accepted baseline picker order preserved: flow
+PASS Persistent composition identity survives ordering changes
+PASS Legacy FOUND 08 migrates using branch-specific matter custody
+PASS Legacy OPTICAL 08 migrates independently without collision
+PASS Ambiguous legacy numbered preset is refused
+PASS Duplicate persistent composition identity is refused
+PASS Qualified legacy synth patches migrate by accepted seven-scene ordering
+PASS Unidentified higher-number patch cannot silently select another lineage
+PASS Legacy scene upgrades to complete composition defaults
+PASS Missing destinations reset defaults without losing authored bases
+PASS Missing newer domains reset to explicit inactive state
+PASS Missing renderer flags use declared defaults
+PASS V2 scene stores canonical source composition identity
+PASS Atomic composition save succeeds
+PASS V2 composition survives JSON roundtrip
+PASS Atomic save retains independently readable prior composition
+PASS Invalid numeric scene identity cannot be hidden by stable-ID migration
+PASS Invalid ecology configuration refused before application mutation
+PASS Representation quality stays bounded independently of numerical configuration
+PASS Patch from another composition is refused
+PASS Legacy ecology LFO becomes one common source and two explicit routes
+PASS Ecology LFO migration is idempotent
+PASS Ecology LFO removal releases unused common graph entries
+PASS Saved authored ecology LFO migrates without a private bus
+PASS Ecology migration refuses component identity collision
+PASS Shared matter/optical/ecology registry fits fixed target budget
+PASS Editable integrated patch binds: integrated_spectral_vortex
+PASS Integrated graph bounds and stable scene ID: integrated_spectral_vortex
+PASS Integrated graph has no missing destinations: integrated_spectral_vortex
+PASS Editable integrated patch binds: integrated_living_membrane
+PASS Integrated graph bounds and stable scene ID: integrated_living_membrane
+PASS Integrated graph has no missing destinations: integrated_living_membrane
+PASS Integrated seeded ecology configuration valid: integrated_living_membrane
+PASS Editable integrated patch binds: integrated_excitable_garden
+PASS Integrated graph bounds and stable scene ID: integrated_excitable_garden
+PASS Integrated graph has no missing destinations: integrated_excitable_garden
+PASS Integrated seeded ecology configuration valid: integrated_excitable_garden
+PASS Editable integrated patch binds: integrated_condensation_instrument
+PASS Integrated graph bounds and stable scene ID: integrated_condensation_instrument
+PASS Integrated graph has no missing destinations: integrated_condensation_instrument
+PASS Editable integrated patch binds: integrated_light_terrarium
+PASS Integrated graph bounds and stable scene ID: integrated_light_terrarium
+PASS Integrated graph has no missing destinations: integrated_light_terrarium
+PASS Integrated seeded ecology configuration valid: integrated_light_terrarium
+PASS Editable integrated patch binds: integrated_matter_orchestra
+PASS Integrated graph bounds and stable scene ID: integrated_matter_orchestra
+PASS Integrated graph has no missing destinations: integrated_matter_orchestra
+PASS Integrated seeded ecology configuration valid: integrated_matter_orchestra
+PASS Catalogue separates expensive topology from continuous live field control
+PASS Catalogue excludes inactive ecology with explicit diagnostic access
+PASS Inactive destination retains its base and reports blocked application
+PASS Bounded saturation reports clamping without changing authored base
+PASS Registry reset preserves sole bus identity and removes prior routes
+PASS 120Hz graph and30Hz world share exact boundaries across60/240Hz rendering
+PASS Common graph trace is invariant to rendering segmentation
+PASS Modulated ecology numerical digest is invariant to rendering segmentation
+PASS Ecology receives isolated samples only after completed graph boundaries
+PASS Zero-delta authoring flush cannot advance numerical history
+PASS Ecology lifecycle remains independent of paused visual graph
+PASS Manual ecology step reaches exactly one fixed boundary
+PASS Scientific mode isolates numerical ecology execution
+COMPOSITION_CONTRACTS {"checks":69,"clock":{"accumulator_seconds":0.0,"dropped_seconds":0.0,"ecology_boundaries":120,"ecology_hz":30,"feedback_boundary":"Ecology observes the completed fourth graph tick; observations may affect only later ticks.","fixed_ticks":480,"graph_hz":120,"schema":"xenovection.instrument-clock.v1"},"compositions":{"count":25,"ids":["source.hybrid","source.filaments","source.optical","source.membrane","source.scientific","source.stress","source.flow","matter.nursery","matter.garden","matter.living","matter.films","matter.condensation","matter.ecosystem","optical.dichroic","optical.weather","optical.lens","optical.garden","optical.microfibres","optical.ecosystem","composition.spectral_vortex","composition.living_membrane","composition.excitable_garden","composition.condensation_instrument","composition.light_terrarium","composition.matter_orchestra"],"ok":true},"ecology_digest":"7dd5cba7ee288520a99a6ade63b827e4b445db71360233ed8310cf4038555091","failures":[],"graph":{"active":true,"dropped_seconds":0.0,"fixed_ticks":480,"graph_p50_usec":14.0,"graph_p95_usec":18.0,"missing_targets":[],"preset":0,"route_count":2,"samples":960,"schema":"xenovection.patch.v1","source_count":2},"registry_budget":256,"schema":"xenovection.convergence-contracts.v1"}

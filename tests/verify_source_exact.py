@@ -16,6 +16,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--godot", default="godot")
     parser.add_argument("--receipt", type=Path)
+    parser.add_argument("--bits", type=Path, help="Compare bits emitted by an independently extracted executable")
     args = parser.parse_args()
     repo = Path(__file__).resolve().parents[1]
     raw = (repo / "app/data/synthetic_foundry.json").read_bytes()
@@ -28,20 +29,25 @@ def main() -> int:
         value for matrix in specimen["weights"] for row in matrix for value in row
     ]
     expected = struct.pack(f"<{len(values)}d", *values)
-    with tempfile.TemporaryDirectory(prefix="xenovection-numeric-") as directory:
-        output = Path(directory) / "godot-f64.bin"
-        command = [
-            args.godot,
-            "--headless",
-            "--path",
-            str(repo / "app"),
-            "--script",
-            str(repo / "tests/export_source_bits.gd"),
-            "--",
-            f"--output={output}",
-        ]
-        run = subprocess.run(command, check=True, capture_output=True, text=True, timeout=60)
-        actual = output.read_bytes()
+    if args.bits:
+        actual = args.bits.read_bytes()
+        godot_output = "Binary64 stream emitted by independently extracted executable: " + str(args.bits)
+    else:
+        with tempfile.TemporaryDirectory(prefix="xenovection-numeric-") as directory:
+            output = Path(directory) / "godot-f64.bin"
+            command = [
+                args.godot,
+                "--headless",
+                "--path",
+                str(repo / "app"),
+                "--script",
+                str(repo / "tests/export_source_bits.gd"),
+                "--",
+                f"--output={output}",
+            ]
+            run = subprocess.run(command, check=True, capture_output=True, text=True, timeout=60)
+            actual = output.read_bytes()
+            godot_output = run.stdout.strip()
     mismatches = [
         index
         for index in range(len(values))
@@ -62,7 +68,7 @@ def main() -> int:
         "expected_binary_sha256": hashlib.sha256(expected).hexdigest(),
         "godot_binary_sha256": hashlib.sha256(actual).hexdigest(),
         "reference": "Python json.loads of the unmodified historical archive specimen, packed as IEEE-754 binary64 little endian",
-        "godot_output": run.stdout.strip(),
+        "godot_output": godot_output,
     }
     text = json.dumps(receipt, indent=2) + "\n"
     print(text, end="")

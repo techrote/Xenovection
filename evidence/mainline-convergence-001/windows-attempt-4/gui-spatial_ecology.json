@@ -1,0 +1,185 @@
+{
+	"checks": 53,
+	"digest": "fbde988b603f98845755bb6d4eff58828d442ef1602828222f1a696336680be9",
+	"ecology": {
+		"numerical_domain": "planar",
+		"paused": true,
+		"sampled_graph_boundaries": 45,
+		"shared_bus": true,
+		"simulation_enabled": true,
+		"snapshot_epoch": 1,
+		"snapshot_generation_us_last": 1103,
+		"snapshot_generation_us_p50": 575,
+		"snapshot_generation_us_p95": 874,
+		"snapshot_samples": 52,
+		"snapshot_topology_revision": 9,
+		"solver_samples": 45,
+		"solver_us_p50": 316,
+		"solver_us_p95": 1304,
+		"world_tick": 45
+	},
+	"failures": [],
+	"material_comparison": {
+		"changed_samples": 151,
+		"mean_rgb_difference": 0.0000916452646231689,
+		"samples": 156500
+	},
+	"option_trace": [
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 1,
+			"selected_after": 1,
+			"selected_before": 0,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.family"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 0,
+			"selected_after": 0,
+			"selected_before": 1,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 4,
+			"selected_after": 4,
+			"selected_before": 2,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 5,
+			"selected_after": 5,
+			"selected_before": 4,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.quality"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 0,
+			"selected_after": 0,
+			"selected_before": 5,
+			"target": "ecology.tool"
+		}
+	],
+	"representation": {
+		"active_instance_buffers": 15,
+		"active_nodes": 41,
+		"allocations": 26,
+		"body_transform_updates": 318,
+		"deallocations": 13,
+		"depth_strength": 0.45,
+		"family_materials": 4,
+		"guide_materials": 1,
+		"instance_uniform_writes": 1052,
+		"material_uniform_writes": 148,
+		"numerical_domain": "planar",
+		"organism_resources": 13,
+		"quality": 2,
+		"representation": "bounded spatial snapshot adapter",
+		"shared_materials": 5,
+		"shared_meshes": 2,
+		"topology_builds": 2,
+		"topology_events": 110,
+		"transform_uploads": 647,
+		"update_us_last": 309,
+		"update_us_p50": 96,
+		"update_us_p95": 316,
+		"upload_bytes": 41408,
+		"world_tick": 45
+	},
+	"status": "PASS",
+	"suite": "spatial ecology real graphical input"
+}

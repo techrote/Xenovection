@@ -21,7 +21,7 @@ GODOT_VERSION = "4.7.2.stable"
 def run(command: list[str], *, cwd: Path) -> None:
     result = subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", errors="replace", stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     print(result.stdout, end="")
-    if result.returncode or any(token in result.stdout for token in ("SCRIPT ERROR:", "Parse Error:", "Shader compilation failed", "ERROR: Cannot export")):
+    if result.returncode or any(token in result.stdout for token in ("SCRIPT ERROR:", "Parse Error:", "Shader compilation failed", "ERROR:", "ObjectDB instances leaked", "resources still in use", "RIDs of type")):
         raise RuntimeError(f"Command failed: {command[0]} (exit {result.returncode})")
 
 
@@ -56,9 +56,14 @@ def main() -> int:
     package.mkdir(parents=True, exist_ok=True)
     build = {"schema": "xenovection.build.v1", "source_sha": sha, "tree_sha": tree,
              "repository": "https://github.com/techrote/Xenovection", "godot": actual_engine,
-             "status": "Draft/HOLD", "primary_renderer": "Vulkan Forward+",
+             "status": "Draft/HOLD", "mission": "MAINLINE-CONVERGENCE-001", "primary_renderer": "Vulkan Forward+",
              "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
     (app / "build_info.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
+    # These are exact copies of committed tests, included as runtime resources
+    # so the independently extracted executable can run the same assertions.
+    qualification = app / "qualification"
+    if qualification.exists():
+        raise RuntimeError("Refusing to overwrite an existing qualification staging directory")
     # Custom templates keep the package reproducible without a machine-wide install.
     export_file = app / "export_presets.cfg"
     original = export_file.read_bytes()
@@ -69,28 +74,52 @@ def main() -> int:
         if not template.is_file():
             raise FileNotFoundError(template)
         configuration = configuration.replace(f'custom_template/{kind}=""', f'custom_template/{kind}="{template.as_posix()}"')
-    export_file.write_text(configuration, encoding="utf-8", newline="\n")
+    qualification.mkdir()
+    script_hashes = {}
     try:
+        scripts = sorted((root / "tests").glob("*.gd")) + [
+            app / "rendering/filaments/verify_filaments.gd",
+            app / "rendering/optical/verify_optical.gd",
+        ]
+        for script in scripts:
+            shutil.copy2(script, qualification / script.name)
+            script_hashes[script.name] = {
+                "source_path": script.relative_to(root).as_posix(),
+                "sha256": hashlib.file_digest(script.open("rb"), "sha256").hexdigest(),
+            }
+        (qualification / "SOURCE.json").write_text(json.dumps(script_hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
+        export_file.write_text(configuration, encoding="utf-8", newline="\n")
         run([options.godot, "--headless", "--path", str(app), "--editor", "--import"], cwd=root)
         if not options.skip_tests:
-            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
+            for test in ("../tests/test_core.gd", "../tests/test_integration.gd", "../tests/test_matter.gd", "../tests/test_synth.gd", "../tests/test_ecology.gd", "../tests/test_compositions.gd", "../tests/test_matter_optics.gd", "../tests/test_convergence_ecology.gd", "../tests/test_convergence.gd", "res://rendering/filaments/verify_filaments.gd", "res://rendering/optical/verify_optical.gd"):
                 run([options.godot, "--headless", "--path", str(app), "--script", test], cwd=root)
             import sys
             run([sys.executable, str(root / "tests" / "verify_source_exact.py"), "--godot", options.godot], cwd=root)
+        run([options.godot, "--headless", "--path", str(app), "--script", str(root / "tools/export_examples.gd"), "--", "--output-directory=" + str(package / "samples")], cwd=root)
         run([options.godot, "--headless", "--path", str(app), "--export-release", "Windows Desktop", str(package / "Xenovection.exe")], cwd=root)
     finally:
         export_file.write_bytes(original)
+        shutil.rmtree(qualification)
     for filename in ("Xenovection.exe", "Xenovection.console.exe", "Xenovection.pck"):
         if not (package / filename).is_file():
             raise RuntimeError("Missing required evaluator file: " + filename)
     (package / "BUILD.json").write_text(json.dumps(build, indent=2) + "\n", encoding="utf-8", newline="\n")
     shutil.copy2(root / "packaging" / "START-HERE.txt", package / "START-HERE.txt")
     shutil.copytree(root / "packaging" / "licenses", package / "licenses", dirs_exist_ok=True)
+    (package / "data").mkdir()
+    shutil.copy2(app / "data/synthetic_foundry.json", package / "data/synthetic_foundry.json")
+    (package / "qualification").mkdir()
+    (package / "qualification/SOURCE.json").write_text(json.dumps(script_hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
+    shutil.copytree(root / "docs", package / "documentation", dirs_exist_ok=True)
     launchers = {
         "Launch-Xenovection.cmd": '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method forward_plus --rendering-driver vulkan %*\r\n',
         "Launch-Compatibility.cmd": '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method gl_compatibility --rendering-driver opengl3 %*\r\n',
         "Profile-This-PC.cmd": '@echo off\r\ncd /d "%~dp0"\r\n"Xenovection.console.exe" --rendering-method forward_plus --rendering-driver vulkan --disable-vsync -- --preset=hybrid --warmup=120 --profile-frames=600 --profile="%~dp0owner-performance.json"\r\necho Performance receipt: owner-performance.json\r\npause\r\n',
     }
+    launchers["Launch-Ecosystem.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method forward_plus --rendering-driver vulkan -- --ecosystem=0\r\n'
+    launchers["Profile-Ecosystem.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\n"Xenovection.console.exe" --rendering-method forward_plus --rendering-driver vulkan --disable-vsync -- --ecosystem=1 --eco-frames=600 --eco-profile="%~dp0owner-ecosystem-performance.json"\r\necho Performance receipt: owner-ecosystem-performance.json\r\npause\r\n'
+    launchers["Launch-Integrated.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\nstart "" "Xenovection.exe" --rendering-method forward_plus --rendering-driver vulkan -- --preset=composition.spectral_vortex\r\n'
+    launchers["Profile-Integrated.cmd"] = '@echo off\r\ncd /d "%~dp0"\r\n"Xenovection.console.exe" --rendering-method forward_plus --rendering-driver vulkan --disable-vsync -- --preset=composition.matter_orchestra --warmup=120 --profile-frames=600 --profile="%~dp0owner-integrated-performance.json"\r\necho Performance receipt: owner-integrated-performance.json\r\npause\r\n'
     for filename, content in launchers.items():
         (package / filename).write_bytes(content.encode("utf-8"))
     hashes = {}
@@ -98,7 +127,7 @@ def main() -> int:
         if path.is_file() and path.name != "SHA256SUMS.json":
             hashes[path.relative_to(package).as_posix()] = hashlib.file_digest(path.open("rb"), "sha256").hexdigest()
     (package / "SHA256SUMS.json").write_text(json.dumps(hashes, indent=2) + "\n", encoding="utf-8", newline="\n")
-    archive = output / f"Xenovection-FOUND-002-Windows-{sha[:12]}.zip"
+    archive = output / f"Xenovection-MAINLINE-CONVERGENCE-001-Windows-{sha[:12]}.zip"
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as target:
         for path in sorted(package.rglob("*")):
             if path.is_file():

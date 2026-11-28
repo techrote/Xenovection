@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "timeout_seconds": 900,
+  "script": "tests/test_soak.gd",
+  "requested_steady_frames": 36000
+}

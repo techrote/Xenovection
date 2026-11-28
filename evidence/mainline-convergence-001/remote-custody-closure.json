@@ -1,0 +1,66 @@
+{
+  "schema": "xenovection.remote-custody-feedback.v1",
+  "checked_utc": "2026-11-28 18:17:54 UTC",
+  "status": "PASS",
+  "protected_refs": [
+    {
+      "branch": "main",
+      "sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+      "tree": "bbf986bc0deebe0d36e058faf794dfbf39458986",
+      "unchanged": true
+    },
+    {
+      "branch": "found-003/procedural-matter",
+      "sha": "e4365ab393415dc833f19e6116633e844b530d42",
+      "tree": "6bfbaf7c66641075af7bad2b25836a8d2128c106",
+      "unchanged": true
+    },
+    {
+      "branch": "feature/synth-002-visual-instrument",
+      "sha": "c1d367a466430cc45afc41c9b97c0a9dac922447",
+      "tree": "39df66c6d1214b3c66b69a5800a9b0f2116aae23",
+      "unchanged": true
+    },
+    {
+      "branch": "optical-003/spectral-matter",
+      "sha": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+      "tree": "8945a40e6f8eee0146cd1b2871ed5bb2837096e4",
+      "unchanged": true
+    },
+    {
+      "branch": "feature/ecosystem-001-artificial-life",
+      "sha": "73d76ad0b312f88105f7cde9e8d08cc3e519d0b9",
+      "tree": "d1202f830e8ad953b523079b6c753e29d352d597",
+      "unchanged": true
+    }
+  ],
+  "integration": {
+    "pull_request": 18,
+    "url": "https://github.com/techrote/Xenovection/pull/18",
+    "head_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+    "base_sha": "a2ef77814e857b1a9e08680e3d1ab43e1eba3de0",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "hold_explicit": true
+  },
+  "feedback": {
+    "issue17_comment_ids": [
+      7240481982
+    ],
+    "pr18_comment_ids": [
+      7240807399,
+      7241074824,
+      7241280913,
+      7241564572,
+      7241804933,
+      7242712222,
+      7242904644
+    ],
+    "reviews": 0,
+    "inline_comments": 0,
+    "new_owner_instructions": [],
+    "blocking_feedback_found": false
+  },
+  "scope": "Read-only final remote recheck. Comments are the same known principal-authored mission updates as the preclosure receipt. This check precedes the final archival receipt commit and final principal publication."
+}

@@ -1,0 +1,47 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS Topology destination rejects continuous route: mode
+PASS Topology destination rejects continuous route: seed
+PASS Topology destination rejects continuous route: count
+PASS Topology destination rejects continuous route: field
+PASS Topology destination rejects continuous route: secondary
+PASS Topology destination rejects continuous route: integration
+PASS Topology destination rejects continuous route: pathline
+PASS Continuous field/material destination accepts route: strength
+PASS Continuous field/material destination accepts route: mix
+PASS Continuous field/material destination accepts route: origin_x
+PASS Continuous field/material destination accepts route: origin_y
+PASS Continuous field/material destination accepts route: origin_z
+PASS Continuous field/material destination accepts route: condensation
+PASS Continuous field/material destination accepts route: optical_mix
+PASS Legacy matter defaults to exact zero optical assignment
+PASS Generated optical assignment is registered on the common bus
+PASS Generated matter accepts shared optical material
+PASS Bounded common thickness reaches generated film
+PASS Common transmission reaches generated film
+PASS Independent illumination direction reaches generated film
+PASS Generated matter shares the qualified environment palette resource
+PASS Unchanged material and paused clocks do not rewrite uniforms
+PASS Material modulation causes zero generated topology rebuilds or mesh uploads
+PASS Material modulation preserves mesh and material identities
+PASS Optical authoring preserves persistent particle resources
+PASS Optical illumination retains independent sky clock
+PASS Spectral colour retains independent palette clock
+PASS Generated material requests no screen/depth-copy pass
+PASS Read-only optical context cannot mutate renderer-owned parameters
+PASS Shared optical_mix zero disables generated enhancement
+PASS Disabled optical environment cannot enable generated optical pass
+PASS Scientific optical context blocks generated enhancement
+PASS Scientific mode hides generated geometry
+PASS Optical assignment does not mutate authored source preset
+PASS Spatial organism material uses the identical bounded optical contract
+PASS Spatial organism material shares uniform caching contract
+PASS Generated particles participate in the common optical environment
+PASS Particle optical zero restores the exact legacy material without resource recreation
+PASS Parsed generated shader declares every forwarded optical uniform
+PASS Parsed spatial material shader implements the optical contract
+PASS Qualified perspective-correct ribbon extrusion retained
+PASS Qualified subpixel ribbon coverage retained
+PASS Optical response preserves original strand/film coverage
+PASS Generated contract cannot silently acquire screen copies
+CONVERGENCE_MATTER_OPTICS_RESULT {"checks":44,"failures":[],"graphical_qualification":false}

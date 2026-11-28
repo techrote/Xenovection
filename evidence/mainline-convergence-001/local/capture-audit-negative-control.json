@@ -1,0 +1,133 @@
+{
+	"capture_directory": "/tmp/xeno-capture-audit-negative",
+	"captures": [
+		{
+			"bright_samples": 0,
+			"central_scene_lit_fraction": 0.0,
+			"central_scene_samples": 560,
+			"dimensions": [
+				256,
+				128
+			],
+			"file": "black.png",
+			"lit_fraction": 0.0,
+			"luminance_lit_fraction": 0.0,
+			"luminance_max": 0.0,
+			"luminance_mean": 0.0,
+			"luminance_min": 0.0,
+			"luminance_stddev": 0.0,
+			"maximum_channel_range": 0.0,
+			"pixel_sha256": "79f042779e26c42049ef191e897a78aa250d61f146ec0fb795a1eed9e5412eb1",
+			"rgb_max": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rgb_mean": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rgb_min": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"samples": 2048,
+			"sha256": "e129c882343a5f27341682acf23f5c137a10b41ca5a3d70f5627973a6f46eb47",
+			"status": "FAIL",
+			"stride": 4
+		},
+		{
+			"bright_samples": 0,
+			"central_scene_lit_fraction": 0.0,
+			"central_scene_samples": 560,
+			"dimensions": [
+				256,
+				128
+			],
+			"file": "transparent.png",
+			"lit_fraction": 0.0,
+			"luminance_lit_fraction": 0.0,
+			"luminance_max": 0.0,
+			"luminance_mean": 0.0,
+			"luminance_min": 0.0,
+			"luminance_stddev": 0.0,
+			"maximum_channel_range": 0.0,
+			"pixel_sha256": "5f79a606d150cddc1c0c71edda05df239ed98e40e67337bc68b5d35dbaf79cea",
+			"rgb_max": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rgb_mean": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"rgb_min": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"samples": 2048,
+			"sha256": "d7d8799ccfebaf6437c0100e0329f8d3dcd13a5a9e98731f59e7614bf019653b",
+			"status": "FAIL",
+			"stride": 4
+		},
+		{
+			"bright_samples": 2048,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 560,
+			"dimensions": [
+				256,
+				128
+			],
+			"file": "uniform.png",
+			"lit_fraction": 1.0,
+			"luminance_lit_fraction": 1.0,
+			"luminance_max": 1.0,
+			"luminance_mean": 1.0,
+			"luminance_min": 1.0,
+			"luminance_stddev": 0.0,
+			"maximum_channel_range": 0.0,
+			"pixel_sha256": "b5a41c3758763bbec72769fab4a2533bf2db0b6312d93d25a695f9e4b9e02260",
+			"rgb_max": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"rgb_mean": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"rgb_min": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"samples": 2048,
+			"sha256": "da5efcb2c157da42d44b2d758f60edd3be4e0c1d50d8e976f791112a52c86ec5",
+			"status": "FAIL",
+			"stride": 4
+		}
+	],
+	"captures_checked": 3,
+	"failures": [
+		"Capture is black, empty or effectively uniform: black.png",
+		"Capture is black, empty or effectively uniform: transparent.png",
+		"Capture is black, empty or effectively uniform: uniform.png"
+	],
+	"identical_pixel_groups": [],
+	"policy": {
+		"bright_channel_threshold": 0.06,
+		"maximum_samples_per_image": 131072,
+		"minimum_bright_samples": 51,
+		"minimum_rgb_range": 0.00392156862745098,
+		"note": "Conservative corruption/black-frame gate. UI pixels can satisfy coverage; central-scene statistics and independent visual inspection remain necessary. No aesthetic acceptance is implied."
+	},
+	"schema": "xenovection.capture-audit.v1",
+	"status": "FAIL",
+	"visual_review_required": true
+}

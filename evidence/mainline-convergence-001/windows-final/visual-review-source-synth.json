@@ -1,0 +1,334 @@
+{
+  "schema": "xenovection.visual-review.v1",
+  "reviewer_role": "Specialist A — architecture, synthesis and authoring",
+  "reviewed_at_utc": "2026-11-28T18:20:41.356144+00:00",
+  "qualified_application_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "source_tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "windows_run_id": 46169673564,
+  "artifact_id": 15275470748,
+  "outer_artifact_sha256": "1e28f08b4f82789943cd46745135c7c9d8994e67651bf0f113f90a6fa9f7cce0",
+  "method": "Fresh direct independent visual inspection of all 17 final-candidate original PNG files through the image viewer, followed by image/receipt hash binding and source-tree checks. Earlier candidate reviews were not substituted. No contact sheets, generated substitute images or image edits.",
+  "image_count": 17,
+  "status": "PASS_FOR_CAPTURE_REVIEW",
+  "blocking_visual_findings": [],
+  "scope_limits": [
+    "This review applies only to the listed downloaded Windows Vulkan Forward+ captures and their exact hash-bound receipts.",
+    "Still images establish visible content and gross geometry/UI health, not animation correctness, numerical custody, full physical optical accuracy or GPU throughput; executable receipts establish the separately cited behavior.",
+    "The ecology marks in the newly authored overview are delicate. Close-view artistic legibility and TITAN RTX performance remain physical owner acceptance requirements.",
+    "No owner acceptance, Ready promotion or merge is implied."
+  ],
+  "images": [
+    {
+      "file": "scientific.png",
+      "role": "baseline scientific",
+      "bytes": 217429,
+      "sha256": "34874f4057b2563051edfe9922979fe4ce2e307dc7689049265207e26cdbcded",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The complete red/blue source graph is visible with Scientific ON and no generated/ecological overlay. Thin source edges remain bounded; no oversized ribbon wedges or blank frame.",
+      "supporting_receipt": "scientific.json",
+      "supporting_receipt_sha256": "b70ae3749400d18f3416441d53dce7176fe98d0561d8ac3b25b673e652881163",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "filaments.png",
+      "role": "baseline counterflow",
+      "bytes": 303838,
+      "sha256": "b1308a7af073891fa12c1038c0c07eb367b9d8a20bf750fcd54e58c0b4446955",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The dense hairline source bundle is visible with separated fine strands and bounded width. High crossing density is intentional; no screen-filling extrusion or empty view.",
+      "supporting_receipt": "filaments.json",
+      "supporting_receipt_sha256": "d8556a80a11aa512ab8b5d009cdf2dfe50212d82598f863d7d3ab19905239bca",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "optical.png",
+      "role": "baseline spectral knot",
+      "bytes": 214496,
+      "sha256": "745c901184f51c521ab9f972d26108ee031a7b32f147c0760350ab26f97da330",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The selected optical knot is centered and legible with cyan/red reflective bands and a continuous curved silhouette. No gross transparent-ordering failure or missing proxy is visible.",
+      "supporting_receipt": "optical.json",
+      "supporting_receipt_sha256": "2f5012398cf198c91564468f754313d200030efa0d547a873afe2e626c1e6c91",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "hybrid.png",
+      "role": "baseline hybrid",
+      "bytes": 301994,
+      "sha256": "43019d204d667eb375380261746aebeba40153717b35bd0138cefff36bcf92e2",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "A small bright optical proxy and exact selected edge highlights coexist with the larger source filament bundle. Both feature populations are visible.",
+      "supporting_receipt": "hybrid.json",
+      "supporting_receipt_sha256": "e49872723ca6949f6a22ff0ea70b60b2d419517070bf797b2b627f437293145b",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "membrane.png",
+      "role": "baseline membrane",
+      "bytes": 643462,
+      "sha256": "9093fab3dc05b4a3f945d5f11df01e80ae22b9804be3352fec7f0a42b3079b5a",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The curved perforated membrane and selected edge highlights are visible against the denser source graph. Transparent openings are legible; there is no flat black replacement or oversized wedge.",
+      "supporting_receipt": "membrane.json",
+      "supporting_receipt_sha256": "bf58521874abc97e01f5f004acdc3a646b7c8c39606de74d3784390a0d33e5e3",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "stress.png",
+      "role": "baseline dense interference",
+      "bytes": 195668,
+      "sha256": "0ccfeace7da581528a80c55fcc8be570a927d2307cf5991df2364cc5888aca20",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The dense source workload remains a bounded, visible hairline bundle. The high crossing density is intentional; the frame is neither empty nor filled by invalid extruded geometry.",
+      "supporting_receipt": "stress.json",
+      "supporting_receipt_sha256": "68ce6a620b63ce7cbf1d28fd6fcac2d3acc90cd4b4ac29acbb76fa35c383f3a6",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "flow.png",
+      "role": "baseline spatial flow",
+      "bytes": 210311,
+      "sha256": "2bc6be14bacb9ff2f298985cd27a4d9a167e34471a8b7591f62d1c64e6367f56",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "Interlocking red/blue flow loops remain legible as fine filaments with open negative space. No missing loop population or oversized width is visible.",
+      "supporting_receipt": "flow.json",
+      "supporting_receipt_sha256": "1fd5216c7948cad543d1fecc02e7aefca7b36c7c90c8ed09df691e9b4c382325",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true
+    },
+    {
+      "file": "synth-1.png",
+      "role": "Vortex Conductor",
+      "bytes": 208995,
+      "sha256": "8eaaea82caee66872fb20ee98701fc643ae724bfcfac64e911ee3a0e038ce394",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The flow-loop presentation is visible with bounded wavy filaments. The still image does not prove temporal phase behavior; the bound profile confirms the active graph and evaluated ticks.",
+      "supporting_receipt": "synth-1.json",
+      "supporting_receipt_sha256": "0fa48c153a9c96ad9d5fe965fecd4380d1d652af83acdf2c85be054e89b15308",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 9,
+        "route_count": 9,
+        "fixed_ticks": 2326,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 90
+    },
+    {
+      "file": "synth-2.png",
+      "role": "Weather Instrument",
+      "bytes": 643337,
+      "sha256": "c3640e4ebb955122da363038ca5e1f2f1d28fa1c81ded71f937453552a42f17c",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The perforated membrane remains legible with layered source strands and optical shading. The image shows a populated scene; the bound profile confirms active synthesis.",
+      "supporting_receipt": "synth-2.json",
+      "supporting_receipt_sha256": "f3be0d9ec2b7f7662c3bd060a01e36efe0b14667f17bfbfeface4adfdad0bd11",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 9,
+        "route_count": 9,
+        "fixed_ticks": 2399,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 90
+    },
+    {
+      "file": "synth-3.png",
+      "role": "Filament Sequencer",
+      "bytes": 298987,
+      "sha256": "4239774abf6e7258db90038963ebe4bafdcc19735435beb19f0acfd6b3d4dcf6",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The fine source bundle is visible without width blow-up. A still image cannot prove sequencing; the bound profile confirms active routes and evaluated graph ticks.",
+      "supporting_receipt": "synth-3.json",
+      "supporting_receipt_sha256": "0a9f298a6a25f859153c77278eb35e316a15e862e76b29fb8a4aecdc30bda6e4",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 9,
+        "route_count": 9,
+        "fixed_ticks": 2399,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 90
+    },
+    {
+      "file": "synth-4.png",
+      "role": "Spectral Layers",
+      "bytes": 231183,
+      "sha256": "3df450d8b029571ff4811aa9e2c460f1babad8600f7c1a6e74e72abeb2b800a5",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The cyan/red knot and environmental colour bands remain visible and bounded. The profile binds this view to the retained colour/Vector2 sample patch.",
+      "supporting_receipt": "synth-4.json",
+      "supporting_receipt_sha256": "510033d50e3a8dade000c448b04e46a258e57c8a6e1e1ddcf4efce1c8468e9a8",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 10,
+        "route_count": 9,
+        "fixed_ticks": 770,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 90
+    },
+    {
+      "file": "synth-5.png",
+      "role": "Autonomous Organism patch",
+      "bytes": 305128,
+      "sha256": "fc3f607b88218e9e6588fefe28d4cb566a9d8238e65f003f9c6d1ac835f01f36",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The source bundle and smaller optical proxy are both visible. This retained patch title denotes synthesis behavior, not the ecology solver; the profile confirms active feedback-capable synthesis.",
+      "supporting_receipt": "synth-5.json",
+      "supporting_receipt_sha256": "975b28238243763467e9d0ce38e0e9daefe07ed8d003a7951f67c86a1b7a9350",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 13,
+        "route_count": 9,
+        "fixed_ticks": 2399,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 90
+    },
+    {
+      "file": "synth-6.png",
+      "role": "XY Morphosis",
+      "bytes": 649245,
+      "sha256": "62a2d22b86969c906201cf20ca527243b08b08cc96d255eb26335626644a4d70",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The membrane and selected source edges remain visible. The profile retains the full 600 measured-frame workload; this still image alone is not a gesture or animation witness.",
+      "supporting_receipt": "synth-6.json",
+      "supporting_receipt_sha256": "4a0a691d4a665991fc96add5e5a662be24126094fb83877b26cf43c3518604df",
+      "embedded_source_tree_matches": true,
+      "source_unchanged": true,
+      "graph": {
+        "source_count": 9,
+        "route_count": 9,
+        "fixed_ticks": 10559,
+        "missing_targets": []
+      },
+      "measured_frame_samples": 600
+    },
+    {
+      "file": "gui-input.png",
+      "role": "source/matter input and recall",
+      "bytes": 300077,
+      "sha256": "12fde427e9f22e97e3492702ac4cdb5d4f92a263665ff0b1cf985840d44f0d79",
+      "dimensions": [
+        1100,
+        687
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The restored Vortex Nursery shows purple and green procedural strands with legible source controls. The on-screen message confirms authored-state recall; exact identity/interaction claims are supported by the bound event receipt.",
+      "supporting_receipt": "gui-input.json",
+      "supporting_receipt_sha256": "504e035ff63e911631062b5912ae3351d778b85545a9f5677cbc0792a74c1957",
+      "input_receipt_checks": 37
+    },
+    {
+      "file": "synth-gui.png",
+      "role": "retained Synth graphical input",
+      "bytes": 630324,
+      "sha256": "1583871caeb8c5e57fb68bc0de4cc1124c24ee7b842bff2dc9e1bd75ed1e6c9e",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The Synth Perform rail is readable, including the XY surface, manual sliders, nine sources/routes and resolved optical.sky_pan Vector2. The diagnostic text occupies its bounded viewport above the performance controls, and the membrane remains visible beside the rail. Normal scrolling reveals controls below the viewport.",
+      "supporting_receipt": "synth-gui.json",
+      "supporting_receipt_sha256": "d7c502b4587b56a3a2593bd3b001e1d4177b7b5fe816a5435cacea596fc96b06",
+      "input_receipt_checks": 10
+    },
+    {
+      "file": "gui-convergence-authoring.png",
+      "role": "integrated graphical authoring",
+      "bytes": 172790,
+      "sha256": "d901ee670d45309065fba66ec09e8da07f412a88fe05a82729a8c050003e42f0",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The recalled component form visibly contains source1, kind manual and value 0.65; the bounded diagnostic area shows one source, three routes and resolved matter condensation. Undo/Redo and component controls remain readable below it. The generated gold curved film and cyan numerical-domain guide remain visible. Route rows are outside this scrolled capture; the 90-check real-input receipt establishes their authoring.",
+      "supporting_receipt": "gui-convergence.json",
+      "supporting_receipt_sha256": "7798b0a14772b873dbba177164df473a03a40e011181061dc4e37e1a7efbf455",
+      "embedded_source_tree_matches": true,
+      "input_receipt_checks": 90
+    },
+    {
+      "file": "gui-convergence-composition.png",
+      "role": "integrated authored composition",
+      "bytes": 88096,
+      "sha256": "01e25fc45b68174ee7393fb47b7aa7c3c360f7f02ffba72ca57c549cb4d42f9e",
+      "dimensions": [
+        1000,
+        625
+      ],
+      "status": "VISUALLY_REVIEWED_NO_BLOCKER",
+      "observations": "The clean view contains a bounded curved gold film, the numerical-domain guide and delicate blue ecological marks. It is not black or empty, and no gross ribbon/transparent artifact is visible. Ecological marks are subtle at this overview scale; physical close-view legibility remains an owner acceptance topic.",
+      "supporting_receipt": "gui-convergence.json",
+      "supporting_receipt_sha256": "7798b0a14772b873dbba177164df473a03a40e011181061dc4e37e1a7efbf455",
+      "embedded_source_tree_matches": true,
+      "input_receipt_checks": 90
+    }
+  ]
+}

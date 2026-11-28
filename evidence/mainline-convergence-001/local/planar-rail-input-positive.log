@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+PLANAR_LAYOUT_INPUT {"cases":[{"minimum_width":364.0,"panel":[624.0,12.0,364.0,601.0],"plant_error":0.0,"requested":"(1000, 625)","roundtrip_error":0.0,"viewport":[0.0,0.0,1000.0,625.0],"world_area":[37.5,62.0,535.0,535.0]},{"minimum_width":364.0,"panel":[1064.0,12.0,364.0,876.0],"plant_error":0.0,"requested":"(1440, 900)","roundtrip_error":0.0,"viewport":[0.0,0.0,1440.0,900.0],"world_area":[120.0,62.0,810.0,810.0]},{"minimum_width":364.0,"panel":[624.0,12.0,364.0,876.0],"plant_error":0.0,"requested":"(1000, 900)","roundtrip_error":0.00000000745058059692383,"viewport":[0.0,0.0,1000.0,900.0],"world_area":[18.0,180.0,574.0,574.0]}],"checks":27,"failures":[],"scope":"Headless actual Control event routing via Viewport.push_input; full Windows graphical qualification remains required","status":"PASS"}

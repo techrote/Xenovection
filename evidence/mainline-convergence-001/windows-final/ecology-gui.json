@@ -1,0 +1,92 @@
+{
+	"checks": 23,
+	"failures": [],
+	"layout": {
+		"control_horizontal_bounds": [
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "CheckButton"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "CheckButton"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "CheckButton"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			},
+			{
+				"left": 1076.0,
+				"right": 1408.0,
+				"type": "HSlider"
+			}
+		],
+		"panel": [
+			1064.0,
+			12.0,
+			364.0,
+			876.0
+		],
+		"panel_minimum_width": 364.0,
+		"pointer_plant_error": 0.0000000842936955791629,
+		"roundtrip_max_error": 0.0,
+		"scroll_clip": [
+			1076.0,
+			24.0,
+			340.0,
+			852.0
+		],
+		"viewport": [
+			0.0,
+			0.0,
+			1440.0,
+			900.0
+		],
+		"world_area": [
+			120.0,
+			62.0,
+			810.0,
+			810.0
+		]
+	},
+	"status": "PASS",
+	"suite": "ecology graphical input"
+}

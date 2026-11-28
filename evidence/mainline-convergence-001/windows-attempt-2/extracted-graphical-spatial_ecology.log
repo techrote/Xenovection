@@ -1,0 +1,80 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+Vulkan 1.4.363 - Forward+ - Using Device #0: Unknown - llvmpipe (LLVM 23.1.6, 256 bits)
+
+XENOVECTION_QUALIFICATION_SCRIPT_STARTED gui_spatial_ecology_probe.gd
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"godot":"4.7.2.stable.official.ed1daf0bf","mission":"MAINLINE-CONVERGENCE-001","primary_renderer":"Vulkan Forward+","repository":"https://github.com/techrote/Xenovection","schema":"xenovection.build.v1","source_sha":"d02577d1d8315bf784e4bf92e142e089254ffcb6","specimen_sha256":"745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c","status":"Draft/HOLD","tree_sha":"4f9eb90263d4f0db7dc3550971c761a8dd6704ab"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+FAIL: Actual option input selects Plant
+FAIL: Actual option input selects Membrane
+FAIL: Actual 3D viewport click plants selected family
+SPATIAL_ECOLOGY_GUI 6/9
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DRIVER:         Searching for driver manifest files
+[Vulkan Loader] DRIVER:            In following locations:
+[Vulkan Loader] DRIVER:            Found no files
+[Vulkan Loader] DRIVER:         Checking for Driver Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: opening device VMBUS\{da0a7802-e377-4aac-8e77-0558eb1073f8}\{5620e0c7-8062-4dce-aeb7-520c7ef76171}
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanDriverName"
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: Opening child device 2 - DISPLAY\MSH062E\5&1A097CD8&0&UID5527112
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_files: GUID for 2 is not SoftwareComponent skipping
+[Vulkan Loader] DRIVER:         windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | DRIVER:  Located json file "D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers"
+[Vulkan Loader] INFO | DRIVER:  Driver D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json is not recognized as a known driver. It will be assumed to be active
+[Vulkan Loader] DRIVER:         Found ICD manifest file D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json, version 1.0.1
+[Vulkan Loader] DEBUG | DRIVER: Searching for ICD drivers named D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\vulkan_lvp.dll
+[Vulkan Loader] DRIVER:         Searching for driver manifest files
+[Vulkan Loader] DRIVER:            In following locations:
+[Vulkan Loader] DRIVER:            Found no files
+[Vulkan Loader] DRIVER:         Checking for Driver Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: opening device VMBUS\{da0a7802-e377-4aac-8e77-0558eb1073f8}\{5620e0c7-8062-4dce-aeb7-520c7ef76171}
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanDriverName"
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: Opening child device 2 - DISPLAY\MSH062E\5&1A097CD8&0&UID5527112
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_files: GUID for 2 is not SoftwareComponent skipping
+[Vulkan Loader] DRIVER:         windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | DRIVER:  Located json file "D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers"
+[Vulkan Loader] INFO | DRIVER:  Driver D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json is not recognized as a known driver. It will be assumed to be active
+[Vulkan Loader] DRIVER:         Found ICD manifest file D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json, version 1.0.1
+[Vulkan Loader] DEBUG | DRIVER: Searching for ICD drivers named D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\vulkan_lvp.dll
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DRIVER:         Searching for driver manifest files
+[Vulkan Loader] DRIVER:            In following locations:
+[Vulkan Loader] DRIVER:            Found no files
+[Vulkan Loader] DRIVER:         Checking for Driver Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: opening device VMBUS\{da0a7802-e377-4aac-8e77-0558eb1073f8}\{5620e0c7-8062-4dce-aeb7-520c7ef76171}
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanDriverName"
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: Opening child device 2 - DISPLAY\MSH062E\5&1A097CD8&0&UID5527112
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_files: GUID for 2 is not SoftwareComponent skipping
+[Vulkan Loader] DRIVER:         windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | DRIVER:  Located json file "D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers"
+[Vulkan Loader] INFO | DRIVER:  Driver D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json is not recognized as a known driver. It will be assumed to be active
+[Vulkan Loader] DRIVER:         Found ICD manifest file D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json, version 1.0.1
+[Vulkan Loader] DEBUG | DRIVER: Searching for ICD drivers named D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\vulkan_lvp.dll
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanImplicitLayers"
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanExplicitLayers"
+[Vulkan Loader] WARNING | LAYER: windows_read_data_files_in_registry: Registry lookup failed to get layer manifest files.
+[Vulkan Loader] DRIVER:         Searching for driver manifest files
+[Vulkan Loader] DRIVER:            In following locations:
+[Vulkan Loader] DRIVER:            Found no files
+[Vulkan Loader] DRIVER:         Checking for Driver Manifest files in Registry at HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: opening device VMBUS\{da0a7802-e377-4aac-8e77-0558eb1073f8}\{5620e0c7-8062-4dce-aeb7-520c7ef76171}
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_entry: Device ID(1) Does not contain a value for "VulkanDriverName"
+[Vulkan Loader] INFO | DRIVER:  windows_get_device_registry_files: Opening child device 2 - DISPLAY\MSH062E\5&1A097CD8&0&UID5527112
+[Vulkan Loader] DEBUG | DRIVER: windows_get_device_registry_files: GUID for 2 is not SoftwareComponent skipping
+[Vulkan Loader] DRIVER:         windows_get_device_registry_files: found no registry files
+[Vulkan Loader] INFO | DRIVER:  Located json file "D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json" from registry "HKEY_LOCAL_MACHINE\SOFTWARE\Khronos\Vulkan\Drivers"
+[Vulkan Loader] INFO | DRIVER:  Driver D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json is not recognized as a known driver. It will be assumed to be active
+[Vulkan Loader] DRIVER:         Found ICD manifest file D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\xenovection-ci-icd.json, version 1.0.1
+[Vulkan Loader] DEBUG | DRIVER: Searching for ICD drivers named D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\vulkan_lvp.dll
+[Vulkan Loader] DRIVER:         vkCreateDevice layer callstack setup to:
+[Vulkan Loader] DRIVER:            <Application>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Loader>
+[Vulkan Loader] DRIVER:              ||
+[Vulkan Loader] DRIVER:            <Device>
+[Vulkan Loader] DRIVER:                Using "llvmpipe (LLVM 23.1.6, 256 bits)" with driver: "D:\a\Xenovection\Xenovection\.runtime\mesa-26.3.1\x64\vulkan_lvp.dll"
+WARNING: The requested V-Sync mode Disabled is not available. Falling back to V-Sync mode Enabled.
+   at: swap_chain_resize (drivers/vulkan/rendering_device_driver_vulkan.cpp:3767)
+

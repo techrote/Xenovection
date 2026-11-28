@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+OPTICAL_LACE {"apertures":216,"material_uv_fraction":0.271853218704564,"maximum_shared_boundary_error":0.0}
+{"checks":62,"failures":[],"graphical_qualification":false,"suite":"optical structural invariants"}

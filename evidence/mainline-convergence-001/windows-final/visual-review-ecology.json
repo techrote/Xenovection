@@ -1,0 +1,302 @@
+{
+  "schema": "xenovection.ecology-visual-review.v1",
+  "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "workflow_run": 46169673564,
+  "artifact_id": 15275470748,
+  "complete_windows_workflow_status": "PASS",
+  "original_download_verification_status": "PASS",
+  "visual_disposition": "REVIEWED_WITH_DOCUMENTED_LIMITATIONS",
+  "reviewed_assigned_images": 18,
+  "additional_control_images": 1,
+  "reviewer": "Specialist C; independently inspected decoded PNG images",
+  "images": [
+    {
+      "file": "ecosystem-0.png",
+      "sha256": "6c21b63cb2fb6ce178621a8835b13ce6b4baa5c7b1e4f41a69121d1bb6eadcba",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Twelve mycelial organisms form finite green branching structures distributed within the complete diagnostic square; fine tips and resource markers remain visible."
+    },
+    {
+      "file": "ecosystem-1.png",
+      "sha256": "9b96fd941d3af5be4c5c11e5a79b9f345467fb63d0d43d535f28a87b5fff3548",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Eighty-four blue trail organisms form broad circulating arcs inside the domain; trajectories remain finite and visibly distinct from the grid and sources."
+    },
+    {
+      "file": "ecosystem-2.png",
+      "sha256": "92fb9869bcd44de83370a802cbacd335028b50050ba26a306887d0f3078df90f",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Twenty-six membrane organisms show bounded purple rings, internal perimeter detail and overlapping growth bodies; no invalid polygon or screen-filling extrusion is visible."
+    },
+    {
+      "file": "ecosystem-3.png",
+      "sha256": "215a5130903e14762df173776f9f1d3ee9ab71323f9bd17fc2f204bb94c18ecb",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The symbiotic configuration visibly combines green branches with blue circulating trails in the same bounded diagnostic domain."
+    },
+    {
+      "file": "ecosystem-4.png",
+      "sha256": "d3972b6d941dff50e85e1e37c640d488020ca0b0cf478951253e8f23db8c68d0",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The excitable configuration displays its 144-node amber lattice. Most pulses are small at this instant; this still image alone does not establish temporal wave propagation."
+    },
+    {
+      "file": "ecosystem-5.png",
+      "sha256": "1dde2b04158da6338304924af97b73adf0959ac301b448e65e97a5cefbee5167",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The evolutionary configuration visibly combines branching, moving trails and membrane growth; its 97-organism caption and 12-second simulation time are readable."
+    },
+    {
+      "file": "composition-living_membrane-overview.png",
+      "sha256": "5be897e5d2d9e0c935ac0fd64c4bd977d6d3067ed063fad709af0bd3e9feab06",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Curved optical organism bodies coexist with a perforated generated membrane. Cyan/red spectral response and finite silhouettes are clearly visible; some domain guide edges extend beyond the authored overview framing."
+    },
+    {
+      "file": "composition-living_membrane-close.png",
+      "sha256": "48ed7b09752ebcf595021393cb798cd7f815612d24567c940973bc894b4f84c9",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Close view clearly reveals curved organism bodies, their bounded tessellation and the deformed perforated film behind them. Intentional camera cropping is present; no exploding geometry or black output."
+    },
+    {
+      "file": "composition-excitable_garden-overview.png",
+      "sha256": "073666629ff60215ce6c7438f85132d9eff21aa42b424c88c8e75c0463aa3f05",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The finite pulse lattice and thin generated strand pattern both execute and are visible, but the default full-optical overview is dark and the resting organism cores are small."
+    },
+    {
+      "file": "composition-excitable_garden-close.png",
+      "sha256": "acf039ca6fb3f9093149676541f5ab640f3ceddecb3464bb0d52442f8ad73132",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The close view distinguishes coloured pulse cores and the separate fine strand field; contrast remains subdued. A static capture does not prove time-varying pulse propagation."
+    },
+    {
+      "file": "composition-light_terrarium-overview.png",
+      "sha256": "3b64b63d6dab148f6363c5aa174882bb4631be6ff628c9a812581387983b82e3",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Branch segments, trail structures and curved organism bodies surround a generated optical film in one spatial composition; the cyan numerical guide remains legible."
+    },
+    {
+      "file": "composition-light_terrarium-close.png",
+      "sha256": "7cfce6d63af11f0d21821e4171061f0748d62a349d5283b32b36adcc06b46fe1",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Close view resolves branch/trail segments and individual optical membrane bodies against the shared generated film. Some coarse body facets are visible, consistent with the bounded first-generation mesh budget."
+    },
+    {
+      "file": "composition-matter_orchestra-overview.png",
+      "sha256": "5c87509547c780e13de1df38d815de4f47f8b4def7d5c9f9aaaa9648f1caf69b",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Three generated regions coexist with organism branches and trails inside the guide. All major forms remain finite; full optical response considerably darkens their separation against black."
+    },
+    {
+      "file": "composition-matter_orchestra-close.png",
+      "sha256": "ec6f74efb34054aebcbd4b60ecd095b3eff90325b5a48b1411884f2e00565aa4",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "Close framing resolves the independent left filament region, central field, right optical film and ecological trails. The palette remains muted; there is no screen-filling ribbon extrusion or invalid cylinder endpoint."
+    },
+    {
+      "file": "gui-spatial_ecology.png",
+      "sha256": "56520f5a828fbd359463f2a90eed2cdd9b9ed32d57b59d315b66038895afe29a",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The Life rail is horizontally legible and shows the explicitly recalled Light Terrarium seed 51571, paused ecology and quarter trail detail. This final capture follows the seed recall witness, not the earlier frozen material pair."
+    },
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "sha256": "758dab6076577c38b0ef60c285fc118e3d2aa459b96bdd0f94cf6911b4933024",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The low-gain frozen comparison retains the cyan numerical-domain guide; tiny organism structures are very dim against the retained scientific-source geometry."
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "sha256": "f6a2e65699d80b877b595a510a483c323947b9e058e7bc986fde8e3012b8e985",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The high-gain frozen comparison increases visible organism dots/branches without changing the guide or scientific-source geometry. The measurable response is small in this overview, so this is not a claim of strong default artistic legibility."
+    },
+    {
+      "file": "ecology-gui.png",
+      "sha256": "b8bc0f57af1cebc714001e23f7a62873dd8a04774cebb1b4bffd3a2a7a152452",
+      "pixels": [
+        1000,
+        625
+      ],
+      "visual_status": "REVIEWED",
+      "finding": "The planar rail now grows toward the viewport interior and keeps its right edge inside the window. Checkbox indicators and slider endpoints are visible, while the numerical domain remains separate. The 23-check real-input receipt measures the panel/control bounds and verifies the intended normalized planting coordinate; the 18 inherited assertions remain."
+    }
+  ],
+  "additional_controls": [
+    {
+      "file": "composition-orchestra-legacy-optics.png",
+      "sha256": "53506e31309d524bd44f39d3536d1fec0d1609dd840996b7cc348bd9ac78ce6f",
+      "finding": "With global optics disabled, violet filaments, the yellow field, blue film and green/blue ecological structures are markedly brighter and easier to separate. The same guide remains legible. This running-scene comparison is not an identical-tick material-only experiment; the frozen spatial GUI pair supplies that stronger control."
+    }
+  ],
+  "scope_limits": [
+    "Planar solver with spatial presentation; no volumetric numerical ecology claim.",
+    "The six clean diagnostic captures show 360 completed ticks, 12 simulation seconds and explicit population counts.",
+    "Composition captures occur at frame 45; final performance profiles follow 60 warmup plus 90 measured frames, so their final population and timing state are not the capture instant.",
+    "The fixed numerical guide remains visible independently of organism optical gain; subpixel gaps can occur in distant thin guide cylinders.",
+    "Default full-optical Excitable Garden and Matter Orchestra views have subdued contrast. Owner evaluation must assess legibility and artistic usefulness.",
+    "The earlier successful candidate 5 and its clipped planar rail are preserved separately. This review applies only to the final candidate 7 images and its independently repeated 23-check planar graphical contract.",
+    "No physical TITAN RTX throughput or owner visual acceptance is claimed."
+  ],
+  "status": "PASS_FOR_CAPTURE_REVIEW",
+  "blocking_visual_findings": [],
+  "qualified_application_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "source_tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "planar_gui_checks": 23,
+  "planar_gui_layout": {
+    "control_horizontal_bounds": [
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "CheckButton"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "CheckButton"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "CheckButton"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      },
+      {
+        "left": 1076.0,
+        "right": 1408.0,
+        "type": "HSlider"
+      }
+    ],
+    "panel": [
+      1064.0,
+      12.0,
+      364.0,
+      876.0
+    ],
+    "panel_minimum_width": 364.0,
+    "pointer_plant_error": 8.42936955791629e-08,
+    "roundtrip_max_error": 0.0,
+    "scroll_clip": [
+      1076.0,
+      24.0,
+      340.0,
+      852.0
+    ],
+    "viewport": [
+      0.0,
+      0.0,
+      1440.0,
+      900.0
+    ],
+    "world_area": [
+      120.0,
+      62.0,
+      810.0,
+      810.0
+    ]
+  }
+}

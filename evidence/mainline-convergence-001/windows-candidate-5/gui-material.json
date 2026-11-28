@@ -1,0 +1,58 @@
+{
+	"checks": 42,
+	"details": {
+		"clock_values": {
+			"displacement": 0.533333333333334,
+			"filament": 0.533333333333334,
+			"normal": 0.533333333333334,
+			"palette": 0.533333333333334,
+			"sky": 0.533333333333334
+		},
+		"comparison": {
+			"legacy_lit_samples": 39250,
+			"mean_rgb_difference": 0.0413135520024604,
+			"optical_lit_samples": 39250,
+			"pixels": [
+				1000,
+				625
+			],
+			"samples": 39250
+		},
+		"input_events": 99,
+		"region": {
+			"active_materials": 1,
+			"active_meshes": 1,
+			"allocated_materials": 3,
+			"allocated_meshes": 2,
+			"dropped_steps": 0,
+			"field_update_usec": 8960,
+			"fixed_steps": 0,
+			"geometry_builds": 1,
+			"geometry_upload_bytes_estimate": 1022976,
+			"geometry_upload_count": 1,
+			"material_uniform_writes": 92,
+			"mode": 1,
+			"optical_material_id": "optical:matter.region0.material",
+			"optical_mix": 1.0,
+			"optical_uniform_writes": 36,
+			"particle_upload_bytes_estimate": 2304,
+			"particle_uploads": 1,
+			"particles": 0,
+			"screen_copy": false,
+			"strips": 144,
+			"triangles": 23040,
+			"vertices": 23328,
+			"visible": true
+		},
+		"source_revision": "sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+	},
+	"device": "llvmpipe (LLVM 23.1.6, 256 bits)",
+	"display": "Windows",
+	"evidence_kind": "Real graphical pointer and keyboard authoring; no physical GPU throughput claim",
+	"failures": [],
+	"passed": 42,
+	"platform": "Windows",
+	"renderer": "forward_plus",
+	"status": "PASS",
+	"suite": "graphical-generated-optical-authoring"
+}

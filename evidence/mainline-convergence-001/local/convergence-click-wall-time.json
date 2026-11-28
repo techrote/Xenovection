@@ -1,0 +1,38 @@
+{
+  "schema": "xenovection.convergence-click-diagnostic.v1",
+  "status": "PASS",
+  "evidence_scope": "Focused Linux headless input timing diagnosis; not Windows graphical qualification",
+  "adverse_windows_candidate": "114768ca41b198c4f06f849bb448664b4f2708e9",
+  "negative": {
+    "control": "[P: (1126.0, 696.0), S: (270.0, 36.0)]",
+    "hold_usec": 663016,
+    "popup_after_press": true,
+    "popup_after_release": false,
+    "popup_mouse": "(15.0, 302.0)",
+    "popup_position": "(1126, 412)",
+    "popup_size": "(111, 488)",
+    "screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 13.0)]",
+    "selected_after": 12,
+    "selected_before": 1
+  },
+  "positive": {
+    "control": "[P: (1126.0, 696.0), S: (270.0, 36.0)]",
+    "hold_usec": 23,
+    "popup_after_release": true,
+    "popup_position": "(1126, 412)",
+    "popup_size": "(111, 488)",
+    "selected_after": 12,
+    "selected_before": 12
+  },
+  "reproduction_note": "The headless popup is 111 logical pixels wide versus 270 in Windows; pointer is 15 pixels inside its overlapping left edge. Both use the actual Synth OptionButton and parsed InputEvents. Negative holds for an awaited 0.65 wall seconds; positive pairs press/release before any rendered frame.",
+  "focused_authoring": {
+    "checks": 87,
+    "passed": 87,
+    "failures": [],
+    "input_events": 384
+  },
+  "all_original_assertion_calls_retained": true,
+  "assertion_call_sites": 31,
+  "probe_sha256": "7d89963df2b1e17ec03ae33165a9deb5985f2de1c0b6a841a9fb7f637739f173",
+  "final_mouse_event_mask": "LEFT on left press; 0 on release"
+}

@@ -1,0 +1,230 @@
+{
+	"checks": 60,
+	"digest": "4bdb06e2634984a239797cd6775f949a49009987dc747b24341fd81101182756",
+	"ecology": {
+		"numerical_domain": "planar",
+		"paused": true,
+		"sampled_graph_boundaries": 77,
+		"shared_bus": true,
+		"simulation_enabled": true,
+		"snapshot_epoch": 3,
+		"snapshot_generation_us_last": 975,
+		"snapshot_generation_us_p50": 911,
+		"snapshot_generation_us_p95": 1505,
+		"snapshot_samples": 86,
+		"snapshot_topology_revision": 16,
+		"solver_samples": 77,
+		"solver_us_p50": 954,
+		"solver_us_p95": 2213,
+		"world_tick": 32
+	},
+	"failures": [],
+	"material_comparison": {
+		"changed_samples": 153,
+		"mean_rgb_difference": 0.0000908851733706947,
+		"samples": 156500
+	},
+	"option_trace": [
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 1,
+			"selected_after": 1,
+			"selected_before": 0,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.family"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 0,
+			"selected_after": 0,
+			"selected_before": 1,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 4,
+			"selected_after": 4,
+			"selected_before": 2,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 5,
+			"selected_after": 5,
+			"selected_before": 4,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 2,
+			"selected_after": 2,
+			"selected_before": 0,
+			"target": "ecology.quality"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 0,
+			"selected_after": 0,
+			"selected_before": 5,
+			"target": "ecology.tool"
+		},
+		{
+			"event_window_id": 0,
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23
+			],
+			"popup_visible": true,
+			"popup_visible_after": false,
+			"popup_window_id": 0,
+			"requested": 23,
+			"selected_after": 23,
+			"selected_before": 0,
+			"target": "composition.preset"
+		}
+	],
+	"representation": {
+		"active_instance_buffers": 38,
+		"active_nodes": 110,
+		"allocations": 75,
+		"body_transform_updates": 1277,
+		"deallocations": 39,
+		"depth_strength": 0.45,
+		"family_materials": 4,
+		"guide_materials": 1,
+		"instance_uniform_writes": 3120,
+		"material_uniform_writes": 648,
+		"numerical_domain": "planar",
+		"organism_resources": 36,
+		"quality": 2,
+		"representation": "bounded spatial snapshot adapter",
+		"shared_materials": 5,
+		"shared_meshes": 2,
+		"topology_builds": 2,
+		"topology_events": 219,
+		"transform_uploads": 1158,
+		"update_us_last": 315,
+		"update_us_p50": 110,
+		"update_us_p95": 360,
+		"upload_bytes": 74112,
+		"world_tick": 32
+	},
+	"seed_authoring": {
+		"displayed_seed_after_refresh": 81234.0,
+		"pending_seed": 81234.0,
+		"previous_world_seed": 7301,
+		"recalled_composition": "composition.light_terrarium",
+		"recalled_seed": 51571,
+		"reset_seed": 81234
+	},
+	"status": "PASS",
+	"suite": "spatial ecology real graphical input"
+}

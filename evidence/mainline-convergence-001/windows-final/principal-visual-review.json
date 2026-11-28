@@ -1,0 +1,28 @@
+{
+  "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "review": "Actual inspection of original final PNGs; supplementary to complete specialist coverage",
+  "images": [
+    {
+      "file": "ecology-gui.png",
+      "sha256": "b8bc0f57af1cebc714001e23f7a62873dd8a04774cebb1b4bffd3a2a7a152452",
+      "observation": "The complete right rail is inside the viewport; controls remain visible and the planar domain is unobstructed."
+    },
+    {
+      "file": "gui-convergence-authoring.png",
+      "sha256": "d901ee670d45309065fba66ec09e8da07f412a88fe05a82729a8c050003e42f0",
+      "observation": "Three-domain authored patch is displayed; diagnostics remain within their bounded scrolling region and controls are legible."
+    },
+    {
+      "file": "composition-condensation_instrument-overview.png",
+      "sha256": "55495aee26a0f2cbe81424f37731859082b126e2336abc9dfd651b95719082f2",
+      "observation": "Continuous curved strip/film geometry is visible without wedges; full-optical response is dark but nonempty."
+    },
+    {
+      "file": "composition-light_terrarium-close.png",
+      "sha256": "7cfce6d63af11f0d21821e4171061f0748d62a349d5283b32b36adcc06b46fe1",
+      "observation": "Membrane, branch structures and organism bodies are visible together; intentional close-view cropping, no blocking geometry defect."
+    }
+  ],
+  "blocking_findings": []
+}

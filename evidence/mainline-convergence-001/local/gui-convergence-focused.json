@@ -1,0 +1,535 @@
+{
+	"checks": 87,
+	"failures": [],
+	"graph": {
+		"active": true,
+		"dropped_seconds": 0.0,
+		"fixed_ticks": 240,
+		"graph_p50_usec": 16.0,
+		"graph_p95_usec": 27.0,
+		"missing_targets": [],
+		"preset": 9,
+		"route_count": 3,
+		"samples": 240,
+		"schema": "xenovection.patch.v1",
+		"source_count": 1
+	},
+	"scope": "Headless real-input focus/authoring reproduction; not graphical qualification",
+	"trace": [
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
+			],
+			"form_after": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Recall an example or create a blank patch.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"form_before": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Recall an example or create a blank patch.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@HBoxContainer@16/@OptionButton@30",
+			"popup_position": "(771, 73)",
+			"popup_size": "(265, 608)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (771.0, 20.0), S: (265.0, 53.0)]",
+			"rect_before": "[P: (771.0, 20.0), S: (265.0, 53.0)]",
+			"requested": 9,
+			"requested_text": "10  Living weather membrane",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 9,
+			"selected_after_pointer": 0,
+			"selected_before": 0,
+			"visible_in_tree": true
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Recall an example or create a blank patch.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"label": "Show spatial ecology",
+			"rect_after": "[P: (1126.0, 314.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 314.0), S: (270.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Recall an example or create a blank patch.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"label": "Pause ecology",
+			"rect_after": "[P: (1126.0, 551.0), S: (134.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 551.0), S: (120.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"label": "Blank",
+			"rect_after": "[P: (1263.0, 268.0), S: (133.0, 36.0)]",
+			"rect_before": "[P: (1263.0, 268.0), S: (133.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"label": "New component",
+			"rect_after": "[P: (1126.0, 632.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 632.0), S: (270.0, 36.0)]"
+		},
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0
+			],
+			"form_after": {
+				"kind_index": 0,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"form_before": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.0,
+				"value_text": "0.0"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@PanelContainer@35/@VBoxContainer@36/@TabContainer@41/Synth/@VBoxContainer@780/ModularInstrument/@VBoxContainer@815/@OptionButton@840",
+			"popup_position": "(1126, 412)",
+			"popup_size": "(111, 488)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (1126.0, 696.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 696.0), S: (270.0, 36.0)]",
+			"requested": 0,
+			"requested_text": "manual",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 0,
+			"selected_after_pointer": 1,
+			"selected_before": 1,
+			"visible_in_tree": true
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Apply component",
+			"rect_after": "[P: (1126.0, 531.0), S: (144.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 523.0), S: (144.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "New route",
+			"rect_after": "[P: (1126.0, 627.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 627.0), S: (270.0, 36.0)]"
+		},
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0
+			],
+			"form_after": {
+				"kind_index": 0,
+				"route_count": 0,
+				"search": "matter.region0.condensation",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"form_before": {
+				"kind_index": 0,
+				"route_count": 0,
+				"search": "matter.region0.condensation",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@PanelContainer@35/@VBoxContainer@36/@TabContainer@41/Synth/@VBoxContainer@780/ModularInstrument/@VBoxContainer@815/@OptionButton@968",
+			"popup_position": "(1126, 581)",
+			"popup_size": "(238, 32)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (1126.0, 545.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 545.0), S: (270.0, 36.0)]",
+			"requested": 0,
+			"requested_text": "matter.region0.condensation",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 0,
+			"selected_after_pointer": 0,
+			"selected_before": 0,
+			"visible_in_tree": true
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 1,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Apply route",
+			"rect_after": "[P: (1126.0, 792.0), S: (133.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 761.0), S: (133.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 1,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "New route",
+			"rect_after": "[P: (1126.0, 305.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 328.0), S: (270.0, 36.0)]"
+		},
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0
+			],
+			"form_after": {
+				"kind_index": 0,
+				"route_count": 1,
+				"search": "optical.optical_thickness",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"form_before": {
+				"kind_index": 0,
+				"route_count": 1,
+				"search": "optical.optical_thickness",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@PanelContainer@35/@VBoxContainer@36/@TabContainer@41/Synth/@VBoxContainer@780/ModularInstrument/@VBoxContainer@815/@OptionButton@968",
+			"popup_position": "(1126, 589)",
+			"popup_size": "(206, 32)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (1126.0, 553.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 553.0), S: (270.0, 36.0)]",
+			"requested": 0,
+			"requested_text": "optical.optical_thickness",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 0,
+			"selected_after_pointer": 0,
+			"selected_before": 0,
+			"visible_in_tree": true
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 2,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Apply route",
+			"rect_after": "[P: (1126.0, 792.0), S: (133.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 769.0), S: (133.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 2,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "New route",
+			"rect_after": "[P: (1126.0, 305.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 328.0), S: (270.0, 36.0)]"
+		},
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0
+			],
+			"form_after": {
+				"kind_index": 0,
+				"route_count": 2,
+				"search": "eco.growth",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"form_before": {
+				"kind_index": 0,
+				"route_count": 2,
+				"search": "eco.growth",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@PanelContainer@35/@VBoxContainer@36/@TabContainer@41/Synth/@VBoxContainer@780/ModularInstrument/@VBoxContainer@815/@OptionButton@968",
+			"popup_position": "(1126, 589)",
+			"popup_size": "(116, 32)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (1126.0, 553.0), S: (270.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 553.0), S: (270.0, 36.0)]",
+			"requested": 0,
+			"requested_text": "eco.growth",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 0,
+			"selected_after_pointer": 0,
+			"selected_before": 0,
+			"visible_in_tree": true
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 3,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch updated.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Apply route",
+			"rect_after": "[P: (1126.0, 769.0), S: (133.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 769.0), S: (133.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 2,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch edit undone.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Undo",
+			"rect_after": "[P: (1126.0, 226.0), S: (87.0, 36.0)]",
+			"rect_before": "[P: (1126.0, 203.0), S: (87.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 3,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch edit restored.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Redo",
+			"rect_after": "[P: (1217.0, 226.0), S: (87.0, 36.0)]",
+			"rect_before": "[P: (1217.0, 226.0), S: (87.0, 36.0)]"
+		},
+		{
+			"event": "button",
+			"form": {
+				"kind_index": 0,
+				"route_count": 3,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch edit restored.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"label": "Step ecology",
+			"rect_after": "[P: (1264.0, 551.0), S: (109.0, 36.0)]",
+			"rect_before": "[P: (1264.0, 551.0), S: (109.0, 36.0)]"
+		},
+		{
+			"disabled": false,
+			"event": "option",
+			"focused_items": [
+				-1,
+				0,
+				1,
+				2,
+				3,
+				4
+			],
+			"form_after": {
+				"kind_index": 1,
+				"route_count": 0,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 0,
+				"source_id": "source1",
+				"status": "Patch edit restored.",
+				"value": 0.0,
+				"value_text": "0.65"
+			},
+			"form_before": {
+				"kind_index": 0,
+				"route_count": 3,
+				"search": "",
+				"sequencer_steps": "0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0",
+				"source_count": 1,
+				"source_id": "source1",
+				"status": "Patch edit restored.",
+				"value": 0.649999999999999,
+				"value_text": "0.65"
+			},
+			"path": "/root/Xenovection/@CanvasLayer@14/@Control@15/@HBoxContainer@16/@OptionButton@30",
+			"popup_position": "(771, 73)",
+			"popup_size": "(265, 608)",
+			"popup_visible": true,
+			"popup_window_id": 0,
+			"rect_after": "[P: (771.0, 20.0), S: (265.0, 53.0)]",
+			"rect_before": "[P: (771.0, 20.0), S: (265.0, 53.0)]",
+			"requested": 4,
+			"requested_text": "05  Scientific / no FX",
+			"screen_transform": "[X: (0.694444, 0.0), Y: (0.0, 0.694444), O: (0.0, 0.0)]",
+			"selected_after_keyboard": 4,
+			"selected_after_pointer": 9,
+			"selected_before": 9,
+			"visible_in_tree": true
+		}
+	]
+}

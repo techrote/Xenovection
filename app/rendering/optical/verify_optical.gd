@@ -120,6 +120,23 @@ func _run() -> void:
 		layer.set_parameters({"surface_opacity": alpha})
 		_check(layer.get_source_membership() == expected, "opacity preserves exact source membership")
 	_check(int(layer.get_metrics().proxy_geometry_builds) == opacity_builds, "opacity switches do not rebuild geometry")
+	# OPTICAL-003 uses the existing proxy mesh and bounded optical uniforms.
+	layer.set_parameters({"optical_mix": 1.0, "optical_thickness": INF, "absorption": -4.0, "ior": 100.0, "layer_spacing": 0.4})
+	var optical_metrics: Dictionary = layer.get_metrics()
+	_check(bool(optical_metrics.surface_translucent) and int(optical_metrics.secondary_film_draws) == 1, "optical matter activates bounded second film")
+	var active_material: ShaderMaterial = layer.get_node("SelectedArtisticProxy").material_override
+	_check(is_finite(float(active_material.get_shader_parameter("optical_thickness"))), "nonfinite authored thickness sanitized")
+	_check(float(active_material.get_shader_parameter("absorption")) == 0.0, "negative absorption rejected")
+	_check(is_equal_approx(float(active_material.get_shader_parameter("ior")), 2.4), "IOR bounded")
+	var film: MeshInstance3D = layer.get_node("SecondaryOpticalFilm")
+	_check(film.mesh == pick_surface.mesh, "second film shares immutable mesh")
+	layer.set_parameters({"refraction_strength": 0.7})
+	_check(bool(layer.get_metrics().refraction_screen_copy_active), "refraction selects screen-copy variant")
+	layer.set_parameters({"refraction_strength": 0.0})
+	_check(not bool(layer.get_metrics().refraction_screen_copy_active), "disabled refraction drops screen-copy variant")
+	layer.set_parameters({"optical_mix": 0.0})
+	_check(not film.visible, "legacy optical branch suppresses second film")
+	_check(int(layer.get_metrics().proxy_geometry_builds) == opacity_builds and layer.get_source_membership() == expected, "optical controls never rebuild geometry or edit source IDs")
 	layer.set_parameters({"enabled": false})
 	var updates := int(layer.get_metrics().proxy_clock_updates)
 	for i in range(30):

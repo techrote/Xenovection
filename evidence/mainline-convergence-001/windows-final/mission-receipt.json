@@ -1,0 +1,299 @@
+{
+  "schema": "xenovection.mainline-convergence-final.v1",
+  "mission": "MAINLINE-CONVERGENCE-001",
+  "recorded_at_utc": "2026-11-28T18:21:28.390389+00:00",
+  "status": "QUALIFIED_DRAFT_HOLD",
+  "physical_gpu_qualified": false,
+  "owner_visual_acceptance": "Pending owner evaluation",
+  "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+  "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+  "artifact": {
+    "workflow_conclusion": "success",
+    "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+    "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+    "workflow_run_id": 46169673564,
+    "workflow_job_id": 141055008781,
+    "workflow_url": "https://github.com/techrote/Xenovection/actions/runs/46169673564",
+    "artifact_id": 15275470748,
+    "artifact_name": "Xenovection-Windows-f566f7861dfa245f55cc2299df46d353a153f7d8",
+    "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46169673564/artifacts/15275470748",
+    "outer_bytes": 61764090,
+    "outer_sha256": "1e28f08b4f82789943cd46745135c7c9d8994e67651bf0f113f90a6fa9f7cce0",
+    "expires_at": "2026-12-28T18:15:09Z"
+  },
+  "inner_zip": {
+    "filename": "Xenovection-MAINLINE-CONVERGENCE-001-Windows-f566f7861dfa.zip",
+    "bytes": 38974660,
+    "sha256": "e528de4fb9a276e77bffafab05fbda2ce8fe16219bb5d7e968a489ff31672e13"
+  },
+  "embedded_build": {
+    "schema": "xenovection.build.v1",
+    "source_sha": "f566f7861dfa245f55cc2299df46d353a153f7d8",
+    "tree_sha": "69175c86890fcae1212cff70bd039e586c720a87",
+    "repository": "https://github.com/techrote/Xenovection",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "status": "Draft/HOLD",
+    "mission": "MAINLINE-CONVERGENCE-001",
+    "primary_renderer": "Vulkan Forward+",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"
+  },
+  "payload_files_verified": 75,
+  "workflow_gates_passed": 101,
+  "source_assertions_passed": 696,
+  "extracted_assertions_passed": 696,
+  "graphical_assertions_passed": 262,
+  "structural_suites": [
+    {
+      "suite": "test_core",
+      "source": {
+        "file": "core-contracts.log",
+        "sha256": "a22fad9c13bcecbd26805bbc597d9519af4e74c3014824ae43341b40718875f9",
+        "checks": 71,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_core.log",
+        "sha256": "cea0c3b194d21c82932f46fe1164964d2e82ed6348f71bae16b9e5abbbdb1991",
+        "checks": 71,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_integration",
+      "source": {
+        "file": "integrated-contracts.log",
+        "sha256": "80c8e56ea3a4d9c21fb9c456f84962dbb79751f78bb68bc17a6ce7ec73a27ae3",
+        "checks": 81,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_integration.log",
+        "sha256": "17309d3939506f913ef1714bbb589f1d96f870d2926eb52b2ed6f157068c1d6a",
+        "checks": 81,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "verify_filaments",
+      "source": {
+        "file": "filament-contracts.log",
+        "sha256": "7a325c0618583949e0b8a001df4de0c1f791e7243677645e55c632e597160611",
+        "checks": 34,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-verify_filaments.log",
+        "sha256": "ac2d5bc81633f83eea1f1279540753912cefc53c9d5139b50f1e00b10b4be651",
+        "checks": 34,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "verify_optical",
+      "source": {
+        "file": "optical-contracts.log",
+        "sha256": "ffba6e893398d6ebcc6265b62190b147890e61fb912b8e70c138ac1f739eae10",
+        "checks": 62,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-verify_optical.log",
+        "sha256": "056bd1275a223af7511a7ebeace7cf0f19de370f93fa811768977bb492cbed7d",
+        "checks": 62,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_matter",
+      "source": {
+        "file": "matter-contracts.log",
+        "sha256": "8fa657680e36d8199a996eedacee434198770b91d0ca214a23d7374226b62c20",
+        "checks": 30,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_matter.log",
+        "sha256": "59366010fd53b25c183102fb72c756847f05f1ce6bd82599cf1bc0fb325078aa",
+        "checks": 30,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_synth",
+      "source": {
+        "file": "synth-contracts.log",
+        "sha256": "692773c6cccc2ae5ff64f6511374093fa29af60d40556b90632f5f171c416a79",
+        "checks": 53,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_synth.log",
+        "sha256": "e9e1d20aafcc0fc93c51544d12657cdd7ee2114af70278d63fe90586c7c36c28",
+        "checks": 53,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_ecology",
+      "source": {
+        "file": "ecology-contracts.log",
+        "sha256": "ab98a82816900bdb894d26e1fc14a2e0b68c924cf90fd7af0c97bcea78da559f",
+        "checks": 81,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_ecology.log",
+        "sha256": "93d2e21a74199c37c81f1dd9b8ad2e4663d88705ad76181ff6ede650b576ca0e",
+        "checks": 81,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_compositions",
+      "source": {
+        "file": "composition-contracts.log",
+        "sha256": "9de6ddbea2df6e7bdcb3a0ef96b523159806cc92cbeb3eb6e8f9bd0401d012ea",
+        "checks": 69,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_compositions.log",
+        "sha256": "d93aeafeec6b85d771f3d4981abfd22dbed856196ed2b0aef558a178a8c08e71",
+        "checks": 69,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_convergence",
+      "source": {
+        "file": "convergence-contracts.log",
+        "sha256": "d888fd1f5332c18b180868991d91c4bb275da80307c5e5688762ac88efd8f97d",
+        "checks": 68,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_convergence.log",
+        "sha256": "a8eb8dfd0e29c21c21bed31c472e905e088d5864235e5444dfdd6f9348dce234",
+        "checks": 68,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_convergence_ecology",
+      "source": {
+        "file": "spatial-ecology-contracts.log",
+        "sha256": "46995f0389bdc2f5b68cd79947a8baaaa54b2cf5e343f61cf0fc5d4b3f97e83b",
+        "checks": 103,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_convergence_ecology.log",
+        "sha256": "2a7834bfeac9382874fecd08352cf980dede2de9c0fb1b9bf527eaeb8d8c7551",
+        "checks": 103,
+        "status": "PASS"
+      }
+    },
+    {
+      "suite": "test_matter_optics",
+      "source": {
+        "file": "matter-optics-contracts.log",
+        "sha256": "44c7cb6923d99d275719d8f45d59b3e8bb25f70be8ec2d052a6f60bbcf0efd88",
+        "checks": 44,
+        "status": "PASS"
+      },
+      "extracted": {
+        "file": "extracted-test_matter_optics.log",
+        "sha256": "04640a476bea2f6aa0f0b7d154623f657f22ba3d288f1041cd02c203ccc722d9",
+        "checks": 44,
+        "status": "PASS"
+      }
+    }
+  ],
+  "graphical_suites": [
+    {
+      "file": "gui-material.json",
+      "sha256": "79a5441212033b8ab778d0c0e6fa7c645a02a8ebe96cf8afdb33b40ef9c9d819",
+      "checks": 42
+    },
+    {
+      "file": "gui-spatial_ecology.json",
+      "sha256": "a9a9dacae2f1728c48b47405014362ae318a20804ff78bfd4b21e82911d39d67",
+      "checks": 60
+    },
+    {
+      "file": "gui-convergence.json",
+      "sha256": "7798b0a14772b873dbba177164df473a03a40e011181061dc4e37e1a7efbf455",
+      "checks": 90
+    },
+    {
+      "file": "gui-input.json",
+      "sha256": "504e035ff63e911631062b5912ae3351d778b85545a9f5677cbc0792a74c1957",
+      "checks": 37
+    },
+    {
+      "file": "synth-gui.json",
+      "sha256": "d7c502b4587b56a3a2593bd3b001e1d4177b7b5fe816a5435cacea596fc96b06",
+      "checks": 10
+    },
+    {
+      "file": "ecology-gui.json",
+      "sha256": "6045e1d361e3be3a21c39b0d854849aa2236fa02be4b563211f4f1c771e6f41d",
+      "checks": 23
+    }
+  ],
+  "full_soak": {
+    "checks": 20,
+    "density": {
+      "instance_buffer_bytes_estimate": 26263552,
+      "nodes": 768,
+      "primary_edges": 81920,
+      "secondary_fibres": 327680,
+      "segments_per_strand": 64
+    },
+    "evidence_kind": "Headless actual application state/update loop; simulated fixed-step timeline, NOT wall-clock GPU uptime or target GPU performance",
+    "failures": [],
+    "memory_scope": "Godot engine tracked static allocations and object counts; not process RSS or total GPU VRAM",
+    "proxy_cycles": {
+      "after_engine_static_bytes": 0,
+      "after_objects": 5600,
+      "before_engine_static_bytes": 0,
+      "before_objects": 5601,
+      "count": 96
+    },
+    "proxy_mesh_rebuilds_during_steady_loop": 0,
+    "simulated_steady_frames": 36000,
+    "simulated_timeline_seconds": 600.0,
+    "source_instance_uploads_during_steady_loop": 0,
+    "status": "PASS",
+    "steady_loop_wall_seconds": 28.640967,
+    "steady_memory": {
+      "after_engine_static_bytes": 0,
+      "after_objects": 5601,
+      "before_engine_static_bytes": 0,
+      "before_objects": 5601,
+      "peak_sampled_engine_static_bytes": 0
+    },
+    "suite": "deterministic-adversarial-headless-soak",
+    "total_wall_seconds": 41.093757
+  },
+  "exact_values": {
+    "suite": "independent-source-binary64-exactness",
+    "status": "PASS",
+    "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c",
+    "input_values": 48,
+    "edge_weights": 11520,
+    "checked_binary64_values": 11568,
+    "byte_count": 92544,
+    "mismatched_values": 0,
+    "first_mismatched_indices": [],
+    "expected_binary_sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629",
+    "godot_binary_sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629",
+    "reference": "Python json.loads of the unmodified historical archive specimen, packed as IEEE-754 binary64 little endian",
+    "godot_output": "Binary64 stream emitted by independently extracted executable: D:\\a\\Xenovection\\Xenovection\\build\\windows-evidence\\extracted-source-f64.bin"
+  },
+  "performance_profiles_verified": 56,
+  "visual_captures_reviewed": 65,
+  "independent_verification_receipt_sha256": "f8a1b7c0fba3747975ca4570c587dfeddf9cb7dbd0ac64f1303c13d22c97b7da",
+  "visual_coverage_sha256": "b555fb1c3c6e6cdcf7d15cde8fe45d97116a3c10ee9dbad92cc1a3ccf404c15c",
+  "remaining_authority": "PR18 stays Draft/HOLD; protected branches and main remain unchanged. No automatic merge, Ready promotion or physical owner acceptance."
+}

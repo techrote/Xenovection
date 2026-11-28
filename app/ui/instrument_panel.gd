@@ -36,6 +36,7 @@ var _show_box: bool = false
 var clean_view: bool = false
 var tabs: TabContainer
 var source_layers: VBoxContainer
+var matter_label: Label
 
 func _ready() -> void:
 	layer = 8
@@ -120,6 +121,7 @@ func _build_header() -> void:
 	subtitle_label = _label("FILAMENTS  /  FIELDS  /  OPTICAL MATTER", 11, MUTED)
 	name_box.add_child(subtitle_label)
 	preset_picker = OptionButton.new()
+	preset_picker.set_meta("target", "composition.preset")
 	preset_picker.custom_minimum_size.x = 216
 	preset_picker.item_selected.connect(func(index: int): preset_selected.emit(index))
 	preset_picker.focus_mode = Control.FOCUS_NONE
@@ -162,6 +164,7 @@ func _slider(parent: Control, label_text: String, key: String, minimum: float, m
 	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(value)
 	var slider := HSlider.new()
+	slider.set_meta("target", key)
 	slider.min_value = minimum
 	slider.max_value = maximum
 	slider.step = step
@@ -176,6 +179,7 @@ func _slider(parent: Control, label_text: String, key: String, minimum: float, m
 
 func _toggle(parent: Control, label_text: String, key: String, initial: bool = true) -> void:
 	var toggle := CheckButton.new()
+	toggle.set_meta("target", key)
 	toggle.text = label_text
 	toggle.button_pressed = initial
 	toggle.focus_mode = Control.FOCUS_NONE
@@ -250,6 +254,25 @@ func _build_rail() -> void:
 	palette.item_selected.connect(func(index: int): parameter_changed.emit("optical.palette", ["glacier", "ember", "pearl"][index]))
 	optics.add_child(palette)
 	_controls["optical.palette"] = {"input": palette}
+	_section(optics, "Optical matter", "Authored film thickness, absorption and bounded spectral response. Mix 0 preserves the original material.")
+	_slider(optics, "Optical matter mix", "optical.optical_mix", 0.0, 1.0, 0.01, 0.0)
+	_slider(optics, "Authored thickness · µm", "optical.optical_thickness", 0.02, 2.0, 0.01, 0.35)
+	_slider(optics, "Absorption · 1/µm", "optical.absorption", 0.0, 6.0, 0.02, 0.7)
+	_slider(optics, "Transmission", "optical.transmission", 0.0, 1.0, 0.01, 0.78)
+	_slider(optics, "Effective index", "optical.ior", 1.0, 2.4, 0.01, 1.45)
+	_slider(optics, "Interference phase", "optical.interference_phase", -6.283, 6.283, 0.02, 0.0)
+	_slider(optics, "Interference strength", "optical.interference_strength", 0.0, 1.0, 0.01, 0.7)
+	_slider(optics, "Spectral bandwidth", "optical.spectral_bandwidth", 0.0, 1.0, 0.01, 0.45)
+	_slider(optics, "Dispersion", "optical.dispersion_strength", 0.0, 1.0, 0.01, 0.25)
+	_slider(optics, "Reflection intensity", "optical.reflection_intensity", 0.0, 2.0, 0.01, 0.85)
+	_slider(optics, "Coupled thickness / absorption field", "optical.optical_field", 0.0, 1.0, 0.01, 0.4)
+	_slider(optics, "Illumination direction", "optical.illumination_direction", -3.14159, 3.14159, 0.02, 0.0)
+	_slider(optics, "Illumination intensity", "optical.illumination_intensity", 0.0, 3.0, 0.02, 0.65)
+	_slider(optics, "Neutral ↔ narrow-band light", "optical.illumination_balance", 0.0, 1.0, 0.01, 0.5)
+	_slider(optics, "Refraction strength", "optical.refraction_strength", 0.0, 1.0, 0.01, 0.0)
+	_slider(optics, "Second film spacing", "optical.layer_spacing", 0.0, 1.0, 0.01, 0.0)
+	_slider(optics, "Local scattering / attenuation", "optical.atmospheric_density", 0.0, 1.0, 0.01, 0.0)
+	_slider(optics, "Diagnostic · 0 art / 1 path / 2 T / 3 F", "optical.optical_diagnostic", 0.0, 3.0, 1.0, 0.0)
 	_toggle(optics, "Environment backdrop", "optical.sky_visible")
 	_toggle(optics, "Optical layer", "optical.enabled")
 	var clocks := _page(tabs, "Clocks")
@@ -311,6 +334,7 @@ func _build_rail() -> void:
 	_button(data, "Save scene  [F5]", "save_scene")
 	_button(data, "Recall scene  [F6]", "load_scene")
 	_button(data, "Save performance receipt  [F10]", "profile")
+	_build_matter_page()
 
 func _build_inspector() -> void:
 	inspector = PanelContainer.new()
@@ -427,3 +451,51 @@ func _draw_box() -> void:
 	if _show_box:
 		_box_control.draw_rect(_box, Color(MINT, 0.075), true)
 		_box_control.draw_rect(_box, Color(MINT, 0.8), false, 1.0)
+
+func _build_matter_page() -> void:
+	var page := _page(tabs,"Matter")
+	_section(page,"Generated regions","Choose a procedural or integrated composition. Region controls are independent of the immutable source. F focuses; I isolates. Undo here restores region edits.")
+	matter_label = _label("Select a procedural preset",12,MINT)
+	page.add_child(matter_label)
+	var row := HBoxContainer.new()
+	page.add_child(row)
+	for i in range(3): _button(row,"Region %d" % (i+1),"matter_select_%d" % i)
+	_toggle(page,"Region visible","matter.edit.visible",false)
+	_section(page,"Topology","0 = integrated flow; 1 = strip / film domain. Field IDs: 0 vortex, 1 sink, 2 curl, 3 helix, 4 dipole, 5 Lorenz, 6 source. Reintegrate to bake live field edits into flow paths.")
+	_slider(page,"Representation","matter.edit.mode",0,1,1,1)
+	_slider(page,"Seed","matter.edit.seed",0,9999,1,73)
+	_slider(page,"Strip population","matter.edit.count",24,192,12,96)
+	_slider(page,"Primary field","matter.edit.field",0,6,1,0)
+	_slider(page,"Secondary field","matter.edit.secondary",0,6,1,2)
+	_slider(page,"Blend","matter.edit.mix",0,1,0.01,0.42)
+	_slider(page,"Integration step","matter.edit.integration",0.005,0.12,0.005,0.055)
+	_toggle(page,"Time-dependent pathlines","matter.edit.pathline",false)
+	_button(page,"Reintegrate / bake field","matter_reintegrate")
+	_button(page,"Reseed","matter_reseed")
+	_toggle(page,"Advected particle population","matter.edit.particles",false)
+	_button(page,"Reset particles","matter_particles_reset")
+	_section(page,"Matter","Condensation changes strip geometry, shell wraps the shared parameter domain. Flow strength, origin and blending affect both geometry and colour.")
+	for spec: Array in [
+		["Condensation","condensation",0,1,0.005,0.7],["Shell wrapping","shell",0,1,0.005,0],
+		["Field deformation","deformation",0,1.5,0.01,0.45],["Field strength","strength",0,3,0.01,1],
+		["Field origin X","origin_x",-4,4,0.05,0],["Field origin Y","origin_y",-4,4,0.05,0],["Field origin Z","origin_z",-4,4,0.05,0],
+		["Pores","pore_size",0,0.47,0.005,0.22],["Growth / erosion","growth",0,1,0.005,1],
+		["Optical thickness","thickness",0,1,0.005,0.42],["Roughness","roughness",0,1,0.01,0.26],
+		["Absorption","absorption",0,2,0.01,0.2],["Opacity","opacity",0,1,0.005,0.45],
+		["Hairline width (pixels)","line_width",0.2,3,0.05,0.65],["Spectral hue","hue",0,1,0.005,0],
+		["Travelling highlights","trails",0,1,0.01,0.35]]:
+		_slider(page,spec[0],"matter.edit."+spec[1],spec[2],spec[3],spec[4],spec[5])
+	_slider(page,"Shared optical response","matter.edit.optical_mix",0,1,0.01,0)
+	_section(page,"Placement")
+	for spec: Array in [["X","x",-9,9,0.05,0],["Y","y",-9,9,0.05,0],["Z","z",-9,9,0.05,0],
+		["Rotation","rotation",-3.14,3.14,0.02,0],["Scale","scale",0.2,2,0.01,1]]:
+		_slider(page,spec[0],"matter.edit."+spec[1],spec[2],spec[3],spec[4],spec[5])
+	_button(page,"Focus region","focus")
+	_button(page,"Isolate / reveal","isolate")
+	_button(page,"Save scene [F5]","save_scene")
+	_button(page,"Recall scene [F6]","load_scene")
+
+func sync_matter(active: bool, selected: int, isolated: bool, values: Dictionary) -> void:
+	if not is_instance_valid(matter_label): return
+	matter_label.text = "Generated region %d%s" % [selected+1," · isolated" if isolated else ""] if active else "Select a procedural preset"
+	for key in values: sync_value("matter.edit."+key,values[key])

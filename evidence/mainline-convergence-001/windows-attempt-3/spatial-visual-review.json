@@ -1,0 +1,87 @@
+{
+  "schema": "xenovection.spatial-ecology-independent-visual-review.v1",
+  "source_sha": "dc90fc2cac6efc0498d716ce5e9f41359b5a14fc",
+  "tree_sha": "5a2684f011dc7cbbdf7630d1111f7e929fd8d18e",
+  "run_id": 46158498122,
+  "artifact_id": 15268134061,
+  "full_campaign_status": "FAIL: later convergence-authoring witness failed; this review does not qualify the complete application",
+  "review_scope": "Independent visual inspection of actual extracted Windows Vulkan spatial-ecology captures, alongside exact graphical-input receipt",
+  "captures": [
+    {
+      "file": "gui-spatial_ecology-material-low.png",
+      "sha256": "2d0e52f30cefbc2ee9bf37557a20218318c4cdf5ebdd5c4cc1358985d101fed2"
+    },
+    {
+      "file": "gui-spatial_ecology-material-high.png",
+      "sha256": "debc7d799a07064ea61cdcb274c04e1fe87f53a63ee3661c45173a8985af27e4"
+    },
+    {
+      "file": "gui-spatial_ecology.png",
+      "sha256": "3f816514dd56bbc69c551e613e290682558f1eb67788651b712b0f678f6ecb29"
+    }
+  ],
+  "spatial_input_status": "PASS",
+  "spatial_input_checks": 53,
+  "observations": [
+    "The numerical interaction plane appears as a finite perspective boundary; no screen-filling wedges, cylinder endpoint explosions, black frame or lost view is visible.",
+    "Sparse living branches, the planted membrane and source markers occupy the bounded domain alongside the retained original source presentation. Numerical state remains planar.",
+    "The final Life inspector is legible and scrolled to quarter trail detail plus numerical/material controls. The global transport reads Play and ecology is paused.",
+    "The exact option trace starts at focused item -1 and advances through real key events to each requested item; Plant1, Membrane2 and all subsequent tool/detail selections commit correctly.",
+    "The 53 executable checks cover actual planting, stable-identity selection, source placement, excitation/inhibition, isolation, camera orbit/inverse mapping, planar return, deactivation/reactivation, exact Step and frozen-clock material comparison.",
+    "At the final capture 13 live organism records remain.26 allocations minus 13 deallocations equals 13, consistent with one planted organism and explicit release/re-entry. Shared topology remains exactly two meshes and four family materials."
+  ],
+  "material_comparison": {
+    "changed_samples": 574,
+    "mean_rgb_difference": 0.00025508154893177,
+    "samples": 156500
+  },
+  "ecology_metrics": {
+    "numerical_domain": "planar",
+    "paused": true,
+    "sampled_graph_boundaries": 45,
+    "shared_bus": true,
+    "simulation_enabled": true,
+    "snapshot_epoch": 1,
+    "snapshot_generation_us_last": 1125,
+    "snapshot_generation_us_p50": 593,
+    "snapshot_generation_us_p95": 804,
+    "snapshot_samples": 52,
+    "snapshot_topology_revision": 9,
+    "solver_samples": 45,
+    "solver_us_p50": 312,
+    "solver_us_p95": 1308,
+    "world_tick": 45
+  },
+  "representation_metrics": {
+    "active_instance_buffers": 15,
+    "active_nodes": 41,
+    "allocations": 26,
+    "body_transform_updates": 318,
+    "deallocations": 13,
+    "depth_strength": 0.45,
+    "instance_uniform_writes": 1052,
+    "material_uniform_writes": 148,
+    "numerical_domain": "planar",
+    "organism_resources": 13,
+    "quality": 2,
+    "representation": "bounded spatial snapshot adapter",
+    "shared_materials": 4,
+    "shared_meshes": 2,
+    "topology_builds": 2,
+    "topology_events": 110,
+    "transform_uploads": 647,
+    "update_us_last": 346,
+    "update_us_p50": 108,
+    "update_us_p95": 330,
+    "upload_bytes": 41408,
+    "world_tick": 45
+  },
+  "numerical_digest": "fbde988b603f98845755bb6d4eff58828d442ef1602828222f1a696336680be9",
+  "measurement_scope": "Solver, snapshot and representation microseconds are hosted Windows CPU measurements. upload_bytes counts submitted instance-transform/custom-data payload estimates; it is not measured PCIe or driver-batched transfer volume.",
+  "limits": [
+    "The retained dense source dominates the central view. Living details are small, especially at the low optical material gain; the high-gain image reveals more of the organisms and domain frame.",
+    "The campaign failed before the inherited and integrated composition populations, so these captures do not establish their final optical/ecological legibility.",
+    "This is a bounded spatial presentation of a planar solver, not a three-dimensional numerical ecology.",
+    "Software Vulkan output is not physical TITAN RTX throughput or owner visual acceptance."
+  ]
+}

@@ -58,7 +58,7 @@ func sample(script_usec: int) -> void:
 
 func _distribution(values: PackedFloat64Array) -> Dictionary:
 	if _count == 0:
-		return {"p50_ms": 0.0, "p95_ms": 0.0, "mean_ms": 0.0, "max_ms": 0.0}
+		return {"p50_ms": 0.0, "p95_ms": 0.0, "p99_ms": 0.0, "mean_ms": 0.0, "max_ms": 0.0}
 	var sorted: PackedFloat64Array = values.slice(0, _count)
 	sorted.sort()
 	var total: float = 0.0
@@ -66,6 +66,7 @@ func _distribution(values: PackedFloat64Array) -> Dictionary:
 		total += value
 	return {"p50_ms": sorted[int((_count - 1) * 0.5)],
 		"p95_ms": sorted[int(ceil((_count - 1) * 0.95))],
+		"p99_ms": sorted[int(ceil((_count - 1) * 0.99))],
 		"mean_ms": total / _count, "max_ms": sorted[-1]}
 
 func snapshot(extra: Dictionary = {}) -> Dictionary:

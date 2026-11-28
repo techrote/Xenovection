@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "Actual exported sample index/file identity verification; not graphical qualification",
+  "scenes": 25,
+  "patches": 12,
+  "unique_patch_ids": 12,
+  "all_patch_paths_exist": true,
+  "patch_preset_identities_match": true,
+  "index_sha256": "8980c4fdf88b41bfe962649688efb36cb06bbab19bd86f540cefb5082f8522cc"
+}
