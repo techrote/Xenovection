@@ -62,11 +62,11 @@ vec3 film(vec2 uv) {
 	float y = (v - 0.5) * 4.6;
 	float z = 0.58 * sin(u * TAU * 1.3 + v * 4.0 + shape_time * 0.45 + seed_phase)
 		+ 0.32 * sin(v * TAU * 1.8 - u * 3.5 - shape_time * 0.3);
-	vec3 flat = vec3(x,y,z);
+	vec3 planar = vec3(x,y,z);
 	float phi = (u - 0.5) * 5.5;
 	float theta = (v - 0.5) * 2.5;
 	vec3 curved = (2.4 + z * 0.35) * vec3(sin(phi)*cos(theta), sin(theta), cos(phi)*cos(theta));
-	vec3 p = mix(flat, curved, shell);
+	vec3 p = mix(planar, curved, shell);
 	p += disturbance(p, shape_time * 0.35 + seed_phase) * deformation;
 	return p;
 }
