@@ -180,6 +180,17 @@ func _run() -> void:
 		application.apply_preset(index)
 		application._process(0.016)
 		check(application.dataset.manifest.revision == original_revision, "Principal preset %d retains the archived source" % index)
+	for optical_index in range(7, 13):
+		application.apply_preset(optical_index)
+		application._process(0.016)
+		check(application.optical.get_metrics().optical_visible and application.optical.get_metrics().optical_matter_mix > 0.99, "Optical composition %d active" % optical_index)
+		check(application.dataset.manifest.revision == original_revision, "Optical composition preserves source")
+		check(application.bus.targets.has("optical.optical_thickness") and application.bus.targets.has("optical.refraction_strength"), "Optical typed targets registered")
+	application.set_parameter("optical.optical_thickness", 0.91)
+	var optical_save_path := "user://optical003-roundtrip.json"
+	application.save_scene(optical_save_path)
+	application.set_parameter("optical.optical_thickness", 0.12)
+	check(application.load_scene(optical_save_path) and is_equal_approx(float(application.bus.get_base("optical.optical_thickness")), 0.91), "Optical authored thickness survives scene recall")
 	application.apply_preset(2)
 	application.set_parameter("optical.displacement", 0.0)
 	application._process(0.016)

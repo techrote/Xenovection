@@ -85,6 +85,10 @@ func _ready() -> void:
 		bus.paused = true
 	if _args.has("no-optical"):
 		optical_flags.enabled = false
+	if _args.has("legacy-optics"):
+		set_parameter("optical.optical_mix", 0.0)
+	if _args.has("close-optics"):
+		camera.set_pose({"distance": camera.orbit_distance * 0.58})
 	if _args.has("no-filaments"):
 		filament_flags.enabled = false
 	if _args.has("no-fibres"):
@@ -165,6 +169,9 @@ func _rebuild_modulation() -> void:
 	bus.add_route({"id": "counter-resonance", "source": "counterphase", "target": "filament.resonance", "amplitude": 0.28 * mod_depth, "operation": "multiply"})
 	bus.add_route({"id": "spectral-drift", "source": "breath", "target": "optical.sky_frequency", "amplitude": Vector2(0.14, -0.1) * mod_depth, "operation": "add"})
 	bus.add_route({"id": "material-breath", "source": "breath", "target": "optical.material_tint", "amplitude": Color(0.035, 0.018, -0.015, 0) * mod_depth, "operation": "add"})
+	# Existing clock and typed bus; no second modulation engine.
+	bus.add_route({"id": "optical-depth-breath", "source": "counterphase", "target": "optical.optical_thickness", "amplitude": 0.12 * mod_depth, "operation": "multiply", "smoothing": 0.18})
+	bus.add_route({"id": "optical-phase-breath", "source": "breath", "target": "optical.interference_phase", "amplitude": 0.38 * mod_depth, "operation": "add"})
 	bus.register_source("sample", {"type": "manual", "value": 0.0})
 	bus.add_route({"id": "sample-phase", "source": "sample", "target": "filament.phase_speed", "amplitude": 0.55, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
 	bus.add_route({"id": "sample-field", "source": "sample", "target": "optical.sky_warp", "amplitude": 0.2, "operation": "add", "mask": 1.0 if replay_enabled else 0.0})
@@ -251,7 +258,7 @@ func apply_preset(index: int) -> void:
 	camera.set_pose({"distance": preset.distance, "yaw": preset.yaw, "pitch": preset.pitch})
 	bus.reset()
 	ui.preset_picker.select(preset_index)
-	ui.set_tab(1 if preset.id in ["optical", "membrane"] else 0)
+	ui.set_tab(1 if preset.id in ["optical", "membrane"] or str(preset.id).begins_with("optical_") else 0)
 	ui.subtitle_label.text = str(preset.description).to_upper()
 	if _ready_done:
 		recorder.reset()
@@ -597,6 +604,9 @@ func load_scene(path: String) -> bool:
 	if str(data.get("source_revision", "")) != _source_sha:
 		ui.show_message("Scene belongs to a different source revision. Load that source first.", 8)
 		return false
+	# Older v1 scenes omitted these destinations; do not inherit a live effect.
+	for name: String in ["optical_mix","optical_thickness","absorption","transmission","ior","interference_phase","interference_strength","spectral_bandwidth","dispersion_strength","reflection_intensity","optical_field","illumination_direction","illumination_intensity","illumination_balance","refraction_strength","layer_spacing","atmospheric_density","optical_diagnostic"]:
+		bus.set_base("optical." + name, OpticalRenderer.DEFAULTS[name])
 	for key: String in data.get("base_parameters", {}):
 		set_parameter(key, _decode(data.base_parameters[key]))
 	for key: String in data.get("filament_flags", {}):

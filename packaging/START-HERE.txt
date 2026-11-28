@@ -51,3 +51,12 @@ BUILD AND LICENSES
 BUILD.json identifies source/engine/specimen; SHA256SUMS.json identifies payload.
 Godot Engine 4.7.2 and third-party notices are included under licenses/.
 The optical fields are original mathematical implementations, not copied donor code.
+
+OPTICAL-003 — six additional editable optical studies, numbered 08–13.
+Optics > Optical matter: mix 0 = accepted legacy appearance; mix 1 enables the optical model.
+Thickness is authored in micrometres, not measured geometry; absorption is per micrometre.
+Layer spacing creates one shared-mesh offset film. Refraction > 0 selects an opaque-background
+screen-copy experiment; transparent strands and other films cannot appear in that copy.
+Use the existing independent Sky, Palette, Normal and Displacement clocks. Diagnostic 1/2/3
+shows estimated path, RGB transmission or Fresnel. Reset via preset; F5/F6 saves/recalls authored controls.
+Use Forward+; the screen depth test is specifically reverse-Z Forward+.

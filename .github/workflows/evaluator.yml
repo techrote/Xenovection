@@ -4,6 +4,8 @@ on:
   push:
     branches: [docs/xenovection-founding-charter]
     paths: [app/**, tests/**, tools/**, packaging/**, .gitattributes, .github/workflows/evaluator.yml]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -12,9 +14,11 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -29,9 +33,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Xenovection-Windows-${{ github.sha }}
+          name: Xenovection-Windows-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
-            build/Xenovection-FOUND-002-Windows-*.zip
+            build/Xenovection-OPTICAL-003-Windows-*.zip
             build/package-receipt.json
             build/windows-evidence/**
           if-no-files-found: error
