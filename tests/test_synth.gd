@@ -150,7 +150,12 @@ func _run() -> void:
 	panel._show_route("")
 	panel._targets("filament.phase_speed")
 	panel.amplitude.value = 0.8
+	var authored_source: String = panel._selected(panel.route_source)
+	var authored_target: String = panel._selected(panel.target_picker)
 	panel._apply_route()
+	print("SYNTH_ROUTE_AUTHORING ", JSON.stringify({"selected_source": authored_source,
+		"selected_target": authored_target, "route_count": app.synth.patch.get("routes", []).size(),
+		"synth_error": app.synth_error, "panel_status": panel.status.text}))
 	check(app.synth.patch.routes.size() == 1, "Editor constructs route without file editing")
 	app._process(1.0 / 60.0)
 	check(float(app.bus.get_parameters()["filament.phase_speed"]) > float(app.bus.get_base("filament.phase_speed")) + 0.39, "New route drives actual renderer target")
@@ -163,6 +168,10 @@ func _run() -> void:
 		check(ok, entry.title + " binds actual renderer targets")
 		if not ok:
 			continue
+		# Patch recall may legitimately change preset topology (segments/fibres).
+		# Flush that authored transition before measuring ordinary continuous
+		# modulation so the assertion still rejects every subsequent rebuild.
+		app._process(0.0)
 		var source_revision: String = app.dataset.manifest.revision
 		var before: Dictionary = app.filaments.get_metrics()
 		var before_optical: Dictionary = app.optical.get_metrics()
