@@ -6,6 +6,8 @@ extends Node3D
 const SURFACE_SHADER := preload("res://rendering/optical/optical_surface.gdshader")
 const TRANSLUCENT_SHADER := preload("res://rendering/optical/optical_translucent.gdshader")
 const BACKGROUND_SHADER := preload("res://rendering/optical/spectral_background.gdshader")
+const REFRACTIVE_SHADER := preload("res://rendering/optical/optical_refractive.gdshader")
+const OPAQUE_BACKGROUND_SHADER := preload("res://rendering/optical/spectral_background_opaque.gdshader")
 const MAX_RIBBONS := 96
 const DEFAULTS := {
 	"enabled": true, "scientific": false, "sky_visible": true,
@@ -17,6 +19,24 @@ const DEFAULTS := {
 	"normal_strength": 0.24, "displacement": 0.12, "domain_warp": 0.12,
 	"surface_opacity": 1.0,
 	"material_tint": Color(0.32, 0.59, 0.64), "palette": "glacier",
+	"optical_mix": 0.0,
+	"optical_thickness": 0.35,
+	"absorption": 0.7,
+	"transmission": 0.78,
+	"ior": 1.45,
+	"interference_phase": 0.0,
+	"interference_strength": 0.7,
+	"spectral_bandwidth": 0.45,
+	"dispersion_strength": 0.25,
+	"reflection_intensity": 0.85,
+	"optical_field": 0.4,
+	"illumination_direction": 0.0,
+	"illumination_intensity": 0.65,
+	"illumination_balance": 0.5,
+	"refraction_strength": 0.0,
+	"layer_spacing": 0.0,
+	"atmospheric_density": 0.0,
+	"optical_diagnostic": 0.0,
 }
 const LIMITS := {
 	"sky_speed": Vector2(-8.0, 8.0), "sky_diagonal": Vector2(-8.0, 8.0),
@@ -27,9 +47,27 @@ const LIMITS := {
 	"metallic": Vector2(0.0, 1.0), "normal_strength": Vector2(0.0, 2.0),
 	"displacement": Vector2(0.0, 1.0), "domain_warp": Vector2(0.0, 3.0),
 	"surface_opacity": Vector2(0.1, 1.0),
+	"optical_mix": Vector2(0.0, 1.0),
+	"optical_thickness": Vector2(0.02, 2.0),
+	"absorption": Vector2(0.0, 6.0),
+	"transmission": Vector2(0.0, 1.0),
+	"ior": Vector2(1.0, 2.4),
+	"interference_phase": Vector2(-6.283, 6.283),
+	"interference_strength": Vector2(0.0, 1.0),
+	"spectral_bandwidth": Vector2(0.0, 1.0),
+	"dispersion_strength": Vector2(0.0, 1.0),
+	"reflection_intensity": Vector2(0.0, 2.0),
+	"optical_field": Vector2(0.0, 1.0),
+	"illumination_direction": Vector2(-3.14159, 3.14159),
+	"illumination_intensity": Vector2(0.0, 3.0),
+	"illumination_balance": Vector2(0.0, 1.0),
+	"refraction_strength": Vector2(0.0, 1.0),
+	"layer_spacing": Vector2(0.0, 1.0),
+	"atmospheric_density": Vector2(0.0, 1.0),
+	"optical_diagnostic": Vector2(0.0, 3.0),
 }
 const SHARED_KEYS := ["sky_frequency", "sky_speed", "sky_diagonal", "sky_radius", "sky_warp", "sky_contrast", "sky_intensity", "sky_rotation", "sky_pan", "palette_phase"]
-const SURFACE_KEYS := ["roughness", "metallic", "normal_strength", "displacement", "domain_warp", "material_tint", "surface_opacity"]
+const SURFACE_KEYS := ["roughness", "metallic", "normal_strength", "displacement", "domain_warp", "material_tint", "surface_opacity", "optical_mix", "optical_thickness", "absorption", "transmission", "ior", "interference_phase", "interference_strength", "spectral_bandwidth", "dispersion_strength", "reflection_intensity", "optical_field", "illumination_direction", "illumination_intensity", "illumination_balance", "refraction_strength", "atmospheric_density", "optical_diagnostic"]
 
 class SurfaceBuilder:
 	var positions := PackedVector3Array()
@@ -74,6 +112,9 @@ var _surface_material: ShaderMaterial
 var _opaque_material: ShaderMaterial
 var _translucent_material: ShaderMaterial
 var _background_material: ShaderMaterial
+var _refractive_material: ShaderMaterial
+var _second_film: MeshInstance3D
+var _screen_reference := false
 var _palette_texture: ImageTexture
 var _source_node_ids: Array[String] = []
 var _source_edge_ids: Array[String] = []
@@ -206,7 +247,14 @@ func get_metrics() -> Dictionary:
 		"proxy_source_nodes": _source_node_ids.size(), "proxy_source_edges": _source_edge_ids.size(),
 		"proxy_visible_source_nodes": _represented_node_ids.size(), "proxy_visible_source_edges": _represented_edge_ids.size(),
 		"proxy_ribbons_drawn": _represented_ribbons, "proxy_ribbon_budget": MAX_RIBBONS,
-		"surface_translucent": float(_parameters.surface_opacity) < 0.999,
+		"surface_translucent": float(_parameters.surface_opacity) < 0.999 or float(_parameters.optical_mix) > 0.0001,
+		"optical_matter_mix": _parameters.optical_mix,
+		"authored_optical_thickness_um": _parameters.optical_thickness,
+		"optical_path_method": "authored thickness / refracted-angle cosine; bounded, not geometry thickness",
+		"refraction_screen_copy_active": _screen_reference and _surface.visible,
+		"secondary_film_draws": 1 if is_instance_valid(_second_film) and _second_film.visible else 0,
+		"secondary_film_triangles": _mesh_triangles if is_instance_valid(_second_film) and _second_film.visible else 0,
+		"atmospheric_density": _parameters.atmospheric_density,
 		"proxy_pick_cpu_bytes_estimate": _mesh_bytes,
 		"proxy_pick_count": _pick_count, "proxy_last_pick_usec": _last_pick_usec,
 		"proxy_last_pick_triangle_tests": _last_pick_triangle_tests,
@@ -324,13 +372,27 @@ func _ensure_nodes() -> void:
 	_rebuild_palette()
 
 func _apply_surface_material() -> void:
-	var needs_translucency := float(_parameters.surface_opacity) < 0.999
+	var matter := float(_parameters.optical_mix) > 0.0001
+	var needs_refraction := matter and float(_parameters.refraction_strength) > 0.0001 and not bool(_parameters.scientific) and bool(_parameters.enabled)
+	var needs_translucency := float(_parameters.surface_opacity) < 0.999 or matter
 	if needs_translucency and _translucent_material == null:
 		_translucent_material = ShaderMaterial.new()
 		_translucent_material.shader = TRANSLUCENT_SHADER
 		# Background(-128), translucent proxy(-64), exact hairlines(0).
 		_translucent_material.render_priority = -64
-	var desired := _translucent_material if needs_translucency else _opaque_material
+	if needs_refraction and _refractive_material == null:
+		_refractive_material = ShaderMaterial.new()
+		_refractive_material.shader = REFRACTIVE_SHADER
+		_refractive_material.render_priority = -64
+	if needs_refraction != _screen_reference:
+		_screen_reference = needs_refraction
+		_background_material.shader = OPAQUE_BACKGROUND_SHADER if needs_refraction else BACKGROUND_SHADER
+		for key in SHARED_KEYS:
+			_background_material.set_shader_parameter(key, _parameters[key])
+		_background_material.set_shader_parameter("background_strength", _parameters.background_strength)
+		_background_material.set_shader_parameter("palette_lut", _palette_texture)
+		_sent_background_clocks.clear()
+	var desired: ShaderMaterial = _refractive_material if needs_refraction else (_translucent_material if needs_translucency else _opaque_material)
 	if _surface_material == desired:
 		return
 	_surface_material = desired
@@ -350,6 +412,31 @@ func _apply_visibility() -> void:
 	var active := bool(_parameters.enabled) and not bool(_parameters.scientific)
 	_surface.visible = active and _surface.mesh != null and _mesh_triangles > 0
 	_background.visible = active and bool(_parameters.sky_visible) and float(_parameters.background_strength) > 0.0
+	_update_second_film()
+
+func _update_second_film() -> void:
+	# One bounded shared-mesh optical echo. No topology rebuild or source IDs.
+	var show_film := _surface.visible and float(_parameters.optical_mix) > 0.0001 and float(_parameters.layer_spacing) > 0.001
+	if not show_film:
+		if is_instance_valid(_second_film):
+			_second_film.visible = false
+			if _second_film.mesh != null and _surface.mesh == null:
+				_second_film.mesh = null
+		return
+	if not is_instance_valid(_second_film):
+		_second_film = MeshInstance3D.new()
+		_second_film.name = "SecondaryOpticalFilm"
+		_second_film.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(_second_film)
+	if _second_film.mesh != _surface.mesh:
+		_second_film.mesh = _surface.mesh
+	if _second_film.material_override != _surface_material:
+		_second_film.material_override = _surface_material
+	var offset := Vector3(0.12, 0.08, 0.52) * _surface_scale * float(_parameters.layer_spacing)
+	if _second_film.position != offset:
+		_second_film.position = offset
+	_second_film.extra_cull_margin = _surface_scale
+	_second_film.visible = true
 
 func _refresh_proxy() -> void:
 	_ensure_nodes()
@@ -378,6 +465,9 @@ func _refresh_proxy() -> void:
 		if source_layer not in hidden and target_layer not in hidden:
 			_represented_edge_ids.append(id)
 	_surface.mesh = null
+	if is_instance_valid(_second_film):
+		_second_film.mesh = null
+		_second_film.visible = false
 	_pick_positions = PackedVector3Array()
 	_pick_normals = PackedVector3Array()
 	_pick_uvs = PackedVector2Array()

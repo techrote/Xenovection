@@ -215,7 +215,7 @@ try {
         $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', 'res://rendering/filaments/verify_filaments.gd', '--log-file', (Join-Path $Evidence 'filament-vulkan-engine.log'))
     ) -EngineLog (Join-Path $Evidence 'filament-vulkan-engine.log')
 
-    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow')) {
+    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow', 'optical_dichroic', 'optical_weather', 'optical_lens', 'optical_garden', 'optical_microfibres', 'optical_ecosystem')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
         $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
@@ -260,6 +260,16 @@ try {
         if ($Preset -eq 'membrane' -and -not $Profile.optical.surface_translucent) {
             throw 'Membrane qualification did not exercise the alpha material variant'
         }
+        if ($Preset.StartsWith('optical_') -and (-not $Profile.optical.optical_visible -or
+            $Profile.optical.optical_matter_mix -lt 0.99 -or $Profile.optical.proxy_source_edges -ne $Profile.selection.edge_ids.Count)) {
+            throw "Optical demonstrator did not exercise its authored material and source selection: $Preset"
+        }
+        if ($Preset -eq 'optical_lens' -and -not $Profile.optical.refraction_screen_copy_active) {
+            throw 'Liquid Lens did not exercise screen-copy refraction'
+        }
+        if ((@('optical_dichroic', 'optical_garden', 'optical_ecosystem') -contains $Preset) -and $Profile.optical.secondary_film_draws -ne 1) {
+            throw "Layered optical scene did not render its second film: $Preset"
+        }
         $Qualification.scenes += [ordered]@{
             preset = $Preset; status = 'EXECUTED'; capture = (Split-Path -Leaf $CapturePath)
             capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
@@ -271,10 +281,39 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    # Additional views and effect-disabled comparison from the extracted executable.
+    $Qualification.comparisons = @()
+    foreach ($Preset in @('optical_dichroic','optical_weather','optical_lens','optical_garden','optical_microfibres','optical_ecosystem')) {
+        $CapturePath = Join-Path $Evidence ($Preset + '-close.png')
+        $ProfilePath = Join-Path $Evidence ($Preset + '-close.json')
+        $EngineLog = Join-Path $Evidence ($Preset + '-close-engine.log')
+        Invoke-Checked -Name ($Preset + '-close') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel', '--close-optics',
+                '--warmup=45', '--profile-frames=15', "--profile=$ProfilePath", '--capture-frame=30', "--capture=$CapturePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        $Qualification.comparisons += [ordered]@{preset=$Preset; mode='close'; capture=(Split-Path -Leaf $CapturePath);
+            capture_sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant(); dimensions=$Dimensions;
+            profile=(Split-Path -Leaf $ProfilePath)}
+    }
+    foreach ($Preset in @('optical_weather','optical_lens','optical_garden','optical_ecosystem')) {
+        $ProfilePath = Join-Path $Evidence ($Preset + '-legacy.json')
+        $EngineLog = Join-Path $Evidence ($Preset + '-legacy-engine.log')
+        Invoke-Checked -Name ($Preset + '-legacy') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel', '--legacy-optics',
+                '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Disabled = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        if ($Disabled.optical.optical_matter_mix -ne 0 -or $Disabled.optical.secondary_film_draws -ne 0 -or $Disabled.optical.refraction_screen_copy_active) {
+            throw "Legacy comparison retained experimental optical passes: $Preset"
+        }
+        $Qualification.comparisons += [ordered]@{preset=$Preset; mode='legacy-optics'; profile=(Split-Path -Leaf $ProfilePath);
+            wall_p50_ms=$Disabled.wall_frame.p50_ms; wall_p95_ms=$Disabled.wall_frame.p95_ms; draw_calls_3d=$Disabled.draw_calls_3d}
+    }
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six rendered native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'Baseline and six optical wide/close rendered native Windows PNGs; retain for human visual review'
 }
 catch {
     $Qualification.status = 'FAIL'
