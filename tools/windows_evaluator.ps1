@@ -147,6 +147,7 @@ try {
     $Tests = [ordered]@{
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
+        'ecology-contracts' = (Join-Path $RepoRoot 'tests/test_ecology.gd')
         'filament-contracts' = 'res://rendering/filaments/verify_filaments.gd'
         'optical-contracts' = 'res://rendering/optical/verify_optical.gd'
     }
@@ -271,6 +272,80 @@ try {
             source_unchanged = $Profile.source_unchanged
         }
     }
+    $Qualification.ecology = @()
+    for ($PresetIndex = 0; $PresetIndex -lt 6; $PresetIndex++) {
+        $Name = "ecosystem-$PresetIndex"
+        $ProfilePath = Join-Path $Evidence ($Name + '.json')
+        $CapturePath = Join-Path $Evidence ($Name + '.png')
+        $EngineLog = Join-Path $Evidence ($Name + '-engine.log')
+        Invoke-Checked -Name ($Name + '-extracted-vulkan') -Executable $Application -Arguments (
+            $Graphics + @('--log-file', $EngineLog, '--', "--ecosystem=$PresetIndex", '--eco-steps=360',
+                '--eco-clean', "--eco-profile=$ProfilePath", "--eco-capture=$CapturePath")
+        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+        $Dimensions = Read-PngDimensions -Path $CapturePath
+        if ($Profile.build.source_sha -ne $SourceSha -or $Profile.ecology_schema -ne 'xenovection.ecology.observations.v1' -or
+            $Profile.configuration.preset -ne $PresetIndex -or $Profile.simulation.tick -ne 360 -or
+            $Profile.simulation.population -gt 192 -or $Profile.samples -lt 59 -or $Profile.wall_frame.p50_ms -le 0 -or
+            $Profile.platform.os -ne 'Windows' -or $Profile.platform.headless -or
+            $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus' -or
+            -not $Profile.platform.software_device -or $Profile.digest -notmatch '^[0-9a-f]{64}
+    Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
+    $Qualification.status = 'PASS'
+    $Qualification.visual_evidence = 'Six baseline and six ecology native Windows PNGs; retain for human visual review'
+}
+catch {
+    $Qualification.status = 'FAIL'
+    $Qualification.failure = $_.ToString()
+    throw
+}
+finally {
+    $CleanupFailure = $null
+    if ($null -ne $DriverRegistryKey) {
+        try {
+            if ($DriverRegistryHadValue) {
+                $DriverRegistryKey.SetValue($DriverRegistryName, $DriverRegistryPriorValue, $DriverRegistryPriorKind)
+            } else {
+                $DriverRegistryKey.DeleteValue($DriverRegistryName, $false)
+            }
+            $Qualification.icd_registration_restored = $true
+        } catch {
+            $Qualification.icd_registration_restored = $false
+            $Qualification.status = 'FAIL'
+            $CleanupFailure = $_
+        } finally {
+            $DriverRegistryKey.Dispose()
+        }
+    }
+    $Qualification | ConvertTo-Json -Depth 20 | Set-Content -Encoding utf8 (Join-Path $Evidence 'qualification.json')
+    if ($null -ne $CleanupFailure) { throw $CleanupFailure }
+}
+) {
+            throw "Invalid extracted ecology profile: $Name"
+        }
+        if ($PresetIndex -eq 0 -and $Profile.simulation.segments -lt 1) { throw 'Mycelial topology missing' }
+        if ($Profile.simulation.signal_mean -le 0) { throw "No shared signal in $Name" }
+        $Qualification.ecology += [ordered]@{
+            preset = $PresetIndex; status = 'EXECUTED'; capture = (Split-Path -Leaf $CapturePath)
+            capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+            capture_dimensions = $Dimensions; profile = (Split-Path -Leaf $ProfilePath)
+            ticks = $Profile.simulation.tick; population = $Profile.simulation.population
+            segments = $Profile.simulation.segments; digest = $Profile.digest
+            wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
+            mode = '360 fixed steps in batches of four; software rendering; not wall-clock ecology throughput'
+        }
+    }
+    # Independent extracted control: disable the complete inter-organism interaction path.
+    $Control = Join-Path $Evidence 'ecosystem-vortex-control.json'
+    $ControlLog = Join-Path $Evidence 'ecosystem-vortex-control-engine.log'
+    Invoke-Checked -Name 'ecosystem-vortex-interaction-disabled' -Executable $Application -Arguments (
+        $Graphics + @('--log-file', $ControlLog, '--', '--ecosystem=1', '--eco-steps=360', '--eco-no-interactions', '--eco-clean', "--eco-profile=$Control")
+    ) -TimeoutSeconds 240 -EngineLog $ControlLog
+    $Off = Get-Content -Raw $Control | ConvertFrom-Json
+    $On = Get-Content -Raw (Join-Path $Evidence 'ecosystem-1.json') | ConvertFrom-Json
+    if ($Off.build.source_sha -ne $SourceSha -or $Off.simulation.tick -ne 360 -or $Off.configuration.interactions -or
+        $Off.simulation.signal_mean -ne 0 -or $Off.simulation.queries -ne 0 -or
+        $Off.spatial_digest -eq $On.spatial_digest) { throw 'Extracted vortex interaction control failed' }
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'

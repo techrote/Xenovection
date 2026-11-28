@@ -50,17 +50,33 @@ func _initialize() -> void:
 		run_steps(control, 180)
 		check(a.digest() == b.digest(), "fixed-step deterministic %d" % preset)
 		check(a.digest() != control.digest(), "interacting state differs %d" % preset)
+		if preset < 4:
+			check(a.spatial_digest() != control.spatial_digest(), "interactions alter spatial structure %d" % preset)
 		check(finite_and_bounded(a) and finite_and_bounded(control), "finite bounds %d" % preset)
 		check(a.metrics().signal_mean > 0 and control.metrics().signal_mean == 0.0, "shared deposition contrast %d" % preset)
 		check(a.consumed > 0.0 and control.consumed == 0.0, "resource competition contrast %d" % preset)
 		check(a.queries <= World.MAX_POP * World.MAX_NEIGHBORS and control.queries == 0, "query limit %d" % preset)
-		experiments.append({"preset": World.NAMES[preset], "seed": 9876, "ticks": 180, "interacting": a.metrics(), "noninteracting": control.metrics(), "digest": a.digest(), "control_digest": control.digest()})
+		experiments.append({"preset": World.NAMES[preset], "seed": 9876, "ticks": 180, "interacting": a.metrics(), "noninteracting": control.metrics(), "digest": a.digest(), "control_digest": control.digest(), "spatial_digest": a.spatial_digest(), "control_spatial_digest": control.spatial_digest()})
 		if preset == 0:
 			check(a.metrics().segments > 0, "genuine branching topology")
 		if preset == 1:
 			check(a.organisms[0].trail.size() > 1, "vortex trail persistence")
 		if preset == 2:
 			check(a.organisms[0].radius != 0.008, "membrane growth")
+	var low = World.new()
+	var high = World.new()
+	var diffusion_config = World.initial_config(4, 125)
+	diffusion_config.interactions = false
+	diffusion_config.params.diffusion = 0.0
+	low.reset(diffusion_config)
+	diffusion_config.params.diffusion = 0.24
+	high.reset(diffusion_config)
+	low.perturb(Vector2(0.5, 0.5), 1.0)
+	high.perturb(Vector2(0.5, 0.5), 1.0)
+	run_steps(low, 30)
+	run_steps(high, 30)
+	check(high.sample(high.signal_field, Vector2(0.5, 0.5)) < low.sample(low.signal_field, Vector2(0.5, 0.5)), "diffusion regime contrast")
+	experiments.append({"experiment": "diffusion", "low": low.metrics(), "high": high.metrics()})
 	var w = World.new()
 	var initial = World.initial_config(0, 51)
 	check(w.reset(initial), "initial state")
@@ -100,8 +116,13 @@ func _initialize() -> void:
 	for i in range(World.MAX_POP * 2):
 		evolution._spawn(0, Vector2(0.1, 0.1))
 	check(evolution.organisms.size() == World.MAX_POP, "hard population cap")
-	run_steps(evolution, 60)
+	run_steps(evolution, 180)
 	check(finite_and_bounded(evolution), "dense bounds")
+	var soak = World.new()
+	soak.reset(World.initial_config(5, 2201))
+	run_steps(soak, 1800)
+	check(finite_and_bounded(soak), "1800-tick evolution soak")
+	experiments.append({"experiment": "evolution-soak", "simulated_seconds": 60, "metrics": soak.metrics(), "digest": soak.digest()})
 	evolution.organisms.clear()
 	evolution.step()
 	check(evolution.organisms.is_empty(), "extinction stable")

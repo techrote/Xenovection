@@ -54,6 +54,10 @@ The historical numerical verifier requires NumPy. The renderer folders contain f
 
 [Development measurements and receipts](evidence/found-002/README.md) identify the tested revisions, density sweep, disabled-pass costs, exact numerical comparison and adversarial interaction checks. The final Actions artifact separately records the packaged Windows source SHA, native graphical captures and software-renderer qualification.
 
+## ECOSYSTEM-001 (Draft/HOLD)
+
+Open **Life > Open Ecosystem** from the original source instrument, or run `Launch-Ecosystem.cmd` in the ECOSYSTEM-001 package. Six separately seeded artificial-life environments share bounded resource/signal fields, local neighborhood coupling, explicit fixed-step simulation, developmental branching, growth, trails and optional inheritance. The ecology view is planar and independent of the source instrument; returning reloads the original scene. See [ecology controls, model, experimental protocol and limitations](docs/14_ECOSYSTEM_001.md). Exact-head hosted Windows evidence and owner hardware measurements are distinct. Do not treat source delivery as qualification.
+
 ## Founding architecture
 
 | Record | Contents |

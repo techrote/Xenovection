@@ -62,6 +62,9 @@ func _ready() -> void:
 	profile_frames = clampi(int(str(args.get("eco-frames", "0"))), 0, 1800)
 	if args.has("eco-clean"):
 		panel.hide()
+	if args.has("eco-no-interactions"):
+		world.config.interactions = false
+		_sync_controls()
 	started_usec = Time.get_ticks_usec()
 	queue_redraw()
 	print("XENOVECTION_ECOLOGY_READY ", World.NAMES[initial])
@@ -178,9 +181,13 @@ func _build_ui() -> void:
 	_label("Click within the world. Source, sink and plant edits are recorded in the initial configuration; excitation is transient.", rail, 11)
 	field_picker = _option(["No field", "Subtle resource", "Resource heat map", "Signal heat map"], rail)
 	field_picker.select(1)
-	field_picker.item_selected.connect(func(v): field_mode = v; queue_redraw())
+	field_picker.item_selected.connect(func(v):
+		field_mode = v
+		queue_redraw())
 	quality_picker = _option(["Full detail", "Half trail/reef detail", "Quarter trail/reef detail"], rail)
-	quality_picker.item_selected.connect(func(v): stride = [1, 2, 4][v]; queue_redraw())
+	quality_picker.item_selected.connect(func(v):
+		stride = [1, 2, 4][v]
+		queue_redraw())
 	_button("Isolate / reveal selected family", rail, _isolate)
 	_button("Save initial configuration", rail, _save)
 	_button("Recall initial configuration", rail, _load)
@@ -317,10 +324,11 @@ func _load() -> void:
 	if not FileAccess.file_exists(SAVE_PATH):
 		message.text = "No saved configuration"
 		return
-	if FileAccess.get_file_as_string(SAVE_PATH).length() > 65536:
-		message.text = "Configuration exceeds 64 KiB"
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if file == null or file.get_length() > 65536:
+		message.text = "Configuration unreadable or exceeds 64 KiB"
 		return
-	var parsed = JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
+	var parsed = JSON.parse_string(file.get_as_text())
 	if not parsed is Dictionary or not world.reset(parsed):
 		message.text = "Invalid configuration; current ecology preserved"
 		return
@@ -332,7 +340,7 @@ func _export() -> void:
 	message.text = "Observation trace exported" if error == OK else "Export failed"
 
 func _write_receipt(path: String) -> Error:
-	return recorder.save(path, {"ecology_schema": "xenovection.ecology.observations.v1", "build": build, "configuration": world.config, "simulation": world.metrics(), "history": world.history, "digest": world.digest(), "fixed_step_hz": 30, "field_step_hz": 10, "growth_step_hz": 5, "dropped_catchup_steps": dropped_steps, "render_detail_stride": stride, "canvas_render_scope": "Planar CanvasItem geometry; no 3D primitive count claim", "mode": "fixed_steps" if automated else "wall_clock", "draw_submission_us_last": last_render_usec})
+	return recorder.save(path, {"ecology_schema": "xenovection.ecology.observations.v1", "build": build, "configuration": world.config, "simulation": world.metrics(), "history": world.history, "digest": world.digest(), "spatial_digest": world.spatial_digest(), "fixed_step_hz": 30, "field_step_hz": 10, "growth_step_hz": 5, "dropped_catchup_steps": dropped_steps, "render_detail_stride": stride, "canvas_render_scope": "Planar CanvasItem geometry; no 3D primitive count claim", "mode": "fixed_steps" if automated else "wall_clock", "draw_submission_us_last": last_render_usec})
 
 func _refresh_stats() -> void:
 	var m: Dictionary = world.metrics()
@@ -447,7 +455,7 @@ func _draw() -> void:
 			2:
 				var radius: float = float(o.radius) * area.size.x
 				draw_circle(p, radius, Color(col.r, col.g, col.b, col.a * 0.065), true, -1.0, true)
-				var arcs = maxi(12, 40 / stride)
+				var arcs = maxi(12, int(40.0 / stride))
 				for j in range(3):
 					var rad = radius * (1.0 - j * 0.22)
 					var a: float = float(o.phase) * 0.18 + float(j)

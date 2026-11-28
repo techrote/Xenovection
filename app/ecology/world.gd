@@ -42,7 +42,7 @@ static func initial_config(preset: int, seed_value: int) -> Dictionary:
 		3: params.resource = 0.6
 		4: params.excitation = 1.55
 		5: params.resource = 0.75
-	return {"schema": "xenovection.ecology.v1", "preset": clampi(preset, 0, 5), "seed": clampi(seed_value, 0, 2147483647), "interactions": true, "reproduce": preset == 5, "params": params, "plants": [], "sources": [[0.24, 0.28, 1.0], [0.75, 0.64, 0.8], [0.52, 0.48, -0.35]]}
+	return {"schema": "xenovection.ecology.v1", "preset": clampi(preset, 0, 5), "seed": clampi(seed_value, 0, 2147483647), "interactions": true, "reproduce": preset == 5, "lfo": false, "params": params, "plants": [], "sources": [[0.24, 0.28, 1.0], [0.75, 0.64, 0.8], [0.52, 0.48, -0.35]]}
 
 static func numeric(value) -> bool:
 	return (value is int or value is float) and is_finite(float(value))
@@ -95,7 +95,7 @@ func validate(c: Dictionary) -> bool:
 	last_error = "Invalid ecology configuration"
 	if c.get("schema") != "xenovection.ecology.v1" or not valid_integer(c.get("preset"), 0, 5) or not valid_integer(c.get("seed"), 0, 2147483647):
 		return false
-	if not c.get("interactions") is bool or not c.get("reproduce") is bool or not c.get("params") is Dictionary:
+	if not c.get("interactions") is bool or not c.get("reproduce") is bool or not c.get("lfo", false) is bool or not c.get("params") is Dictionary:
 		return false
 	for key in BOUNDS:
 		var value = c.params.get(key)
@@ -320,13 +320,14 @@ func step() -> void:
 			var q: Vector2 = o.p - Vector2(0.5, 0.5)
 			var flow = Vector2(-q.y, q.x) * 0.18 + gradient(resource, o.p) * 0.4
 			flow += gradient(signal_field, o.p).orthogonal() * strength * 0.8
-			flow += Vector2(sensed.force) * strength * 0.13 + (Vector2(sensed.alignment) - Vector2(o.v)) * float(effective.alignment) * strength
-			o.v = (Vector2(o.v) + flow * DT).limit_length(0.15) * 0.997
-			var next: Vector2 = o.p + Vector2(o.v) * DT
+			flow += sensed.force * strength * 0.13 + (sensed.alignment - o.v) * float(effective.alignment) * strength
+			var velocity: Vector2 = (o.v + flow * DT).limit_length(0.15) * 0.997
+			var next: Vector2 = o.p + velocity * DT
 			if next.x < 0.015 or next.x > 0.985:
-				o.v.x = -o.v.x
+				velocity.x = -velocity.x
 			if next.y < 0.015 or next.y > 0.985:
-				o.v.y = -o.v.y
+				velocity.y = -velocity.y
+			o.v = velocity
 			o.p = next.clamp(Vector2.ONE * 0.015, Vector2.ONE * 0.985)
 			if tick % 3 == 0:
 				var trail: PackedVector2Array = o.trail
@@ -335,7 +336,7 @@ func step() -> void:
 					trail.remove_at(0)
 				o.trail = trail
 		elif o.kind == 2 and interacting:
-			o.p = (Vector2(o.p) + Vector2(sensed.force) * strength * 0.0015).clamp(Vector2.ONE * 0.02, Vector2.ONE * 0.98)
+			o.p = (o.p + sensed.force * strength * 0.0015).clamp(Vector2.ONE * 0.02, Vector2.ONE * 0.98)
 		if o.kind == 3:
 			o.refractory = maxf(0.0, float(o.refractory) - DT)
 			o.excited = maxf(0.0, float(o.excited) - DT * 2.4)
@@ -358,7 +359,7 @@ func step() -> void:
 			var growth_start = Time.get_ticks_usec()
 			_grow(o)
 			growth_us += Time.get_ticks_usec() - growth_start
-		if config.reproduce and o.age > 180 and o.energy > 0.82 and tick % 60 == 0 and rng.randf() < 0.20:
+		if config.reproduce and o.age >= 120 and o.energy > 0.70 and tick % 60 == 0 and rng.randf() < 0.28:
 			if organisms.size() + offspring.size() < MAX_POP:
 				o.energy *= 0.54
 				offspring.append(o.duplicate(true))
@@ -399,4 +400,11 @@ func digest() -> String:
 	var state: Array = [tick, next_id, rng.state, births, deaths, resource, signal_field]
 	for o in organisms:
 		state.append(o)
+	return var_to_bytes(state).hex_encode().sha256_text()
+
+
+func spatial_digest() -> String:
+	var state: Array = []
+	for o in organisms:
+		state.append([o.id, o.p, o.radius, o.segments, o.trail, o.excited])
 	return var_to_bytes(state).hex_encode().sha256_text()

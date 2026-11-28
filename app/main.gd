@@ -50,7 +50,8 @@ var _build: Dictionary = {"source_sha": "working-tree", "status": "Draft/HOLD"}
 
 func _ready() -> void:
 	_args = _read_arguments()
-	if _args.has("ecosystem"):
+	if _args.has("ecosystem") and not get_tree().has_meta("ecology_entered"):
+		get_tree().set_meta("ecology_entered", true)
 		get_tree().call_deferred("change_scene_to_file", "res://ecology/workspace.tscn")
 		return
 	_load_build_info()
