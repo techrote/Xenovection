@@ -61,6 +61,7 @@ var edit_controls: HBoxContainer
 var perform: VBoxContainer
 var status: Label
 var live: Label
+var diagnostic_view: ScrollContainer
 var example_picker: OptionButton
 var source_picker: OptionButton
 var source_id := ""
@@ -122,8 +123,18 @@ func setup(application) -> void:
 	_button(transfer, "Import…", func(): _file(true))
 	_button(transfer, "Export…", func(): _file(false))
 	_button(file_controls, "Recover previous save", func(): _load(SLOT + ".bak"))
-	status = _label(self, "Recall an example or create a blank patch.")
-	live = _label(self, "")
+	# Live values and validation messages must not move authoring controls while
+	# the user points at them. Preserve complete text in a bounded scroll area.
+	diagnostic_view = ScrollContainer.new()
+	diagnostic_view.custom_minimum_size.y = 160
+	diagnostic_view.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(diagnostic_view)
+	var diagnostic_text := VBoxContainer.new()
+	diagnostic_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	diagnostic_text.add_theme_constant_override("separation", 7)
+	diagnostic_view.add_child(diagnostic_text)
+	status = _label(diagnostic_text, "Recall an example or create a blank patch.")
+	live = _label(diagnostic_text, "")
 	edit_controls = _row(self)
 	_button(edit_controls, "Undo", _undo)
 	_button(edit_controls, "Redo", _redo)

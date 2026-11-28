@@ -1,0 +1,5 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+SYNTH_LAYOUT_REPRO [{"author_y":554.0,"live_height":19.5416660308838,"live_parent_height":1727.0,"target_y":1466.0},{"author_y":622.0,"live_height":87.1666641235352,"live_parent_height":1795.0,"target_y":1534.0},{"author_y":779.0,"live_height":244.958374023438,"live_parent_height":1952.0,"target_y":1691.0}]

@@ -187,6 +187,26 @@ func _run() -> void:
 		check(app.synth.ticks == 180 and source_revision == app.dataset.manifest.revision, entry.title + " executes with immutable source")
 		check(before.mesh_build_count == after.mesh_build_count and before.instance_upload_count == after.instance_upload_count and before_optical.proxy_geometry_builds == app.optical.get_metrics().proxy_geometry_builds, entry.title + " ordinary modulation does not rebuild geometry")
 		print("SYNTH_EXAMPLE ", entry.title, " ", JSON.stringify(app.synth.metrics()))
+	# Continuous diagnostics must not shift a pending pointer target. Exercise
+	# both live values and validation text across several wrapping lengths.
+	panel.set_process(false)
+	panel._mode(false)
+	panel.status.text = "Patch updated."
+	panel.live.text = "Ready"
+	for frame in range(4): await process_frame
+	var author_position: Vector2 = panel.author.global_position
+	var search_rect: Rect2 = panel.target_search.get_global_rect()
+	var diagnostics_cases := [
+		["Patch updated.", "1 sources · 3 routes · 10 ticks\nsource1: 0.65\nmatter.region0.condensation: 0.597499999999999"],
+		["A missing destination cannot be applied until its domain is available.", "source1: (0.649999999999999, -0.949999999999999)\noptical.sky_frequency: (1.024000000001, -1.024000000001)"],
+		["Invalid component input: source1.a; the current authored patch remains unchanged.", "Missing: [matter.region0.condensation, optical.optical_thickness]\nInactive domain: [eco.growth, eco.excitation, eco.mutation, matter.region2.deformation]\nAt target limits: [matter.region0.condensation, optical.optical_thickness, optical.illumination_intensity]"]]
+	for i in range(diagnostics_cases.size()):
+		panel.status.text = diagnostics_cases[i][0]
+		panel.live.text = diagnostics_cases[i][1]
+		for frame in range(4): await process_frame
+		check(panel.author.global_position.is_equal_approx(author_position) and panel.target_search.get_global_rect() == search_rect and is_equal_approx(panel.diagnostic_view.size.y, 160.0), "Wrapped status and live diagnostics preserve authoring target rectangles: %d" % i)
+	check(panel.live.text == diagnostics_cases[-1][1] and panel.status.text == diagnostics_cases[-1][0] and panel.diagnostic_view.get_v_scroll_bar().max_value > panel.diagnostic_view.get_v_scroll_bar().page, "Complete long diagnostics remain accessible by scrolling within the fixed area")
+	panel.set_process(true)
 	app.apply_preset(4)
 	check(app.synth.patch.is_empty() and app.scientific, "Scientific preset restores baseline without patch")
 	app.queue_free()

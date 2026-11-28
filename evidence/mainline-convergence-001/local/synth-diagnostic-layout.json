@@ -1,0 +1,63 @@
+{
+  "schema": "xenovection.synth-diagnostic-layout.v1",
+  "status": "PASS",
+  "adverse_windows_candidate": "a3cd1a1409a32a1a32effdbe087579773bb5f84e",
+  "scope": "Focused actual UI layout reproduction and headless input diagnosis; Windows graphical qualification remains separate.",
+  "negative_before": [
+    {
+      "author_y": 554.0,
+      "live_height": 19.5416660308838,
+      "live_parent_height": 1727.0,
+      "target_y": 1466.0
+    },
+    {
+      "author_y": 622.0,
+      "live_height": 87.1666641235352,
+      "live_parent_height": 1795.0,
+      "target_y": 1534.0
+    },
+    {
+      "author_y": 779.0,
+      "live_height": 244.958374023438,
+      "live_parent_height": 1952.0,
+      "target_y": 1691.0
+    }
+  ],
+  "positive_after": [
+    {
+      "author_y": 644.0,
+      "live_height": 19.5416660308838,
+      "live_parent_height": 70.0,
+      "target_y": 1556.0
+    },
+    {
+      "author_y": 644.0,
+      "live_height": 87.1666641235352,
+      "live_parent_height": 138.0,
+      "target_y": 1556.0
+    },
+    {
+      "author_y": 644.0,
+      "live_height": 244.958374023438,
+      "live_parent_height": 295.0,
+      "target_y": 1556.0
+    }
+  ],
+  "all_original_synth_assertion_calls_retained": true,
+  "synth_contracts": {
+    "checks": 53,
+    "failures": []
+  },
+  "focused_authoring": {
+    "checks": 87,
+    "passed": 87,
+    "failures": [],
+    "input_events": 390
+  },
+  "diagnostics": "Complete status/live strings remain in a fixed 160-pixel vertical scrolling area; no clipping of message content or retry-click masking.",
+  "source_hashes": {
+    "app/ui/synth_panel.gd": "c19d8b96f1b8916d968081098e15fe9986a459376d538ea285039a482e63e2ce",
+    "tests/test_synth.gd": "d3e0f827a62ded31cf1835f79c8259171c342ba29c1bd64b8db61aa5631db327",
+    "tests/gui_convergence_probe.gd": "7d89963df2b1e17ec03ae33165a9deb5985f2de1c0b6a841a9fb7f637739f173"
+  }
+}
