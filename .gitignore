@@ -7,3 +7,6 @@ app/build_info.json
 experiments/found-001/source/**/*.uid
 .runtime/
 .DS_Store
+
+# Ecology scripts are referenced by path; generated UID metadata is not source.
+app/ecology/*.gd.uid
