@@ -27,10 +27,11 @@ var sample_cursor := 0
 var fade_from: Dictionary = {}
 var fade_elapsed := 0.0
 var missing_targets: Array = []
+var route_by_id: Dictionary = {}
 
 
 static func blank(preset: int = 0) -> Dictionary:
-	return {"schema": SCHEMA, "preset": preset, "bpm": 100.0, "clocks": {}, "sources": [], "routes": []}
+	return {"schema": SCHEMA, "preset": preset, "bpm": 100.0, "clocks": {}, "xy": ["", ""], "sources": [], "routes": []}
 
 
 static func source_defaults(id: String, kind: String = "sine") -> Dictionary:
@@ -137,6 +138,15 @@ func configure(data, bus) -> bool:
 				progressed = true
 		if not progressed:
 			return refuse("Instantaneous cycle; insert a delay")
+	var xy = data.get("xy", ["", ""])
+	if not xy is Array or xy.size() != 2:
+		return refuse("XY assignment must have two axes")
+	for id in xy:
+		if not id is String or (not id.is_empty() and (not by_id.has(id) or by_id[id].kind != "manual")):
+			return refuse("XY axes must reference manual components")
+	if not xy[0].is_empty() and xy[0] == xy[1]:
+		return refuse("XY axes must use distinct components")
+	clean.xy = xy.duplicate()
 	var route_ids: Dictionary = {}
 	for raw in data.routes:
 		if not raw is Dictionary or not identifier(raw.get("id")) or route_ids.has(raw.id):
@@ -158,6 +168,9 @@ func configure(data, bus) -> bool:
 	patch = clean
 	nodes = by_id
 	order = sorted
+	route_by_id.clear()
+	for route in clean.routes:
+		route_by_id[route.id] = route
 	solo_id = ""
 	reset()
 	return true
@@ -292,10 +305,8 @@ func advance(bus, delta: float, scientific: bool = false) -> void:
 			bus.routes.remove_at(i)
 			continue
 		var rid: String = route.id.trim_prefix(PREFIX)
-		for authored in patch.routes:
-			if authored.id == rid:
-				route.enabled = authored.enabled and not scientific and (solo_id.is_empty() or solo_id == rid)
-				break
+		var authored: Dictionary = route_by_id.get(rid, {})
+		route.enabled = bool(authored.get("enabled", false)) and not scientific and (solo_id.is_empty() or solo_id == rid)
 	var cost := float(Time.get_ticks_usec() - start)
 	if samples.size() < 1024:
 		samples.append(cost)
