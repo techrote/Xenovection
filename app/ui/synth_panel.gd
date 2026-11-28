@@ -602,7 +602,7 @@ func _build_performance(data: Dictionary) -> void:
 		pause.toggled.connect(func(active: bool):
 			host.bus.set_clock(clock_id, {"paused": active})
 			host.ui.sync_clocks(host.bus.clocks)
-	)
+		)
 	_label(perform_controls, "Beat clock follows filament rate/pause × BPM. Stateful modules do not run backward through history.")
 
 
@@ -623,3 +623,8 @@ func _process(delta: float) -> void:
 	live.text = "%d sources · %d routes · %d ticks\n%s: %s\n%s: %s" % [
 		graph.nodes.size(), graph.patch.routes.size(), graph.ticks, source_id, str(signal_value),
 		active_route.get("target", "No route"), str(target_value)]
+	if not graph.missing_targets.is_empty():
+		live.text += "\nMissing: " + str(graph.missing_targets)
+	if is_instance_valid(pad) and not pad.dragging:
+		var axes: Array = graph.patch.xy
+		pad.set_point(Vector2(float(graph.nodes.get(axes[0], {}).get("value", 0)), float(graph.nodes.get(axes[1], {}).get("value", 0))))
