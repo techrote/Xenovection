@@ -2,6 +2,7 @@ extends SceneTree
 const Main = preload("res://main.gd")
 const Field = preload("res://matter/field_model.gd")
 const Matter = preload("res://matter/laboratory.gd")
+const Catalogue = preload("res://convergence/composition_catalogue.gd")
 var failures: Array = []
 var checks := 0
 
@@ -30,14 +31,17 @@ func _run() -> void:
 	root.add_child(app)
 	app.set_process(false)
 	var revision: String = app.dataset.manifest.revision
-	check(app.presets.size() == 13,"Seven accepted plus six generated presets")
-	for index in range(7,13):
-		app.apply_preset(index)
+	var retained_ids: Array = []
+	for preset in app.presets.slice(0,13): retained_ids.append(str(preset.id))
+	check(retained_ids == Catalogue.BASE_IDS + Catalogue.MATTER_IDS,"Seven accepted plus all six generated identities retain explicit ordering")
+	for matter_id in Catalogue.MATTER_IDS:
+		var index := Catalogue.index_of(app.presets,matter_id)
+		app.apply_preset(maxi(0,index))
 		app._process(1.0/60.0)
 		check(app.matter.active and app.dataset.manifest.revision == revision,"Generated preset preserves original source: %d" % index)
 		var metrics: Dictionary = app.matter.metrics()
 		check(metrics.regions.size() == 3 and metrics.regions[0].vertices > 0,"Stable generated slot topology: %d" % index)
-	app.apply_preset(11)
+	app.apply_preset(Catalogue.index_of(app.presets,"condensation"))
 	var region = app.matter.regions[0]
 	var before: int = region.builds
 	app.set_parameter("matter.edit.condensation",0.0)
@@ -74,7 +78,7 @@ func _run() -> void:
 	file.store_string(JSON.stringify(bad))
 	file.close()
 	check(not app.load_scene(save_path) and is_equal_approx(float(app.bus.get_base(Matter.target(1,"x"))),2.5),"Malformed matter rejected atomically")
-	app.apply_preset(7)
+	app.apply_preset(Catalogue.index_of(app.presets,"nursery"))
 	region = app.matter.regions[0]
 	for frame in range(60): app._process(1.0/60.0)
 	check(region.fixed_steps >= 59 and region.fixed_steps <= 60,"Bounded live particle stepping")

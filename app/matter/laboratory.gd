@@ -13,10 +13,13 @@ const SPECS := {
 	"condensation": [0.7,0.0,1.0], "shell": [0.0,0.0,1.0], "deformation": [0.45,0.0,1.5],
 	"pore_size": [0.22,0.0,0.47], "growth": [1.0,0.0,1.0], "thickness": [0.42,0.0,1.0],
 	"roughness": [0.26,0.0,1.0], "absorption": [0.2,0.0,2.0], "opacity": [0.45,0.0,1.0],
-	"line_width": [0.65,0.2,3.0], "hue": [0.0,0.0,1.0], "trails": [0.35,0.0,1.0],
+	"optical_mix": [0.0,0.0,1.0], "line_width": [0.65,0.2,3.0], "hue": [0.0,0.0,1.0], "trails": [0.35,0.0,1.0],
 	"particles": [0.0,0.0,1.0], "x": [0.0,-9.0,9.0], "y": [0.0,-9.0,9.0], "z": [0.0,-9.0,9.0],
 	"rotation": [0.0,-3.14,3.14], "scale": [1.0,0.2,2.0]
 }
+# These seven authored settings change integrated source topology. The other
+# baked field values also drive live deformation/particles and stay continuous.
+const REBUILD_CONTROLS := ["mode","seed","count","field","secondary","integration","pathline"]
 const TOPOLOGY := ["mode","seed","count","field","secondary","integration","pathline","mix","strength","origin_x","origin_y","origin_z"]
 var regions: Array = []
 var active := false
@@ -30,6 +33,7 @@ func _ready() -> void:
 	for i in range(COUNT):
 		var region = Region.new()
 		region.name = "GeneratedRegion%d" % i
+		region.identity = target(i, "material")
 		add_child(region)
 		region.hide()
 		regions.append(region)
@@ -42,7 +46,8 @@ func register_targets(bus) -> void:
 	for i in range(COUNT):
 		for key in SPECS:
 			var s: Array = SPECS[key]
-			bus.register_target(target(i,key), s[0], s[1], s[2])
+			bus.register_target(target(i,key), s[0], s[1], s[2],
+				{"policy":"base_only" if key in REBUILD_CONTROLS else "continuous","category":"matter"})
 
 func params(bus, slot: int, effective: Dictionary = {}) -> Dictionary:
 	var result: Dictionary = {}
@@ -73,16 +78,16 @@ func rebuild(bus, slot: int) -> void:
 	for key in TOPOLOGY: baked[slot][key] = p[key]
 	regions[slot].rebuild(p)
 
-func update(bus, effective: Dictionary, clocks: Dictionary, delta: float, scientific: bool, disabled: bool = false) -> void:
+func update(bus, effective: Dictionary, clocks: Dictionary, delta: float, scientific: bool, disabled: bool = false, optical_context: Dictionary = {}) -> void:
 	visible = active and not scientific and not disabled
 	if not visible: return
 	var clock: Dictionary = bus.clocks.filament
 	for i in range(COUNT):
 		var p := params(bus,i,effective)
 		# Discrete and baked topology cannot silently change from signal routes.
-		for key in ["mode","seed","count","field","secondary","integration","pathline"]:
+		for key in REBUILD_CONTROLS:
 			p[key] = baked[i].get(key,p[key])
-		regions[i].update(p,clocks,delta * maxf(0.0,float(clock.rate)),not bus.paused and not clock.paused and clock.rate > 0.0,not isolated or i == selected)
+		regions[i].update(p,clocks,delta * maxf(0.0,float(clock.rate)),not bus.paused and not clock.paused and clock.rate > 0.0,not isolated or i == selected,optical_context)
 
 func edit(bus, key: String, value: Variant) -> void:
 	if not active or not SPECS.has(key): return
@@ -101,7 +106,7 @@ func edit(bus, key: String, value: Variant) -> void:
 
 func _apply(bus, slot: int, key: String, value: float) -> void:
 	bus.set_base(target(slot,key),value)
-	if key in ["mode","seed","count","field","secondary","integration","pathline"]:
+	if key in REBUILD_CONTROLS:
 		rebuild(bus,slot)
 
 func undo(bus, redo: bool) -> void:

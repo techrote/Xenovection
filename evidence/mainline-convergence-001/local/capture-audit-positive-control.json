@@ -1,0 +1,55 @@
+{
+	"capture_directory": "/tmp/xeno-capture-audit-positive",
+	"captures": [
+		{
+			"bright_samples": 1188,
+			"central_scene_lit_fraction": 1.0,
+			"central_scene_samples": 560,
+			"dimensions": [
+				256,
+				128
+			],
+			"file": "gradient.png",
+			"lit_fraction": 0.580078125,
+			"luminance_lit_fraction": 0.580078125,
+			"luminance_max": 0.321317672729492,
+			"luminance_mean": 0.122863132606199,
+			"luminance_min": 0.00365411792881787,
+			"luminance_stddev": 0.10942673778329,
+			"maximum_channel_range": 0.905882358551025,
+			"pixel_sha256": "037a5c105e930b0f8253b400a37608a15f1d48cce508d1a27f575ae2bd6df60a",
+			"rgb_max": [
+				0.905882358551025,
+				0.0980392172932625,
+				0.811764717102051
+			],
+			"rgb_mean": [
+				0.284354448318481,
+				0.058516550809145,
+				0.284746468067169
+			],
+			"rgb_min": [
+				0.0,
+				0.00392156885936856,
+				0.0117647061124444
+			],
+			"samples": 2048,
+			"sha256": "4f6c001a562901bbc3c235f3b8ebf37bd4a183649ece0f5de396db5369b2b6c4",
+			"status": "PASS",
+			"stride": 4
+		}
+	],
+	"captures_checked": 1,
+	"failures": [],
+	"identical_pixel_groups": [],
+	"policy": {
+		"bright_channel_threshold": 0.06,
+		"maximum_samples_per_image": 131072,
+		"minimum_bright_samples": 51,
+		"minimum_rgb_range": 0.00392156862745098,
+		"note": "Conservative corruption/black-frame gate. UI pixels can satisfy coverage; central-scene statistics and independent visual inspection remain necessary. No aesthetic acceptance is implied."
+	},
+	"schema": "xenovection.capture-audit.v1",
+	"status": "PASS",
+	"visual_review_required": true
+}

@@ -1,0 +1,8 @@
+{
+  "protected_optical_source": "8472b02c6b2a4bc5517e2456bfb24e1dec475928",
+  "thin_film_body_token_equivalent": true,
+  "illumination_body_token_equivalent": true,
+  "helper_sha256": "6418262959cedc4e15cf3a079592c24586914414f3074d2ab4ec933097df951f",
+  "qualification_kind": "Source-equation preservation; parameter names and whitespace normalized; not a numerical or graphical qualification claim",
+  "recovered_ribbon_and_film_vertex_body_identical": true
+}

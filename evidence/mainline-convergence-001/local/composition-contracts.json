@@ -1,0 +1,61 @@
+{
+	"checks": 69,
+	"clock": {
+		"accumulator_seconds": 0.0,
+		"dropped_seconds": 0.0,
+		"ecology_boundaries": 120,
+		"ecology_hz": 30,
+		"feedback_boundary": "Ecology observes the completed fourth graph tick; observations may affect only later ticks.",
+		"fixed_ticks": 480,
+		"graph_hz": 120,
+		"schema": "xenovection.instrument-clock.v1"
+	},
+	"compositions": {
+		"count": 25,
+		"ids": [
+			"source.hybrid",
+			"source.filaments",
+			"source.optical",
+			"source.membrane",
+			"source.scientific",
+			"source.stress",
+			"source.flow",
+			"matter.nursery",
+			"matter.garden",
+			"matter.living",
+			"matter.films",
+			"matter.condensation",
+			"matter.ecosystem",
+			"optical.dichroic",
+			"optical.weather",
+			"optical.lens",
+			"optical.garden",
+			"optical.microfibres",
+			"optical.ecosystem",
+			"composition.spectral_vortex",
+			"composition.living_membrane",
+			"composition.excitable_garden",
+			"composition.condensation_instrument",
+			"composition.light_terrarium",
+			"composition.matter_orchestra"
+		],
+		"ok": true
+	},
+	"ecology_digest": "7dd5cba7ee288520a99a6ade63b827e4b445db71360233ed8310cf4038555091",
+	"failures": [],
+	"graph": {
+		"active": true,
+		"dropped_seconds": 0.0,
+		"fixed_ticks": 480,
+		"graph_p50_usec": 14.0,
+		"graph_p95_usec": 18.0,
+		"missing_targets": [],
+		"preset": 0,
+		"route_count": 2,
+		"samples": 960,
+		"schema": "xenovection.patch.v1",
+		"source_count": 2
+	},
+	"registry_budget": 256,
+	"schema": "xenovection.convergence-contracts.v1"
+}

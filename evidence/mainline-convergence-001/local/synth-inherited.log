@@ -1,0 +1,62 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS Valid typed graph binds existing bus
+PASS Independent replay graph binds
+PASS Explicit delay reads initial state
+PASS Delayed feedback reads previous tick
+PASS Fixed-step replay identical at 60 and 120 Hz render cadence
+PASS Typed vector reaches registered bus destination
+PASS Independent clock pause
+PASS Analytical clock reverses
+PASS Global pause preserves tick count
+PASS Manual envelope produces a playable attack
+PASS Instantaneous cycle rejected
+PASS Vector to scalar route rejected
+PASS Unavailable destination refused
+PASS Non-finite value rejected
+PASS Duplicate component IDs rejected
+PASS Base-only topology targets excluded
+PASS Invalid edit retains prior graph
+PASS Deleted destination safely omitted before bus evaluation
+PASS Patch save succeeds
+PASS JSON roundtrip reproduces authored graph
+PASS Reload and reset reproduce deterministic graph trace
+PASS 48-source/96-route bounded dense specimen
+PASS 60 simulated seconds; bounded profile ring
+SYNTH_DENSE {"metrics":{"active":true,"dropped_seconds":0.0,"fixed_ticks":7200,"graph_p50_usec":340.0,"graph_p95_usec":493.0,"missing_targets":[],"preset":0,"route_count":96,"samples":1024,"schema":"xenovection.patch.v1","source_count":48},"simulated_seconds":60,"wall_seconds":3.056361}
+PASS Oversized graph refused
+XENOVECTION_ECOLOGY_READY Mycelial Atlas
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+PASS Original seven preset identities and order retained; synth is opt-in
+PASS Authoring creates a component through editor controls
+SYNTH_ROUTE_AUTHORING {"panel_status":"Patch updated.","route_count":1,"selected_source":"source1","selected_target":"filament.phase_speed","synth_error":""}
+PASS Editor constructs route without file editing
+PASS New route drives actual renderer target
+PASS Undo restores pre-route state
+PASS Redo restores route
+PASS Vortex Conductor binds actual renderer targets
+PASS Vortex Conductor executes with immutable source
+PASS Vortex Conductor ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE Vortex Conductor {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":53.0,"graph_p95_usec":67.0,"missing_targets":[],"preset":6,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":9}
+PASS Weather Instrument binds actual renderer targets
+PASS Weather Instrument executes with immutable source
+PASS Weather Instrument ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE Weather Instrument {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":54.0,"graph_p95_usec":92.0,"missing_targets":[],"preset":3,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":9}
+PASS Filament Sequencer binds actual renderer targets
+PASS Filament Sequencer executes with immutable source
+PASS Filament Sequencer ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE Filament Sequencer {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":54.0,"graph_p95_usec":99.0,"missing_targets":[],"preset":1,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":9}
+PASS Spectral Layers binds actual renderer targets
+PASS Spectral Layers executes with immutable source
+PASS Spectral Layers ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE Spectral Layers {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":57.0,"graph_p95_usec":77.0,"missing_targets":[],"preset":2,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":10}
+PASS Autonomous Organism binds actual renderer targets
+PASS Autonomous Organism executes with immutable source
+PASS Autonomous Organism ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE Autonomous Organism {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":73.0,"graph_p95_usec":91.0,"missing_targets":[],"preset":0,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":13}
+PASS XY Morphosis binds actual renderer targets
+PASS XY Morphosis executes with immutable source
+PASS XY Morphosis ordinary modulation does not rebuild geometry
+SYNTH_EXAMPLE XY Morphosis {"active":true,"dropped_seconds":0.0,"fixed_ticks":180,"graph_p50_usec":59.0,"graph_p95_usec":102.0,"missing_targets":[],"preset":3,"route_count":9,"samples":181,"schema":"xenovection.patch.v1","source_count":9}
+PASS Scientific preset restores baseline without patch
+SYNTH_TEST {"checks":49,"failures":[]}

@@ -1,12 +1,28 @@
 extends Control
-## An additive, planar artificial-life workspace within the same application.
+## Persistent diagnostic workspace. Hosted mode shares the application bus and fixed scheduler.
+signal return_requested
+signal spatial_requested
+signal snapshot_updated(snapshot: Dictionary)
+signal modulation_requested(enabled: bool)
+signal configuration_changed
+const Snapshot = preload("res://ecology/snapshot.gd")
+const CompositionStore = preload("res://convergence/composition_store.gd")
 const World = preload("res://ecology/world.gd")
 const Bus = preload("res://core/modulation_bus.gd")
 const Recorder = preload("res://diagnostics/frame_recorder.gd")
 const COLOURS = [Color(0.53, 0.95, 0.71), Color(0.35, 0.77, 1.0), Color(0.93, 0.49, 0.76), Color(1.0, 0.72, 0.36)]
 const SAVE_PATH = "user://ecosystem-configuration.json"
 var world = World.new()
-var bus = Bus.new()
+var bus = null
+var hosted: bool = false
+var simulation_enabled: bool = true
+var fixed_step_request: Callable
+var snapshot_builder = Snapshot.new()
+var latest_snapshot: Dictionary = {}
+var solver_samples: Array[int] = []
+var sampled_graph_boundaries: int = 0
+var return_button: Button
+var spatial_button: Button
 var recorder = Recorder.new()
 var panel: PanelContainer
 var title_label: Label
@@ -27,6 +43,7 @@ var sliders: Dictionary = {}
 var paused: bool = false
 var syncing: bool = false
 var accum: float = 0.0
+var presentation_alpha: float = 1.0
 var dropped_steps: int = 0
 var selected: int = -1
 var field_mode: int = 1
@@ -43,13 +60,49 @@ var started_usec: int = 0
 var build: Dictionary = {}
 var last_render_usec: int = 0
 
+func configure_shared(shared_bus, step_request: Callable = Callable()) -> void:
+	hosted = true
+	bus = shared_bus
+	fixed_step_request = step_request
+	simulation_enabled = false
+
+func apply_configuration(candidate: Dictionary) -> bool:
+	if not world.reset(candidate):
+		return false
+	if is_node_ready():
+		_after_reset()
+	else:
+		snapshot_builder.reset_generation()
+	return true
+
+func authored_configuration() -> Dictionary:
+	return world.config.duplicate(true)
+
+func publish_snapshot() -> Dictionary:
+	latest_snapshot = snapshot_builder.capture(world)
+	snapshot_updated.emit(latest_snapshot)
+	return latest_snapshot
+
+func step_resolved(values: Dictionary, force: bool = false) -> void:
+	if (paused or not simulation_enabled) and not force:
+		return
+	# Only this completed 30 Hz boundary writes resolved graph values into World.
+	world.apply_effective(values)
+	world.step()
+	sampled_graph_boundaries += 1
+	solver_samples.append(world.step_us)
+	if solver_samples.size() > 1024:
+		solver_samples.pop_front()
+	publish_snapshot()
+
 func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--"):
 			var pair = arg.trim_prefix("--").split("=", true, 1)
 			args[pair[0]] = pair[1] if pair.size() == 2 else true
 	var initial: int = clampi(int(str(args.get("ecosystem", "0"))), 0, 5)
-	world.reset(World.initial_config(initial, 7301))
+	if world.config.is_empty():
+		world.reset(World.initial_config(initial, 7301))
 	_setup_bus()
 	_build_ui()
 	_sync_controls()
@@ -66,13 +119,17 @@ func _ready() -> void:
 		world.config.interactions = false
 		_sync_controls()
 	started_usec = Time.get_ticks_usec()
+	snapshot_builder.reset_generation()
+	publish_snapshot()
 	queue_redraw()
 	print("XENOVECTION_ECOLOGY_READY ", World.NAMES[initial])
 
 func _setup_bus() -> void:
-	bus = Bus.new()
+	if not hosted:
+		bus = Bus.new()
 	world.register_targets(bus)
-	if bool(world.config.get("lfo", false)):
+	# Hosted graph routes are owned by SYNTH. Preset/reset never adds hidden oscillators.
+	if not hosted and bool(world.config.get("lfo", false)):
 		bus.register_source("eco_lfo", {"type": "lfo", "clock": "filament", "waveform": "sine", "frequency": 0.08})
 		bus.add_route({"target": "eco.growth", "source": "eco_lfo", "amplitude": 0.4})
 		bus.add_route({"target": "eco.excitation", "source": "eco_lfo", "amplitude": 0.35})
@@ -157,12 +214,15 @@ func _build_ui() -> void:
 	reproduction_button.toggled.connect(func(v):
 		if not syncing: world.config.reproduce = v)
 	mod_button = CheckButton.new()
-	mod_button.text = "Slow growth/excitation modulation"
+	mod_button.text = "Shared slow growth/excitation patch" if hosted else "Slow growth/excitation modulation"
 	rail.add_child(mod_button)
 	mod_button.toggled.connect(func(v):
 		if not syncing:
 			world.config.lfo = v
-			_setup_bus())
+			if hosted:
+				modulation_requested.emit(v)
+			else:
+				_setup_bus())
 	for key in World.BOUNDS:
 		var bound: Vector2 = World.BOUNDS[key]
 		var caption = _label(str(key).capitalize(), rail, 12)
@@ -192,7 +252,9 @@ func _build_ui() -> void:
 	_button("Save initial configuration", rail, _save)
 	_button("Recall initial configuration", rail, _load)
 	_button("Export observation trace", rail, _export)
-	_button("Return to source instrument", rail, func(): get_tree().change_scene_to_file("res://main.tscn"))
+	if hosted:
+		spatial_button = _button("Spatial ecology / shared instrument", rail, func(): spatial_requested.emit())
+	return_button = _button("Return to source instrument", rail, _return_to_instrument)
 	stats_label = _label("", rail, 12)
 	inspector = _label("No organism selected", rail, 12)
 	message = _label("", rail, 12)
@@ -202,6 +264,10 @@ func _parameter(value: float, key: String) -> void:
 		return
 	world.apply_parameter(key, value)
 	bus.set_base("eco." + key, float(world.config.params[key]))
+	# Material gain is presentation-only. Authored changes remain visible while
+	# simulation is paused, without stepping or rewriting any organism history.
+	if key == "material":
+		publish_snapshot()
 	sliders[key][1].text = "%s  %.2f" % [key.capitalize(), value]
 
 func _sync_controls() -> void:
@@ -229,6 +295,8 @@ func _reset() -> void:
 
 func _after_reset() -> void:
 	_setup_bus()
+	snapshot_builder.reset_generation()
+	publish_snapshot()
 	selected = -1
 	isolated = -1
 	accum = 0.0
@@ -236,6 +304,7 @@ func _after_reset() -> void:
 	_sync_controls()
 	_refresh_stats()
 	queue_redraw()
+	configuration_changed.emit()
 
 func _toggle_pause() -> void:
 	paused = not paused
@@ -243,8 +312,19 @@ func _toggle_pause() -> void:
 	pause_button.text = "Resume" if paused else "Pause"
 
 func _tick() -> void:
-	world.apply_effective(bus.advance(World.DT))
-	world.step()
+	if hosted:
+		if fixed_step_request.is_valid():
+			fixed_step_request.call()
+		else:
+			step_resolved(bus.evaluate(), true)
+	else:
+		step_resolved(bus.advance(World.DT), true)
+
+func _return_to_instrument() -> void:
+	if hosted:
+		return_requested.emit()
+	else:
+		get_tree().change_scene_to_file("res://main.tscn")
 
 func _area() -> Rect2:
 	var available = Vector2(maxf(100.0, size.x - (324.0 if panel.visible else 0.0) - 36.0), maxf(100.0, size.y - 90.0))
@@ -261,6 +341,13 @@ func _gui_input(event: InputEvent) -> void:
 	if not area.has_point(event.position):
 		return
 	var p = (event.position - area.position) / area.size
+	intervene_at(p)
+	accept_event()
+
+func intervene_at(p: Vector2) -> bool:
+	if not p.is_finite() or p.x < 0.0 or p.x > 1.0 or p.y < 0.0 or p.y > 1.0:
+		return false
+	var changed = false
 	match tools.selected:
 		0:
 			var best: float = 0.075
@@ -272,16 +359,30 @@ func _gui_input(event: InputEvent) -> void:
 				if dist < best:
 					best = dist
 					selected = o.id
-		1: message.text = "Planted" if world.plant(family.selected, p) else "Plant limit reached"
-		2: message.text = "Resource source added" if world.source_at(p, 1.0) else "Source limit reached"
-		3: message.text = "Resource sink added" if world.source_at(p, -0.8) else "Source limit reached"
-		4: world.perturb(p, 0.95)
-		5: world.perturb(p, -0.95)
+		1:
+			changed = world.plant(family.selected, p)
+			message.text = "Planted" if changed else "Plant limit reached"
+		2:
+			changed = world.source_at(p, 1.0)
+			message.text = "Resource source added" if changed else "Source limit reached"
+		3:
+			changed = world.source_at(p, -0.8)
+			message.text = "Resource sink added" if changed else "Source limit reached"
+		4:
+			world.perturb(p, 0.95)
+			changed = true
+		5:
+			world.perturb(p, -0.95)
+			changed = true
+	if changed:
+		publish_snapshot()
 	_refresh_stats()
 	queue_redraw()
-	accept_event()
+	return true
 
 func _unhandled_key_input(event: InputEvent) -> void:
+	if hosted and not is_visible_in_tree():
+		return
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 	match event.keycode:
@@ -295,7 +396,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			if not panel.visible:
 				panel.show()
 			else:
-				get_tree().change_scene_to_file("res://main.tscn")
+				_return_to_instrument()
 		_: return
 	queue_redraw()
 	get_viewport().set_input_as_handled()
@@ -311,13 +412,11 @@ func _isolate() -> void:
 	queue_redraw()
 
 func _save() -> void:
-	var f = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		message.text = "Configuration write failed"
-		return
 	var candidate: Dictionary = world.config.duplicate(true)
 	candidate.seed = int(seed_box.value)
-	f.store_string(JSON.stringify(candidate, "\t"))
+	if not CompositionStore.write(SAVE_PATH, candidate):
+		message.text = "Configuration write failed; previous save retained for recovery"
+		return
 	message.text = "Initial configuration saved; not live state"
 
 func _load() -> void:
@@ -360,7 +459,7 @@ func _process(delta: float) -> void:
 		for j in range(mini(4, target_steps - world.tick)):
 			_tick()
 	else:
-		if not paused:
+		if not hosted and not paused and simulation_enabled:
 			accum += minf(delta, 0.25)
 			var steps = 0
 			while accum >= World.DT and steps < 4:
@@ -374,7 +473,8 @@ func _process(delta: float) -> void:
 	if info_elapsed > 0.3:
 		info_elapsed = 0.0
 		_refresh_stats()
-	queue_redraw()
+	if is_visible_in_tree():
+		queue_redraw()
 	if frame == 30:
 		recorder.reset()
 	elif frame > 30:
@@ -397,7 +497,7 @@ func _finish() -> void:
 	get_tree().quit(0 if ok else 1)
 
 func _draw() -> void:
-	if not is_instance_valid(panel):
+	if not is_instance_valid(panel) or (hosted and not is_visible_in_tree()):
 		return
 	var start = Time.get_ticks_usec()
 	draw_rect(Rect2(Vector2.ZERO, size), Color(0.006, 0.015, 0.026))
@@ -427,7 +527,7 @@ func _draw() -> void:
 			continue
 		var position: Vector2 = o.p
 		if not automated and not paused and (o.kind == 1 or o.kind == 2):
-			position = o.prev_p.lerp(o.p, clampf(accum / World.DT, 0.0, 1.0))
+			position = o.prev_p.lerp(o.p, clampf(presentation_alpha if hosted else accum / World.DT, 0.0, 1.0))
 		var p = _screen(position, area)
 		var col: Color = COLOURS[o.kind].lerp(Color(0.95, 0.99, 1.0), clampf(float(o.allele) - 0.5, 0.0, 1.0) * 0.3)
 		var brightness = clampf(0.28 + float(o.energy) * 0.68, 0.2, 0.96)
@@ -477,3 +577,40 @@ func _draw() -> void:
 			draw_arc(p, 11.0, 0.0, TAU, 30, Color.WHITE, 1.0, true)
 	draw_rect(area, Color(0.25, 0.42, 0.48, 0.7), false, 1.0)
 	last_render_usec = Time.get_ticks_usec() - start
+
+func convergence_metrics() -> Dictionary:
+	var samples: Array[int] = solver_samples.duplicate()
+	samples.sort()
+	var result: Dictionary = snapshot_builder.metrics()
+	result.merge({"solver_us_p50": samples[int((samples.size() - 1) * 0.5)] if not samples.is_empty() else 0,
+		"solver_us_p95": samples[int((samples.size() - 1) * 0.95)] if not samples.is_empty() else 0,
+		"solver_samples": samples.size(), "sampled_graph_boundaries": sampled_graph_boundaries,
+		"simulation_enabled": simulation_enabled, "paused": paused, "shared_bus": hosted,
+		"numerical_domain": "planar", "world_tick": world.tick})
+	return result
+
+func authoring_snapshot() -> Dictionary:
+	return {"enabled": simulation_enabled, "paused": paused, "configuration": authored_configuration(),
+		"representation": {"mode": "planar" if is_visible_in_tree() else "spatial",
+			"quality": [1, 2, 4].find(stride), "field_mode": field_mode, "selected": selected, "isolated": isolated}}
+
+func restore_authored(envelope: Dictionary) -> bool:
+	var candidate = envelope.get("configuration", {})
+	if not candidate is Dictionary or not world.validate(candidate):
+		return false
+	if not apply_configuration(candidate):
+		return false
+	simulation_enabled = bool(envelope.get("enabled", false))
+	paused = bool(envelope.get("paused", false))
+	var presentation: Dictionary = envelope.get("representation", {})
+	stride = [1, 2, 4][clampi(int(presentation.get("quality", 0)), 0, 2)]
+	field_mode = clampi(int(presentation.get("field_mode", 1)), 0, 3)
+	selected = int(presentation.get("selected", -1))
+	isolated = clampi(int(presentation.get("isolated", -1)), -1, 3)
+	if is_node_ready():
+		_sync_controls()
+		quality_picker.select([1, 2, 4].find(stride))
+		field_picker.select(field_mode)
+		_refresh_stats()
+		queue_redraw()
+	return true

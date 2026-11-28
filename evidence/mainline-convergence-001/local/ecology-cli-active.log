@@ -1,0 +1,5 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+XENOVECTION_ECOLOGY_READY Vortex Colony
+XENOVECTION_READY {"build":{"source_sha":"working-tree","status":"Draft/HOLD"},"edges":11520,"nodes":288,"preset":"hybrid","source":"found-001-synthetic-foundry","source_revision":"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c"}
+XENOVECTION_ECOLOGY_FINISHED {"births":0,"consumed":315.552958609654,"deaths":0,"energy_mean":0.999962035427921,"events":300,"excited_count":0,"family_counts":{"1":84},"field_us":867,"growth_us":26,"lineages":84,"population":84,"queries":580,"resource_mean":0.290474084869857,"segments":0,"signal_mean":0.141280470230413,"step_us":2853,"synchrony":0.527149927048456,"tick":360}

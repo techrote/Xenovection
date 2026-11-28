@@ -79,15 +79,14 @@ func _run() -> void:
 	if button == null:
 		quit(1)
 		return
-	var tabs: TabContainer = main.ui.tabs
-	tabs.current_tab = tabs.get_tab_count() - 1
+	await key(KEY_F4)
 	await frames(4)
 	check(button.is_visible_in_tree() and button.get_global_rect().has_area(), "Life entry control is laid out and visible before input")
 	await click(button.get_global_rect().get_center())
 	await frames(8)
-	app = current_scene
-	check(app != null and app.scene_file_path == "res://ecology/workspace.tscn", "Actual Open Ecosystem button changes workspace")
-	if app == null or app.scene_file_path != "res://ecology/workspace.tscn":
+	app = main.ecology
+	check(current_scene == main and app != null and app.is_visible_in_tree(), "Actual Open Ecosystem button activates persistent workspace")
+	if app == null or not app.is_visible_in_tree():
 		quit(1)
 		return
 	await key(KEY_SPACE)
@@ -130,6 +129,17 @@ func _run() -> void:
 	await key(KEY_F6)
 	check(app.world.config.preset == 0 and app.world.organisms.size() == count + 1 and app.world.config.sources.size() == sources + 1, "F6 restores authored initial placements and sources")
 	await frames(4)
+	var held_digest: String = app.world.digest()
+	var held_world = app.world
+	var held_bus = app.bus
+	await key(KEY_ESCAPE)
+	check(current_scene == main and not app.is_visible_in_tree(), "Actual Escape returns to shared instrument without scene replacement")
+	check(app.world == held_world and app.bus == held_bus and app.world.digest() == held_digest, "Return retains solver identity, shared registry and paused numerical history")
+	await key(KEY_F4)
+	await frames(3)
+	await click(button.get_global_rect().get_center())
+	await frames(4)
+	check(app.is_visible_in_tree() and app.world == held_world and app.world.digest() == held_digest, "Actual re-entry preserves ecological numerical history")
 	await RenderingServer.frame_post_draw
 	var error = root.get_texture().get_image().save_png(prefix + ".png")
 	check(error == OK, "Actual graphical workspace capture")

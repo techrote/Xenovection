@@ -1,0 +1,22 @@
+{
+  "active": {
+    "tick": 360,
+    "population": 84,
+    "samples": 60,
+    "interactions": true,
+    "signal_mean": 0.141280470230413,
+    "queries": 580,
+    "digest": "d5e0d5fd095d84c85715cb5a32dc550471874642d83f8b3d23d678f89795bf4f",
+    "spatial_digest": "21965b9b8e488a9bf9fea4a7d37c163fca66d130690b673120d0a90193ca8225"
+  },
+  "control": {
+    "tick": 360,
+    "population": 84,
+    "samples": 60,
+    "interactions": false,
+    "signal_mean": 0.0,
+    "queries": 0,
+    "digest": "fe404856c8887e2b72a0a3be27e29acf4bd73d70b99bcacb6d05c84694824839",
+    "spatial_digest": "9afe989a4b6da45daf8309b372ff25082d2fa40fb5543d8daf0162d6143480ba"
+  }
+}

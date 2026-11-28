@@ -1,6 +1,8 @@
 shader_type spatial;
 render_mode unshaded, cull_disabled, depth_draw_never, blend_mix, shadows_disabled, fog_disabled, skip_vertex_transform;
 
+#include "res://rendering/optical/generated_optical_contract.gdshaderinc"
+
 // Persistent generated strips: mode 0 = integrated curves, mode 1 = shared
 // parameter-domain strip topology. At condensation=1 adjacent film strips meet.
 uniform int mode = 1;
@@ -28,6 +30,8 @@ uniform vec3 field_origin = vec3(0.0);
 uniform float line_width = 0.65;
 uniform float hue = 0.0;
 uniform float trails = 0.35;
+varying vec3 generated_local_position;
+varying vec3 generated_world_position;
 varying vec2 domain;
 varying float field_value;
 varying float strip_side;
@@ -109,6 +113,8 @@ void vertex() {
 		VERTEX = view_point.xyz;
 		POSITION = PROJECTION_MATRIX * view_point;
 	}
+	generated_local_position = p;
+	generated_world_position = (MODEL_MATRIX * vec4(p,1.0)).xyz;
 	NORMAL = vec3(0.0,0.0,1.0);
 }
 
@@ -148,5 +154,21 @@ void fragment() {
 		ALBEDO = mix(tint * (0.65 + lum * 0.35), spectral * (0.55 + reflected*0.55 + fresnel*0.8) * transmitted, condensation);
 		ALBEDO += lace * spectral * 0.16 * condensation;
 		ALPHA = opacity * mix(edge, hole * grown * (0.65 + 0.35*fresnel), condensation);
+	}
+	if (xeno_optical_mix > 0.0001) {
+		// Mode-0 ribbons have view-facing analytic shading normals because their
+		// source vertices coincide before pixel extrusion. Film normals come from
+		// the actual deformed geometric surface, not a flat proxy.
+		vec3 view_n = normalize(-VERTEX);
+		if (mode == 1) {
+			vec3 surface_n = cross(dFdx(VERTEX), dFdy(VERTEX));
+			if (dot(surface_n,surface_n) > 0.00000001) { view_n = normalize(surface_n); }
+		}
+		vec3 world_n = normalize((INV_VIEW_MATRIX * vec4(view_n,0.0)).xyz);
+		vec3 world_v = CAMERA_POSITION_WORLD - generated_world_position;
+		vec4 optical = xeno_generated_optics(ALBEDO, ALPHA, generated_local_position,
+			generated_world_position, world_n, world_v, 0.0);
+		ALBEDO = optical.rgb;
+		ALPHA = optical.a;
 	}
 }

@@ -16,11 +16,30 @@ var last_error := ""
 var _effective: Dictionary = {}
 var _smoothed: Dictionary = {}
 var _last_delta := 0.0
+var diagnostics: Dictionary = {"missing": [], "unavailable": [], "clamped": []}
 
 
 func _init() -> void:
 	for name in CLOCK_NAMES:
 		clocks[name] = {"time": 0.0, "rate": 1.0, "paused": false}
+
+
+func reset_registry() -> void:
+	# Workspace consumers keep this object; only the registered authored scene
+	# changes. No hidden second bus survives a composition transition.
+	targets.clear()
+	sources.clear()
+	routes.clear()
+	_effective.clear()
+	_smoothed.clear()
+	clocks.clear()
+	for name in CLOCK_NAMES:
+		clocks[name] = {"time": 0.0, "rate": 1.0, "paused": false}
+	paused = false
+	enabled = true
+	_last_delta = 0.0
+	last_error = ""
+	diagnostics = {"missing": [], "unavailable": [], "clamped": []}
 
 
 func register_target(name: String, base, minimum = -1000.0, maximum = 1000.0, metadata: Dictionary = {}) -> bool:
@@ -36,7 +55,9 @@ func register_target(name: String, base, minimum = -1000.0, maximum = 1000.0, me
 	var policy = metadata.get("policy", "continuous")
 	if not policy in ["continuous", "base_only", "discrete"]:
 		return _error("Unknown target update policy")
-	targets[name] = {"base": _bounded(base, minimum, maximum), "minimum": minimum, "maximum": maximum, "kind": kind}
+	var registered_default = targets.get(name, {}).get("default", _bounded(base, minimum, maximum))
+	targets[name] = {"base": _bounded(base, minimum, maximum), "default": registered_default, "minimum": minimum, "maximum": maximum, "kind": kind,
+		"available": bool(metadata.get("available", true)), "category": str(metadata.get("category", name.get_slice(".", 0)))}
 	if metadata.has("policy"):
 		targets[name]["policy"] = policy
 	if metadata.get("field_descriptor") is Dictionary:
@@ -55,6 +76,19 @@ func set_base(name: String, value) -> bool:
 
 func get_base(name: String):
 	return targets.get(name, {}).get("base", 0.0)
+
+
+func set_namespace_available(prefix: String, available: bool) -> void:
+	for id in targets:
+		if str(id).begins_with(prefix):
+			targets[id].available = available
+
+
+func default_parameters() -> Dictionary:
+	var result: Dictionary = {}
+	for id in targets:
+		result[id] = targets[id].get("default", targets[id].base)
+	return result
 
 
 func register_source(name: String, config: Dictionary) -> bool:
@@ -141,19 +175,27 @@ func get_clocks() -> Dictionary:
 
 
 func advance(delta: float) -> Dictionary:
+	advance_clocks(delta)
+	return evaluate(0.0 if paused else _last_delta)
+
+
+func advance_clocks(delta: float) -> void:
+	# Separate clock ownership from evaluation so the common fixed scheduler
+	# resolves each routed signal once, after graph publication.
 	if not is_finite(delta) or delta < 0.0:
-		return evaluate(0.0)
+		_last_delta = 0.0
+		return
 	# A suspended window must not explode the phase on resume.
 	_last_delta = minf(delta, 0.25)
 	if not paused:
 		for name in clocks:
 			if not clocks[name].paused:
 				clocks[name].time = clampf(float(clocks[name].time) + _last_delta * float(clocks[name].rate), -1.0e9, 1.0e9)
-	return evaluate(0.0 if paused else _last_delta)
 
 
 func evaluate(delta: float = 0.0) -> Dictionary:
 	_effective.clear()
+	diagnostics = {"missing": [], "unavailable": [], "clamped": []}
 	for name in targets:
 		_effective[name] = targets[name].base
 	if not enabled:
@@ -163,7 +205,15 @@ func evaluate(delta: float = 0.0) -> Dictionary:
 		sampled[name] = _source_value(sources[name])
 	# Insertion order is the declared, serialized route order.
 	for route in routes:
-		if not route.enabled or route.mask <= 0.0 or not targets.has(route.target) or targets[route.target].get("policy", "continuous") != "continuous":
+		if not route.enabled or route.mask <= 0.0:
+			continue
+		if not targets.has(route.target):
+			diagnostics.missing.append(route.target)
+			continue
+		if targets[route.target].get("policy", "continuous") != "continuous":
+			continue
+		if not bool(targets[route.target].get("available", true)):
+			diagnostics.unavailable.append(route.target)
 			continue
 		var raw = sampled.get(route.source, null)
 		if raw == null:
@@ -188,7 +238,10 @@ func evaluate(delta: float = 0.0) -> Dictionary:
 		else:
 			_effective[target] += modulation
 		var spec: Dictionary = targets[target]
-		_effective[target] = _bounded(_effective[target], spec.minimum, spec.maximum)
+		var bounded = _bounded(_effective[target], spec.minimum, spec.maximum)
+		if bounded != _effective[target] and not target in diagnostics.clamped:
+			diagnostics.clamped.append(target)
+		_effective[target] = bounded
 	return _effective.duplicate()
 
 

@@ -13,3 +13,6 @@ app/matter/*.uid
 tests/test_matter.gd.uid
 # Ecology scripts are referenced by path; generated UID metadata is not source.
 app/ecology/*.gd.uid
+
+# Disposable exact-source qualification copies are created only while exporting.
+app/qualification/

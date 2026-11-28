@@ -180,10 +180,15 @@ func _run() -> void:
 		application.apply_preset(index)
 		application._process(0.016)
 		check(application.dataset.manifest.revision == original_revision, "Principal preset %d retains the archived source" % index)
-	for optical_index in range(7, 13):
-		application.apply_preset(optical_index)
+	# FOUND and OPTICAL independently used indices 08–13. Retain all original
+	# optical behaviour assertions while resolving the six immutable identities.
+	var catalogue = load("res://convergence/composition_catalogue.gd")
+	for optical_id in ["optical_dichroic", "optical_weather", "optical_lens", "optical_garden", "optical_microfibres", "optical_ecosystem"]:
+		var optical_index: int = catalogue.index_of(application.presets,optical_id)
+		check(optical_index >= 0, "Retained optical composition identity: " + optical_id)
+		application.apply_preset(maxi(0,optical_index))
 		application._process(0.016)
-		check(application.optical.get_metrics().optical_visible and application.optical.get_metrics().optical_matter_mix > 0.99, "Optical composition %d active" % optical_index)
+		check(application.optical.get_metrics().optical_visible and application.optical.get_metrics().optical_matter_mix > 0.99, "Optical composition active: " + optical_id)
 		check(application.dataset.manifest.revision == original_revision, "Optical composition preserves source")
 		check(application.bus.targets.has("optical.optical_thickness") and application.bus.targets.has("optical.refraction_strength"), "Optical typed targets registered")
 	application.set_parameter("optical.optical_thickness", 0.91)

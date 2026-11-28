@@ -2,6 +2,7 @@ extends VBoxContainer
 ## Matrix authoring and live performance. All structural edits validate atomically.
 const Graph = preload("res://core/synth_graph.gd")
 const Examples = preload("res://core/synth_examples.gd")
+const Catalogue = preload("res://convergence/composition_catalogue.gd")
 const SLOT := "user://xenovection-patch.json"
 const HISTORY_LIMIT := 32
 
@@ -80,6 +81,7 @@ var route_id := ""
 var route_id_label: Label
 var route_source: OptionButton
 var target_search: LineEdit
+var target_category: OptionButton
 var target_picker: OptionButton
 var operation: OptionButton
 var amplitude: SpinBox
@@ -109,7 +111,7 @@ func setup(application) -> void:
 		example_picker.add_item(example.title)
 	var recall := _row(self)
 	_button(recall, "Recall example", func(): _edit(examples[example_picker.selected].patch, true))
-	_button(recall, "Blank", func(): _edit(Graph.blank(host.preset_index)))
+	_button(recall, "Blank", func(): _edit(Graph.blank(host.preset_index, Catalogue.stable_id(host.presets[host.preset_index]))))
 	file_controls = VBoxContainer.new()
 	add_child(file_controls)
 	var file_row := _row(file_controls)
@@ -226,7 +228,9 @@ func _mode(performance: bool) -> void:
 
 
 func _data() -> Dictionary:
-	return host.synth.snapshot(host.bus) if not host.synth.patch.is_empty() else Graph.blank(host.preset_index)
+	var data: Dictionary = host.synth.snapshot(host.bus) if not host.synth.patch.is_empty() else Graph.blank(host.preset_index)
+	data.preset_id = Catalogue.stable_id(host.presets[host.preset_index])
+	return data
 
 
 func _edit(candidate: Dictionary, recall: bool = false, morph: bool = false) -> bool:
@@ -328,6 +332,10 @@ func _build_author() -> void:
 	route_id_label = _label(author, "")
 	_label(author, "Signal")
 	route_source = _option(author)
+	_label(author, "Target domain")
+	target_category = _option(author)
+	_items(target_category, ["all", "filament", "optical", "matter", "eco"])
+	target_category.item_selected.connect(func(_index: int): _targets(_selected(target_picker)))
 	_label(author, "Search continuous targets")
 	target_search = LineEdit.new()
 	target_search.placeholder_text = "e.g. displacement"
@@ -346,7 +354,7 @@ func _build_author() -> void:
 	_button(route_actions, "Apply route", _apply_route)
 	_button(route_actions, "Delete", _remove_route)
 	solo = _button(author, "Solo / clear solo", _solo)
-	_label(author, "Patch edits reset graph history and phase. Signed depth controls polarity; target limits clamp the result.")
+	_label(author, "Patch undo restores authored graph edits; it does not reverse simulation. Discrete topology is excluded. Target limits clamp the result.")
 
 
 func _next_id(items: Array, prefix: String) -> String:
@@ -438,16 +446,26 @@ func _remove_source() -> void:
 
 func _targets(selected: String = "") -> void:
 	var catalogue := Graph.target_catalogue(host.bus)
+	var complete := Graph.target_catalogue(host.bus, true)
 	var choices: Array = []
 	var query := target_search.text.to_lower()
+	var category := _selected(target_category) if is_instance_valid(target_category) else "all"
 	for id in catalogue:
 		# An empty search is the normal route-authoring state and must expose
 		# the complete continuous-target catalogue. GDScript's empty-string
 		# containment test is not a reliable substitute for this explicit case.
-		if query.is_empty() or query in str(id).to_lower():
+		if (category == "all" or str(catalogue[id].category) == category) and (query.is_empty() or query in str(id).to_lower()):
 			choices.append(id)
+	# A recalled route into an inactive domain remains visibly selected; never
+	# replace its destination with the first unrelated active target.
+	if query.is_empty() and category == "all" and complete.has(selected) and not selected in choices:
+		choices.append(selected)
 	choices.sort()
 	_items(target_picker, choices, selected)
+	for i in range(target_picker.item_count):
+		var id := str(target_picker.get_item_metadata(i))
+		if complete.has(id) and not bool(complete[id].available):
+			target_picker.set_item_text(i, id + " [inactive]")
 
 
 func _show_route(id: String) -> void:
@@ -458,6 +476,7 @@ func _show_route(id: String) -> void:
 	route_id = route.id
 	route_id_label.text = "Route: " + route_id
 	_items(route_source, _ids(data.sources), route.source)
+	_items(target_category, ["all", "filament", "optical", "matter", "eco"], "all")
 	target_search.text = ""
 	_targets(route.target)
 	_items(operation, ["add", "multiply"], route.operation)
@@ -625,6 +644,11 @@ func _process(delta: float) -> void:
 		active_route.get("target", "No route"), str(target_value)]
 	if not graph.missing_targets.is_empty():
 		live.text += "\nMissing: " + str(graph.missing_targets)
+	var diagnostic: Dictionary = host.bus.diagnostics
+	if not diagnostic.get("unavailable", []).is_empty():
+		live.text += "\nInactive domain: " + str(diagnostic.unavailable)
+	if not diagnostic.get("clamped", []).is_empty():
+		live.text += "\nAt target limits: " + str(diagnostic.clamped)
 	if is_instance_valid(pad) and not pad.dragging:
 		var axes: Array = graph.patch.xy
 		pad.set_point(Vector2(float(graph.nodes.get(axes[0], {}).get("value", 0)), float(graph.nodes.get(axes[1], {}).get("value", 0))))

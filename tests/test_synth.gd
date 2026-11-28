@@ -140,7 +140,10 @@ func _run() -> void:
 	root.add_child(app)
 	app.set_process(false)
 	var panel = app.synth_panel
-	check(app.presets.size() == 7 and app.synth.patch.is_empty(), "Original seven presets retained; synth is opt-in")
+	var retained_baseline: Array = []
+	for preset in app.presets.slice(0, 7):
+		retained_baseline.append(preset.id)
+	check(retained_baseline == ["hybrid", "filaments", "optical", "membrane", "scientific", "stress", "flow"] and app.synth.patch.is_empty(), "Original seven preset identities and order retained; synth is opt-in")
 	panel._edit(Graph.blank(app.preset_index))
 	panel._show_source("")
 	panel._items(panel.kind_picker, Graph.KINDS, "manual")

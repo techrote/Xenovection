@@ -1,104 +1,149 @@
 XENOVECTION — MAINLINE-CONVERGENCE-001
-Native GPU visual synthesis · Draft/HOLD owner evaluator
+Unified computational matter instrument · Draft/HOLD owner evaluator
 
-RUN
-Extract the complete folder and double-click Launch-Xenovection.cmd.
-The application and its content are included; no Godot installation is needed.
-Primary target: Windows 11, Vulkan-capable GPU (owner target: NVIDIA TITAN RTX).
-Launch-Compatibility.cmd is an explicit OpenGL fallback for diagnosis.
+LAUNCH
+Extract the complete ZIP to a writable folder. Double-click Launch-Integrated.cmd
+for Spectral Vortex Nursery, or Launch-Xenovection.cmd for the original source
+instrument. Godot, Python and development tools are not required.
+Target: Windows 11, NVIDIA TITAN RTX, Vulkan Forward+.
+Launch-Compatibility.cmd is an explicit OpenGL diagnostic fallback; it is not
+the qualified optical renderer. Keep every executable and resource together.
 
-TRY THIS FIRST
-1. Start with Convergence. Orbit with the middle mouse button; zoom with wheel.
-2. Choose Counterflow loom (2), move closer and watch the fine travelling strands.
-3. Drag a box through source nodes. Click Knot, Ribbon or Membrane.
-4. Open Optics and vary the environment, normal detail or geometric displacement.
-5. Press G to inspect exact source topology without decorative effects.
-6. Press G again, then U, to return that selected region to moving hairlines.
+FIRST EVALUATION — ABOUT 15 MINUTES
+1. Launch-Integrated.cmd. Orbit with middle mouse, zoom with the wheel. Choose
+   all six integrated compositions (20–25) using the top composition picker.
+2. In Condensation Instrument (23), press F7, open Perform, move the XY pad
+   and trigger the envelope. Watch strands form an actual continuous film.
+   Open Patch to inspect and edit the same routes driving that transformation.
+3. Press F2 for Matter. Select a region, change its transform, field strength,
+   condensation and Shared optical response. These continuous edits reuse the
+   existing topology. Reintegrate explicitly bakes new field curves.
+4. Press F3 for Optics. Enable Optical layer, vary Optical matter mix from 0
+   to 1, then adjust thickness, transmission and the independent light lobes.
+   The generated films and living matter use the shared optical environment.
+5. Choose Evolutionary Light Terrarium (24). Press F4 for Life, pause ecology,
+   then Step ecology. Inspect, plant, place resources and excite/inhibit using
+   the selected tool and left clicks in the visible numerical domain.
+6. Open Ecosystem from Life for the planar diagnostic view. Escape returns
+   without resetting organisms. Show spatial ecology restores its 3D view.
+7. In the source/spatial instrument, F5 saves the whole authored composition.
+   Choose another composition, then F6 recalls it. Open Scenes for named file
+   save/open and backup recovery. samples/scenes includes all 25 compositions;
+   samples/patches includes six integrated and six retained SYNTH patches.
+8. Choose Scientific (5) or press G to inspect the exact original source.
+   Generated matter, spatial ecology and decorative optics are excluded.
+9. Run Profile-This-PC.cmd, Profile-Integrated.cmd and Profile-Ecosystem.cmd.
+   Keep their JSON receipts with your GPU/driver details and visual notes.
 
-MODULAR SYNTH
-F7 opens Synth. Recall one of six example patches; Perform opens the XY pad,
-manual macros, envelope triggers, tempo and independent clocks. Patch opens the
-source/route editor. Blank starts a new patch; New component, choose kind and
-clock, Apply component, then New route, choose signal and searchable destination,
-signed depth and offset, Apply route. Routes may be bypassed or soloed.
-Save/Load uses a private user JSON slot; Import/Export opens a file chooser.
-Morph loads the slot with a 0.8s transition only for identical scene/wiring.
-Undo/Redo are patch edits; Ctrl+Z remains original selection undo.
-Recall resets to the example scene. Stop or keys 1–7 return to baseline.
-Patch edits restart graph phase/history. Pause freezes state; analytical clocks
-can reverse but stateful delay, slew and walks do not reverse their history.
-F5/F6 includes authored patch settings in scene snapshots, not runtime history.
+COMPOSITIONS AND NAVIGATION
+01–07: seven accepted source presentations.
+08–13: all six qualified procedural matter studies.
+14–19: all six qualified optical studies.
+20–25: six integrated, editable compositions.
+Life also retains all six seeded ecology configurations and four organism
+families. Picker positions are display order; saved files use stable IDs.
+Keys 1–9 and 0 select the first ten compositions. The picker exposes all 25.
+F2 Matter; F3 Optics; F4 Life; F7 Synth. Scenes contains full-file persistence.
+Tab hides the authoring rail; H hides the HUD; F12 captures the viewport.
 
-CONTROLS
-MMB: orbit. Shift+MMB: pan. Hold RMB: capture pointer and fly with WASD/QE.
-Shift accelerates flight; Ctrl slows it. Release RMB or press Esc to release.
-Click: exact source node/edge. Drag: through-depth source-region selection.
-Shift adds to selection. F focuses selection. I isolates/reveals it.
-M materialises a knot. U removes the proxy. Ctrl+Z / Ctrl+Shift+Z undo/redo visuals.
-Space pauses all clocks; V reverses them. Clocks tab controls each separately.
-R resets the preset. Keys 1–9 and 0 select the first ten presets; all thirteen are available in the picker. Tab hides the panel; H hides the HUD.
-F5 saves scene; F6 recalls it. F9 exports exact selection. F10 exports metrics.
-F12 captures the actual viewport. Exports are in %APPDATA%\Godot\app_userdata\Xenovection.
+POINTER AND KEYBOARD
+MMB: orbit. Shift+MMB: pan. Hold RMB: fly with WASD/QE; Shift faster, Ctrl slower.
+Release RMB or press Escape to release captured pointer.
+Life tab + Edit ecology in viewport: left click belongs to the ecology tool.
+All spatial ecology tools intersect the fixed numerical domain plane, even
+when branches and membranes appear above or below it. Visual depth does not
+change where a seed, resource or signal is placed.
+Elsewhere, left click selects a matter region when generated matter is active.
+In source presentations, click an exact node/edge or drag a through-depth box;
+Shift adds selection. F focuses; I isolates; M creates a knot; U removes it.
+R resets the current composition to its authored starting state.
+F9 exports exact source selection. F10 exports the current performance receipt.
+Exports default to %APPDATA%\Godot\app_userdata\Xenovection.
 
-SOURCE AND ART
-The default source is the exact recovered FOUND-001 synthetic 6×48 tanh specimen.
-It contains 288 nodes and 11,520 stored coefficients. It is not an LLM.
-Other density choices are explicitly new deterministic stress specimens.
-Vortex atlas (7) uses the same adapter and renderer for a synthetic spatial field:
-4,608 samples, 6,144 exact streamline/coupling edges. It is not measured fluid data.
-Positions are a declared visual projection. Phase, secondary braids, optical
-proxies and displacement are artistic. They never mutate source coefficients/IDs.
-Scientific mode disables these decorative systems and retains exact inspection.
-An optical ribbon budget may show a bounded sample of a selected region; the full
-source membership remains in its selection receipt.
+TRANSPORT AND HISTORY
+Space pauses visual/graph transport; V reverses analytical visual clocks.
+Clocks exposes separate filament, sky, palette, normal and displacement clocks.
+Ecology has its own Pause/Step/Reset controls in Life. Pausing visual transport
+freezes its modulation values while ecology can continue sampling those values.
+In the planar diagnostic view, Space controls ecology directly.
+Ctrl+Z / Ctrl+Shift+Z use the active authoring scope: Synth patch, Matter region,
+or source selection. They do not undo numerical simulation history.
+Scene recall restores authored initial conditions and restarts graph delay,
+particle and organism histories. It is not an exact mid-run checkpoint.
 
-PERFORMANCE
-The footer reports wall-frame percentiles, render CPU/GPU timing where supported,
-draw calls and strands. F10 saves a fuller receipt. Profile-This-PC.cmd collects
-a reproducible 600-frame Convergence profile after warm-up, requesting VSync off.
-The engine log records any driver fallback to a synchronised presentation mode.
-GPU timing on a software renderer measures that software device, not a TITAN RTX.
-The build manifest identifies the precise source revision. Owner hardware and
-subjective motion/visual acceptance remain separate from hosted qualification.
+COMMON MODULAR SYNTH
+F7 opens Synth. Perform provides XY, macros, envelope triggers, tempo and clocks.
+Patch provides a bounded 48-source/96-route graph with deterministic seeded
+sources, sequencers, explicit one-tick feedback and typed destinations.
+Blank starts a patch. New component -> kind/clock -> Apply component.
+New route -> signal -> searchable/domain-filtered destination -> signed depth
+and offset -> Apply route. Bypass/solo and Undo/Redo remain available.
+Destinations include source presentation, matter.region0..2.*, optical.* and
+eco.*. Inactive domains are identified; topology controls are base-only.
+Save/Load uses the private patch slot; Import/Export selects named JSON files.
+Morph transitions compatible scene/wiring over 0.8 seconds. Patches in samples
+are ordinary editable graphs, not hard-coded showcase playback.
+Patch edits restart graph phase/history. Reversing analytical clocks does not
+reverse delay, slew, particle or organism history.
 
-BUILD AND LICENSES
-BUILD.json identifies source/engine/specimen; SHA256SUMS.json identifies payload.
-Godot Engine 4.7.2 and third-party notices are included under licenses/.
-The optical fields are original mathematical implementations, not copied donor code.
+PROCEDURAL MATTER AND OPTICS
+Matter retains three stable region slots, seeded fields, fixed-step particles,
+persistent strips and genuine geometric strand-to-film condensation.
+At condensation 1, adjacent strips meet. Shell, pores and growth deform them.
+Flow topology is rebuilt for discrete mode/seed/count/field/integration edits
+or explicit Reintegrate. Strength, field origin/blend, transforms and ordinary
+material modulation remain continuous. Selection and camera movement do not
+rebuild generated topology.
+Set a region's Shared optical response and the common Optical matter mix to
+assign its persistent material to the shared optical environment. Mix 0 retains
+the qualified legacy appearance. Optical layer is the shared master enable.
+Thickness is authored in micrometres; it is not measured surface thickness.
+The RGB model uses bounded attenuation, dielectric Fresnel, three-band thin-film
+response and independent analytical illumination. It is not calibrated spectral
+transport or physically exact scattering.
+Generated matter and ecology use analytical environment transmission. They do
+not request screen/depth-copy refraction or refract other transparent layers.
+The original optical source proxies retain their optional second shared-mesh
+film and opt-in Forward+ screen/depth-copy pass. That copy contains opaque
+background content, not other transparent strands or films.
 
-PROCEDURAL MATTER
-Choose presets 08–13 in the header, open Matter. Select any of three region
-slots, toggle visibility, edit placement, then focus (F) or isolate (I).
-Condensation changes the actual gap between persistent strips; at 1 the strips
-meet in a film. Shell wraps the same domain. Pores and growth change the film.
-Flow mode integrates seeded fields on the CPU when topology is edited or when
-Reintegrate is clicked. Strength, origin and mix animate the local GPU distortion
-immediately; Reintegrate bakes them into flow geometry. Particles advance with
-bounded positive filament-clock steps, pause on reverse; reset restarts them.
-F5/F6 preserves region IDs, bases and baked field settings; history-dependent
-particle positions restart, not a reversible simulation snapshot. Ctrl+Z undoes
-region edits. G hides generated matter and exposes exact source data.
+LIVING MATTER
+One deterministic planar numerical world drives both visual representations.
+Rates: world 30 Hz, fields 10 Hz, growth 5 Hz. Shared modulation is sampled at
+completed fixed-step boundaries. Graphical frame rate, camera and detail do not
+change the state reached after the same completed numerical ticks.
+Spatial branches, flattened membranes and trails are a bounded first-generation
+presentation of that plane. This is not a fully 3D ecology solver.
+Life's configuration picker, seed, interactions, reproduction and parameter
+controls retain the six qualified experiments. The planar view exposes their
+full diagnostic controls, fields, trace export and isolation.
+Disabling Ecology active releases organism presentation resources and retains
+the world; re-enabling resumes it. View changes do not reset its seed or tick.
+Direct configuration reset/reseed and choosing a different starting composition
+do reset history, as labelled. Planar F5/F6 retains its separate ecology initial-
+configuration file; use the instrument's Scenes tab for whole compositions.
+Ecology is an artistic computational model, not a calibrated biological model.
 
-OPTICAL-003 — six additional editable optical studies, numbered 14–19.
-Optics > Optical matter: mix 0 = accepted legacy appearance; mix 1 enables the optical model.
-Thickness is authored in micrometres, not measured geometry; absorption is per micrometre.
-Layer spacing creates one shared-mesh offset film. Refraction > 0 selects an opaque-background
-screen-copy experiment; transparent strands and other films cannot appear in that copy.
-Use the existing independent Sky, Palette, Normal and Displacement clocks. Diagnostic 1/2/3
-shows estimated path, RGB transmission or Fresnel. Reset via preset; F5/F6 saves/recalls authored controls.
-Use Forward+; the screen depth test is specifically reverse-Z Forward+.
+SCIENTIFIC CUSTODY
+The recovered FOUND-001 specimen contains 288 nodes and 11,520 coefficients.
+Its 11,568 stored binary64 values are preserved exactly; it is not an LLM.
+SHA-256: 745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c
+The immutable JSON is also supplied under data/ for independent inspection.
+Density stress specimens and Vortex Atlas are explicitly synthetic alternatives.
+Positions are declared visual projections. Optical proxies, generated matter
+and ecology never change scientific source values, IDs or source membership.
 
-ECOSYSTEM WORKSPACE
-Run Launch-Ecosystem.cmd, or select Life > Open Ecosystem in the original instrument.
-Six seeded ecosystems; choose the preset in the rail. Space pauses; Step advances
-one 1/30 second tick. R resets to authored conditions. Set a seed before reset.
-Select a tool, then click the ecology canvas to inspect, plant, place a resource
-source/sink, or excite/inhibit the shared signal. Field view and quality do not
-alter simulation. The interactions toggle disables consumption, deposits and
-neighbor coupling, enabling paired comparisons. Reproduction is opt-in except
-Terrarium. F5/F6 save/recall initial configurations, not simulation snapshots.
-F10 exports a bounded trace to the application user-data folder. Tab hides the
-rail. Escape returns to the source instrument (reloads its starting state).
-Profile-Ecosystem.cmd collects a live Vortex Colony 600-frame profile.
-Planar ecology is an artistic computational model, not a biological simulation.
-The membrane perforation rings are a visual approximation, not optical holes.
+PERFORMANCE AND BUILD IDENTITY
+BUILD.json records the exact source commit, tree, Godot version and specimen.
+SHA256SUMS.json records each payload file's SHA-256. qualification/SOURCE.json
+records the committed executable-test scripts embedded in the application pack.
+Full contracts and controls are in documentation/. samples/INDEX.json maps the
+25 complete scenes and 12 reusable patches.
+The footer/F10 and profiling launchers report frame percentiles and available
+CPU/GPU counters, graph/solver/snapshot/representation costs and resource counts.
+Reported geometry upload bytes are submitted-array estimates, not measured bus
+traffic. Hosted software-renderer measurements are not TITAN RTX throughput.
+Physical GPU performance and owner visual acceptance remain pending until you
+perform them. This evaluator and its integration PR remain Draft/HOLD.
+Godot 4.7.2 and third-party notices are included in licenses/. No hosted software
+Vulkan driver is bundled into this physical-owner evaluator.

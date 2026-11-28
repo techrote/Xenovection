@@ -30,22 +30,29 @@ var missing_targets: Array = []
 var route_by_id: Dictionary = {}
 
 
-static func blank(preset: int = 0) -> Dictionary:
-	return {"schema": SCHEMA, "preset": preset, "bpm": 100.0, "clocks": {}, "xy": ["", ""], "sources": [], "routes": []}
+static func blank(preset: int = 0, preset_id: String = "") -> Dictionary:
+	var data := {"schema": SCHEMA, "preset": preset, "bpm": 100.0, "clocks": {}, "xy": ["", ""], "sources": [], "routes": []}
+	if not preset_id.is_empty():
+		data.preset_id = preset_id
+	return data
 
 
 static func source_defaults(id: String, kind: String = "sine") -> Dictionary:
 	return {"id": id, "kind": kind, "clock": "filament", "rate": 0.2, "phase": 0.0, "value": 0.0, "param": 0.25, "seed": 1, "a": "", "b": "", "c": "", "steps": [0.0, 0.5, 1.0, -0.5, 0.25, -1.0, 0.75, 0.0]}
 
 
-static func target_catalogue(bus) -> Dictionary:
+static func target_catalogue(bus, include_unavailable: bool = false) -> Dictionary:
 	# A renderer may register further stable, continuously writable typed targets.
 	var result: Dictionary = {}
 	for id in bus.targets:
 		var spec: Dictionary = bus.targets[id]
 		if spec.get("policy", "continuous") != "continuous":
 			continue
-		result[id] = {"schema": TARGET_SCHEMA, "id": id, "kind": spec.kind, "minimum": spec.minimum, "maximum": spec.maximum, "base": spec.base, "policy": "continuous", "field_descriptor": spec.get("field_descriptor", {})}
+		var available := bool(spec.get("available", true))
+		if not available and not include_unavailable:
+			continue
+		result[id] = {"schema": TARGET_SCHEMA, "id": id, "kind": spec.kind, "minimum": spec.minimum, "maximum": spec.maximum, "base": spec.base, "policy": "continuous", "available": available,
+			"category": str(spec.get("category", str(id).get_slice(".", 0))), "field_descriptor": spec.get("field_descriptor", {})}
 	return result
 
 
@@ -84,6 +91,13 @@ func configure(data, bus) -> bool:
 	if data.sources.size() > MAX_NODES or data.routes.size() > MAX_ROUTES:
 		return refuse("Patch exceeds graph bounds")
 	var clean := blank(int(data.preset))
+	if data.has("preset_id"):
+		if not data.preset_id is String or data.preset_id.is_empty() or data.preset_id.length() > 96:
+			return refuse("Invalid persistent composition identity")
+		for ch in data.preset_id:
+			if not ch in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-":
+				return refuse("Invalid persistent composition identity")
+		clean.preset_id = data.preset_id
 	clean.bpm = float(data.bpm)
 	for clock in data.get("clocks", {}):
 		var cfg = data.clocks[clock]
@@ -260,6 +274,8 @@ func trigger(id: String) -> bool:
 func transition_from(previous) -> bool:
 	# Discrete scene or wiring changes cut; identical routes/types interpolate.
 	if previous.patch.is_empty() or patch.preset != previous.patch.preset or patch.routes != previous.patch.routes:
+		return false
+	if patch.get("preset_id", "") != previous.patch.get("preset_id", ""):
 		return false
 	for id in nodes:
 		if not previous.nodes.has(id) or output_kind(nodes[id].kind) != output_kind(previous.nodes[id].kind):

@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "godot",
+      "--headless",
+      "--path",
+      "/tmp/xeno-export-script-probe",
+      "--export-pack",
+      "Windows Desktop",
+      "/tmp/xeno-export-script-probe/probe.pck"
+    ],
+    "returncode": 0,
+    "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Started Project initialization (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Scanning file structure...\u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Loading global class names...\u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Verifying GDExtensions...\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Creating autoload scripts...\u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Initializing plugins...\u001b[39m\u001b[0m\n[  83% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Starting file scan...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mfirst_scan_filesystem\u001b[22m\n\u001b[0m\n[   0% ] \u001b[90m\u001b[1msavepack\u001b[22m | Started Packing (102 steps)\u001b[39m\u001b[0m\n[   1% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://data/marker.json\u001b[39m\u001b[0m\n[  17% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://qualification/probe.gdc\u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://qualification/SOURCE.json\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://icon.svg.import\u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://shader.gdshader\u001b[39m\u001b[0m\n[  82% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://shader.gdshaderinc\u001b[39m\u001b[0m\n[  82% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://qualification/probe.gd.remap\u001b[39m\u001b[0m\n[  82% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/global_script_class_cache.cfg\u001b[39m\u001b[0m\n[  82% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/uid_cache.bin\u001b[39m\u001b[0m\n[  82% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://project.binary\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1msavepack\u001b[22m\n\u001b[0m\n"
+  },
+  {
+    "command": [
+      "godot",
+      "--headless",
+      "--main-pack",
+      "/tmp/xeno-export-script-probe/probe.pck",
+      "--script",
+      "res://qualification/probe.gd"
+    ],
+    "returncode": 0,
+    "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\nEXPORTED_SHADER_CHECK {\"loaded_shader_code\":true,\"raw_include\":true,\"raw_shader\":true}\n"
+  }
+]

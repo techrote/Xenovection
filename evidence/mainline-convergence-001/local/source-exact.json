@@ -1,0 +1,15 @@
+{
+  "suite": "independent-source-binary64-exactness",
+  "status": "PASS",
+  "specimen_sha256": "745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c",
+  "input_values": 48,
+  "edge_weights": 11520,
+  "checked_binary64_values": 11568,
+  "byte_count": 92544,
+  "mismatched_values": 0,
+  "first_mismatched_indices": [],
+  "expected_binary_sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629",
+  "godot_binary_sha256": "5cbc5684277b613767ca84a7214428a913aab5cdc8969f061591fb6835104629",
+  "reference": "Python json.loads of the unmodified historical archive specimen, packed as IEEE-754 binary64 little endian",
+  "godot_output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n{\"binary64_values\":11568,\"file\":\"/tmp/xenovection-numeric-mvooe5_1/godot-f64.bin\",\"source_revision\":\"sha256:745d47fa3ebd6a91ce1c9bd11181688ce4237199bbbce11e2e330dc76d78947c\"}"
+}

@@ -2,14 +2,18 @@ extends RefCounted
 ## Validate a complete saved scene before the application mutates any live state.
 
 const SCHEMA := "xenovection.scene.v1"
+const COMPOSITION_SCHEMA := "xenovection.scene.v2"
 const CLOCKS := ["filament", "sky", "normal", "displacement", "palette"]
 const MATERIALS := ["none", "knot", "ribbon", "membrane"]
 const WAVES := ["sine", "triangle", "smooth_triangle", "cosine"]
 
 
 static func validate(input, dataset: Dictionary, targets: Dictionary, filament_defaults: Dictionary, optical_defaults: Dictionary) -> Dictionary:
-	if not input is Dictionary or input.get("schema", "") != SCHEMA:
+	if not input is Dictionary or not input.get("schema", "") in [SCHEMA, COMPOSITION_SCHEMA]:
 		return _fail("Unsupported or malformed scene schema")
+	if input.get("schema", "") == COMPOSITION_SCHEMA:
+		if not input.get("preset_id", null) is String or input.preset_id.is_empty() or input.preset_id.length() > 96:
+			return _fail("Composition requires its persistent preset identity")
 	var manifest: Dictionary = dataset.get("manifest", {})
 	if input.get("source_id", "") != manifest.get("source_id", "") or input.get("source_revision", "") != manifest.get("revision", ""):
 		return _fail("Scene belongs to a different source identity/revision; load its exact source first")

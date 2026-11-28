@@ -121,6 +121,7 @@ func _build_header() -> void:
 	subtitle_label = _label("FILAMENTS  /  FIELDS  /  OPTICAL MATTER", 11, MUTED)
 	name_box.add_child(subtitle_label)
 	preset_picker = OptionButton.new()
+	preset_picker.set_meta("target", "composition.preset")
 	preset_picker.custom_minimum_size.x = 216
 	preset_picker.item_selected.connect(func(index: int): preset_selected.emit(index))
 	preset_picker.focus_mode = Control.FOCUS_NONE
@@ -163,6 +164,7 @@ func _slider(parent: Control, label_text: String, key: String, minimum: float, m
 	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(value)
 	var slider := HSlider.new()
+	slider.set_meta("target", key)
 	slider.min_value = minimum
 	slider.max_value = maximum
 	slider.step = step
@@ -177,6 +179,7 @@ func _slider(parent: Control, label_text: String, key: String, minimum: float, m
 
 func _toggle(parent: Control, label_text: String, key: String, initial: bool = true) -> void:
 	var toggle := CheckButton.new()
+	toggle.set_meta("target", key)
 	toggle.text = label_text
 	toggle.button_pressed = initial
 	toggle.focus_mode = Control.FOCUS_NONE
@@ -451,7 +454,7 @@ func _draw_box() -> void:
 
 func _build_matter_page() -> void:
 	var page := _page(tabs,"Matter")
-	_section(page,"Generated regions","Choose a procedural preset (08–13). Region controls are independent of the immutable source. F focuses; I isolates.")
+	_section(page,"Generated regions","Choose a procedural or integrated composition. Region controls are independent of the immutable source. F focuses; I isolates. Undo here restores region edits.")
 	matter_label = _label("Select a procedural preset",12,MINT)
 	page.add_child(matter_label)
 	var row := HBoxContainer.new()
@@ -482,6 +485,7 @@ func _build_matter_page() -> void:
 		["Hairline width (pixels)","line_width",0.2,3,0.05,0.65],["Spectral hue","hue",0,1,0.005,0],
 		["Travelling highlights","trails",0,1,0.01,0.35]]:
 		_slider(page,spec[0],"matter.edit."+spec[1],spec[2],spec[3],spec[4],spec[5])
+	_slider(page,"Shared optical response","matter.edit.optical_mix",0,1,0.01,0)
 	_section(page,"Placement")
 	for spec: Array in [["X","x",-9,9,0.05,0],["Y","y",-9,9,0.05,0],["Z","z",-9,9,0.05,0],
 		["Rotation","rotation",-3.14,3.14,0.02,0],["Scale","scale",0.2,2,0.01,1]]:

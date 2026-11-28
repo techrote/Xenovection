@@ -236,6 +236,11 @@ func _send_clock(material: ShaderMaterial, cache: Dictionary, key: String, value
 	cache[key] = value
 	return true
 
+func get_environment_context() -> Dictionary:
+	# Values are copied; the immutable palette texture is deliberately shared.
+	# Consumers acquire no ownership over source meshes or optical pass variants.
+	return {"parameters": _parameters.duplicate(true), "palette_lut": _palette_texture}
+
 func get_metrics() -> Dictionary:
 	return {
 		"optical_visible": is_instance_valid(_surface) and _surface.visible,

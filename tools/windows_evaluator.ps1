@@ -21,7 +21,7 @@ $Qualification = [ordered]@{
     physical_gpu_qualified = $false
     scope = 'Native Windows executable, Vulkan Forward+ with pinned Mesa software rendering'
     vsync_requested = 'Disabled; any driver fallback is recorded per scene from the engine log'
-    profile_scope = 'Short software Windows qualification: 60 measured frames after 60 warm-up frames; screenshot readback precedes measurement'
+    profile_scope = 'Retained per-suite workloads plus 90 measured frames for integrated views after 60 warm-up frames; screenshots precede measurement; full 36000-frame structural soak is separate'
     owner_titan_rtx_qualification = 'Pending owner hardware execution and visual acceptance'
     steps = $Steps
     scenes = @()
@@ -59,7 +59,7 @@ function Invoke-Checked {
         $InspectText += "`n" + (Get-Content -Raw -LiteralPath $EngineLog)
     }
     $ExitCode = $Process.ExitCode
-    $HasEngineError = $InspectText -match '(?m)(SCRIPT ERROR:|Parse Error:|Shader compilation failed|^ERROR:)'
+    $HasEngineError = $InspectText -match '(?m)(SCRIPT ERROR:|Parse Error:|Shader compilation failed|^ERROR:|ObjectDB instances leaked|resources still in use|RIDs of type)'
     $Passed = $Finished -and $ExitCode -eq 0 -and -not $HasEngineError
     $Steps.Add([ordered]@{
         name = $Name; status = $(if ($Passed) { 'PASS' } else { 'FAIL' })
@@ -107,6 +107,7 @@ function Write-TreeEvidence {
         Write-Host "Tracked source changes at ${Stage}:"
         Write-Host $StatusText
         Write-Host $DiffText.Substring(0, [Math]::Min(6000, $DiffText.Length))
+        throw "Tracked source changed during qualification at $Stage"
     }
 }
 
@@ -154,6 +155,10 @@ try {
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
         'synth-contracts' = (Join-Path $RepoRoot 'tests/test_synth.gd')
         'ecology-contracts' = (Join-Path $RepoRoot 'tests/test_ecology.gd')
+        'composition-contracts' = (Join-Path $RepoRoot 'tests/test_compositions.gd')
+        'matter-optics-contracts' = (Join-Path $RepoRoot 'tests/test_matter_optics.gd')
+        'spatial-ecology-contracts' = (Join-Path $RepoRoot 'tests/test_convergence_ecology.gd')
+        'convergence-contracts' = (Join-Path $RepoRoot 'tests/test_convergence.gd')
         'filament-contracts' = 'res://rendering/filaments/verify_filaments.gd'
         'optical-contracts' = 'res://rendering/optical/verify_optical.gd'
     }
@@ -172,13 +177,19 @@ try {
     ) -TimeoutSeconds 600
 
     $PackageReceipt = Get-Content -Raw (Join-Path $RepoRoot 'build/package-receipt.json') | ConvertFrom-Json
-    if ($PackageReceipt.build.source_sha -ne $SourceSha) { throw 'Package source identity mismatch' }
+    $SourceTree = (git -C $RepoRoot rev-parse 'HEAD^{tree}').Trim()
+    if ($PackageReceipt.build.source_sha -ne $SourceSha -or $PackageReceipt.build.tree_sha -ne $SourceTree) { throw 'Package source/tree identity mismatch' }
     $Archive = Join-Path $RepoRoot ('build/' + $PackageReceipt.archive)
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $TestRoot = Join-Path $RepoRoot 'build/windows-test-copy'
     if (Test-Path $TestRoot) { Remove-Item -Recurse -Force $TestRoot }
     Expand-Archive -LiteralPath $Archive -DestinationPath $TestRoot
     $Payload = Join-Path $TestRoot 'Xenovection'
+    $EmbeddedBuild = Get-Content -Raw (Join-Path $Payload 'BUILD.json') | ConvertFrom-Json
+    if ($EmbeddedBuild.source_sha -ne $SourceSha -or $EmbeddedBuild.tree_sha -ne $SourceTree -or
+        $EmbeddedBuild.mission -ne 'MAINLINE-CONVERGENCE-001') { throw 'Extracted BUILD identity mismatch' }
+    $Qualification.embedded_build = $EmbeddedBuild
+    $Qualification.source_tree = $SourceTree
     $PayloadHashes = Get-Content -Raw (Join-Path $Payload 'SHA256SUMS.json') | ConvertFrom-Json -AsHashtable
     foreach ($Relative in $PayloadHashes.Keys) {
         if ($Relative -match '(^|/)\.\.(/|$)' -or [System.IO.Path]::IsPathRooted($Relative)) { throw 'Invalid payload hash path' }
@@ -218,6 +229,46 @@ try {
     )
     $Application = Join-Path $Payload 'Xenovection.exe'
     $Graphics = @('--rendering-method', 'forward_plus', '--rendering-driver', 'vulkan', '--audio-driver', 'Dummy', '--disable-vsync', '--windowed', '--resolution', '1000x650')
+    $Qualification.script_custody = Get-Content -Raw (Join-Path $Payload 'qualification/SOURCE.json') | ConvertFrom-Json -AsHashtable
+    foreach ($Entry in $Qualification.script_custody.Values) {
+        Assert-FileHash -Path (Join-Path $RepoRoot $Entry.source_path) -Expected $Entry.sha256
+    }
+    # Every core contract also runs from the independently extracted executable.
+    # These are exact copied scripts from the committed source, not substitutes.
+    foreach ($Script in @('test_core.gd', 'test_integration.gd', 'test_matter.gd', 'test_synth.gd',
+        'test_ecology.gd', 'test_compositions.gd', 'test_matter_optics.gd', 'test_convergence_ecology.gd',
+        'test_convergence.gd', 'verify_filaments.gd', 'verify_optical.gd')) {
+        Invoke-Checked -Name ('extracted-' + $Script.Replace('.gd', '')) -Executable $Application -Arguments @(
+            '--headless', '--script', ('res://qualification/' + $Script)
+        ) -TimeoutSeconds 600
+    }
+    Invoke-Checked -Name 'extracted-full-resource-soak' -Executable $Application -Arguments @(
+        '--headless', '--script', 'res://qualification/test_soak.gd', '--',
+        "--receipt=$(Join-Path $Evidence 'extracted-soak.json')"
+    ) -TimeoutSeconds 900
+    $ExtractedBits = Join-Path $Evidence 'extracted-source-f64.bin'
+    Invoke-Checked -Name 'extracted-source-export' -Executable $Application -Arguments @(
+        '--headless', '--script', 'res://qualification/export_source_bits.gd', '--', "--output=$ExtractedBits"
+    )
+    Invoke-Checked -Name 'extracted-source-binary64-exactness' -Executable 'python' -Arguments @(
+        (Join-Path $RepoRoot 'tests/verify_source_exact.py'), '--bits', $ExtractedBits,
+        '--receipt', (Join-Path $Evidence 'extracted-source-binary64-exactness.json')
+    )
+    Assert-FileHash -Path (Join-Path $Payload 'data/synthetic_foundry.json') -Expected $EmbeddedBuild.specimen_sha256
+    # New material/interaction gates run first so a meaningful new shader or
+    # authoring failure is diagnosed before the expensive scene populations.
+    foreach ($Probe in @('material', 'spatial_ecology', 'convergence')) {
+        $ProbePrefix = Join-Path $Evidence ('gui-' + $Probe)
+        $ProbeLog = $ProbePrefix + '-engine.log'
+        Invoke-Checked -Name ('extracted-graphical-' + $Probe) -Executable $Application -Arguments (
+            $Graphics + @('--script', ('res://qualification/gui_' + $Probe + '_probe.gd'),
+                '--log-file', $ProbeLog, '--', "--output-prefix=$ProbePrefix")
+        ) -TimeoutSeconds 600 -EngineLog $ProbeLog
+        $ProbeReceipt = Get-Content -Raw ($ProbePrefix + '.json') | ConvertFrom-Json
+        if ($ProbeReceipt.status -ne 'PASS' -or $ProbeReceipt.checks -lt 15) {
+            throw "Incomplete graphical interoperability receipt: $Probe"
+        }
+    }
     Invoke-Checked -Name 'filament-vulkan-buffer-roundtrip' -Executable ([string]$Tools.paths.godot) -Arguments (
         $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', 'res://rendering/filaments/verify_filaments.gd', '--log-file', (Join-Path $Evidence 'filament-vulkan-engine.log'))
     ) -EngineLog (Join-Path $Evidence 'filament-vulkan-engine.log')
@@ -290,8 +341,8 @@ try {
     }
     # SYNTH-002 source GUI input probe and exact extracted-package patch profiles.
     $GuiPrefix = Join-Path $Evidence 'synth-gui'
-    Invoke-Checked -Name 'synth-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
-        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_synth_probe.gd'),
+    Invoke-Checked -Name 'synth-graphical-input' -Executable $Application -Arguments (
+        $Graphics + @('--script', 'res://qualification/gui_synth_probe.gd',
             '--log-file', (Join-Path $Evidence 'synth-gui-engine.log'), '--', "--output-prefix=$GuiPrefix")
     ) -TimeoutSeconds 300 -EngineLog (Join-Path $Evidence 'synth-gui-engine.log')
     $null = Read-PngDimensions -Path ($GuiPrefix + '.png')
@@ -329,8 +380,8 @@ try {
     # A real input route test on the same source and pinned graphics stack.
     $GuiLog = Join-Path $Evidence 'gui-input-engine.log'
     $GuiPrefix = Join-Path $Evidence 'gui-input'
-    Invoke-Checked -Name 'graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
-        $Graphics + @('--path',(Join-Path $RepoRoot 'app'),'--script',(Join-Path $RepoRoot 'tests/gui_input_probe.gd'),
+    Invoke-Checked -Name 'graphical-input' -Executable $Application -Arguments (
+        $Graphics + @('--script','res://qualification/gui_input_probe.gd',
             '--log-file',$GuiLog,'--',"--output-prefix=$GuiPrefix")
     ) -TimeoutSeconds 480 -EngineLog $GuiLog
     foreach ($Preset in @('nursery','garden','living','films','condensation','ecosystem')) {
@@ -403,12 +454,12 @@ try {
         $Qualification.comparisons += [ordered]@{preset=$Preset; mode='legacy-optics'; profile=(Split-Path -Leaf $ProfilePath);
             wall_p50_ms=$Disabled.wall_frame.p50_ms; wall_p95_ms=$Disabled.wall_frame.p95_ms; draw_calls_3d=$Disabled.draw_calls_3d}
     }
-    Invoke-Checked -Name 'ecology-graphical-input' -Executable ([string]$Tools.paths.godot) -Arguments (
-        $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', (Join-Path $RepoRoot 'tests/gui_ecology_probe.gd'),
+    Invoke-Checked -Name 'ecology-graphical-input' -Executable $Application -Arguments (
+        $Graphics + @('--script', 'res://qualification/gui_ecology_probe.gd',
             '--log-file', (Join-Path $Evidence 'ecology-gui-engine.log'), '--', "--output-prefix=$(Join-Path $Evidence 'ecology-gui')")
     ) -EngineLog (Join-Path $Evidence 'ecology-gui-engine.log') -TimeoutSeconds 240
     $GuiReceipt = Get-Content -Raw (Join-Path $Evidence 'ecology-gui.json') | ConvertFrom-Json
-    if ($GuiReceipt.status -ne 'PASS' -or $GuiReceipt.checks -lt 12) { throw 'Ecology graphical input receipt incomplete' }
+    if ($GuiReceipt.status -ne 'PASS' -or $GuiReceipt.checks -lt 18) { throw 'Ecology graphical input receipt incomplete' }
     $Qualification.ecology_gui = $GuiReceipt
     $Qualification.ecology = @()
     for ($PresetIndex = 0; $PresetIndex -lt 6; $PresetIndex++) {
@@ -453,10 +504,69 @@ try {
     if ($Off.build.source_sha -ne $SourceSha -or $Off.simulation.tick -ne 360 -or $Off.configuration.interactions -or
         $Off.simulation.signal_mean -ne 0 -or $Off.simulation.queries -ne 0 -or
         $Off.spatial_digest -eq $On.spatial_digest) { throw 'Extracted vortex interaction control failed' }
+    $Qualification.compositions = @()
+    $Compositions = @('spectral_vortex', 'living_membrane', 'excitable_garden', 'condensation_instrument', 'light_terrarium', 'matter_orchestra')
+    foreach ($Composition in $Compositions) {
+        foreach ($View in @('overview', 'close')) {
+            $Name = 'composition-' + $Composition + '-' + $View
+            $ProfilePath = Join-Path $Evidence ($Name + '.json')
+            $CapturePath = Join-Path $Evidence ($Name + '.png')
+            $EngineLog = Join-Path $Evidence ($Name + '-engine.log')
+            $Extra = @()
+            if ($View -eq 'close') { $Extra += '--close-optics' }
+            Invoke-Checked -Name $Name -Executable $Application -Arguments (
+                $Graphics + @('--log-file', $EngineLog, '--', "--preset=composition.$Composition", '--hide-panel',
+                    '--warmup=60', '--profile-frames=90', "--profile=$ProfilePath", '--capture-frame=45', "--capture=$CapturePath") + $Extra
+            ) -TimeoutSeconds 480 -EngineLog $EngineLog
+            $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
+            $Dimensions = Read-PngDimensions -Path $CapturePath
+            if ($Profile.build.source_sha -ne $SourceSha -or $Profile.build.tree_sha -ne $SourceTree -or
+                $Profile.composition_id -ne "composition.$Composition" -or -not $Profile.source_unchanged -or
+                -not $Profile.synthesis.active -or $Profile.synthesis.fixed_ticks -lt 1 -or
+                $Profile.synthesis.missing_targets.Count -ne 0 -or -not $Profile.matter.active -or
+                $Profile.samples -lt 90 -or $Profile.platform.headless -or
+                $Profile.platform.driver -ne 'vulkan' -or $Profile.platform.rendering_method -ne 'forward_plus') {
+                throw "Incomplete integrated composition execution: $Name"
+            }
+            $HasEcology = $Composition -in @('living_membrane', 'excitable_garden', 'light_terrarium', 'matter_orchestra')
+            if ($HasEcology -and (-not $Profile.ecology.shared_bus -or $Profile.ecology.world_tick -lt 1 -or
+                $Profile.spatial_ecology.organism_resources -lt 1 -or $Profile.ecology_digest -notmatch '^[0-9a-f]{64}$')) {
+                throw "Integrated ecology representation did not execute: $Name"
+            }
+            $Qualification.compositions += [ordered]@{
+                composition = $Profile.composition_id; view = $View; source_sha = $SourceSha; tree_sha = $SourceTree
+                capture = (Split-Path -Leaf $CapturePath); capture_dimensions = $Dimensions
+                capture_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $CapturePath).Hash.ToLowerInvariant()
+                profile = (Split-Path -Leaf $ProfilePath); graph = $Profile.synthesis
+                ecology = $Profile.ecology; spatial = $Profile.spatial_ecology
+                startup_usec = $Profile.startup_usec; scene_prepare_usec = $Profile.scene_prepare_usec
+                wall_p50_ms = $Profile.wall_frame.p50_ms; wall_p95_ms = $Profile.wall_frame.p95_ms
+            }
+        }
+    }
+    # Generated matter and spatial ecology share the explicit global mix-zero contract.
+    $NoOpticsPath = Join-Path $Evidence 'composition-orchestra-legacy-optics.json'
+    $NoOpticsLog = Join-Path $Evidence 'composition-orchestra-legacy-optics-engine.log'
+    Invoke-Checked -Name 'composition-orchestra-legacy-optics' -Executable $Application -Arguments (
+        $Graphics + @('--log-file', $NoOpticsLog, '--', '--preset=composition.matter_orchestra', '--hide-panel', '--legacy-optics',
+            '--warmup=60', '--profile-frames=90', "--profile=$NoOpticsPath",
+            '--capture-frame=45', "--capture=$(Join-Path $Evidence 'composition-orchestra-legacy-optics.png')")
+    ) -TimeoutSeconds 480 -EngineLog $NoOpticsLog
+    $NoOptics = Get-Content -Raw $NoOpticsPath | ConvertFrom-Json
+    if ($NoOptics.optical.optical_matter_mix -ne 0 -or $NoOptics.optical.refraction_screen_copy_active -or
+        $NoOptics.build.source_sha -ne $SourceSha -or $NoOptics.samples -lt 90) {
+        throw 'Integrated effect-disabled optical comparison failed'
+    }
+    Invoke-Checked -Name 'graphical-capture-health' -Executable $Application -Arguments @(
+        '--headless', '--script', 'res://qualification/verify_captures.gd', '--', "--capture-directory=$Evidence",
+        "--output=$(Join-Path $Evidence 'capture-health.json')"
+    ) -TimeoutSeconds 180
+    $Qualification.capture_health = Get-Content -Raw (Join-Path $Evidence 'capture-health.json') | ConvertFrom-Json
+    Write-TreeEvidence -Stage 'after-complete-qualification'
     # The release archive must still be the same bytes after qualification.
     Assert-FileHash -Path $Archive -Expected $PackageReceipt.sha256
     $Qualification.status = 'PASS'
-    $Qualification.visual_evidence = 'Six baseline and six ecology native Windows PNGs; retain for human visual review'
+    $Qualification.visual_evidence = 'All inherited feature scenes, six integrated compositions at overview/close, disabled-effect controls and actual extracted authoring; retain PNGs for human review'
 }
 catch {
     $Qualification.status = 'FAIL'
