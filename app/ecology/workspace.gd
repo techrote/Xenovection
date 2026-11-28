@@ -348,7 +348,7 @@ func _refresh_stats() -> void:
 	inspector.text = "No organism selected"
 	for o in world.organisms:
 		if o.id == selected:
-			inspector.text = "%s #%d · lineage %d\nParent %d · generation %d\nAge %.1fs · energy %.3f\nTrait %.3f · branches %d" % [World.FAMILIES[o.kind], o.id, o.lineage, o.parent, o.generation, float(o.age) * World.DT, o.energy, o.trait, int(o.segments.size() / 2)]
+			inspector.text = "%s #%d · lineage %d\nParent %d · generation %d\nAge %.1fs · energy %.3f\nTrait %.3f · branches %d" % [World.FAMILIES[o.kind], o.id, o.lineage, o.parent, o.generation, float(o.age) * World.DT, o.energy, o.allele, int(o.segments.size() / 2)]
 			break
 
 func _process(delta: float) -> void:
@@ -429,7 +429,7 @@ func _draw() -> void:
 		if not automated and not paused and (o.kind == 1 or o.kind == 2):
 			position = o.prev_p.lerp(o.p, clampf(accum / World.DT, 0.0, 1.0))
 		var p = _screen(position, area)
-		var col: Color = COLOURS[o.kind].lerp(Color(0.95, 0.99, 1.0), clampf(float(o.trait) - 0.5, 0.0, 1.0) * 0.3)
+		var col: Color = COLOURS[o.kind].lerp(Color(0.95, 0.99, 1.0), clampf(float(o.allele) - 0.5, 0.0, 1.0) * 0.3)
 		var brightness = clampf(0.28 + float(o.energy) * 0.68, 0.2, 0.96)
 		brightness *= clampf(float(world.effective.material), 0.15, 1.4)
 		col.a = clampf(brightness, 0.08, 1.0)

@@ -140,12 +140,12 @@ func _spawn(family: int, p: Vector2, parent: Dictionary = {}) -> bool:
 		return false
 	var id = next_id
 	next_id += 1
-	var trait: float = rng.randf_range(0.65, 1.35) if parent.is_empty() else clampf(float(parent.trait) + rng.randf_range(-1.0, 1.0) * float(effective.mutation), 0.35, 1.65)
+	var allele: float = rng.randf_range(0.65, 1.35) if parent.is_empty() else clampf(float(parent.allele) + rng.randf_range(-1.0, 1.0) * float(effective.mutation), 0.35, 1.65)
 	var phase: float = rng.randf_range(0.0, TAU)
 	if family == 3:
 		phase = rng.randf_range(0.0, 0.35) + p.x * 0.4
 	p = p.clamp(Vector2.ONE * 0.02, Vector2.ONE * 0.98)
-	organisms.append({"id": id, "parent": int(parent.get("id", 0)), "lineage": int(parent.get("lineage", id)), "generation": int(parent.get("generation", -1)) + 1, "kind": family, "p": p, "prev_p": p, "v": Vector2.from_angle(rng.randf_range(0.0, TAU)) * 0.035, "age": 0, "energy": 0.58, "trait": trait, "phase": phase, "excited": 0.0, "refractory": 0.0, "radius": 0.008, "segments": PackedVector2Array(), "tips": PackedVector2Array([p]), "trail": PackedVector2Array([p])})
+	organisms.append({"id": id, "parent": int(parent.get("id", 0)), "lineage": int(parent.get("lineage", id)), "generation": int(parent.get("generation", -1)) + 1, "kind": family, "p": p, "prev_p": p, "v": Vector2.from_angle(rng.randf_range(0.0, TAU)) * 0.035, "age": 0, "energy": 0.58, "allele": allele, "phase": phase, "excited": 0.0, "refractory": 0.0, "radius": 0.008, "segments": PackedVector2Array(), "tips": PackedVector2Array([p]), "trail": PackedVector2Array([p])})
 	births += 1
 	return true
 
@@ -271,7 +271,7 @@ func _grow(o: Dictionary) -> void:
 			var direction = Vector2.from_angle(rng.randf_range(0.0, TAU)) * 0.32 + gradient(resource, tip) * 3.4
 			if config.interactions:
 				direction += gradient(signal_field, tip) * 1.2 * float(effective.interaction)
-			var next: Vector2 = (tip + direction.normalized() * 0.015 * float(o.trait) * float(effective.growth)).clamp(Vector2.ONE * 0.01, Vector2.ONE * 0.99)
+			var next: Vector2 = (tip + direction.normalized() * 0.015 * float(o.allele) * float(effective.growth)).clamp(Vector2.ONE * 0.01, Vector2.ONE * 0.99)
 			if next.distance_squared_to(tip) > 0.0000001:
 				segments.append(tip)
 				segments.append(next)
@@ -286,7 +286,7 @@ func _grow(o: Dictionary) -> void:
 		o.tips = tips
 		o.segments = segments
 	elif o.kind == 2:
-		o.radius = clampf(float(o.radius) + (float(o.energy) - 0.19) * 0.003 * float(effective.growth) * float(o.trait), 0.005, 0.11)
+		o.radius = clampf(float(o.radius) + (float(o.energy) - 0.19) * 0.003 * float(effective.growth) * float(o.allele), 0.005, 0.11)
 
 func step() -> void:
 	var start = Time.get_ticks_usec()
@@ -309,7 +309,7 @@ func step() -> void:
 		var sensed: Dictionary = observations[i]
 		var idx = _index(cell(o.p))
 		var available: float = resource[idx]
-		var uptake = minf(available, 0.010 * float(effective.resource) * float(o.trait))
+		var uptake = minf(available, 0.010 * float(effective.resource) * float(o.allele))
 		if interacting:
 			resource[idx] = maxf(0.0, available - uptake)
 			last_consumed += uptake
@@ -347,7 +347,7 @@ func step() -> void:
 				o.refractory = 1.35
 			o.phase = fposmod(float(o.phase) + DT * (0.5 + float(sensed.phase) * strength), TAU)
 		else:
-			o.phase = fposmod(float(o.phase) + DT * (0.8 * float(o.trait) + float(sensed.phase) * strength), TAU)
+			o.phase = fposmod(float(o.phase) + DT * (0.8 * float(o.allele) + float(sensed.phase) * strength), TAU)
 		if interacting:
 			var deposit: float = 0.012 * strength * float(o.energy)
 			if o.kind == 3:

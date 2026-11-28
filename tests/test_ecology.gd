@@ -128,12 +128,24 @@ func _initialize() -> void:
 	var parent: Dictionary = evolution.organisms[0].duplicate(true)
 	check(evolution._spawn(int(parent.kind), Vector2(0.4, 0.4), parent), "child spawned")
 	var child: Dictionary = evolution.organisms[-1]
-	check(child.parent == parent.id and child.lineage == parent.lineage and child.generation == parent.generation + 1 and child.trait == parent.trait, "exact no-mutation inheritance")
+	check(child.parent == parent.id and child.lineage == parent.lineage and child.generation == parent.generation + 1 and child.allele == parent.allele, "exact no-mutation inheritance")
 	for i in range(World.MAX_POP * 2):
 		evolution._spawn(0, Vector2(0.1, 0.1))
 	check(evolution.organisms.size() == World.MAX_POP, "hard population cap")
 	run_steps(evolution, 180)
 	check(finite_and_bounded(evolution), "dense bounds")
+	var abundant = World.new()
+	var abundant_config = World.initial_config(5, 5051)
+	abundant_config.interactions = false
+	abundant_config.params.resource = 2.0
+	abundant.reset(abundant_config)
+	run_steps(abundant, 240)
+	check(abundant.births > 0 and abundant.organisms.size() > 36, "energy-dependent births in abundant control")
+	for o in abundant.organisms:
+		o.age = 2401
+	abundant.step()
+	check(abundant.organisms.is_empty() and abundant.deaths > 0, "senescence produces extinction")
+	experiments.append({"experiment": "birth-and-senescence", "metrics": abundant.metrics()})
 	var soak = World.new()
 	soak.reset(World.initial_config(5, 2201))
 	run_steps(soak, 1800)

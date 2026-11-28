@@ -144,6 +144,10 @@ try {
     Write-TreeEvidence -Stage 'after-historical-import'
     Invoke-Checked -Name 'editor-import' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--editor', '--import')
     Write-TreeEvidence -Stage 'after-app-import'
+    Invoke-Checked -Name 'ecology-world-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', 'res://ecology/world.gd')
+    Invoke-Checked -Name 'ecology-workspace-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', 'res://ecology/workspace.gd')
+    Invoke-Checked -Name 'ecology-gui-probe-parse' -Executable $Editor -Arguments @('--headless', '--path', (Join-Path $RepoRoot 'app'), '--check-only', '--script', (Join-Path $RepoRoot 'tests/gui_ecology_probe.gd'))
+
     $Tests = [ordered]@{
         'core-contracts' = (Join-Path $RepoRoot 'tests/test_core.gd')
         'integrated-contracts' = (Join-Path $RepoRoot 'tests/test_integration.gd')
