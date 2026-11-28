@@ -43,7 +43,7 @@ class XYPad extends Control:
 				_move(event.position)
 			accept_event()
 		elif event is InputEventMouseMotion and dragging:
-			if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			if (event.button_mask & MOUSE_BUTTON_MASK_LEFT) == 0:
 				dragging = false
 			else:
 				_move(event.position)
@@ -55,6 +55,8 @@ var examples: Array = Examples.all()
 var undo_stack: Array = []
 var redo_stack: Array = []
 var author: VBoxContainer
+var file_controls: VBoxContainer
+var edit_controls: HBoxContainer
 var perform: VBoxContainer
 var status: Label
 var live: Label
@@ -108,20 +110,25 @@ func setup(application) -> void:
 	var recall := _row(self)
 	_button(recall, "Recall example", func(): _edit(examples[example_picker.selected].patch, true))
 	_button(recall, "Blank", func(): _edit(Graph.blank(host.preset_index)))
-	var file_row := _row(self)
+	file_controls = VBoxContainer.new()
+	add_child(file_controls)
+	var file_row := _row(file_controls)
 	_button(file_row, "Save", func(): _save(SLOT))
 	_button(file_row, "Load", func(): _load(SLOT))
 	_button(file_row, "Morph", func(): _load(SLOT, true))
-	var transfer := _row(self)
+	var transfer := _row(file_controls)
 	_button(transfer, "Import…", func(): _file(true))
 	_button(transfer, "Export…", func(): _file(false))
-	_button(self, "Recover previous save", func(): _load(SLOT + ".bak"))
+	_button(file_controls, "Recover previous save", func(): _load(SLOT + ".bak"))
 	status = _label(self, "Recall an example or create a blank patch.")
 	live = _label(self, "")
-	var edits := _row(self)
-	_button(edits, "Undo", _undo)
-	_button(edits, "Redo", _redo)
-	_button(edits, "Stop", func(): host.stop_synth(); refresh())
+	edit_controls = _row(self)
+	_button(edit_controls, "Undo", _undo)
+	_button(edit_controls, "Redo", _redo)
+	_button(edit_controls, "Stop", func():
+		host.stop_synth()
+		refresh()
+	)
 	author = VBoxContainer.new()
 	add_child(author)
 	_build_author()
@@ -213,6 +220,8 @@ func _selected(picker: OptionButton) -> String:
 
 func _mode(performance: bool) -> void:
 	author.visible = not performance
+	file_controls.visible = not performance
+	edit_controls.visible = not performance
 	perform.visible = performance
 
 
@@ -535,7 +544,7 @@ func _build_performance(data: Dictionary) -> void:
 		elif n.kind == "envelope":
 			var id: String = n.id
 			_button(perform_controls, "Trigger · " + id, func(): host.synth.trigger(id))
-	_label(perform_controls, "XY PERFORMANCE SURFACE", true)
+	var xy_title := _label(perform_controls, "XY PERFORMANCE SURFACE", true)
 	_label(perform_controls, "X → manual source")
 	var x := _option(perform_controls)
 	_items(x, manual_ids, data.xy[0], true)
@@ -546,6 +555,8 @@ func _build_performance(data: Dictionary) -> void:
 	y.item_selected.connect(func(_index: int): _assign_xy(1, _selected(y)))
 	pad = XYPad.new()
 	perform_controls.add_child(pad)
+	perform_controls.move_child(xy_title, 0)
+	perform_controls.move_child(pad, 1)
 	pad.active = not data.xy[0].is_empty() or not data.xy[1].is_empty()
 	pad.gesture.connect(func(xx: float, yy: float):
 		if not host.synth.patch.is_empty():
@@ -580,8 +591,14 @@ func _build_performance(data: Dictionary) -> void:
 		pause.button_pressed = host.bus.clocks[clock].paused
 		row.add_child(pause)
 		var clock_id: String = clock
-		speed.value_changed.connect(func(number: float): host.bus.set_clock(clock_id, {"rate": number}); host.ui.sync_clocks(host.bus.clocks))
-		pause.toggled.connect(func(active: bool): host.bus.set_clock(clock_id, {"paused": active}); host.ui.sync_clocks(host.bus.clocks))
+		speed.value_changed.connect(func(number: float):
+			host.bus.set_clock(clock_id, {"rate": number})
+			host.ui.sync_clocks(host.bus.clocks)
+		)
+		pause.toggled.connect(func(active: bool):
+			host.bus.set_clock(clock_id, {"paused": active})
+			host.ui.sync_clocks(host.bus.clocks)
+		)
 	_label(perform_controls, "Beat clock follows filament rate/pause × BPM. Stateful modules do not run backward through history.")
 
 

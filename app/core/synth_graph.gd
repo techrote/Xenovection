@@ -43,7 +43,9 @@ static func target_catalogue(bus) -> Dictionary:
 	var result: Dictionary = {}
 	for id in bus.targets:
 		var spec: Dictionary = bus.targets[id]
-		result[id] = {"schema": TARGET_SCHEMA, "id": id, "kind": spec.kind, "minimum": spec.minimum, "maximum": spec.maximum, "base": spec.base, "policy": "continuous"}
+		if spec.get("policy", "continuous") != "continuous":
+			continue
+		result[id] = {"schema": TARGET_SCHEMA, "id": id, "kind": spec.kind, "minimum": spec.minimum, "maximum": spec.maximum, "base": spec.base, "policy": "continuous", "field_descriptor": spec.get("field_descriptor", {})}
 	return result
 
 
@@ -73,7 +75,7 @@ func configure(data, bus) -> bool:
 	last_error = ""
 	if not data is Dictionary or data.get("schema") != SCHEMA:
 		return refuse("Unknown patch schema")
-	if not number(data.get("preset"), 0, 6) or float(data.preset) != floorf(float(data.preset)):
+	if not number(data.get("preset"), 0, 63) or float(data.preset) != floorf(float(data.preset)):
 		return refuse("Invalid scene index")
 	if not number(data.get("bpm"), 20, 300):
 		return refuse("Tempo outside 20..300 BPM")
@@ -112,7 +114,14 @@ func configure(data, bus) -> bool:
 		for step in n.steps:
 			if not number(step, -16, 16):
 				return refuse("Invalid sequencer step")
-		n.steps = n.steps.duplicate()
+		var normalized_steps: Array = []
+		for step in n.steps:
+			normalized_steps.append(float(step))
+		n.steps = normalized_steps
+		for key in ["rate", "phase", "value", "param"]:
+			n[key] = float(n[key])
+		if float(n.seed) != floorf(float(n.seed)):
+			return refuse("Seed must be an integer")
 		n.seed = int(n.seed)
 		by_id[n.id] = n
 		clean.sources.append(n)
@@ -153,6 +162,8 @@ func configure(data, bus) -> bool:
 			return refuse("Missing or duplicate route ID")
 		if not raw.get("source") is String or not by_id.has(raw.source) or not raw.get("target") is String or not bus.targets.has(raw.target):
 			return refuse("Unknown route source or unavailable destination")
+		if bus.targets[raw.target].get("policy", "continuous") != "continuous":
+			return refuse("Destination is base-only or discrete")
 		var kind := output_kind(by_id[raw.source].kind)
 		if kind != "scalar" and kind != bus.targets[raw.target].kind:
 			return refuse("Incompatible route signal and target")
@@ -225,6 +236,10 @@ func attach(bus) -> bool:
 		if not bus.add_route(bound):
 			detach(bus)
 			return refuse(bus.last_error)
+	# Active patches own the artistic route mix; stopped patches restore stock LFOs.
+	for existing in bus.routes:
+		if not str(existing.id).begins_with(PREFIX):
+			existing.enabled = false
 	return true
 
 
@@ -299,7 +314,7 @@ func advance(bus, delta: float, scientific: bool = false) -> void:
 		var route: Dictionary = bus.routes[i]
 		if not str(route.id).begins_with(PREFIX):
 			continue
-		if not bus.targets.has(route.target):
+		if not bus.targets.has(route.target) or bus.targets[route.target].get("policy", "continuous") != "continuous":
 			if not route.target in missing_targets:
 				missing_targets.append(route.target)
 			bus.routes.remove_at(i)

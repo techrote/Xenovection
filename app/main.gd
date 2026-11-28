@@ -285,6 +285,9 @@ func install_synth_patch(data: Dictionary, recall: bool = false, morph: bool = f
 	if not candidate.configure(data, bus):
 		synth_error = candidate.last_error
 		return false
+	if int(candidate.patch.preset) >= presets.size():
+		synth_error = "Scene is not present in this application."
+		return false
 	var previous = synth
 	var compatible: bool = morph and candidate.transition_from(previous)
 	if recall and not compatible:
@@ -307,10 +310,11 @@ func install_synth_patch(data: Dictionary, recall: bool = false, morph: bool = f
 		if not compatible:
 			bus.reset()
 		if is_instance_valid(synth_panel):
-			ui.set_tab(ui.tabs.get_tab_count() - 1)
+			ui.set_tab(ui.tabs.get_node("Synth").get_index())
 		if morph:
 			synth_error = "0.8 s compatible morph." if compatible else "Different scene or routing: explicit cut."
 	_sync_ui()
+	if is_instance_valid(synth_panel): synth_panel.refresh()
 	return true
 
 func stop_synth() -> void:
@@ -552,7 +556,7 @@ func handle_action(action: String) -> void:
 		"synth":
 			if ui.clean_view: ui.toggle_clean()
 			ui.rail.show()
-			ui.set_tab(ui.tabs.get_tab_count() - 1)
+			ui.set_tab(ui.tabs.get_node("Synth").get_index())
 			_frame_canvas()
 		"focus": camera.focus_points(selection.get_selected_points())
 		"isolate": selection.set_isolated(not selection.get_visual_state().isolate)
@@ -650,7 +654,7 @@ func save_scene(path: String) -> void:
 		"camera": _encode(camera.get_pose()), "clocks": _encode(bus.clocks),
 		"scientific": scientific, "paused": bus.paused, "modulation_enabled": bus.enabled,
 		"mod_depth": mod_depth, "mod_frequency": mod_frequency, "mod_waveform": mod_waveform,
-		"replay_enabled": replay_enabled})
+		"replay_enabled": replay_enabled, "synth_patch": synth.snapshot(bus) if not synth.patch.is_empty() else {}})
 
 func load_scene(path: String) -> bool:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -672,6 +676,15 @@ func load_scene(path: String) -> bool:
 	if str(data.get("source_revision", "")) != _source_sha:
 		ui.show_message("Scene belongs to a different source revision. Load that source first.", 8)
 		return false
+	var saved_patch = data.get("synth_patch", {})
+	if not saved_patch is Dictionary:
+		ui.show_message("Scene contains malformed patch data")
+		return false
+	if not saved_patch.is_empty():
+		var validator = SynthGraph.new()
+		if not validator.configure(saved_patch, bus) or int(validator.patch.preset) != int(data.get("preset_index", preset_index)) or int(validator.patch.preset) >= presets.size():
+			ui.show_message("Scene patch refused: " + validator.last_error, 8)
+			return false
 	stop_synth()
 	for key: String in data.get("base_parameters", {}):
 		set_parameter(key, _decode(data.base_parameters[key]))
@@ -698,6 +711,11 @@ func load_scene(path: String) -> bool:
 	ui.preset_picker.select(preset_index)
 	ui.subtitle_label.text = str(presets[preset_index].description).to_upper()
 	_rebuild_modulation()
+	if not saved_patch.is_empty():
+		if not install_synth_patch(saved_patch):
+			ui.show_message("Scene patch could not bind: " + synth_error, 8)
+			return false
+		bus.enabled = bool(data.get("modulation_enabled", true))
 	_sync_ui()
 	if is_instance_valid(synth_panel): synth_panel.refresh()
 	ui.show_message("Scene restored · source IDs preserved")

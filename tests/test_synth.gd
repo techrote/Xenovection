@@ -99,6 +99,10 @@ func _run() -> void:
 	invalid = p.duplicate(true)
 	invalid.sources[0].id = invalid.sources[1].id
 	check(not a.configure(invalid, first), "Duplicate component IDs rejected")
+	first.register_target("test.discrete", 0.0, 0.0, 1.0, {"policy": "base_only"})
+	invalid = p.duplicate(true)
+	invalid.routes[0].target = "test.discrete"
+	check(not a.configure(invalid, first) and not Graph.target_catalogue(first).has("test.discrete"), "Base-only topology targets excluded")
 	check(a.patch.sources.size() == p.sources.size(), "Invalid edit retains prior graph")
 	first.targets.erase("test.vector")
 	a.advance(first, Graph.STEP)
