@@ -1,0 +1,37 @@
+{
+  "schema": "xenovection.material-visual-review.v1",
+  "reviewer": "independent Specialist B visual inspection",
+  "candidate_source": "d02577d1d8315bf784e4bf92e142e089254ffcb6",
+  "candidate_tree": "4f9eb90263d4f0db7dc3550971c761a8dd6704ab",
+  "workflow_run": 46157276455,
+  "workflow_status": "FAIL at subsequent spatial ecology graphical interaction; no whole-application qualification claim",
+  "material_gui": "PASS 42/42 real graphical input assertions",
+  "files": [
+    {
+      "file": "gui-material-legacy.png",
+      "sha256": "8a409964013fe19f9f5b8954b6c120440b716ad1676d1742b0783fa8e5cc4ad5"
+    },
+    {
+      "file": "gui-material-optical.png",
+      "sha256": "d276678488033a35ae7b1822d3fa676ed2a489db7c21c80d99e28d0db29b12c0"
+    },
+    {
+      "file": "gui-material-authoring.png",
+      "sha256": "bd6b186212024de6cc0129c8ad53c9eb5058950e09e22d6115fb7ce2db1f46ee"
+    }
+  ],
+  "observations": [
+    "Mix-zero image retains the qualified curved perforated membrane, its sparse holes and separate green field layer; no gross extrusion artifact.",
+    "Mix-one image preserves the identical silhouette, aperture locations and field-layer alignment, with changed reddish/cyan optical highlights and greater visual transmission.",
+    "The full optical membrane is substantially darker than its legacy counterpart; the untouched green field layer dominates at this authored material/view. This is a legibility limitation of this parameter choice, not a black frame.",
+    "Visible optical highlights remain concentrated at the left fold and lower curvature; this view demonstrates a material change but does not establish angle-dependent response across camera motion.",
+    "The actual Optics inspector is readable, the mix is 1.00, transport is paused, and thickness/interference/illumination controls remain accessible.",
+    "No screen-filling wedge, blown-out transparent layer, missing geometry or unexpected camera/scene reset is visible in these captures."
+  ],
+  "bounds": [
+    "This is hosted Windows llvmpipe Vulkan Forward+ evidence, not physical TITAN RTX throughput or owner aesthetic acceptance.",
+    "Both comparison images include the same opt-in dim analytical environment backdrop; lit-sample coverage alone does not prove membrane legibility.",
+    "Only the selected membrane region received the assignment; the green field layer intentionally retains its prior material.",
+    "The renderer provides RGB artistic optical approximations and analytical environment transmission, not calibrated spectral transport or screen-copy refraction for generated matter."
+  ]
+}

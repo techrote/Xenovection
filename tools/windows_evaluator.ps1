@@ -290,15 +290,16 @@ try {
         $Graphics + @('--path', (Join-Path $RepoRoot 'app'), '--script', 'res://rendering/filaments/verify_filaments.gd', '--log-file', (Join-Path $Evidence 'filament-vulkan-engine.log'))
     ) -EngineLog (Join-Path $Evidence 'filament-vulkan-engine.log')
 
-    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'flow', 'optical_dichroic', 'optical_weather', 'optical_lens', 'optical_garden', 'optical_microfibres', 'optical_ecosystem')) {
+    foreach ($Preset in @('scientific', 'filaments', 'optical', 'hybrid', 'membrane', 'stress', 'flow', 'optical_dichroic', 'optical_weather', 'optical_lens', 'optical_garden', 'optical_microfibres', 'optical_ecosystem')) {
         $ProfilePath = Join-Path $Evidence ($Preset + '.json')
         $CapturePath = Join-Path $Evidence ($Preset + '.png')
         $EngineLog = Join-Path $Evidence ($Preset + '-engine.log')
+        $SceneTimeout = $(if ($Preset -eq 'stress') { 480 } else { 240 })
         Invoke-Checked -Name ($Preset + '-playable-vulkan') -Executable $Application -Arguments (
             $Graphics + @('--log-file', $EngineLog, '--', "--preset=$Preset", '--hide-panel',
                 '--warmup=60', '--profile-frames=60', "--profile=$ProfilePath",
                 '--capture-frame=45', "--capture=$CapturePath")
-        ) -TimeoutSeconds 240 -EngineLog $EngineLog
+        ) -TimeoutSeconds $SceneTimeout -EngineLog $EngineLog
         $Profile = Get-Content -Raw $ProfilePath | ConvertFrom-Json
         $Dimensions = Read-PngDimensions -Path $CapturePath
         $VSyncFallback = (Get-Content -Raw -LiteralPath $EngineLog) -match 'Falling back to V-Sync mode Enabled'
@@ -315,6 +316,12 @@ try {
         if ($Preset -eq 'flow') {
             if ($Profile.source.source_id -ne 'xenovection-spatial-flow-v1' -or $Profile.source.node_count -ne 4608 -or $Profile.source.edge_count -ne 6144) {
                 throw 'Packaged spatial-flow source identity or topology is incorrect'
+            }
+        } elseif ($Preset -eq 'stress') {
+            if ($Profile.source.source_id -ne 'found-002-synthetic-96' -or $Profile.source.node_count -ne 576 -or
+                $Profile.source.edge_count -ne 46080 -or $Profile.source.historical_custody_verified -or
+                $Profile.filaments.primary_edges -ne 46080 -or $Profile.filaments.segments_per_strand -ne 16) {
+                throw 'Packaged dense-interference source or authored stress workload is incorrect'
             }
         } elseif ($Profile.source.revision -ne ('sha256:' + $PackageReceipt.build.specimen_sha256) -or
             -not $Profile.source.historical_custody_verified -or $Profile.source.node_count -ne 288 -or $Profile.source.edge_count -ne 11520) {

@@ -1,0 +1,35 @@
+{
+	"checks": 20,
+	"density": {
+		"instance_buffer_bytes_estimate": 26263552,
+		"nodes": 768,
+		"primary_edges": 81920,
+		"secondary_fibres": 327680,
+		"segments_per_strand": 64
+	},
+	"evidence_kind": "Headless actual application state/update loop; simulated fixed-step timeline, NOT wall-clock GPU uptime or target GPU performance",
+	"failures": [],
+	"memory_scope": "Godot engine tracked static allocations and object counts; not process RSS or total GPU VRAM",
+	"proxy_cycles": {
+		"after_engine_static_bytes": 0,
+		"after_objects": 5586,
+		"before_engine_static_bytes": 0,
+		"before_objects": 5587,
+		"count": 96
+	},
+	"proxy_mesh_rebuilds_during_steady_loop": 0,
+	"simulated_steady_frames": 36000,
+	"simulated_timeline_seconds": 600.0,
+	"source_instance_uploads_during_steady_loop": 0,
+	"status": "PASS",
+	"steady_loop_wall_seconds": 28.290113,
+	"steady_memory": {
+		"after_engine_static_bytes": 0,
+		"after_objects": 5587,
+		"before_engine_static_bytes": 0,
+		"before_objects": 5587,
+		"peak_sampled_engine_static_bytes": 0
+	},
+	"suite": "deterministic-adversarial-headless-soak",
+	"total_wall_seconds": 40.712498
+}

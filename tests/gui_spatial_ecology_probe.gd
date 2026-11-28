@@ -7,6 +7,7 @@ var app
 var life
 var scroll: ScrollContainer
 var material_comparison: Dictionary = {}
+var option_trace: Array[Dictionary] = []
 
 func _initialize() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -129,14 +130,31 @@ func press(label: String) -> bool:
 func choose(picker: OptionButton, index: int) -> void:
 	await reveal(picker)
 	await click(picker.get_global_rect().get_center())
-	var popup_id: int = picker.get_popup().get_window_id()
-	if popup_id < 0:
-		popup_id = root.get_window_id()
-	await key(KEY_HOME, popup_id)
-	for i in range(index):
-		await key(KEY_DOWN, popup_id)
-	await key(KEY_ENTER, popup_id)
+	await frames(2)
+	var popup: PopupMenu = picker.get_popup()
+	var trace: Dictionary = {"target": str(picker.get_meta("target", "")),
+		"requested": index, "selected_before": picker.selected,
+		"popup_visible": popup.visible, "popup_window_id": popup.get_window_id(),
+		"event_window_id": 0, "focused_items": [popup.get_focused_item()]}
+	check(popup.visible, "Actual option pointer opens " + picker.get_item_text(index) + " menu")
+	if not popup.visible:
+		option_trace.append(trace)
+		return
+	# Match the real-event path already qualified by gui_material_probe. Popup
+	# initial focus and HOME semantics vary with native/embedded menus; observe
+	# the focused item and let Godot route ordinary key events to the open menu.
+	for attempt in range(picker.item_count + 3):
+		var focused: int = popup.get_focused_item()
+		if focused == index:
+			break
+		await key(KEY_DOWN if focused < index else KEY_UP)
+		trace.focused_items.append(popup.get_focused_item())
+	check(popup.get_focused_item() == index, "Actual option navigation locates " + picker.get_item_text(index))
+	await key(KEY_ENTER)
 	await frames(3)
+	trace.selected_after = picker.selected
+	trace.popup_visible_after = popup.visible
+	option_trace.append(trace)
 	check(picker.selected == index, "Actual option input selects " + picker.get_item_text(index))
 
 func orbit() -> void:
@@ -281,7 +299,8 @@ func finish() -> void:
 	check(root.get_texture().get_image().save_png(prefix + ".png") == OK, "Spatial authoring capture written")
 	var receipt = {"suite": "spatial ecology real graphical input", "checks": checks, "failures": failures,
 		"status": "PASS" if failures.is_empty() else "FAIL", "ecology": app.ecology.convergence_metrics(),
-		"representation": app.spatial_ecology.metrics(), "digest": app.ecology.world.digest(), "material_comparison": material_comparison}
+		"representation": app.spatial_ecology.metrics(), "digest": app.ecology.world.digest(),
+		"material_comparison": material_comparison, "option_trace": option_trace}
 	var file = FileAccess.open(prefix + ".json", FileAccess.WRITE)
 	if file == null:
 		failures.append("Cannot write spatial graphical receipt")

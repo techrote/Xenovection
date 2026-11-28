@@ -1,0 +1,29 @@
+{
+  "run_id": 46157276455,
+  "artifact_id": 15268700541,
+  "source_sha": "d02577d1d8315bf784e4bf92e142e089254ffcb6",
+  "source_tree": "4f9eb90263d4f0db7dc3550971c761a8dd6704ab",
+  "outer_bytes": 40162475,
+  "outer_sha256": "0c8aaee3ebe6b53e4025d4742a7d7672b3857845dbdfc4c47dbbc4edcd6d9d5a",
+  "outer_hash_verified": true,
+  "disposition": "FAIL: spatial GUI popup keyboard navigation selected incorrect Plant/Membrane items; full graphical campaign incomplete",
+  "artifact_url": "https://github.com/techrote/Xenovection/actions/runs/46157276455/artifacts/15268700541",
+  "captures": [
+    {
+      "filename": "gui-material-authoring.png",
+      "sha256": "bd6b186212024de6cc0129c8ad53c9eb5058950e09e22d6115fb7ce2db1f46ee"
+    },
+    {
+      "filename": "gui-material-legacy.png",
+      "sha256": "8a409964013fe19f9f5b8954b6c120440b716ad1676d1742b0783fa8e5cc4ad5"
+    },
+    {
+      "filename": "gui-material-optical.png",
+      "sha256": "d276678488033a35ae7b1822d3fa676ed2a489db7c21c80d99e28d0db29b12c0"
+    },
+    {
+      "filename": "gui-spatial_ecology.png",
+      "sha256": "b420f7099c27d517124894e52102c519f43ac454cb854e6e2547de3e38bda60c"
+    }
+  ]
+}

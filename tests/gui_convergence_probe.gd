@@ -172,8 +172,8 @@ func choose(control: OptionButton, index: int) -> void:
 	if not popup.visible: return
 	for attempt in range(control.item_count + 3):
 		if popup.get_focused_item() == index: break
-		await key(KEY_DOWN if popup.get_focused_item() < index else KEY_UP, false, popup.get_window_id())
-	await key(KEY_ENTER, false, popup.get_window_id())
+		await key(KEY_DOWN if popup.get_focused_item() < index else KEY_UP)
+	await key(KEY_ENTER)
 	await frames(3)
 	check(control.selected == index, "Actual keyboard commits the selected option")
 

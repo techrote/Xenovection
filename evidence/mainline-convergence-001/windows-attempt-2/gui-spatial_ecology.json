@@ -1,0 +1,53 @@
+{
+	"checks": 9,
+	"digest": "5295cfd01110041eeade9e95ca8e94b733b55766d7a2915440ba75fb8e5faf47",
+	"ecology": {
+		"numerical_domain": "planar",
+		"paused": true,
+		"sampled_graph_boundaries": 43,
+		"shared_bus": true,
+		"simulation_enabled": true,
+		"snapshot_epoch": 1,
+		"snapshot_generation_us_last": 578,
+		"snapshot_generation_us_p50": 595,
+		"snapshot_generation_us_p95": 678,
+		"snapshot_samples": 44,
+		"snapshot_topology_revision": 8,
+		"solver_samples": 43,
+		"solver_us_p50": 301,
+		"solver_us_p95": 1314,
+		"world_tick": 43
+	},
+	"failures": [
+		"Actual option input selects Plant",
+		"Actual option input selects Membrane",
+		"Actual 3D viewport click plants selected family"
+	],
+	"material_comparison": {},
+	"representation": {
+		"active_instance_buffers": 14,
+		"active_nodes": 38,
+		"allocations": 12,
+		"body_transform_updates": 264,
+		"deallocations": 0,
+		"depth_strength": 0.45,
+		"instance_uniform_writes": 528,
+		"material_uniform_writes": 8,
+		"numerical_domain": "planar",
+		"organism_resources": 12,
+		"quality": 0,
+		"representation": "bounded spatial snapshot adapter",
+		"shared_materials": 4,
+		"shared_meshes": 2,
+		"topology_builds": 2,
+		"topology_events": 96,
+		"transform_uploads": 447,
+		"update_us_last": 93,
+		"update_us_p50": 90,
+		"update_us_p95": 301,
+		"upload_bytes": 28608,
+		"world_tick": 43
+	},
+	"status": "FAIL",
+	"suite": "spatial ecology real graphical input"
+}
