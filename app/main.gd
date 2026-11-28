@@ -50,6 +50,9 @@ var _build: Dictionary = {"source_sha": "working-tree", "status": "Draft/HOLD"}
 
 func _ready() -> void:
 	_args = _read_arguments()
+	if _args.has("ecosystem"):
+		get_tree().call_deferred("change_scene_to_file", "res://ecology/workspace.tscn")
+		return
 	_load_build_info()
 	_setup_world()
 	add_child(filaments)
@@ -57,6 +60,12 @@ func _ready() -> void:
 	add_child(camera)
 	camera.current = true
 	add_child(ui)
+	var ecology_page: VBoxContainer = ui._page(ui.tabs, "Life")
+	ui._section(ecology_page, "Artificial life", "Open an independent planar ecosystem workspace. Returning reloads the source instrument.")
+	var ecology_button := Button.new()
+	ecology_button.text = "Open Ecosystem"
+	ecology_button.pressed.connect(func(): get_tree().change_scene_to_file("res://ecology/workspace.tscn"))
+	ecology_page.add_child(ecology_button)
 	camera.navigation_changed.connect(_frame_canvas)
 	get_viewport().size_changed.connect(_frame_canvas)
 	ui.set_presets(presets)
